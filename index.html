@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DOLLOP — Pure Flavour. Legendary Stink.</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+/* ── BRAND FONTS ─────────────────────────────────────────── */
+@font-face {
+  font-family: 'Barlow';
+  src: url('brand_assets/Barlow-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Barlow';
+  src: url('brand_assets/Barlow-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Barlow';
+  src: url('brand_assets/Barlow-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* ── RESET & BASE ────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 500;
+  background: #F0E7BD;
+  color: #1C1A0E;
+  overflow-x: hidden;
+}
+/* Grain overlay */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 9999;
+  opacity: .03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px;
+}
+
+/* ── TYPE HELPERS ─────────────────────────────────────────── */
+.disp    { font-family: 'Barlow', sans-serif; font-weight: 700; font-style: italic; line-height: .96; letter-spacing: -.02em; }
+.disp-m  { font-family: 'Barlow', sans-serif; font-weight: 500; line-height: 1; }
+.body-t  { font-family: 'Barlow', sans-serif; font-weight: 500; line-height: 1.65; }
+
+/* ── NAV ─────────────────────────────────────────────────── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: #F0E7BD;
+  border-bottom: 2px solid #B08F2F;
+}
+.nav-link {
+  font-family: 'Barlow', sans-serif; font-weight: 500;
+  font-size: 13px; letter-spacing: .08em; text-transform: uppercase;
+  color: #838A46;
+  transition: color .18s ease;
+}
+.nav-link:hover { color: #E4A434; }
+
+/* ── BUTTONS ─────────────────────────────────────────────── */
+.btn-p {
+  background: #E4A434; color: #1C1A0E;
+  font-family: 'Barlow', sans-serif; font-weight: 700; font-style: italic;
+  font-size: 14px; letter-spacing: .04em; text-transform: uppercase;
+  padding: 12px 28px; border-radius: 100px;
+  border: 2.5px solid #1C1A0E;
+  box-shadow: 4px 4px 0 #B08F2F;
+  display: inline-block; cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.btn-p:hover  { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 #B08F2F; }
+.btn-p:active { transform: translate(0,0);       box-shadow: 2px 2px 0 #B08F2F; }
+
+.btn-o {
+  background: transparent; color: #1C1A0E;
+  font-family: 'Barlow', sans-serif; font-weight: 700; font-style: italic;
+  font-size: 14px; letter-spacing: .04em; text-transform: uppercase;
+  padding: 11px 26px; border-radius: 100px;
+  border: 2.5px solid #1C1A0E;
+  display: inline-block; cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.btn-o:hover { background: #1C1A0E; color: #E4A434; }
+
+.btn-o-olive {
+  background: transparent; color: #F0E7BD;
+  font-family: 'Barlow', sans-serif; font-weight: 700; font-style: italic;
+  font-size: 14px; letter-spacing: .04em; text-transform: uppercase;
+  padding: 11px 26px; border-radius: 100px;
+  border: 2.5px solid #F0E7BD;
+  display: inline-block; cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.btn-o-olive:hover { background: #F0E7BD; color: #838A46; }
+
+/* ── HERO ─────────────────────────────────────────────────── */
+.hero { background: #838A46; min-height: 88vh; position: relative; overflow: hidden; }
+.hero-blob {
+  position: absolute; border-radius: 62% 38% 46% 54% / 60% 44% 56% 40%;
+  pointer-events: none;
+}
+
+/* ── MARQUEE ─────────────────────────────────────────────── */
+@keyframes mq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ── CARDS ───────────────────────────────────────────────── */
+.pkg-card {
+  background: #F0E7BD;
+  border: 2.5px solid #1C1A0E; border-radius: 24px;
+  transition: transform .2s ease, box-shadow .2s ease;
+  position: relative; overflow: hidden;
+}
+.pkg-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(28,26,14,.15); }
+.pkg-feat { background: #E4A434; transform: scale(1.04); }
+.pkg-feat:hover { transform: scale(1.04) translateY(-6px); }
+
+/* ── LOCATION CARDS ──────────────────────────────────────── */
+.loc-card {
+  background: #fff; border: 2px solid #1C1A0E; border-radius: 16px;
+  transition: transform .18s ease;
+}
+.loc-card:hover { transform: translateX(4px); }
+
+/* ── AVAILABILITY DOTS ────────────────────────────────────── */
+.avdot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.av-g  { background: #22c55e; animation: pdot 2s ease-in-out infinite; }
+.av-y  { background: #f59e0b; }
+.av-r  { background: #ef4444; }
+@keyframes pdot { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:.6;transform:scale(1.4);} }
+
+/* ── ANIMATIONS ──────────────────────────────────────────── */
+@keyframes flt  { 0%,100%{transform:translateY(0) rotate(0deg);} 50%{transform:translateY(-14px) rotate(2deg);} }
+@keyframes fltr { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px) rotate(-3deg);} }
+@keyframes fu   { from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);} }
+@keyframes spin-s { from{transform:rotate(0deg);}to{transform:rotate(360deg);} }
+.flt  { animation: flt  5s ease-in-out infinite; }
+.fltr { animation: fltr 6s ease-in-out infinite; }
+.fu   { animation: fu   .7s cubic-bezier(.22,1,.36,1) both; }
+.d1{animation-delay:.1s;}.d2{animation-delay:.2s;}.d3{animation-delay:.3s;}.d4{animation-delay:.4s;}.d5{animation-delay:.5s;}
+.spin-s { animation: spin-s 14s linear infinite; }
+
+/* ── MAP ─────────────────────────────────────────────────── */
+.map-wrap { border-radius: 20px; overflow: hidden; border: 3px solid #1C1A0E; box-shadow: 6px 6px 0 #B08F2F; }
+
+/* ── STARBURST ────────────────────────────────────────────── */
+.starburst { clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%); }
+.wobbly    { border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; }
+
+/* ── MOBILE MENU ─────────────────────────────────────────── */
+#mob-nav { display: none; }
+#mob-nav.open { display: block; }
+
+/* ── SCROLLBAR ────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #F0E7BD; }
+::-webkit-scrollbar-thumb { background: #E4A434; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ANNOUNCEMENT BAR                                        -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--<div style="background:#E4A434;color:#1C1A0E;overflow:hidden;" class="py-2">
+  <div style="display:inline-flex;gap:3rem;animation:mq 20s linear infinite;white-space:nowrap;">
+    <span class="disp-m" style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;">🍨 Musang King Gelato &nbsp;·&nbsp;</span>
+    <span class="disp-m" style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;">Available at select carts now &nbsp;·&nbsp;</span>
+    <span class="disp-m" style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;">🏆 One flavour. No regrets &nbsp;·&nbsp;</span>
+    <span class="disp-m" style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;">🍨 Musang King Gelato &nbsp;·&nbsp;</span>
+    <span class="disp-m" style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;">Available at select carts now &nbsp;·&nbsp;</span>
+    <span class="disp-m" style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;">🏆 One flavour. No regrets &nbsp;·&nbsp;</span>
+  </div>
+</div>
+!>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- NAV                                                     -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<nav class="px-6 md:px-10 py-4">
+  <div class="max-w-7xl mx-auto flex items-center justify-between">
+    <!-- Logo image -->
+    <a href="#">
+      <img src="brand_assets/Dollop Logo.png" alt="Dollop" style="height:44px;width:auto;" />
+    </a>
+
+    <!-- Desktop links -->
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#product"  class="nav-link">The Goods</a>
+      <a href="#packages" class="nav-link">Packages</a>
+      <a href="#find-us"  class="nav-link">Find Us</a>
+      <a href="#packages" class="btn-p" style="font-size:13px;padding:10px 22px;">ORDER NOW</a>
+    </div>
+
+    <!-- Mobile hamburger -->
+    <button onclick="document.getElementById('mob-nav').classList.toggle('open')"
+            class="md:hidden p-2" style="color:#838A46;" aria-label="Menu">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <path d="M3 6h18M3 12h18M3 18h18"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mob-nav" class="md:hidden px-4 py-5 space-y-4 border-t mt-3" style="border-color:#B08F2F;">
+    <a href="#product"  class="nav-link block">The Goods</a>
+    <a href="#packages" class="nav-link block">Packages</a>
+    <a href="#find-us"  class="nav-link block">Find Us</a>
+    <a href="#packages" class="btn-p block text-center mt-2">ORDER NOW</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- HERO — olive green bg                                   -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="hero px-6 md:px-10 pt-12 md:pt-16 flex items-center">
+
+  <!-- Decorative bg blobs -->
+  <div class="hero-blob" style="width:460px;height:460px;background:rgba(176,143,47,.22);top:-80px;right:-100px;"></div>
+  <div class="hero-blob" style="width:300px;height:300px;background:rgba(240,231,189,.12);bottom:40px;left:-60px;"></div>
+  <!-- Subtle dot grid texture -->
+  <div style="position:absolute;inset:0;background-image:radial-gradient(circle,rgba(240,231,189,.18) 1px,transparent 1px);background-size:28px 28px;pointer-events:none;"></div>
+
+  <div class="max-w-7xl mx-auto w-full relative z-10">
+    <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-4">
+
+      <!-- ── LEFT: Text ────────────────────────────────── -->
+      <div class="flex-1 pb-16 lg:pb-24">
+
+        <!-- Eyebrow pill -->
+        <div class="fu" style="margin-bottom:1.25rem;">
+          <span style="background:rgba(240,231,189,.2);border:1.5px solid rgba(240,231,189,.5);color:#F0E7BD;font-family:'Barlow',sans-serif;font-weight:500;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:5px 14px;border-radius:100px;display:inline-block;">
+            🇲🇾 &nbsp;Locally Made · Musang King
+          </span>
+        </div>
+
+        <!-- Main headline — Barlow Bold Italic -->
+        <h1 class="disp fu d1" style="color:#F0E7BD;font-size:clamp(3rem,7.2vw,6.2rem);">
+          PURE<br/>
+          <span style="color:#E4A434;">FLAVOUR</span><br/>
+          THAT WILL<br/>
+          BLOW YOUR<br/>
+          MIND.
+        </h1>
+
+        <!-- Subline -->
+        <p class="disp fu d2" style="color:#E6D677;font-size:clamp(1rem,2vw,1.5rem);margin-top:.4rem;margin-bottom:1.75rem;">
+          (and stink your mouth)
+        </p>
+
+        <!-- Body copy -->
+        <p class="body-t fu d3" style="color:rgba(240,231,189,.75);font-size:1rem;max-width:380px;margin-bottom:2rem;">
+          Malaysia's most audacious Musang King gelato. One flavour. No compromises. No apologies.
+        </p>
+
+        <!-- CTAs -->
+        <div class="flex flex-wrap gap-4 fu d4">
+          <a href="#packages" class="btn-p">GET YOUR DOLLOP</a>
+          <a href="#find-us"  class="btn-o-olive">FIND A CART</a>
+        </div>
+
+        <!-- Mini trust bar -->
+        <div class="fu d5" style="display:flex;align-items:center;gap:1.5rem;margin-top:2.5rem;flex-wrap:wrap;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <span style="color:#E4A434;font-size:1rem;">★★★★★</span>
+            <span class="disp-m" style="color:rgba(240,231,189,.6);font-size:12px;letter-spacing:.06em;text-transform:uppercase;">Legendary</span>
+          </div>
+          <div style="width:1px;height:16px;background:rgba(240,231,189,.25);"></div>
+          <span class="disp-m" style="color:rgba(240,231,189,.6);font-size:12px;letter-spacing:.06em;text-transform:uppercase;">100% Real Musang King</span>
+          <div style="width:1px;height:16px;background:rgba(240,231,189,.25);"></div>
+          <span class="disp-m" style="color:rgba(240,231,189,.6);font-size:12px;letter-spacing:.06em;text-transform:uppercase;">No Artificial Anything</span>
+        </div>
+      </div>
+
+      <!-- ── RIGHT: Dollop Character ───────────────────── -->
+      <div class="flex-1 flex justify-center items-end relative" style="min-height:420px;">
+
+        <!-- Spinning ring behind character -->
+        <div style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);width:320px;height:320px;">
+          <svg width="320" height="320" viewBox="0 0 320 320" class="spin-s" style="position:absolute;inset:0;">
+            <circle cx="160" cy="160" r="150" fill="none" stroke="rgba(240,231,189,.2)" stroke-width="1.5" stroke-dasharray="10 8"/>
+          </svg>
+          <!-- Glow circle -->
+          <div style="position:absolute;inset:20px;border-radius:50%;background:radial-gradient(circle,rgba(228,164,52,.2) 0%,transparent 70%);"></div>
+        </div>
+
+        <!-- Floating "STINKY GOOD" doodle tag -->
+        <div class="flt" style="position:absolute;top:20px;right:6%;animation-delay:.6s;z-index:3;">
+          <div class="wobbly disp" style="background:#E6D677;color:#1C1A0E;padding:6px 16px;transform:rotate(9deg);border:2px solid #1C1A0E;font-size:1rem;display:inline-block;">
+            STINKY GOOD
+          </div>
+        </div>
+
+        <!-- Floating starburst -->
+        <div class="starburst fltr" style="position:absolute;top:40px;left:12%;width:48px;height:48px;background:#E4A434;opacity:.85;"></div>
+
+        <!-- THE CHARACTER IMAGE -->
+        <div class="flt" style="position:relative;z-index:2;margin-bottom:-8px;">
+          <img
+            src="brand_assets/Dollop Character.webp"
+            alt="Dollop — The Durian King"
+            style="width:min(340px,60vw);height:auto;object-fit:contain;filter:drop-shadow(0 24px 48px rgba(28,26,14,.35));"
+          />
+        </div>
+
+        <!-- Small floating tag bottom left -->
+        <div style="position:absolute;bottom:16px;left:6%;z-index:3;" class="fltr" style="animation-delay:1.2s;">
+          <div style="background:#1C1A0E;color:#E4A434;font-family:'Barlow',sans-serif;font-weight:700;font-style:italic;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 14px;border-radius:100px;white-space:nowrap;">
+            King of Fruits 👑
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wave bottom -->
+  <div style="position:absolute;bottom:-1px;left:0;right:0;pointer-events:none;">
+    <svg viewBox="0 0 1440 64" fill="none" style="display:block;width:100%;">
+      <path d="M0 64 Q180 8 360 40 Q540 72 720 16 Q900 -40 1080 24 Q1260 88 1440 12 L1440 64Z" fill="#F0E7BD"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- MARQUEE STRIP                                           -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div style="background:#F0E7BD;border-bottom:2px solid #B08F2F;overflow:hidden;" class="py-3">
+  <div style="display:inline-flex;gap:2.5rem;animation:mq 16s linear infinite;white-space:nowrap;">
+    <span class="disp-m" style="color:#838A46;font-size:12px;letter-spacing:.1em;text-transform:uppercase;">🌿 100% Real Musang King</span>
+    <span style="color:#E4A434;font-size:1.1rem;">✦</span>
+    <span class="disp-m" style="color:#838A46;font-size:12px;letter-spacing:.1em;text-transform:uppercase;">No Artificial Flavour</span>
+    <span style="color:#E4A434;font-size:1.1rem;">✦</span>
+    <span class="disp-m" style="color:#838A46;font-size:12px;letter-spacing:.1em;text-transform:uppercase;">Certified Stinky™</span>
+    <span style="color:#E4A434;font-size:1.1rem;">✦</span>
+    <span class="disp-m" style="color:#838A46;font-size:12px;letter-spacing:.1em;text-transform:uppercase;">One Flavour. No Regrets.</span>
+    <span style="color:#E4A434;font-size:1.1rem;">✦</span>
+    <span class="disp-m" style="color:#838A46;font-size:12px;letter-spacing:.1em;text-transform:uppercase;">🌿 100% Real Musang King</span>
+    <span style="color:#E4A434;font-size:1.1rem;">✦</span>
+    <span class="disp-m" style="color:#838A46;font-size:12px;letter-spacing:.1em;text-transform:uppercase;">No Artificial Flavour</span>
+    <span style="color:#E4A434;font-size:1.1rem;">✦</span>
+    <span class="disp-m" style="color:#838A46;font-size:12px;letter-spacing:.1em;text-transform:uppercase;">Certified Stinky™</span>
+    <span style="color:#E4A434;font-size:1.1rem;">✦</span>
+    <span class="disp-m" style="color:#838A46;font-size:12px;letter-spacing:.1em;text-transform:uppercase;">One Flavour. No Regrets.</span>
+    <span style="color:#E4A434;font-size:1.1rem;">✦</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PRODUCT SECTION                                         -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="product" class="px-6 md:px-10 py-24" style="background:#F0E7BD;">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex flex-col lg:flex-row items-center gap-16">
+
+      <!-- Left: Character on gold circle -->
+      <div class="flex-1 flex justify-center">
+        <div style="position:relative;">
+          <!-- Gold circle backdrop -->
+          <div style="width:300px;height:300px;background:#E4A434;border-radius:50%;border:3px solid #1C1A0E;box-shadow:8px 8px 0 #B08F2F;display:flex;align-items:center;justify-content:center;position:relative;overflow:visible;">
+            <!-- Spinning dashed ring -->
+            <svg width="344" height="344" viewBox="0 0 344 344" class="spin-s"
+                 style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;">
+              <circle cx="172" cy="172" r="164" fill="none" stroke="#B08F2F" stroke-width="1.5" stroke-dasharray="10 8" opacity=".5"/>
+            </svg>
+            <!-- Character inside circle -->
+            <img src="brand_assets/Dollop Character.webp" alt="Dollop character"
+                 style="width:240px;height:auto;object-fit:contain;position:relative;z-index:2;margin-bottom:-30px;filter:drop-shadow(0 8px 24px rgba(28,26,14,.2));"/>
+          </div>
+
+          <!-- "the one & only" tag -->
+          <div class="flt" style="position:absolute;top:-16px;right:-20px;background:#E6D677;color:#1C1A0E;font-family:'Barlow',sans-serif;font-weight:700;font-style:italic;font-size:.95rem;padding:5px 14px;border-radius:100px;border:2px solid #1C1A0E;transform:rotate(-7deg);white-space:nowrap;">
+            the one &amp; only
+          </div>
+
+          <!-- Stars badge -->
+          <div style="position:absolute;bottom:-14px;left:12px;background:#1C1A0E;padding:8px 16px;border-radius:100px;display:flex;align-items:center;gap:8px;">
+            <span style="color:#E4A434;">★★★★★</span>
+            <span class="disp-m" style="color:white;font-size:11px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;">Certified Legendary</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Text -->
+      <div class="flex-1">
+        <div class="disp-m" style="color:#838A46;font-size:1.1rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.6rem;">The Flavour</div>
+
+        <h2 class="disp" style="color:#1C1A0E;font-size:clamp(2.4rem,4.2vw,3.8rem);margin-bottom:1.25rem;">
+          MUSANG KING.<br/>
+          <span style="color:#E4A434;">That's it.<br/>That's the menu.</span>
+        </h2>
+
+        <p class="body-t" style="color:#4A3800;max-width:460px;margin-bottom:1.75rem;">
+          We don't do vanilla. We don't do safe choices. We do one thing — the King of Kings, transformed into a gelato that'll haunt your taste buds and clear your sinuses simultaneously.
+        </p>
+
+        <!-- 4 flavour note cards -->
+        <div class="grid grid-cols-2 gap-3" style="margin-bottom:2rem;">
+          <div style="background:#E4A434;border:2px solid #1C1A0E;border-radius:16px;padding:16px;">
+            <div class="disp" style="font-size:1.3rem;color:#1C1A0E;margin-bottom:4px;">Creamy</div>
+            <div class="body-t" style="font-size:.8rem;color:rgba(28,26,14,.65);">Real Musang King pulp</div>
+          </div>
+          <div style="background:#E6D677;border:2px solid #1C1A0E;border-radius:16px;padding:16px;">
+            <div class="disp" style="font-size:1.3rem;color:#1C1A0E;margin-bottom:4px;">Bold</div>
+            <div class="body-t" style="font-size:.8rem;color:rgba(28,26,14,.65);">No artificial anything</div>
+          </div>
+          <div style="background:#F0E7BD;border:2px solid #1C1A0E;border-radius:16px;padding:16px;">
+            <div class="disp" style="font-size:1.3rem;color:#1C1A0E;margin-bottom:4px;">Aromatic</div>
+            <div class="body-t" style="font-size:.8rem;color:rgba(28,26,14,.65);">(that means it stinks)</div>
+          </div>
+          <div style="background:#838A46;border:2px solid #1C1A0E;border-radius:16px;padding:16px;">
+            <div class="disp" style="font-size:1.3rem;color:#F0E7BD;margin-bottom:4px;">Legendary</div>
+            <div class="body-t" style="font-size:.8rem;color:rgba(240,231,189,.7);">You'll be back. Trust.</div>
+          </div>
+        </div>
+
+        <a href="#packages" class="btn-p">GET YOUR DOLLOP</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Wave divider → yellow packages -->
+<div style="background:#F0E7BD;">
+  <svg viewBox="0 0 1440 56" fill="none" style="display:block;width:100%;">
+    <path d="M0 56 L0 28 Q360 -12 720 28 Q1080 68 1440 14 L1440 56Z" fill="#E6D677"/>
+  </svg>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PACKAGES                                                -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="packages" class="px-6 md:px-10 py-24" style="background:#E6D677;">
+  <div class="max-w-6xl mx-auto">
+
+    <div class="text-center" style="margin-bottom:4rem;">
+      <div class="disp-m" style="color:#838A46;font-size:1.1rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem;">choose your</div>
+      <h2 class="disp" style="color:#1C1A0E;font-size:clamp(2.2rem,4.2vw,3.6rem);">
+        DOLLOP <span style="color:#838A46;">PACKAGES</span>
+      </h2>
+      <p class="body-t" style="color:rgba(28,26,14,.55);margin-top:.75rem;max-width:380px;margin-left:auto;margin-right:auto;">
+        More cups, more joy, more stink. Share with friends — or don't.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+
+      <!-- ── Package A ── -->
+      <div class="pkg-card" style="padding:2rem;">
+        <div class="starburst" style="position:absolute;top:14px;right:14px;width:28px;height:28px;background:#E6D677;opacity:.8;"></div>
+
+        <div class="disp-m" style="color:#838A46;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem;">Package A</div>
+        <div class="disp" style="font-size:4rem;color:#1C1A0E;line-height:1;">5</div>
+        <div class="disp-m" style="color:#988F3C;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.5rem;">cups</div>
+
+        <!-- Cup icons -->
+        <div style="display:flex;gap:5px;margin-bottom:1.5rem;">
+          <svg viewBox="0 0 22 30" width="22" height="30" fill="none"><path d="M3 7 L1 26 L21 26 L19 7Z" fill="#E4A434"/><ellipse cx="11" cy="7" rx="8" ry="3" fill="#B08F2F"/><path d="M6 11 L5 22 L6.5 22 L7 11Z" fill="#E6D677" opacity=".5"/></svg>
+          <svg viewBox="0 0 22 30" width="22" height="30" fill="none"><path d="M3 7 L1 26 L21 26 L19 7Z" fill="#E4A434"/><ellipse cx="11" cy="7" rx="8" ry="3" fill="#B08F2F"/></svg>
+          <svg viewBox="0 0 22 30" width="22" height="30" fill="none"><path d="M3 7 L1 26 L21 26 L19 7Z" fill="#E4A434"/><ellipse cx="11" cy="7" rx="8" ry="3" fill="#B08F2F"/></svg>
+          <svg viewBox="0 0 22 30" width="22" height="30" fill="none"><path d="M3 7 L1 26 L21 26 L19 7Z" fill="#E4A434"/><ellipse cx="11" cy="7" rx="8" ry="3" fill="#B08F2F"/></svg>
+          <svg viewBox="0 0 22 30" width="22" height="30" fill="none"><path d="M3 7 L1 26 L21 26 L19 7Z" fill="#E4A434"/><ellipse cx="11" cy="7" rx="8" ry="3" fill="#B08F2F"/></svg>
+        </div>
+
+        <div style="border-top:2px solid #1C1A0E;padding-top:1.25rem;margin-bottom:1.5rem;">
+          <div class="disp" style="font-size:2.6rem;color:#1C1A0E;">RM50</div>
+          <div class="body-t" style="color:#988F3C;font-size:.85rem;margin-top:3px;">RM10 per cup</div>
+        </div>
+
+        <a href="#find-us" class="btn-o" style="width:100%;text-align:center;display:block;">ORDER NOW</a>
+        <div class="disp" style="color:#838A46;font-size:.95rem;text-align:center;margin-top:.75rem;">solo stinker 🤫</div>
+      </div>
+
+      <!-- ── Package B — FEATURED ── -->
+      <div class="pkg-card pkg-feat" style="padding:2rem;box-shadow:0 24px 60px rgba(228,164,52,.2);">
+        <div style="position:absolute;top:-17px;left:50%;transform:translateX(-50%);background:#1C1A0E;color:#E4A434;font-family:'Barlow',sans-serif;font-weight:700;font-style:italic;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:6px 18px;border-radius:100px;border:2px solid #E4A434;white-space:nowrap;">
+          ★ BEST VALUE ★
+        </div>
+
+        <div class="disp-m" style="color:#1C1A0E;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem;">Package B</div>
+        <div class="disp" style="font-size:4rem;color:#1C1A0E;line-height:1;">10</div>
+        <div class="disp-m" style="color:#4A3800;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.5rem;">cups</div>
+
+        <!-- Cup icons 10 -->
+        <div style="display:flex;gap:4px;flex-wrap:wrap;max-width:140px;margin-bottom:1.5rem;">
+          <svg viewBox="0 0 20 28" width="20" height="28" fill="none"><path d="M3 6 L1 24 L19 24 L17 6Z" fill="#1C1A0E"/><ellipse cx="10" cy="6" rx="7" ry="2.5" fill="#4A3800"/></svg>
+          <svg viewBox="0 0 20 28" width="20" height="28" fill="none"><path d="M3 6 L1 24 L19 24 L17 6Z" fill="#1C1A0E"/><ellipse cx="10" cy="6" rx="7" ry="2.5" fill="#4A3800"/></svg>
+          <svg viewBox="0 0 20 28" width="20" height="28" fill="none"><path d="M3 6 L1 24 L19 24 L17 6Z" fill="#1C1A0E"/><ellipse cx="10" cy="6" rx="7" ry="2.5" fill="#4A3800"/></svg>
+          <svg viewBox="0 0 20 28" width="20" height="28" fill="none"><path d="M3 6 L1 24 L19 24 L17 6Z" fill="#1C1A0E"/><ellipse cx="10" cy="6" rx="7" ry="2.5" fill="#4A3800"/></svg>
+          <svg viewBox="0 0 20 28" width="20" height="28" fill="none"><path d="M3 6 L1 24 L19 24 L17 6Z" fill="#1C1A0E"/><ellipse cx="10" cy="6" rx="7" ry="2.5" fill="#4A3800"/></svg>
+          <svg viewBox="0 0 20 28" width="20" height="28" fill="none"><path d="M3 6 L1 24 L19 24 L17 6Z" fill="#1C1A0E"/><ellipse cx="10" cy="6" rx="7" ry="2.5" fill="#4A3800"/></svg>
+          <svg viewBox="0 0 20 28" width="20" height="28" fill="none"><path d="M3 6 L1 24 L19 24 L17 6Z" fill="#1C1A0E"/><ellipse cx="10" cy="6" rx="7" ry="2.5" fill="#4A3800"/></svg>
+          <svg viewBox="0 0 20 28" width="20" height="28" fill="none"><path d="M3 6 L1 24 L19 24 L17 6Z" fill="#1C1A0E"/><ellipse cx="10" cy="6" rx="7" ry="2.5" fill="#4A3800"/></svg>
+          <svg viewBox="0 0 20 28" width="20" height="28" fill="none"><path d="M3 6 L1 24 L19 24 L17 6Z" fill="#1C1A0E"/><ellipse cx="10" cy="6" rx="7" ry="2.5" fill="#4A3800"/></svg>
+          <svg viewBox="0 0 20 28" width="20" height="28" fill="none"><path d="M3 6 L1 24 L19 24 L17 6Z" fill="#1C1A0E"/><ellipse cx="10" cy="6" rx="7" ry="2.5" fill="#4A3800"/></svg>
+        </div>
+
+        <div style="border-top:2px solid #1C1A0E;padding-top:1.25rem;margin-bottom:1.5rem;">
+          <div class="disp" style="font-size:2.6rem;color:#1C1A0E;">RM100</div>
+          <div class="body-t" style="color:#4A3800;font-size:.85rem;margin-top:3px;">RM10 per cup</div>
+        </div>
+
+        <a href="#find-us"
+           style="background:#1C1A0E;color:#E4A434;font-family:'Barlow',sans-serif;font-weight:700;font-style:italic;font-size:14px;letter-spacing:.04em;text-transform:uppercase;padding:12px 28px;border-radius:100px;display:block;text-align:center;border:2.5px solid #1C1A0E;box-shadow:4px 4px 0 #4A3800;transition:transform .15s,box-shadow .15s;"
+           onmouseover="this.style.transform='translate(-2px,-2px)';this.style.boxShadow='6px 6px 0 #4A3800';"
+           onmouseout="this.style.transform='';this.style.boxShadow='4px 4px 0 #4A3800';">
+          ORDER NOW
+        </a>
+        <div class="disp" style="color:#1C1A0E;font-size:.95rem;text-align:center;margin-top:.75rem;">spread the stink 🍃</div>
+      </div>
+
+      <!-- ── Package C ── -->
+      <div class="pkg-card" style="padding:2rem;">
+        <div style="position:absolute;top:12px;right:12px;width:26px;height:26px;border-radius:50%;background:#838A46;opacity:.3;"></div>
+
+        <div class="disp-m" style="color:#838A46;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.2rem;">Package C</div>
+        <div class="disp" style="font-size:4rem;color:#1C1A0E;line-height:1;">15</div>
+        <div class="disp-m" style="color:#988F3C;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.5rem;">cups</div>
+
+        <!-- Cup icons 15 -->
+        <div style="display:flex;gap:3px;flex-wrap:wrap;max-width:150px;margin-bottom:1.5rem;">
+          <svg viewBox="0 0 18 26" width="18" height="26" fill="none"><path d="M2 6 L1 22 L17 22 L16 6Z" fill="#838A46"/><ellipse cx="9" cy="6" rx="6" ry="2" fill="#988F3C"/></svg>
+          <svg viewBox="0 0 18 26" width="18" height="26" fill="none"><path d="M2 6 L1 22 L17 22 L16 6Z" fill="#838A46"/><ellipse cx="9" cy="6" rx="6" ry="2" fill="#988F3C"/></svg>
+          <svg viewBox="0 0 18 26" width="18" height="26" fill="none"><path d="M2 6 L1 22 L17 22 L16 6Z" fill="#838A46"/><ellipse cx="9" cy="6" rx="6" ry="2" fill="#988F3C"/></svg>
+          <svg viewBox="0 0 18 26" width="18" height="26" fill="none"><path d="M2 6 L1 22 L17 22 L16 6Z" fill="#838A46"/><ellipse cx="9" cy="6" rx="6" ry="2" fill="#988F3C"/></svg>
+          <svg viewBox="0 0 18 26" width="18" height="26" fill="none"><path d="M2 6 L1 22 L17 22 L16 6Z" fill="#838A46"/><ellipse cx="9" cy="6" rx="6" ry="2" fill="#988F3C"/></svg>
+          <svg viewBox="0 0 18 26" width="18" height="26" fill="none"><path d="M2 6 L1 22 L17 22 L16 6Z" fill="#838A46"/><ellipse cx="9" cy="6" rx="6" ry="2" fill="#988F3C"/></svg>
+          <svg viewBox="0 0 18 26" width="18" height="26" fill="none"><path d="M2 6 L1 22 L17 22 L16 6Z" fill="#838A46"/><ellipse cx="9" cy="6" rx="6" ry="2" fill="#988F3C"/></svg>
+          <svg viewBox="0 0 18 26" width="18" height="26" fill="none"><path d="M2 6 L1 22 L17 22 L16 6Z" fill="#838A46"/><ellipse cx="9" cy="6" rx="6" ry="2" fill="#988F3C"/></svg>
+          <svg viewBox="0 0 18 26" width="18" height="26" fill="none"><path d="M2 6 L1 22 L17 22 L16 6Z" fill="#838A46"/><ellipse cx="9" cy="6" rx="6" ry="2" fill="#988F3C"/></svg>
+          <svg viewBox="0 0 18 26" width="18" height="26" fill="none"><path d="M2 6 L1 22 L17 22 L16 6Z" fill="#838A46"/><ellipse cx="9" cy="6" rx="6" ry="2" fill="#988F3C"/></svg>
+          <svg viewBox="0 0 18 26" width="18" height="26" fill="none"><path d="M2 6 L1 22 L17 22 L16 6Z" fill="#838A46"/><ellipse cx="9" cy="6" rx="6" ry="2" fill="#988F3C"/></svg>
+          <svg viewBox="0 0 18 26" width="18" height="26" fill="none"><path d="M2 6 L1 22 L17 22 L16 6Z" fill="#838A46"/><ellipse cx="9" cy="6" rx="6" ry="2" fill="#988F3C"/></svg>
+          <svg viewBox="0 0 18 26" width="18" height="26" fill="none"><path d="M2 6 L1 22 L17 22 L16 6Z" fill="#838A46"/><ellipse cx="9" cy="6" rx="6" ry="2" fill="#988F3C"/></svg>
+          <svg viewBox="0 0 18 26" width="18" height="26" fill="none"><path d="M2 6 L1 22 L17 22 L16 6Z" fill="#838A46"/><ellipse cx="9" cy="6" rx="6" ry="2" fill="#988F3C"/></svg>
+          <svg viewBox="0 0 18 26" width="18" height="26" fill="none"><path d="M2 6 L1 22 L17 22 L16 6Z" fill="#838A46"/><ellipse cx="9" cy="6" rx="6" ry="2" fill="#988F3C"/></svg>
+        </div>
+
+        <div style="border-top:2px solid #1C1A0E;padding-top:1.25rem;margin-bottom:1.5rem;">
+          <div class="disp" style="font-size:2.6rem;color:#1C1A0E;">RM150</div>
+          <div class="body-t" style="color:#988F3C;font-size:.85rem;margin-top:3px;">RM10 per cup</div>
+        </div>
+
+        <a href="#find-us" class="btn-o" style="width:100%;text-align:center;display:block;">ORDER NOW</a>
+        <div class="disp" style="color:#838A46;font-size:.95rem;text-align:center;margin-top:.75rem;">the stink boss™ 👑</div>
+      </div>
+    </div>
+
+    <p class="body-t text-center" style="color:rgba(28,26,14,.4);font-size:.75rem;margin-top:2rem;">
+      Pre-order at the cart or via WhatsApp. Collect at your nearest Dollop location.
+    </p>
+  </div>
+</section>
+
+<!-- Wave divider → cream find us -->
+<div style="background:#E6D677;">
+  <svg viewBox="0 0 1440 56" fill="none" style="display:block;width:100%;background:#F0E7BD;">
+    <path d="M0 0 Q360 80 720 18 Q1080 -44 1440 36 L1440 0Z" fill="#E6D677"/>
+  </svg>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- FIND US / MAP                                           -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="find-us" class="px-6 md:px-10 py-24" style="background:#F0E7BD;">
+  <div class="max-w-7xl mx-auto">
+
+    <div style="margin-bottom:3rem;">
+      <div class="disp-m" style="color:#838A46;font-size:1rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem;">smell us before you see us</div>
+      <h2 class="disp" style="color:#1C1A0E;font-size:clamp(2.2rem,4.2vw,3.6rem);">
+        FIND A <span style="color:#E4A434;">DOLLOP CART</span>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+
+      <!-- Map -->
+      <div class="lg:col-span-3">
+        <div class="map-wrap" style="height:480px;">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127485.5!2d101.6138!3d3.1466!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc362abd08e7d3%3A0x232eb2c91776b397!2sKuala%20Lumpur%2C%20Federal%20Territory%20of%20Kuala%20Lumpur%2C%20Malaysia!5e0!3m2!1sen!2smy!4v1700000000000!5m2!1sen!2smy"
+            width="100%" height="100%" style="border:0;display:block;"
+            allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Dollop Cart Locations">
+          </iframe>
+        </div>
+        <!-- Legend -->
+        <div style="display:flex;gap:1.5rem;margin-top:.85rem;flex-wrap:wrap;">
+          <div style="display:flex;align-items:center;gap:6px;"><div class="avdot av-g"></div><span class="body-t" style="font-size:.8rem;color:#988F3C;">Open Now</span></div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="avdot av-y"></div><span class="body-t" style="font-size:.8rem;color:#988F3C;">Opening Soon</span></div>
+          <div style="display:flex;align-items:center;gap:6px;"><div class="avdot av-r"></div><span class="body-t" style="font-size:.8rem;color:#988F3C;">Closed Today</span></div>
+        </div>
+      </div>
+
+      <!-- Location cards -->
+      <div class="lg:col-span-2" style="display:flex;flex-direction:column;gap:.85rem;">
+
+        <!-- Location 1 -->
+        <div class="loc-card" style="padding:1.1rem 1.25rem;">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+            <div>
+              <div class="disp-m" style="color:#1C1A0E;font-size:.95rem;">Chow Kit Cart</div>
+              <div class="body-t" style="color:#988F3C;font-size:.78rem;margin-top:2px;">Jalan Chow Kit, KL City Centre</div>
+              <div class="body-t" style="color:#988F3C;font-size:.78rem;">Mon – Sat · 3pm – 10pm</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:5px;background:#f0fdf4;padding:5px 10px;border-radius:100px;border:1px solid #bbf7d0;flex-shrink:0;">
+              <div class="avdot av-g"></div>
+              <span class="disp-m" style="color:#16a34a;font-size:.75rem;">Open</span>
+            </div>
+          </div>
+          <div style="border-top:1px solid #f3f4f6;margin-top:.7rem;padding-top:.7rem;display:flex;align-items:center;justify-content:space-between;">
+            <span class="disp" style="color:#838A46;font-size:.9rem;">Est. wait: 5 mins</span>
+            <a href="#" class="disp-m" style="color:#E4A434;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;"
+               onmouseover="this.style.color='#B08F2F'" onmouseout="this.style.color='#E4A434'">Directions →</a>
+          </div>
+        </div>
+
+        <!-- Location 2 -->
+        <div class="loc-card" style="padding:1.1rem 1.25rem;">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+            <div>
+              <div class="disp-m" style="color:#1C1A0E;font-size:.95rem;">Pasar Malam Setapak</div>
+              <div class="body-t" style="color:#988F3C;font-size:.78rem;margin-top:2px;">Jalan Gombak, Setapak</div>
+              <div class="body-t" style="color:#988F3C;font-size:.78rem;">Wed &amp; Sat · 6pm – 11pm</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:5px;background:#fffbeb;padding:5px 10px;border-radius:100px;border:1px solid #fde68a;flex-shrink:0;">
+              <div class="avdot av-y"></div>
+              <span class="disp-m" style="color:#92400e;font-size:.75rem;">Soon</span>
+            </div>
+          </div>
+          <div style="border-top:1px solid #f3f4f6;margin-top:.7rem;padding-top:.7rem;display:flex;align-items:center;justify-content:space-between;">
+            <span class="disp" style="color:#838A46;font-size:.9rem;">Opens at 6pm</span>
+            <a href="#" class="disp-m" style="color:#E4A434;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;"
+               onmouseover="this.style.color='#B08F2F'" onmouseout="this.style.color='#E4A434'">Directions →</a>
+          </div>
+        </div>
+
+        <!-- Location 3 -->
+        <div class="loc-card" style="padding:1.1rem 1.25rem;">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+            <div>
+              <div class="disp-m" style="color:#1C1A0E;font-size:.95rem;">SS2 Night Market, PJ</div>
+              <div class="body-t" style="color:#988F3C;font-size:.78rem;margin-top:2px;">Jalan SS2/24, Petaling Jaya</div>
+              <div class="body-t" style="color:#988F3C;font-size:.78rem;">Monday only · 5pm – 10pm</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:5px;background:#f0fdf4;padding:5px 10px;border-radius:100px;border:1px solid #bbf7d0;flex-shrink:0;">
+              <div class="avdot av-g"></div>
+              <span class="disp-m" style="color:#16a34a;font-size:.75rem;">Open</span>
+            </div>
+          </div>
+          <div style="border-top:1px solid #f3f4f6;margin-top:.7rem;padding-top:.7rem;display:flex;align-items:center;justify-content:space-between;">
+            <span class="disp" style="color:#838A46;font-size:.9rem;">Est. wait: 10 mins</span>
+            <a href="#" class="disp-m" style="color:#E4A434;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;"
+               onmouseover="this.style.color='#B08F2F'" onmouseout="this.style.color='#E4A434'">Directions →</a>
+          </div>
+        </div>
+
+        <!-- Location 4 -->
+        <div class="loc-card" style="padding:1.1rem 1.25rem;">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+            <div>
+              <div class="disp-m" style="color:#1C1A0E;font-size:.95rem;">Bazaar Gombak</div>
+              <div class="body-t" style="color:#988F3C;font-size:.78rem;margin-top:2px;">Jalan Pahang, Gombak</div>
+              <div class="body-t" style="color:#988F3C;font-size:.78rem;">Seasonal · Check @dollop.my</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:5px;background:#fef2f2;padding:5px 10px;border-radius:100px;border:1px solid #fecaca;flex-shrink:0;">
+              <div class="avdot av-r"></div>
+              <span class="disp-m" style="color:#dc2626;font-size:.75rem;">Closed</span>
+            </div>
+          </div>
+          <div style="border-top:1px solid #f3f4f6;margin-top:.7rem;padding-top:.7rem;display:flex;align-items:center;justify-content:space-between;">
+            <span class="disp" style="color:#838A46;font-size:.9rem;">Seasonal pop-up</span>
+            <a href="#" class="disp-m" style="color:#E4A434;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;"
+               onmouseover="this.style.color='#B08F2F'" onmouseout="this.style.color='#E4A434'">Directions →</a>
+          </div>
+        </div>
+
+        <!-- Not near you -->
+        <div style="border:2px dashed #B08F2F;border-radius:16px;padding:1.1rem 1.25rem;text-align:center;background:rgba(228,164,52,.07);">
+          <div class="disp" style="color:#838A46;font-size:1rem;margin-bottom:.35rem;">Not near you?</div>
+          <p class="body-t" style="font-size:.8rem;color:#988F3C;margin-bottom:.65rem;">DM us and we'll try to bring a cart to your area.</p>
+          <a href="#" class="disp-m" style="color:#E4A434;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;"
+             onmouseover="this.style.color='#B08F2F'" onmouseout="this.style.color='#E4A434'">@dollop.my →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- FOOTER                                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<footer style="background:#838A46;border-top:3px solid #B08F2F;">
+  <!-- Wave top -->
+  <div style="background:#F0E7BD;">
+    <svg viewBox="0 0 1440 48" fill="none" style="display:block;width:100%;">
+      <path d="M0 48 L0 18 Q360 58 720 8 Q1080 -42 1440 18 L1440 48Z" fill="#838A46"/>
+    </svg>
+  </div>
+
+  <div class="px-6 md:px-10 py-16">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-12" style="margin-bottom:3rem;">
+
+        <!-- Brand col -->
+        <div class="md:col-span-2">
+          <img src="brand_assets/Dollop Logo.png" alt="Dollop"
+               style="height:48px;width:auto;margin-bottom:1rem;" />
+          <p class="body-t" style="color:rgba(240,231,189,.75);font-size:.9rem;max-width:300px;line-height:1.7;margin-bottom:1.25rem;">
+            Pure Musang King Gelato. One flavour. No compromises.
+            <em style="color:#F0E7BD;font-style:normal;font-weight:700;">No apologies.</em>
+          </p>
+          <div style="display:flex;gap:.75rem;">
+            <a href="#" style="width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(228,164,52,.3);display:flex;align-items:center;justify-content:center;transition:border-color .2s;"
+               onmouseover="this.style.borderColor='#E4A434'" onmouseout="this.style.borderColor='rgba(228,164,52,.3)'" aria-label="Instagram">
+              <svg width="15" height="15" fill="none" stroke="#E4A434" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                <rect x="2" y="2" width="20" height="20" rx="5"/>
+                <circle cx="12" cy="12" r="5"/>
+                <circle cx="17.5" cy="6.5" r="1.5" fill="#E4A434" stroke="none"/>
+              </svg>
+            </a>
+            <a href="#" style="width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(228,164,52,.3);display:flex;align-items:center;justify-content:center;transition:border-color .2s;"
+               onmouseover="this.style.borderColor='#E4A434'" onmouseout="this.style.borderColor='rgba(228,164,52,.3)'" aria-label="TikTok">
+              <svg width="13" height="13" fill="#E4A434" viewBox="0 0 24 24">
+                <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.77 0 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 105.54 6.28V8.69a8.24 8.24 0 004.82 1.54V6.78a4.85 4.85 0 01-1.05-.09z"/>
+              </svg>
+            </a>
+            <a href="#" style="width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(228,164,52,.3);display:flex;align-items:center;justify-content:center;transition:border-color .2s;"
+               onmouseover="this.style.borderColor='#E4A434'" onmouseout="this.style.borderColor='rgba(228,164,52,.3)'" aria-label="Facebook">
+              <svg width="13" height="13" fill="#E4A434" viewBox="0 0 24 24">
+                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Links -->
+        <div>
+          <h4 class="disp-m" style="color:#F0E7BD;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem;">Quick Links</h4>
+          <ul style="display:flex;flex-direction:column;gap:.6rem;">
+            <li><a href="#product"  class="body-t" style="color:rgba(240,231,189,.65);font-size:.9rem;" onmouseover="this.style.color='#F0E7BD'" onmouseout="this.style.color='rgba(240,231,189,.65)'">The Product</a></li>
+            <li><a href="#packages" class="body-t" style="color:rgba(240,231,189,.65);font-size:.9rem;" onmouseover="this.style.color='#F0E7BD'" onmouseout="this.style.color='rgba(240,231,189,.65)'">Packages</a></li>
+            <li><a href="#find-us"  class="body-t" style="color:rgba(240,231,189,.65);font-size:.9rem;" onmouseover="this.style.color='#F0E7BD'" onmouseout="this.style.color='rgba(240,231,189,.65)'">Find a Cart</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="disp-m" style="color:#F0E7BD;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem;">Contact</h4>
+          <ul style="display:flex;flex-direction:column;gap:.6rem;">
+            <li><a href="#" class="body-t" style="color:rgba(240,231,189,.65);font-size:.9rem;" onmouseover="this.style.color='#F0E7BD'" onmouseout="this.style.color='rgba(240,231,189,.65)'">@dollop.my</a></li>
+            <li><a href="#" class="body-t" style="color:rgba(240,231,189,.65);font-size:.9rem;" onmouseover="this.style.color='#F0E7BD'" onmouseout="this.style.color='rgba(240,231,189,.65)'">WhatsApp Us</a></li>
+            <li><a href="#" class="body-t" style="color:rgba(240,231,189,.65);font-size:.9rem;" onmouseover="this.style.color='#F0E7BD'" onmouseout="this.style.color='rgba(240,231,189,.65)'">Partner With Us</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid rgba(240,231,189,.2);padding-top:1.5rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;">
+        <p class="body-t" style="color:rgba(240,231,189,.5);font-size:.75rem;">© 2026 DOLLOP. All rights reserved. Stink responsibly.</p>
+        <div class="disp" style="color:#F0E7BD;font-size:.95rem;">made with 🍂 in Malaysia</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleMobileMenu() {
+  document.getElementById('mob-nav').classList.toggle('open');
+}
+</script>
+</body>
+</html>
