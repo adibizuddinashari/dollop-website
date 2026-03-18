@@ -97,7 +97,7 @@ body:has(button:hover) #cursor,body:has(a:hover) #cursor{transform:scale(1.4) ro
 
 /* PRODUCTS */
 .products{padding:72px 48px;background:var(--cream);text-align:center;}
-.pg-head{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,4vw,3.4rem);letter-spacing:0.06em;color:var(--brown);margin-bottom:6px;line-height:1;}
+.pg-head{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem, 7vw, 6.5rem);letter-spacing:0.06em;color:var(--brown);margin-bottom:6px;line-height:1;}
 .pg-head span{color:var(--green-mid);}
 .pg-sub{font-size:0.84rem;color:var(--brown-mid);margin-bottom:40px;max-width:420px;line-height:1.6;margin-left:auto;margin-right:auto;}
 .pg2{display:grid;grid-template-columns:1fr 1fr;gap:22px;text-align:left;}
@@ -151,10 +151,31 @@ body:has(button:hover) #cursor,body:has(a:hover) #cursor{transform:scale(1.4) ro
 
 
 /* MARQUEE */
-.mq{overflow:hidden;background:var(--brown);padding:15px 0;}
-.mq-track{display:flex;animation:mq 22s linear infinite;white-space:nowrap;}
-.mi{font-family:'Bebas Neue',sans-serif;font-size:0.95rem;letter-spacing:0.22em;color:rgba(255,248,238,0.25);padding:0 32px;flex-shrink:0;}
+.mq{overflow:hidden;background:var(--brown);padding:15px 0;cursor:default;}
+.mq-track{display:flex;animation:mq 22s linear infinite;white-space:nowrap;transition:filter 0.3s;}
+.mq:hover .mq-track{animation-play-state:paused;}
+.mi{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:0.95rem;
+  letter-spacing:0.22em;
+  color:rgba(255,248,238,0.25);
+  padding:0 32px;
+  flex-shrink:0;
+  transition:color 0.2s, text-shadow 0.2s, transform 0.2s, letter-spacing 0.2s;
+  display:inline-block;
+}
 .mi.y{color:var(--yellow);}
+.mq-track:hover .mi:not(:hover){color:rgba(255,248,238,0.1);}
+.mi:hover{
+  color:var(--cream);
+  text-shadow:0 0 24px rgba(245,197,24,0.6), 0 0 48px rgba(245,197,24,0.2);
+  transform:scaleY(1.12);
+  letter-spacing:0.28em;
+}
+.mi.y:hover{
+  color:var(--yellow);
+  text-shadow:0 0 20px rgba(245,197,24,0.9), 0 0 40px rgba(245,197,24,0.4);
+}
 @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* FOOTER */
@@ -236,7 +257,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 .sz-btn:hover:not(.active){border-color:var(--brown);}
 
 /* REVEAL */
-.reveal{opacity:1;transform:none;transition:opacity 0.65s ease,transform 0.65s ease;}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity 0.7s cubic-bezier(0.22,1,0.36,1),transform 0.7s cubic-bezier(0.22,1,0.36,1);}
 .reveal.visible{opacity:1;transform:none;}
 
 /* MOBILE */
@@ -307,9 +328,648 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
   0%,100%{opacity:1;transform:scale(1);}
   50%{opacity:0.4;transform:scale(0.6);}
 }
+
+/* ================================
+   STORY SECTIONS (index-v2)
+================================ */
+
+/* STORY: THE KING'S PROMISE */
+.story-promise {
+  background: var(--brown);
+  background-image: url('images/durian-flesh.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 110px 48px;
+  position: relative;
+  overflow: hidden;
+}
+.story-promise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(42,20,8,0.72);
+  pointer-events: none;
+  z-index: 0;
+}
+.sp-inner { position: relative; z-index: 1; }
+.story-promise::before {
+  content: '';
+  position: absolute;
+  top: -120px; right: -120px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(245,197,24,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.sp-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto;
+}
+.sp-head {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 7vw, 6.5rem);
+  line-height: 0.92;
+  color: var(--cream);
+  letter-spacing: 0.02em;
+  margin-bottom: 22px;
+  text-shadow: 0 0 80px rgba(245,197,24,0.2);
+}
+.sp-sub {
+  font-size: 0.95rem;
+  color: rgba(255,248,238,0.55);
+  line-height: 1.75;
+  max-width: 560px;
+  margin: 0 auto 42px;
+}
+.sp-benefits {
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  width: 100%;
+  margin-top: 8px;
+}
+.spb {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+  padding: 20px 16px;
+  border-top: 1px solid rgba(255,248,238,0.08);
+  border-bottom: 1px solid rgba(255,248,238,0.08);
+  flex: 1;
+}
+
+.spb-icon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  background: rgba(245,197,24,0.1);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.spb-title {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--cream);
+  margin-bottom: 3px;
+  letter-spacing: -0.01em;
+}
+.spb-note {
+  font-size: 0.78rem;
+  color: rgba(255,248,238,0.45);
+  line-height: 1.5;
+}
+.spb-text { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.sp-right {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  height: 580px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.55);
+  border: 3px solid rgba(255,248,238,0.08);
+}
+.sp-right img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+.sp-right:hover img {
+  transform: scale(1.04);
+}
+.sp-right::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(42,20,8,0.35) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* STORY: WHAT'S INSIDE */
+.story-inside {
+  background: var(--yellow);
+  padding: 80px 48px;
+  position: relative;
+  overflow: hidden;
+}
+.story-inside::after {
+  content: '';
+  position: absolute;
+  bottom: -80px; left: -80px;
+  width: 350px; height: 350px;
+  background: radial-gradient(circle, rgba(59,31,10,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+.si-inner { max-width: 880px; margin: 0 auto; position: relative; z-index: 1; text-align: center; }
+.si-head-row { margin-bottom: 44px; }
+.si-head {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.8rem, 5.5vw, 5rem);
+  line-height: 0.92;
+  color: var(--brown);
+  letter-spacing: 0.02em;
+  margin-bottom: 10px;
+}
+.si-sub {
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-style: italic;
+  color: rgba(59,31,10,0.6);
+  letter-spacing: -0.01em;
+}
+.si-ing-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 32px;
+  justify-content: center;
+}
+.si-ing {
+  background: rgba(59,31,10,0.08);
+  border: 2px solid rgba(59,31,10,0.15);
+  color: var(--brown);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  letter-spacing: 0.02em;
+  padding: 10px 18px;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.si-ing--star {
+  background: var(--brown);
+  color: var(--yellow);
+  border-color: var(--brown);
+  font-size: 0.95rem;
+}
+.si-ing--small {
+  font-size: 0.75rem;
+  font-weight: 500;
+  opacity: 0.7;
+  border-style: dashed;
+}
+.si-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: rgba(59,31,10,0.07);
+  border: 2px solid rgba(59,31,10,0.18);
+  border-radius: 14px;
+  padding: 20px 22px;
+  margin-bottom: 22px;
+  text-align: left;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.si-note-icon { font-size: 1.4rem; flex-shrink: 0; }
+.si-note-title {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--brown);
+  margin-bottom: 4px;
+}
+.si-note-body { font-size: 0.82rem; color: rgba(59,31,10,0.68); line-height: 1.6; }
+.si-halal {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: center;
+}
+.si-halal-badge {
+  background: var(--green);
+  color: var(--cream);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.22em;
+  padding: 8px 20px;
+  border-radius: 6px;
+}
+.si-halal-text {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: rgba(59,31,10,0.6);
+  letter-spacing: 0.05em;
+}
+
+/* STORY: TESTIMONIALS */
+.story-testi {
+  background: var(--cream);
+  padding: 80px 48px;
+  border-top: 1px solid rgba(59,31,10,0.06);
+}
+.st-inner { max-width: 1000px; margin: 0 auto; text-align: center; }
+.st-head-row { margin-bottom: 48px; }
+.st-head {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 0.92;
+  color: var(--brown);
+  letter-spacing: 0.02em;
+}
+.st-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.st-card {
+  background: var(--white);
+  border: 1.5px solid rgba(59,31,10,0.08);
+  border-radius: 18px;
+  padding: 30px 26px 24px;
+  position: relative;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.st-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 48px rgba(59,31,10,0.1);
+}
+.st-ql {
+  font-size: 3.5rem;
+  line-height: 1;
+  color: var(--yellow);
+  font-family: Georgia, serif;
+  margin-bottom: 4px;
+  opacity: 0.85;
+  display: block;
+}
+.st-quote {
+  font-size: 0.92rem;
+  color: var(--brown-mid);
+  line-height: 1.75;
+  margin-bottom: 22px;
+  padding-top: 4px;
+}
+.st-author { display: flex; align-items: center; gap: 12px; }
+.st-avatar {
+  width: 38px; height: 38px;
+  background: var(--yellow);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+.st-name {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 0.88rem;
+  color: var(--brown);
+}
+.st-stars { font-size: 0.72rem; color: var(--yellow); letter-spacing: 0.05em; }
+
+/* STORY: WHERE TO FIND */
+.story-where {
+  background: var(--green);
+  padding: 80px 48px;
+  position: relative;
+  overflow: hidden;
+}
+.story-where::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 420px; height: 420px;
+  background: radial-gradient(circle, rgba(140,198,63,0.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+.sw-inner { max-width: 1000px; margin: 0 auto; position: relative; z-index: 1; }
+.sw-head-row { margin-bottom: 52px; text-align: center; }
+.sw-head {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.8rem, 5.5vw, 5rem);
+  line-height: 0.92;
+  color: var(--cream);
+  letter-spacing: 0.02em;
+  margin-bottom: 12px;
+}
+.sw-sub {
+  font-size: 0.92rem;
+  color: rgba(255,248,238,0.6);
+  max-width: 480px;
+  line-height: 1.65;
+  margin: 0 auto;
+}
+.sw-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+.sw-lbl {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--green-light);
+  margin-bottom: 18px;
+}
+.sw-loc-cards { display: flex; flex-direction: column; gap: 12px; }
+.sw-loc {
+  background: rgba(255,248,238,0.08);
+  border: 1px solid rgba(255,248,238,0.14);
+  border-radius: 12px;
+  padding: 18px 20px;
+  transition: background 0.2s, border-color 0.2s;
+}
+.sw-loc:hover {
+  background: rgba(255,248,238,0.14);
+  border-color: rgba(255,248,238,0.28);
+}
+.sw-loc--link {
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+}
+.sw-loc--link:hover {
+  background: rgba(255,248,238,0.16);
+  border-color: rgba(245,197,24,0.45);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+.sw-loc--link:active { transform: translateY(0); }
+.sw-loc { transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
+.sw-loc-arrow {
+  font-style: normal;
+  font-size: 0.85rem;
+  opacity: 0.5;
+  transition: opacity 0.2s, transform 0.2s;
+  display: inline-block;
+}
+.sw-loc--link:hover .sw-loc-arrow { opacity: 1; transform: translate(2px, -2px); }
+.sw-loc-name {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--cream);
+  margin-bottom: 4px;
+}
+.sw-loc-note { font-size: 0.78rem; color: rgba(255,248,238,0.45); }
+.sw-order-card {
+  background: var(--yellow);
+  border-radius: 18px;
+  padding: 36px 32px;
+  text-align: center;
+}
+.sw-order-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 0.1em;
+  color: var(--brown);
+  margin-bottom: 12px;
+  line-height: 1;
+}
+.sw-order-sub {
+  font-size: 0.84rem;
+  color: rgba(59,31,10,0.65);
+  line-height: 1.65;
+  margin-bottom: 24px;
+}
+.sw-order-btn {
+  display: inline-block;
+  background: var(--brown);
+  color: var(--yellow);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.2em;
+  padding: 14px 36px;
+  border-radius: 40px;
+  border: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-bottom: 14px;
+  width: 100%;
+}
+.sw-order-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(59,31,10,0.35);
+}
+.sw-order-note {
+  font-size: 0.72rem;
+  color: rgba(59,31,10,0.5);
+  letter-spacing: 0.04em;
+}
+
+/* Mobile responsive for new sections */
+@media(max-width:860px) {
+  .sp-inner { grid-template-columns: 1fr; gap: 40px; }
+  .sp-right { order: -1; }
+  .sp-char-img { max-width: 260px; margin: 0 auto; display: block; }
+  .story-promise,.story-inside,.story-testi,.story-where { padding: 60px 24px; }
+  .st-grid { grid-template-columns: 3fr; }
+  .sw-cols { grid-template-columns: 1fr; }
+}
+
+
+/* ============================================
+   SECTION ENTRANCE TRANSITIONS
+   ============================================ */
+
+/* Base: each section starts invisible */
+.sec-enter {
+  opacity: 0;
+  transform: translateY(48px);
+  transition:
+    opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.sec-enter.sec-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Variant: slide from left */
+.sec-enter-left {
+  opacity: 0;
+  transform: translateX(-56px);
+  transition:
+    opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.sec-enter-left.sec-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Variant: scale up (intimate/product feel) */
+.sec-enter-scale {
+  opacity: 0;
+  transform: scale(0.96) translateY(24px);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.sec-enter-scale.sec-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Stagger inner children when section becomes visible */
+.sec-stagger > * {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.sec-stagger.sec-visible > *:nth-child(1) { opacity:1; transform:none; transition-delay: 0.05s; }
+.sec-stagger.sec-visible > *:nth-child(2) { opacity:1; transform:none; transition-delay: 0.15s; }
+.sec-stagger.sec-visible > *:nth-child(3) { opacity:1; transform:none; transition-delay: 0.25s; }
+.sec-stagger.sec-visible > *:nth-child(4) { opacity:1; transform:none; transition-delay: 0.35s; }
+.sec-stagger.sec-visible > *:nth-child(5) { opacity:1; transform:none; transition-delay: 0.45s; }
+.sec-stagger.sec-visible > *:nth-child(6) { opacity:1; transform:none; transition-delay: 0.55s; }
+
+/* Trust bar items stagger */
+.tb .tb-item {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.tb.sec-visible .tb-item:nth-child(1) { opacity:1; transform:none; transition-delay: 0.0s; }
+.tb.sec-visible .tb-item:nth-child(2) { opacity:1; transform:none; transition-delay: 0.1s; }
+.tb.sec-visible .tb-item:nth-child(3) { opacity:1; transform:none; transition-delay: 0.2s; }
+.tb.sec-visible .tb-item:nth-child(4) { opacity:1; transform:none; transition-delay: 0.3s; }
+.tb.sec-visible .tb-item:nth-child(5) { opacity:1; transform:none; transition-delay: 0.4s; }
+
+/* Product cards stagger */
+.pg2.sec-stagger > .pcard { transition-property: opacity, transform, box-shadow; }
+
+/* Ingredient pills stagger */
+.si-ing-grid.sec-stagger > .si-ing {
+  opacity: 0;
+  transform: scale(0.9) translateY(12px);
+  transition:
+    opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.si-ing-grid.sec-stagger.sec-visible > .si-ing:nth-child(1) { opacity:1; transform:none; transition-delay:0.05s; }
+.si-ing-grid.sec-stagger.sec-visible > .si-ing:nth-child(2) { opacity:1; transform:none; transition-delay:0.10s; }
+.si-ing-grid.sec-stagger.sec-visible > .si-ing:nth-child(3) { opacity:1; transform:none; transition-delay:0.15s; }
+.si-ing-grid.sec-stagger.sec-visible > .si-ing:nth-child(4) { opacity:1; transform:none; transition-delay:0.20s; }
+.si-ing-grid.sec-stagger.sec-visible > .si-ing:nth-child(5) { opacity:1; transform:none; transition-delay:0.25s; }
+.si-ing-grid.sec-stagger.sec-visible > .si-ing:nth-child(6) { opacity:1; transform:none; transition-delay:0.30s; }
+.si-ing-grid.sec-stagger.sec-visible > .si-ing:nth-child(7) { opacity:1; transform:none; transition-delay:0.35s; }
+.si-ing-grid.sec-stagger.sec-visible > .si-ing:nth-child(8) { opacity:1; transform:none; transition-delay:0.40s; }
+.si-ing-grid.sec-stagger.sec-visible > .si-ing:nth-child(9) { opacity:1; transform:none; transition-delay:0.45s; }
+
+
+
+
+
+/* ============================================
+   HERO CINEMATIC INTRO
+   ============================================ */
+
+/* Phase 1 — BG Ken Burns zoom-in */
+@keyframes heroBgReveal {
+  from { opacity: 0; transform: scale(1.08); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.hero-bg--intro {
+  animation: heroBgReveal 2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Phase 2+3 — Centre logo: pop in, hold, then shrink-move to top */
+.hero-logo-intro {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 96px;
+  width: auto;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  transform: translate(-50%, -50%) scale(1);
+  transform-origin: center center;
+  z-index: 10;
+  pointer-events: none;
+  will-change: transform, opacity;
+  /* Starts invisible; JS drives the animation via class toggling */
+  opacity: 0;
+}
+.hero-logo-intro.phase-pop {
+  animation: logoPopIn 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+@keyframes logoPopIn {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.25); }
+  60%  { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+.hero-logo-intro.phase-move {
+  /* JS sets --logo-dx and --logo-dy via inline style */
+  animation: logoMoveToTop 0.75s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+@keyframes logoMoveToTop {
+  0%   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  85%  { opacity: 1; transform: translate(calc(-50% + var(--logo-dx, 0px)), calc(-50% + var(--logo-dy, -220px))) scale(var(--logo-scale, 0.2)); }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--logo-dx, 0px)), calc(-50% + var(--logo-dy, -220px))) scale(var(--logo-scale, 0.2)); }
+}
+
+/* Real logo + all hero-c children hidden until JS reveals them */
+/* Each hero element starts hidden independently */
+.hero-logo-top,
+.hero-ey,
+.hero-stink,
+.hero-pills,
+.hero-btn,
+.hero-note,
+.hero-scroll,
+.hero-badge,
+.hero-dots { opacity: 0; }
+
+/* Individual element transitions (triggered by adding class 'hi-show') */
+.hero-logo-top  { transition: opacity 0.5s ease; }
+.hero-ey        { transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22,1,0.36,1); transform: translateY(12px); }
+.hero-hl-line   { overflow: hidden; padding-bottom: 0.05em; }
+.hero-hl-line > * { display: inline; }
+
+/* Headline lines: each is a masking container — inner span slides up */
+.hl-slide {
+  display: block;
+  transform: translateY(110%);
+  transition: transform 0.72s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hl-slide.hi-show { transform: translateY(0); }
+
+.hero-stink { transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.22,1,0.36,1); transform: translateY(10px); }
+.hero-pills { transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.22,1,0.36,1); transform: translateY(12px); }
+.hero-btn   { transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34,1.4,0.64,1); transform: translateY(10px) scale(0.96); }
+.hero-note  { transition: opacity 0.5s ease; }
+.hero-scroll{ transition: opacity 0.5s ease; }
+.hero-badge { transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22,1,0.36,1); transform: translateX(30px) rotate(6deg) scale(0.88); }
+.hero-dots  { transition: opacity 0.5s ease; }
+
+.hero-ey.hi-show, .hero-stink.hi-show, .hero-pills.hi-show,
+.hero-btn.hi-show, .hero-note.hi-show, .hero-scroll.hi-show, .hero-dots.hi-show {
+  opacity: 1 !important;
+  transform: none !important;
+}
+.hero-btn.hi-show { transform: none !important; }
+.hero-badge.hi-show { opacity: 1 !important; transform: none !important; }
+.hero-logo-top.hi-show { opacity: 0.88 !important; }
+
+
+  /* ── Scroll lock during intro ── */
+  body.intro-lock { overflow: hidden; }
 </style>
 </head>
-<body>
+<body class="intro-lock">
 <div id="cursor"></div>
 
 <!-- SIDEBAR -->
@@ -324,13 +984,13 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
       <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
       <span class="sb-tip">The Goods</span>
     </a>
-    <a href="#features" class="sb-link">
+    <a href="#story" class="sb-link">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      <span class="sb-tip">Why Dollop</span>
+      <span class="sb-tip">The Story</span>
     </a>
-    <a href="#faq" class="sb-link">
+    <a href="#where" class="sb-link">
       <svg viewBox="0 0 24 24"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      <span class="sb-tip">FAQ</span>
+      <span class="sb-tip">Find Us</span>
     </a>
     <div class="sb-div"></div>
     <a href="#" class="sb-link" onclick="openModal();return false;">
@@ -345,21 +1005,21 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 
 <!-- HERO -->
 <section class="hero" id="hero">
-  <div class="hero-bg" id="heroBg">
+  <div class="hero-bg hero-bg--intro" id="heroBg">
     <div class="hero-slide active" data-slide="0">
-      <img src="https://images.unsplash.com/photo-1567206563114-c179706a0e42?w=1440&q=90&fit=crop&crop=center" alt="Dollop lifestyle" loading="eager">
+      <img src="images/anshul-oS1XZMjWOoQ-unsplash 1.png" alt="Dollop lifestyle" loading="eager">
     </div>
     <div class="hero-slide" data-slide="1">
-      <img src="https://source.unsplash.com/4D7oRZ7rKjM/1440x900" alt="Dollop lifestyle" loading="lazy">
+      <img src="images/unsplash_-cQ2kQqpEB8.png" alt="Dollop lifestyle" loading="lazy">
     </div>
     <div class="hero-slide" data-slide="2">
-      <img src="https://source.unsplash.com/b2A0OkG3Uw0/1440x900" alt="Dollop lifestyle" loading="lazy">
+      <img src="images/unsplash_DNKGiUUoVkc.png" alt="Dollop lifestyle" loading="lazy">
     </div>
     <div class="hero-slide" data-slide="3">
-      <img src="https://source.unsplash.com/A0ZQMXUy45Q/1440x900" alt="Dollop lifestyle" loading="lazy">
+      <img src="images/unsplash_fHsX0eS5X9Y.png" alt="Dollop lifestyle" loading="lazy">
     </div>
     <div class="hero-slide" data-slide="4">
-      <img src="https://images.unsplash.com/photo-1488900128323-21503983a07e?w=1440&q=90&fit=crop&crop=center" alt="Dollop lifestyle" loading="lazy">
+      <img src="images/unsplash_t2csAFCOBu4.png" alt="Dollop lifestyle" loading="lazy">
     </div>
   </div>
   <div class="hero-dots" id="heroDots">
@@ -375,9 +1035,9 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
     <img src="brand assets/dollop logo.webp" alt="Dollop" class="hero-logo-top">
     <div class="hero-ey">Locally Made · Musang King</div>
     <div class="hero-hl">
-      <span class="hero-hl-line"><span class="hl-xbold">PURE</span> FLAVOUR</span>
-      <span class="hero-hl-line">THAT WILL <span class="hl-barrio">BLOW</span></span>
-      <span class="hero-hl-line">YOUR <span class="hl-anton">MIND</span></span>
+      <span class="hero-hl-line"><span class="hl-slide"><span class="hl-xbold">PURE</span> FLAVOUR</span></span>
+      <span class="hero-hl-line"><span class="hl-slide">THAT WILL <span class="hl-barrio">BLOW</span></span></span>
+      <span class="hero-hl-line"><span class="hl-slide">YOUR <span class="hl-anton">MIND</span></span></span>
     </div>
     <p class="hero-stink">(and stink your mouth)</p>
     <div class="hero-pills">
@@ -388,6 +1048,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
     <button class="hero-btn" onclick="openModal()">Get Your Dollop</button>
     <p class="hero-note">🛒 Available at select carts · 🚚 Order via WhatsApp</p>
   </div>
+  <img class="hero-logo-intro" src="brand assets/dollop logo.webp" alt="Dollop intro logo">
   <div class="hero-badge">
     <div class="hero-badge-cloud">Stinky Good</div>
     <img class="hero-badge-char" src="brand assets/Dollop Character.webp" alt="Dollop Character">
@@ -426,11 +1087,11 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 </div>
 
 <!-- PRODUCTS -->
-<section class="products" id="products">
+<section class="products sec-enter-scale" id="products">
   <div class="sec-lbl">The Goods</div>
   <h2 class="pg-head">Pick Your <span>Flavour</span></h2>
   <p class="pg-sub">Two cups. One obsession. Choose your sweetness level — both made with 100% real Musang King.</p>
-  <div class="pg2">
+  <div class="pg2 sec-stagger">
 
     <!-- REGULAR SWEET -->
     <div class="pcard reveal" onclick="location.href='product.html?flavour=regular'" style="cursor:pointer!important;">
@@ -486,53 +1147,156 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
   </div>
 </section>
 
-<!-- FEATURES -->
-<section class="features" id="features">
-  <div class="sec-lbl">Why Dollop</div>
-  <div class="feat-inner">
-    <div class="fr">
-      <div class="fn">01</div>
-      <div>
-        <div class="ft">Musang King. Nothing Else.</div>
-        <p class="fd">We don't do vanilla. We don't do safe choices. We do one thing — the King of Kings, transformed into a gelato that'll haunt your taste buds and clear your sinuses simultaneously.</p>
-      </div>
-    </div>
-    <div class="fr" style="transition-delay:0.1s">
-      <div class="fn">02</div>
-      <div>
-        <div class="ft">No Artificial Anything. Full Stop.</div>
-        <p class="fd">Not even a little. Real Musang King pulp — no watered-down shortcuts, no fillers. If you can't handle real durian intensity, this might not be your vibe.</p>
-      </div>
-    </div>
-    <div class="fr" style="transition-delay:0.2s">
-      <div class="fn">03</div>
-      <div>
-        <div class="ft">Stink Means It Worked.</div>
-        <p class="fd">Trust the stink. That smell is just the Musang King announcing itself — as it should. One flavour. One obsession. Because when you've got the King of Fruits, you don't need anything else.</p>
+
+<!-- STORY: THE KING'S PROMISE -->
+<section class="story-promise sec-enter" id="story">
+  <div class="sp-inner">
+    <div class="sp-left reveal">
+      <div class="sec-lbl" style="color:rgba(255,248,238,0.5);">The Story</div>
+      <h2 class="sp-head">BUILT ON<br>ONE OBSESSION.</h2>
+      <p class="sp-sub">No shortcuts. No fillers. No "durian flavouring". Just the real, pungent, glorious Musang King — the way your favourite uncle eats it at the pasar malam, minus the awkward family drama.</p>
+      <div class="sp-benefits">
+        <div class="spb reveal">
+          <div class="spb-icon">👑</div>
+          <div class="spb-text">
+            <div class="spb-title">100% Real Musang King Pulp</div>
+            <div class="spb-note">Not concentrate. Not extract. The actual fruit.</div>
+          </div>
+        </div>
+        <div class="spb reveal" style="transition-delay:0.08s">
+          <div class="spb-icon">🌿</div>
+          <div class="spb-text">
+            <div class="spb-title">Zero Artificial Anything</div>
+            <div class="spb-note">No flavours, no preservatives, no colour — ever.</div>
+          </div>
+        </div>
+        <div class="spb reveal" style="transition-delay:0.16s">
+          <div class="spb-icon">🍦</div>
+          <div class="spb-text">
+            <div class="spb-title">Made in Small Batches</div>
+            <div class="spb-note">Churned fresh so every cup hits harder.</div>
+          </div>
+        </div>
+        <div class="spb reveal" style="transition-delay:0.24s">
+          <div class="spb-icon">✅</div>
+          <div class="spb-text">
+            <div class="spb-title">Halal Certified</div>
+            <div class="spb-note">Pure ingredients. Pure conscience.</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FAQ -->
-<section class="faq" id="faq">
-  <div class="sec-lbl">FAQ</div>
-  <div class="faq-inner">
-    <div class="fi">
-      <button class="fq" onclick="toggleFaq(this)">How does pickup work?<span class="fi-icon">+</span></button>
-      <div class="fa">We operate on a pickup model to keep your gelato at peak freshness. Choose your nearest location (BU/TTDI/Damansara, Subang/SS15, or Mont Kiara), place your order online, and collect within 1–2 hours. It's cold, it's fresh, and it's waiting for you.</div>
+<!-- STORY: WHAT'S INSIDE -->
+<section class="story-inside sec-enter-left" id="inside">
+  <div class="si-inner">
+    <div class="si-head-row reveal">
+      <h2 class="si-head">WHAT'S ACTUALLY<br>IN YOUR CUP.</h2>
+      <p class="si-sub">Read the label. Brag to your friends.</p>
     </div>
-    <div class="fi">
-      <button class="fq" onclick="toggleFaq(this)">How fresh is your Musang King gelato?<span class="fi-icon">+</span></button>
-      <div class="fa">Made in small batches using 100% real Musang King pulp — no freezer burn, no shortcuts. We churn to order so what you get is as fresh and bold as the durian deserves to be.</div>
+    <div class="si-ing-grid sec-stagger">
+      <div class="si-ing">💧 Water</div>
+      <div class="si-ing si-ing--star">👑 MSK Durian</div>
+      <div class="si-ing">🥛 Milk</div>
+      <div class="si-ing">🍦 Cream</div>
+      <div class="si-ing">🍬 Sugar</div>
+      <div class="si-ing">❄️ Trehalose</div>
+      <div class="si-ing">🥛 Skimmed Milk Powder</div>
+      <div class="si-ing">🌾 Dextrose</div>
+      <div class="si-ing si-ing--small">Stabiliser: Guar Gum · Cellulose Gum · Carrageenan</div>
     </div>
-    <div class="fi">
-      <button class="fq" onclick="toggleFaq(this)">Can I order for events or in bulk?<span class="fi-icon">+</span></button>
-      <div class="fa">Absolutely. For large orders, events, weddings, or corporate gifting, WhatsApp us directly and we'll sort out a custom arrangement — including quantity, timing, and the right pickup location for you.</div>
+    <div class="si-note reveal">
+      <div class="si-note-icon">⚠️</div>
+      <div>
+        <div class="si-note-title">Please Note</div>
+        <div class="si-note-body">Contains Milk. May contain traces of eggs and nuts. Produced in a facility that also processes tree nuts.</div>
+      </div>
     </div>
-    <div class="fi">
-      <button class="fq" onclick="toggleFaq(this)">Is it halal?<span class="fi-icon">+</span></button>
-      <div class="fa">Yes. Dollop is halal certified — no pork, no lard, no alcohol. Just pure durian gelato made with love in Malaysia.</div>
+    <div class="si-halal reveal">
+      <div class="si-halal-badge">HALAL</div>
+      <div class="si-halal-text">Certified Halal · No pork · No alcohol · No lard</div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY: TESTIMONIALS -->
+<section class="story-testi sec-enter-scale" id="testi">
+  <div class="st-inner">
+    <div class="st-head-row">
+      <div class="sec-lbl" style="color:var(--brown-light);">Stink Fans Speak</div>
+      <h2 class="st-head">WHAT PEOPLE<br>ARE SAYING.</h2>
+    </div>
+    <div class="st-grid sec-stagger">
+      <div class="st-card">
+        <span class="st-ql">&ldquo;</span><div class="st-quote">Bro this hits different. I ate the whole cup standing at the counter. No regrets.&rdquo;</div>
+        <div class="st-author">
+          <div class="st-avatar">😤</div>
+          <div>
+            <div class="st-name">Hafiz R.</div>
+            <div class="st-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+      <div class="st-card" style="transition-delay:0.1s">
+        <span class="st-ql">&ldquo;</span><div class="st-quote">Finally a gelato that actually tastes like Musang King and not some sad durian perfume water.&rdquo;</div>
+        <div class="st-author">
+          <div class="st-avatar">🫠</div>
+          <div>
+            <div class="st-name">Priya K.</div>
+            <div class="st-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+      <div class="st-card" style="transition-delay:0.2s">
+        <span class="st-ql">&ldquo;</span><div class="st-quote">My husband said don't buy it. I bought two. He finished his in 3 minutes.&rdquo;</div>
+        <div class="st-author">
+          <div class="st-avatar">😂</div>
+          <div>
+            <div class="st-name">Siti A.</div>
+            <div class="st-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY: WHERE TO FIND -->
+<section class="story-where sec-enter" id="where">
+  <div class="sw-inner">
+    <div class="sw-head-row reveal">
+      <h2 class="sw-head">WHERE TO<br>FIND YOUR FIX.</h2>
+      <p class="sw-sub">Three pickup zones across the Klang Valley — or order for delivery straight to your door.</p>
+    </div>
+    <div class="sw-cols">
+      <div class="sw-locs reveal">
+        <div class="sw-lbl">📍 Pickup Zones</div>
+        <div class="sw-loc-cards sec-stagger">
+          <a class="sw-loc sw-loc--link" href="https://www.google.com/maps?q=Bandar+Utama+TTDI+Damansara+Kuala+Lumpur" target="_blank" rel="noopener">
+            <div class="sw-loc-name">BU · TTDI · Damansara <span class="sw-loc-arrow">↗</span></div>
+            <div class="sw-loc-note">Bandar Utama, TTDI, and surrounding area</div>
+          </a>
+          <a class="sw-loc sw-loc--link" href="https://www.google.com/maps?q=SS15+Subang+Jaya+Selangor" target="_blank" rel="noopener">
+            <div class="sw-loc-name">Subang · SS15 <span class="sw-loc-arrow">↗</span></div>
+            <div class="sw-loc-note">Subang Jaya, SS15, and nearby townships</div>
+          </a>
+          <a class="sw-loc sw-loc--link" href="https://www.google.com/maps?q=Mont+Kiara+Kuala+Lumpur" target="_blank" rel="noopener">
+            <div class="sw-loc-name">Mont Kiara <span class="sw-loc-arrow">↗</span></div>
+            <div class="sw-loc-note">Mont Kiara, Sri Hartamas, Duta</div>
+          </a>
+        </div>
+      </div>
+      <div class="sw-order reveal" style="transition-delay:0.12s">
+        <div class="sw-lbl">🛒 Order Online</div>
+        <div class="sw-order-card">
+          <div class="sw-order-title">ONE CLICK AWAY</div>
+          <p class="sw-order-sub">Choose your location, pick your flavour, set a time. We'll have it cold and ready when you arrive.</p>
+          <button class="sw-order-btn" onclick="openModal()">Order Now</button>
+          <div class="sw-order-note">Also available via WhatsApp for bulk & events</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -679,14 +1443,130 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 </div>
 
 <script>
+
+// ============================================
+// HERO CINEMATIC INTRO SEQUENCE
+// ============================================
+(function () {
+  const heroC       = document.querySelector('.hero-c');
+  const introLogo   = document.querySelector('.hero-logo-intro');
+  const realLogo    = document.querySelector('.hero-logo-top');
+  const eyebrow     = document.querySelector('.hero-ey');
+  const hlSlides    = document.querySelectorAll('.hl-slide');
+  const stink       = document.querySelector('.hero-stink');
+  const pills       = document.querySelector('.hero-pills');
+  const btn         = document.querySelector('.hero-btn');
+  const note        = document.querySelector('.hero-note');
+  const badge       = document.querySelector('.hero-badge');
+  const dots        = document.querySelector('.hero-dots');
+  const heroScroll  = document.querySelector('.hero-scroll');
+
+  function show(el) { if (el) el.classList.add('hi-show'); }
+
+  // Measure real logo position relative to the intro logo's center origin
+  function measureLogoOffset() {
+    const hero     = document.querySelector('.hero');
+    const heroBcr  = hero.getBoundingClientRect();
+    const logoBcr  = realLogo.getBoundingClientRect();
+    const introBcr = introLogo.getBoundingClientRect(); // currently 96px tall, centered
+
+    const heroCx = heroBcr.left + heroBcr.width  / 2;
+    const heroCy = heroBcr.top  + heroBcr.height / 2;
+
+    const logoCx = logoBcr.left + logoBcr.width  / 2;
+    const logoCy = logoBcr.top  + logoBcr.height / 2;
+
+    const dx = logoCx - heroCx;
+    const dy = logoCy - heroCy;
+
+    // Intro logo is 96px; real logo is ~22px (1.4rem)
+    // We need real logo to actually be measured from the DOM
+    const scale = logoBcr.height / 96;
+
+    introLogo.style.setProperty('--logo-dx', dx + 'px');
+    introLogo.style.setProperty('--logo-dy', dy + 'px');
+    introLogo.style.setProperty('--logo-scale', scale.toFixed(3));
+  }
+
+  // Elements are already opacity:0 via CSS — measure layout directly
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      measureLogoOffset();
+
+      // ── Phase 2 @ 0.9s: intro logo pops in ──────────────────────────
+      setTimeout(() => {
+        introLogo.classList.add('phase-pop');
+      }, 900);
+
+      // ── Phase 3 @ 1.7s: logo moves to top position ──────────────────
+      setTimeout(() => {
+        introLogo.classList.remove('phase-pop');
+        void introLogo.offsetWidth; // force repaint
+        introLogo.classList.add('phase-move');
+      }, 1700);
+
+      // ── Phase 4a @ 2.35s: real logo fades in as intro logo fades out ─
+      setTimeout(() => show(realLogo), 2350);
+
+      // ── Phase 4b @ 2.5s: eyebrow ─────────────────────────────────────
+      setTimeout(() => show(eyebrow), 2500);
+
+      // ── Phase 4c @ 2.65–2.95s: headline line wipes ───────────────────
+      hlSlides.forEach((line, i) => {
+        setTimeout(() => line.classList.add('hi-show'), 2650 + i * 160);
+      });
+
+      // ── Phase 5 @ 3.1s+: rest ────────────────────────────────────────
+      setTimeout(() => show(stink),      3100);
+      setTimeout(() => show(pills),      3280);
+      setTimeout(() => show(btn),        3440);
+      setTimeout(() => show(note),       3620);
+      setTimeout(() => show(badge),      3050);
+      setTimeout(() => show(dots),       3700);
+      setTimeout(() => show(heroScroll), 3850);
+      setTimeout(() => document.body.classList.remove('intro-lock'), 4550);
+    });
+  });
+})();
+
 const cursor=document.getElementById('cursor');
 document.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';});
 
+// Element-level reveal (existing)
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.05,rootMargin:'0px 0px 80px 0px'});
 document.querySelectorAll('.reveal,.fr,.pcard').forEach(el=>obs.observe(el));
+
+// Section-level entrance transitions
+const secObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('sec-visible');
+      // Also trigger stagger children inside this section
+      e.target.querySelectorAll('.sec-stagger').forEach(el => {
+        el.classList.add('sec-visible');
+      });
+      secObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.sec-enter, .sec-enter-left, .sec-enter-scale').forEach(el => secObs.observe(el));
+
+// Trust bar — observe separately (it's a div not section)
+const tbEl = document.querySelector('.tb');
+if (tbEl) secObs.observe(tbEl);
 // Fallback: force all visible after short delay (catches elements in viewport on load)
-function forceVisible(){document.querySelectorAll('.reveal,.fr,.pcard').forEach(el=>el.classList.add('visible'));}
-setTimeout(forceVisible,500);
+function forceVisible(){
+  document.querySelectorAll('.reveal,.fr,.pcard').forEach(el=>el.classList.add('visible'));
+  document.querySelectorAll('.sec-enter,.sec-enter-left,.sec-enter-scale').forEach(el=>{
+    const r=el.getBoundingClientRect();
+    if(r.top<window.innerHeight){
+      el.classList.add('sec-visible');
+      el.querySelectorAll('.sec-stagger').forEach(s=>s.classList.add('sec-visible'));
+    }
+  });
+}
+setTimeout(forceVisible,300);
 
 const sLinks=document.querySelectorAll('.sb-link');
 const secs=document.querySelectorAll('section[id]');
