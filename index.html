@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async>
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dollop — Pure Musang King Gelato</title>
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;800&family=Bebas+Neue&family=Barrio&family=Anton&family=Bangers&display=swap" rel="stylesheet">
+<style>
+@font-face { font-family:'Barlow'; src:url('brand assets/fonts/Barlow-Medium.ttf') format('truetype'); font-weight:500; font-style:normal; }
+@font-face { font-family:'Barlow'; src:url('brand assets/fonts/Barlow-Italic.ttf') format('truetype'); font-weight:400; font-style:italic; }
+@font-face { font-family:'Barlow'; src:url('brand assets/fonts/Barlow-BoldItalic.ttf') format('truetype'); font-weight:700; font-style:italic; }
+:root {
+  --cream:#FFF8EE; --yellow:#F5C518; --yellow-deep:#E0A800;
+  --brown:#3B1F0A; --brown-mid:#6B3A1F; --brown-light:#B07B4A;
+  --green:#2D5016; --green-mid:#4A7C24; --green-light:#8CC63F;
+  --thorn:#1A3A0A; --white:#FFFDF7; --sb:64px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Barlow',sans-serif;font-weight:500;background:var(--cream);color:var(--brown);overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+
+/* CURSOR */
+*{cursor:none!important;}
+#cursor{position:fixed;top:-100px;left:-100px;z-index:9999;pointer-events:none;transition:transform 0.15s ease;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.35));width:40px;height:40px;background:url('brand%20assets/durian%20cursor.png') center/contain no-repeat;}
+body:has(button:hover) #cursor,body:has(a:hover) #cursor{transform:scale(1.4) rotate(-15deg);}
+
+/* SIDEBAR */
+.sb{position:fixed;left:0;top:0;bottom:0;width:var(--sb);background:var(--brown);z-index:200;display:flex;flex-direction:column;align-items:center;padding:22px 0 18px;}
+.sb-logo{width:44px;height:44px;margin-bottom:28px;display:flex;align-items:center;justify-content:center;}
+.sb-logo img{width:42px;height:42px;object-fit:contain;}
+.sb-nav{display:flex;flex-direction:column;gap:4px;flex:1;align-items:center;}
+.sb-link{width:42px;height:42px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:rgba(255,248,238,0.3);transition:color 0.2s,background 0.2s;position:relative;}
+.sb-link:hover,.sb-link.active{color:var(--yellow);background:rgba(245,197,24,0.1);}
+.sb-link svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.sb-tip{position:absolute;left:calc(100% + 10px);top:50%;transform:translateY(-50%);background:var(--thorn);color:var(--cream);font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;padding:4px 9px;border-radius:4px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.15s;}
+.sb-link:hover .sb-tip{opacity:1;}
+.sb-div{width:22px;height:1px;background:rgba(255,248,238,0.1);margin:6px 0;}
+.sb-dot{width:6px;height:6px;border-radius:50%;background:var(--yellow);margin-top:auto;margin-bottom:2px;box-shadow:0 0 8px var(--yellow);}
+
+/* MAIN */
+.main{margin-left:var(--sb);}
+
+/* HERO */
+.hero{position:relative;height:100vh;min-height:640px;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+.hero-bg{position:absolute;inset:0;z-index:0;background:#1a1a1a;overflow:hidden;}
+.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease;will-change:opacity;}
+.hero-slide.active{opacity:1;}
+.hero-slide img{width:100%;height:100%;object-fit:cover;object-position:center;}
+.hero-dots{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:5;display:flex;gap:8px;}
+.hero-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,248,238,0.35);border:none;cursor:pointer;transition:all 0.3s;padding:0;}
+.hero-dot.active{background:var(--yellow);transform:scale(1.3);}
+.hero-grain{position:absolute;inset:0;z-index:1;opacity:0.35;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");}
+.hero-ov{position:absolute;inset:0;z-index:2;background:linear-gradient(to top,rgba(8,4,0,0.88) 0%,rgba(8,4,0,0.45) 50%,rgba(8,4,0,0.58) 100%);}
+.hero-c{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;padding:0 60px;max-width:1080px;}
+.hero-logo-top{height:1.4rem;width:auto;object-fit:contain;filter:brightness(0) invert(1);margin-bottom:10px;opacity:0.88;}
+.hero-ey{font-size:0.68rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--green-light);font-weight:500;margin-bottom:10px;display:flex;align-items:center;gap:14px;}
+.hero-ey::before,.hero-ey::after{content:'';display:block;width:26px;height:1px;background:var(--green-light);}
+.hero-hl{font-family:'Barlow',sans-serif;font-weight:500;font-size:clamp(3.2rem,7.5vw,6rem);line-height:0.94;color:var(--cream);text-align:center;letter-spacing:0.02em;margin-bottom:12px;text-shadow:0 2px 40px rgba(0,0,0,0.55);}
+.hero-hl-line{display:block;}
+.hl-xbold{font-weight:800;}
+.hl-barrio{font-family:'Barrio',cursive;font-weight:400;}
+.hl-anton{font-family:'Anton',sans-serif;font-weight:400;letter-spacing:0.01em;}
+.hero-stink{font-family:'Bangers',cursive;font-size:clamp(1rem,1.6vw,1.35rem);color:rgba(255,248,238,0.72);letter-spacing:0.08em;margin-bottom:28px;text-shadow:0 2px 12px rgba(0,0,0,0.4);}
+.hero-pills{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-bottom:32px;}
+.hero-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,248,238,0.07);border:1px solid rgba(255,248,238,0.14);border-radius:40px;padding:6px 14px;font-size:0.76rem;font-weight:500;color:rgba(255,248,238,0.78);backdrop-filter:blur(4px);}
+.trust-bar{background:var(--brown);padding:0;display:flex;justify-content:center;align-items:stretch;border-bottom:3px solid var(--yellow);}
+.trust-items{display:flex;align-items:center;justify-content:center;gap:0;width:100%;max-width:900px;flex-wrap:wrap;}
+.trust-item{display:flex;align-items:center;gap:16px;padding:28px 48px;position:relative;flex:1;min-width:240px;}
+.trust-item:not(:last-child)::after{content:'';position:absolute;right:0;top:20%;bottom:20%;width:1px;background:rgba(255,248,238,0.15);}
+.trust-icon{font-size:2rem;flex-shrink:0;}
+.trust-text{display:flex;flex-direction:column;gap:3px;}
+.trust-title{font-family:'Barlow',sans-serif;font-size:1.2rem;font-weight:700;font-style:italic;color:var(--cream);letter-spacing:-0.01em;line-height:1.1;}
+.trust-sub{font-family:'Barlow',sans-serif;font-size:0.75rem;font-weight:500;color:rgba(255,248,238,0.5);letter-spacing:0.06em;text-transform:uppercase;}
+.hero-btn{display:inline-flex;align-items:center;gap:11px;background:var(--yellow);color:var(--brown);font-family:'Bebas Neue',sans-serif;font-size:1.55rem;letter-spacing:0.2em;padding:17px 52px 18px 50px;border-radius:50px 44px 52px 46px;transition:transform 0.2s,box-shadow 0.2s;margin-bottom:13px;position:relative;overflow:hidden;border:none;}
+.hero-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent 40%,rgba(255,255,255,0.18) 50%,transparent 60%);transform:translateX(-100%);transition:transform 0.5s;}
+.hero-btn:hover::after{transform:translateX(100%);}
+.hero-btn:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(245,197,24,0.38);}
+.hero-note{font-size:0.73rem;color:rgba(255,248,238,0.38);letter-spacing:0.04em;}
+.hero-badge{position:absolute;bottom:0;right:40px;z-index:4;display:flex;flex-direction:column;align-items:center;}
+.hero-badge-char{width:160px;height:auto;filter:drop-shadow(0 8px 24px rgba(0,0,0,0.4));animation:charFloat 3s ease-in-out infinite;}
+@keyframes charFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.hero-badge-cloud{background:var(--yellow);color:var(--brown);font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.12em;padding:7px 18px;border-radius:40px 40px 40px 4px;border:2px solid var(--brown);box-shadow:0 4px 16px rgba(0,0,0,0.25);white-space:nowrap;margin-bottom:8px;position:relative;}
+.hero-badge-cloud::after{content:'';position:absolute;bottom:-8px;left:18px;border:5px solid transparent;border-top-color:var(--brown);}
+.hero-badge-cloud::before{content:'';position:absolute;bottom:-6px;left:19px;border:4px solid transparent;border-top-color:var(--yellow);}
+.hero-badge-in .bs{display:block;font-size:0.56rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--brown-mid);}
+.hero-scroll{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:4;display:flex;flex-direction:column;align-items:center;gap:5px;color:rgba(255,248,238,0.28);font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;animation:scr 2.4s ease-in-out infinite;}
+@keyframes scr{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+.hero-scroll svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8;}
+
+/* SECTION LABEL */
+.sec-lbl{font-size:0.68rem;letter-spacing:0.24em;text-transform:uppercase;color:var(--brown-mid);font-weight:500;display:inline-flex;align-items:center;gap:9px;margin-bottom:36px;}
+.sec-lbl::before{content:'—';color:var(--yellow);letter-spacing:0;font-family:sans-serif;}
+
+/* PRODUCTS */
+.products{padding:72px 48px;background:var(--cream);text-align:center;}
+.pg-head{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,4vw,3.4rem);letter-spacing:0.06em;color:var(--brown);margin-bottom:6px;line-height:1;}
+.pg-head span{color:var(--green-mid);}
+.pg-sub{font-size:0.84rem;color:var(--brown-mid);margin-bottom:40px;max-width:420px;line-height:1.6;margin-left:auto;margin-right:auto;}
+.pg2{display:grid;grid-template-columns:1fr 1fr;gap:22px;text-align:left;}
+.pcard{background:var(--white);border-radius:22px;overflow:hidden;border:1.5px solid rgba(59,31,10,0.07);transition:transform 0.35s cubic-bezier(0.34,1.2,0.64,1),box-shadow 0.35s;display:flex;flex-direction:column;}
+.pcard:hover{transform:translateY(-8px);box-shadow:0 24px 60px rgba(59,31,10,0.13);}
+.pcard-img{height:300px;position:relative;overflow:hidden;flex-shrink:0;}
+.pcard-pkg-img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
+.pcard-reg{background:radial-gradient(ellipse at 40% 30%,#8FBF3A 0%,#4A7C24 40%,#2D5016 75%,#1A3A0A 100%);}
+.pcard-less{background:radial-gradient(ellipse at 60% 70%,#A8D458 0%,#6B9E2A 35%,#3A6A12 70%,#0D2205 100%);}
+.pcard-badge{position:absolute;top:16px;left:16px;background:var(--yellow);color:var(--brown);font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:4px 11px;border-radius:40px;}
+.pcard-img-note{position:absolute;bottom:14px;right:14px;font-size:0.62rem;color:rgba(255,248,238,0.35);letter-spacing:0.08em;text-transform:uppercase;background:rgba(0,0,0,0.3);padding:3px 8px;border-radius:4px;backdrop-filter:blur(4px);}
+.pcard-body{padding:26px 26px 22px;flex:1;display:flex;flex-direction:column;gap:10px;}
+.pcard-name{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:0.06em;color:var(--brown);line-height:1;}
+.pcard-desc{font-size:0.84rem;color:var(--brown-mid);line-height:1.6;margin-bottom:4px;}
+.pcard-sizes{display:flex;gap:8px;align-items:center;}
+.pcard-size-lbl{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--brown-light);margin-right:4px;}
+.pcard-sz{padding:6px 16px;border:1.5px solid rgba(59,31,10,0.14);border-radius:40px;background:transparent;font-family:'Barlow',sans-serif;font-size:0.78rem;font-weight:500;color:var(--brown-mid);transition:all 0.2s;}
+.pcard-sz.active{border-color:var(--green);background:var(--green);color:var(--cream);}
+.pcard-sz:hover:not(.active){border-color:var(--brown-mid);color:var(--brown);}
+.pcard-footer{display:flex;align-items:center;gap:12px;margin-top:auto;padding-top:18px;border-top:1px solid rgba(59,31,10,0.07);}
+.pcard-price{font-family:'Bebas Neue',sans-serif;font-size:2.1rem;letter-spacing:0.04em;color:var(--brown);line-height:1;white-space:nowrap;}
+.pcard-price small{font-size:0.75rem;letter-spacing:0.08em;color:var(--brown-light);font-family:'Barlow',sans-serif;font-weight:500;display:block;margin-top:1px;}
+.pcard-qty{display:flex;align-items:center;border:1.5px solid rgba(59,31,10,0.14);border-radius:40px;overflow:hidden;background:var(--cream);}
+.pcard-qty button{width:32px;height:36px;background:transparent;border:none;font-size:1.3rem;color:var(--brown);font-weight:300;transition:background 0.15s;line-height:1;display:flex;align-items:center;justify-content:center;}
+.pcard-qty button:hover{background:rgba(59,31,10,0.07);}
+.pcard-qty span{min-width:26px;text-align:center;font-weight:700;font-size:0.88rem;color:var(--brown);}
+.pcard-btn{flex:1;padding:10px 18px;background:var(--brown);color:var(--cream);font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:0.15em;border:none;border-radius:40px;transition:all 0.25s;white-space:nowrap;}
+.pcard-btn:hover{background:var(--green);color:var(--yellow);transform:none;}
+
+/* FEATURES */
+.features{padding:72px 48px;background:var(--white);border-top:1px solid rgba(59,31,10,0.06);}
+.feat-inner{width:100%;}
+.fr{display:grid;grid-template-columns:60px 1fr;gap:22px;align-items:flex-start;padding:30px 0;border-bottom:1px solid rgba(59,31,10,0.07);opacity:1;transform:none;transition:opacity 0.6s ease,transform 0.6s ease;}
+.fr:first-of-type{border-top:1px solid rgba(59,31,10,0.07);}
+.fr.visible{opacity:1;transform:none;}
+.fn{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--yellow);line-height:1;opacity:0.55;padding-top:3px;}
+.ft{font-family:'Barlow',sans-serif;font-size:1.2rem;font-weight:700;font-style:italic;color:var(--brown);margin-bottom:8px;letter-spacing:-0.01em;}
+.fd{font-size:0.88rem;color:var(--brown-mid);line-height:1.75;}
+
+/* FAQ */
+.faq{padding:72px 48px;background:var(--cream);}
+.faq-inner{width:100%;}
+.fi{border-bottom:1px solid rgba(59,31,10,0.09);}
+.fq{width:100%;padding:21px 0;display:flex;align-items:center;justify-content:space-between;gap:18px;background:none;border:none;text-align:left;font-family:'Barlow',sans-serif;font-size:1rem;font-weight:700;font-style:italic;color:var(--brown);letter-spacing:-0.01em;transition:color 0.2s;}
+.fq:hover{color:var(--green-mid);}
+.fi-icon{width:28px;height:28px;min-width:28px;border:1.5px solid rgba(59,31,10,0.16);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:300;color:var(--brown-mid);line-height:1;transition:all 0.25s;}
+.fi.open .fi-icon{background:var(--yellow);border-color:var(--yellow);color:var(--brown);transform:rotate(45deg);}
+.fa{max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s ease;font-size:0.88rem;color:var(--brown-mid);line-height:1.75;}
+.fi.open .fa{max-height:180px;padding-bottom:20px;}
+
+
+
+/* MARQUEE */
+.mq{overflow:hidden;background:var(--brown);padding:15px 0;}
+.mq-track{display:flex;animation:mq 22s linear infinite;white-space:nowrap;}
+.mi{font-family:'Bebas Neue',sans-serif;font-size:0.95rem;letter-spacing:0.22em;color:rgba(255,248,238,0.25);padding:0 32px;flex-shrink:0;}
+.mi.y{color:var(--yellow);}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* FOOTER */
+footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
+.ft-top{display:flex;align-items:flex-start;justify-content:space-between;gap:36px;padding-bottom:44px;border-bottom:1px solid rgba(255,248,238,0.07);}
+.ft-brand{max-width:250px;}
+.ft-logo{height:44px;width:auto;display:block;filter:brightness(0) invert(1);margin-bottom:13px;}
+.ft-tagline{font-size:0.82rem;color:rgba(255,248,238,0.4);line-height:1.65;margin-bottom:18px;}
+.ft-soc{display:flex;gap:9px;}
+.ft-soc a{width:33px;height:33px;border:1px solid rgba(255,248,238,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.74rem;transition:background 0.2s,border-color 0.2s;}
+.ft-soc a:hover{background:var(--yellow);border-color:var(--yellow);color:var(--brown);}
+.ft-cols{display:flex;gap:52px;}
+.ft-ct{font-size:0.66rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--yellow);margin-bottom:16px;font-weight:500;}
+.ft-col a{display:block;font-size:0.84rem;color:rgba(255,248,238,0.48);margin-bottom:10px;transition:color 0.2s;}
+.ft-col a:hover{color:var(--cream);}
+.ft-bot{padding:17px 0;display:flex;justify-content:space-between;align-items:center;font-size:0.7rem;color:rgba(255,248,238,0.26);}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(18,8,2,0.65);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--white);border-radius:18px;width:100%;max-width:540px;max-height:90vh;overflow-y:auto;padding:44px;position:relative;animation:min 0.3s cubic-bezier(0.34,1.56,0.64,1);}
+@keyframes min{from{transform:scale(0.92) translateY(16px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+.m-close{position:absolute;top:17px;right:17px;width:33px;height:33px;background:var(--cream);border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.95rem;color:var(--brown);transition:background 0.2s;}
+.m-close:hover{background:var(--yellow);}
+.m-step{display:none;}.m-step.active{display:block;}
+.m-title{font-family:'Barlow',sans-serif;font-size:1.85rem;font-weight:700;font-style:italic;color:var(--brown);margin-bottom:5px;letter-spacing:-0.02em;}
+.m-sub{font-size:0.84rem;color:var(--brown-light);margin-bottom:24px;}
+.fulfilment-toggle{display:flex;gap:0;border:1.5px solid rgba(59,31,10,0.14);border-radius:40px;overflow:hidden;margin-bottom:20px;background:var(--cream);}
+.ft-btn{flex:1;padding:10px 16px;background:transparent;border:none;font-family:'Bebas Neue',sans-serif;font-size:0.95rem;letter-spacing:0.12em;color:var(--brown);opacity:0.5;cursor:pointer;transition:background 0.2s,opacity 0.2s;}
+.ft-btn.active{background:var(--yellow);opacity:1;border-radius:40px;}
+.delivery-fields{display:none;margin-bottom:20px;}
+.delivery-fields.show{display:block;}
+.delivery-note{background:rgba(245,197,24,0.12);border:1.5px solid rgba(245,197,24,0.35);border-radius:10px;padding:12px 14px;font-size:0.8rem;color:var(--brown);line-height:1.6;margin-bottom:10px;}
+.pickup-fields{display:block;}
+.pickup-fields.hide{display:none;}
+.m-cards{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:20px;}
+.m-card{border:2px solid rgba(59,31,10,0.12);border-radius:12px;padding:20px;text-align:center;transition:all 0.2s;background:var(--cream);}
+.m-card:hover{border-color:var(--green-mid);background:rgba(74,124,36,0.05);}
+.m-card.selected{border-color:var(--green);background:rgba(74,124,36,0.08);}
+.m-icon{font-size:1.8rem;margin-bottom:7px;display:block;}
+.m-name{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:0.1em;color:var(--brown);margin-bottom:3px;}
+.m-note{font-size:0.71rem;color:var(--brown-light);}
+.fg{margin-bottom:17px;}
+.fl{display:block;font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--brown-mid);margin-bottom:6px;}
+.fi2,.fs,.fta{width:100%;padding:11px 13px;border:1.5px solid rgba(59,31,10,0.14);border-radius:8px;font-family:'Barlow',sans-serif;font-size:0.92rem;color:var(--brown);background:var(--cream);transition:border-color 0.2s;outline:none;}
+.fi2:focus,.fs:focus,.fta:focus{border-color:var(--green-mid);}
+.fta{resize:vertical;min-height:72px;}
+.os{background:var(--cream);border-radius:10px;padding:17px 20px;margin-bottom:20px;}
+.or{display:flex;justify-content:space-between;font-size:0.86rem;color:var(--brown-mid);padding:4px 0;}
+.or.tot{border-top:1px solid rgba(59,31,10,0.1);margin-top:7px;padding-top:12px;font-weight:700;color:var(--brown);font-size:0.98rem;}
+.si{display:flex;align-items:center;gap:5px;margin-bottom:26px;}
+.sd{width:7px;height:7px;border-radius:50%;background:rgba(59,31,10,0.12);transition:all 0.3s;}
+.sd.active{background:var(--green);width:21px;border-radius:3px;}
+.sd.done{background:var(--green-light);}
+.mb{width:100%;padding:14px;border:none;border-radius:8px;font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:0.15em;transition:all 0.2s;}
+.mb-p{background:var(--green);color:var(--yellow);}
+.mb-p:hover{background:var(--thorn);}
+.mb-s{background:transparent;color:var(--brown-mid);border:1.5px solid rgba(59,31,10,0.17);margin-top:8px;font-size:0.92rem;letter-spacing:0.08em;font-family:'Barlow',sans-serif;}
+.mb-s:hover{border-color:var(--brown);color:var(--brown);}
+.pm{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.pb{padding:5px 11px;border:1px solid rgba(59,31,10,0.12);border-radius:6px;font-size:0.71rem;font-weight:500;color:var(--brown-mid);background:var(--cream);}
+.pb.fpx{border-color:var(--green-mid);color:var(--green-mid);}
+.ss{text-align:center;padding:14px 0;}
+.si2{width:70px;height:70px;background:rgba(74,124,36,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 18px;border:2px solid var(--green-light);}
+.st{font-family:'Barlow',sans-serif;font-size:2rem;font-weight:700;font-style:italic;color:var(--brown);margin-bottom:7px;letter-spacing:-0.02em;}
+.ssub{color:var(--brown-mid);line-height:1.7;margin-bottom:26px;font-size:0.88rem;}
+.son{background:var(--cream);border-radius:8px;padding:13px;font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:0.2em;color:var(--green);margin-bottom:20px;}
+.v-lbl{font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--brown-mid);margin-bottom:8px;}
+.v-sel{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:4px;}
+.vb{display:flex;flex-direction:column;align-items:flex-start;padding:10px 13px;border:2px solid rgba(59,31,10,0.12);border-radius:9px;background:transparent;text-align:left;transition:all 0.2s;position:relative;}
+.vb.active{border-color:var(--green);background:rgba(74,124,36,0.07);}
+.vb.active::after{content:'✓';position:absolute;top:6px;right:8px;font-size:0.7rem;color:var(--green);font-weight:700;}
+.vb:hover:not(.active){border-color:var(--brown-light);}
+.vn{font-weight:700;font-size:0.84rem;color:var(--brown);margin-bottom:1px;display:block;}
+.vnt{font-size:0.68rem;color:var(--brown-light);display:block;}
+.sz-sel{display:flex;gap:6px;margin-bottom:20px;margin-top:9px;}
+.sz-btn{padding:6px 14px;border:1.5px solid rgba(59,31,10,0.17);border-radius:40px;background:transparent;font-family:'Barlow',sans-serif;font-size:0.78rem;font-weight:500;color:var(--brown-mid);transition:all 0.2s;}
+.sz-btn.active{border-color:var(--green);background:var(--green);color:var(--cream);}
+.sz-btn:hover:not(.active){border-color:var(--brown);}
+
+/* REVEAL */
+.reveal{opacity:1;transform:none;transition:opacity 0.65s ease,transform 0.65s ease;}
+.reveal.visible{opacity:1;transform:none;}
+
+/* MOBILE */
+@media(max-width:860px){
+  .sb{display:none;}.main{margin-left:0;}
+  .pg2{grid-template-columns:1fr;}
+  
+  .features,.faq,.products{padding:52px 24px;}
+  footer{padding:40px 24px 0;}
+  .ft-top{flex-direction:column;}
+  .ft-cols{flex-direction:column;gap:24px;}
+  .m-cards{grid-template-columns:1fr;}
+  .modal{padding:26px 18px;}
+  .hero-c{padding:0 24px;}
+}
+
+/* FLOATING BUY BUTTON */
+#floatBtn{
+  position:fixed;
+  bottom:32px;
+  right:32px;
+  z-index:8000;
+  background:var(--yellow);
+  color:var(--brown);
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.15rem;
+  letter-spacing:0.14em;
+  padding:16px 28px;
+  border:2.5px solid var(--brown);
+  border-radius:50px 44px 52px 46px;
+  box-shadow:0 8px 32px rgba(245,197,24,0.45),0 2px 8px rgba(59,31,10,0.18);
+  cursor:none;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  opacity:0;
+  transition:opacity 0.4s ease,box-shadow 0.25s;
+  pointer-events:none;
+  white-space:nowrap;
+}
+#floatBtn.show{
+  opacity:1;
+  pointer-events:auto;
+  animation:floatBuzz 2.8s ease-in-out infinite;
+}
+#floatBtn:hover{
+  animation:none;
+  transform:scale(1.06);
+  box-shadow:0 12px 40px rgba(245,197,24,0.6),0 4px 12px rgba(59,31,10,0.22);
+}
+#floatBtn .fb-pulse{
+  width:9px;height:9px;
+  background:var(--brown);
+  border-radius:50%;
+  flex-shrink:0;
+  animation:fbPulse 1.2s ease-in-out infinite;
+}
+@keyframes floatBuzz{
+  0%,100%{transform:translateY(0) rotate(0deg);}
+  10%{transform:translateY(-3px) rotate(-1.5deg);}
+  20%{transform:translateY(-1px) rotate(1deg);}
+  30%{transform:translateY(-4px) rotate(-1deg);}
+  40%{transform:translateY(0px) rotate(0.5deg);}
+  50%{transform:translateY(-2px) rotate(0deg);}
+  60%{transform:translateY(0) rotate(0deg);}
+}
+@keyframes fbPulse{
+  0%,100%{opacity:1;transform:scale(1);}
+  50%{opacity:0.4;transform:scale(0.6);}
+}
+</style>
+</head>
+<body>
+<div id="cursor"></div>
+
+<!-- SIDEBAR -->
+<nav class="sb">
+  <a href="#hero" class="sb-logo"><img src="brand assets/durian cursor.png" alt="Dollop"></a>
+  <div class="sb-nav">
+    <a href="#hero" class="sb-link active">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span class="sb-tip">Home</span>
+    </a>
+    <a href="#products" class="sb-link">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+      <span class="sb-tip">The Goods</span>
+    </a>
+    <a href="#features" class="sb-link">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span class="sb-tip">Why Dollop</span>
+    </a>
+    <a href="#faq" class="sb-link">
+      <svg viewBox="0 0 24 24"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <span class="sb-tip">FAQ</span>
+    </a>
+    <div class="sb-div"></div>
+    <a href="#" class="sb-link" onclick="openModal();return false;">
+      <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      <span class="sb-tip">Order Now</span>
+    </a>
+  </div>
+  <div class="sb-dot"></div>
+</nav>
+
+<div class="main">
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg" id="heroBg">
+    <div class="hero-slide active" data-slide="0">
+      <img src="https://images.unsplash.com/photo-1567206563114-c179706a0e42?w=1440&q=90&fit=crop&crop=center" alt="Dollop lifestyle" loading="eager">
+    </div>
+    <div class="hero-slide" data-slide="1">
+      <img src="https://source.unsplash.com/4D7oRZ7rKjM/1440x900" alt="Dollop lifestyle" loading="lazy">
+    </div>
+    <div class="hero-slide" data-slide="2">
+      <img src="https://source.unsplash.com/b2A0OkG3Uw0/1440x900" alt="Dollop lifestyle" loading="lazy">
+    </div>
+    <div class="hero-slide" data-slide="3">
+      <img src="https://source.unsplash.com/A0ZQMXUy45Q/1440x900" alt="Dollop lifestyle" loading="lazy">
+    </div>
+    <div class="hero-slide" data-slide="4">
+      <img src="https://images.unsplash.com/photo-1488900128323-21503983a07e?w=1440&q=90&fit=crop&crop=center" alt="Dollop lifestyle" loading="lazy">
+    </div>
+  </div>
+  <div class="hero-dots" id="heroDots">
+    <button class="hero-dot active" data-dot="0" aria-label="Slide 1"></button>
+    <button class="hero-dot" data-dot="1" aria-label="Slide 2"></button>
+    <button class="hero-dot" data-dot="2" aria-label="Slide 3"></button>
+    <button class="hero-dot" data-dot="3" aria-label="Slide 4"></button>
+    <button class="hero-dot" data-dot="4" aria-label="Slide 5"></button>
+  </div>
+  <div class="hero-grain"></div>
+  <div class="hero-ov"></div>
+  <div class="hero-c">
+    <img src="brand assets/dollop logo.webp" alt="Dollop" class="hero-logo-top">
+    <div class="hero-ey">Locally Made · Musang King</div>
+    <div class="hero-hl">
+      <span class="hero-hl-line"><span class="hl-xbold">PURE</span> FLAVOUR</span>
+      <span class="hero-hl-line">THAT WILL <span class="hl-barrio">BLOW</span></span>
+      <span class="hero-hl-line">YOUR <span class="hl-anton">MIND</span></span>
+    </div>
+    <p class="hero-stink">(and stink your mouth)</p>
+    <div class="hero-pills">
+      <span class="hero-pill">★★★★★ Legendary</span>
+      <span class="hero-pill">👑 100% Real Musang King</span>
+      <span class="hero-pill">🌿 No Artificial Flavours/Preservatives</span>
+    </div>
+    <button class="hero-btn" onclick="openModal()">Get Your Dollop</button>
+    <p class="hero-note">🛒 Available at select carts · 🚚 Order via WhatsApp</p>
+  </div>
+  <div class="hero-badge">
+    <div class="hero-badge-cloud">Stinky Good</div>
+    <img class="hero-badge-char" src="brand assets/Dollop Character.webp" alt="Dollop Character">
+  </div>
+  <div class="hero-scroll">
+    <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    scroll
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-items">
+    <div class="trust-item">
+      <span class="trust-icon">🌿</span>
+      <div class="trust-text">
+        <span class="trust-title">No Artificial Flavours<br>or Preservatives</span>
+        <span class="trust-sub">Purely natural ingredients</span>
+      </div>
+    </div>
+    <div class="trust-item">
+      <span class="trust-icon">👨‍👩‍👧‍👦</span>
+      <div class="trust-text">
+        <span class="trust-title">Family Recipe</span>
+        <span class="trust-sub">Generations of durian love</span>
+      </div>
+    </div>
+    <div class="trust-item">
+      <span class="trust-icon">👑</span>
+      <div class="trust-text">
+        <span class="trust-title">100% Real Musang King</span>
+        <span class="trust-sub">The king of durians, period</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="products" id="products">
+  <div class="sec-lbl">The Goods</div>
+  <h2 class="pg-head">Pick Your <span>Flavour</span></h2>
+  <p class="pg-sub">Two cups. One obsession. Choose your sweetness level — both made with 100% real Musang King.</p>
+  <div class="pg2">
+
+    <!-- REGULAR SWEET -->
+    <div class="pcard reveal" onclick="location.href='product.html?flavour=regular'" style="cursor:pointer!important;">
+      <div class="pcard-img pcard-reg">
+        <img src="dollop%20packaging.webp" alt="Dollop Regular Sweet packaging" class="pcard-pkg-img">
+        <span class="pcard-badge">Most Popular</span>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-name">Regular Sweet</div>
+        <div class="pcard-desc">Classic durian richness — bold, creamy, unmistakably Musang King the way it was meant to be.</div>
+        <div class="pcard-sizes">
+          <span class="pcard-size-lbl">Size:</span>
+          <button class="pcard-sz active" id="sz-reg-100" onclick="pcSelSz(event,'reg',100,this)">100ml</button>
+          <button class="pcard-sz" id="sz-reg-300" onclick="pcSelSz(event,'reg',300,this)">300ml</button>
+        </div>
+        <div class="pcard-footer">
+          <div class="pcard-price">RM 18 <small>per cup</small></div>
+          <div class="pcard-qty">
+            <button onclick="pcQty(event,'reg',-1)">−</button>
+            <span id="qty-reg">1</span>
+            <button onclick="pcQty(event,'reg',1)">+</button>
+          </div>
+          <button class="pcard-btn" onclick="event.stopPropagation();openModalWithFlavour('regular')">Order Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- LESS SWEET -->
+    <div class="pcard reveal" onclick="location.href='product.html?flavour=less'" style="transition-delay:0.12s;cursor:pointer!important;">
+      <div class="pcard-img pcard-less">
+        <img src="dollop%20packaging.webp" alt="Dollop Less Sweet packaging" class="pcard-pkg-img">
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-name">Less Sweet</div>
+        <div class="pcard-desc">Pure durian forward — the raw, intense Musang King experience for the true believer.</div>
+        <div class="pcard-sizes">
+          <span class="pcard-size-lbl">Size:</span>
+          <button class="pcard-sz active" id="sz-less-100" onclick="pcSelSz(event,'less',100,this)">100ml</button>
+          <button class="pcard-sz" id="sz-less-300" onclick="pcSelSz(event,'less',300,this)">300ml</button>
+        </div>
+        <div class="pcard-footer">
+          <div class="pcard-price">RM 18 <small>per cup</small></div>
+          <div class="pcard-qty">
+            <button onclick="pcQty(event,'less',-1)">−</button>
+            <span id="qty-less">1</span>
+            <button onclick="pcQty(event,'less',1)">+</button>
+          </div>
+          <button class="pcard-btn" onclick="event.stopPropagation();openModalWithFlavour('less')">Order Now</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="sec-lbl">Why Dollop</div>
+  <div class="feat-inner">
+    <div class="fr">
+      <div class="fn">01</div>
+      <div>
+        <div class="ft">Musang King. Nothing Else.</div>
+        <p class="fd">We don't do vanilla. We don't do safe choices. We do one thing — the King of Kings, transformed into a gelato that'll haunt your taste buds and clear your sinuses simultaneously.</p>
+      </div>
+    </div>
+    <div class="fr" style="transition-delay:0.1s">
+      <div class="fn">02</div>
+      <div>
+        <div class="ft">No Artificial Anything. Full Stop.</div>
+        <p class="fd">Not even a little. Real Musang King pulp — no watered-down shortcuts, no fillers. If you can't handle real durian intensity, this might not be your vibe.</p>
+      </div>
+    </div>
+    <div class="fr" style="transition-delay:0.2s">
+      <div class="fn">03</div>
+      <div>
+        <div class="ft">Stink Means It Worked.</div>
+        <p class="fd">Trust the stink. That smell is just the Musang King announcing itself — as it should. One flavour. One obsession. Because when you've got the King of Fruits, you don't need anything else.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="sec-lbl">FAQ</div>
+  <div class="faq-inner">
+    <div class="fi">
+      <button class="fq" onclick="toggleFaq(this)">How does pickup work?<span class="fi-icon">+</span></button>
+      <div class="fa">We operate on a pickup model to keep your gelato at peak freshness. Choose your nearest location (BU/TTDI/Damansara, Subang/SS15, or Mont Kiara), place your order online, and collect within 1–2 hours. It's cold, it's fresh, and it's waiting for you.</div>
+    </div>
+    <div class="fi">
+      <button class="fq" onclick="toggleFaq(this)">How fresh is your Musang King gelato?<span class="fi-icon">+</span></button>
+      <div class="fa">Made in small batches using 100% real Musang King pulp — no freezer burn, no shortcuts. We churn to order so what you get is as fresh and bold as the durian deserves to be.</div>
+    </div>
+    <div class="fi">
+      <button class="fq" onclick="toggleFaq(this)">Can I order for events or in bulk?<span class="fi-icon">+</span></button>
+      <div class="fa">Absolutely. For large orders, events, weddings, or corporate gifting, WhatsApp us directly and we'll sort out a custom arrangement — including quantity, timing, and the right pickup location for you.</div>
+    </div>
+    <div class="fi">
+      <button class="fq" onclick="toggleFaq(this)">Is it halal?<span class="fi-icon">+</span></button>
+      <div class="fa">Yes. Dollop is halal certified — no pork, no lard, no alcohol. Just pure durian gelato made with love in Malaysia.</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="mq">
+  <div class="mq-track">
+    <span class="mi">DOLLOP</span><span class="mi y">·</span><span class="mi">PURE MUSANG KING</span><span class="mi y">·</span><span class="mi">ONE FLAVOUR</span><span class="mi y">·</span><span class="mi">NO COMPROMISE</span><span class="mi y">·</span><span class="mi">NO APOLOGIES</span><span class="mi y">·</span><span class="mi">STINKY GOOD</span><span class="mi y">·</span><span class="mi">MADE IN MALAYSIA</span><span class="mi y">·</span><span class="mi">HALAL CERTIFIED</span><span class="mi y">·</span>
+    <span class="mi">DOLLOP</span><span class="mi y">·</span><span class="mi">PURE MUSANG KING</span><span class="mi y">·</span><span class="mi">ONE FLAVOUR</span><span class="mi y">·</span><span class="mi">NO COMPROMISE</span><span class="mi y">·</span><span class="mi">NO APOLOGIES</span><span class="mi y">·</span><span class="mi">STINKY GOOD</span><span class="mi y">·</span><span class="mi">MADE IN MALAYSIA</span><span class="mi y">·</span><span class="mi">HALAL CERTIFIED</span><span class="mi y">·</span>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="ft-top">
+    <div class="ft-brand">
+      <img src="brand assets/dollop logo.webp" alt="Dollop" class="ft-logo">
+      <p class="ft-tagline">Pure Musang King Gelato. One Flavour. No apologies.</p>
+      <div class="ft-soc"><a href="#">IG</a><a href="#">TT</a><a href="#">FB</a></div>
+    </div>
+    <div class="ft-cols">
+      <div class="ft-col">
+        <div class="ft-ct">The Goods</div>
+        <a href="#">The Flavour</a><a href="#">Packages</a><a href="#">Find a Cart</a><a href="#" onclick="openModal();return false;">Order Now</a>
+      </div>
+      <div class="ft-col">
+        <div class="ft-ct">Info</div>
+        <a href="#">FAQ</a><a href="#">Delivery Info</a><a href="#">Contact Us</a><a href="#">Wholesale</a>
+      </div>
+    </div>
+  </div>
+  <div class="ft-bot">
+    <span>© 2025 Dollop Sdn. Bhd. All rights reserved.</span>
+    <span>halal certified · no pork no lard</span>
+    <span>made with ❤️ in Malaysia</span>
+  </div>
+</footer>
+
+</div><!-- /.main -->
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <button class="m-close" onclick="closeModal()">✕</button>
+    <div class="m-step active" id="step1">
+      <div class="si"><div class="sd active"></div><div class="sd"></div><div class="sd"></div></div>
+      <div class="m-title">Get Your Dollop</div>
+      <div class="m-sub">Choose your size and how you'd like to get your stink on.</div>
+      <div class="v-lbl">Flavour</div>
+      <div class="v-sel" style="margin-bottom:20px;">
+        <button class="vb active" id="sw-regular" onclick="selSweet('regular')"><span class="vn">Regular Sweet</span><span class="vnt">Classic durian richness</span></button>
+        <button class="vb" id="sw-less" onclick="selSweet('less')"><span class="vn">Less Sweet</span><span class="vnt">Pure durian forward</span></button>
+      </div>
+      <div class="v-lbl">Cup Size</div>
+      <div class="sz-sel" style="margin-bottom:20px;">
+        <button class="sz-btn active" onclick="selSize(this,18)">100ml · RM18</button>
+        <button class="sz-btn" onclick="selSize(this,18)">300ml · RM18</button>
+      </div>
+      <div class="v-lbl">Quantity</div>
+      <div style="display:flex;align-items:center;gap:0;border:1.5px solid rgba(59,31,10,0.14);border-radius:40px;width:fit-content;overflow:hidden;margin-bottom:20px;background:var(--cream);">
+        <button style="width:40px;height:40px;background:transparent;border:none;font-size:1.4rem;color:var(--brown);font-weight:300;display:flex;align-items:center;justify-content:center;transition:background 0.15s;" onmouseover="this.style.background='rgba(59,31,10,0.07)'" onmouseout="this.style.background='transparent'" onclick="modalQty(-1)">−</button>
+        <span id="modal-qty" style="min-width:36px;text-align:center;font-weight:700;font-size:0.95rem;color:var(--brown);">1</span>
+        <button style="width:40px;height:40px;background:transparent;border:none;font-size:1.4rem;color:var(--brown);font-weight:300;display:flex;align-items:center;justify-content:center;transition:background 0.15s;" onmouseover="this.style.background='rgba(59,31,10,0.07)'" onmouseout="this.style.background='transparent'" onclick="modalQty(1)">+</button>
+      </div>
+      <div class="v-lbl">Fulfilment</div>
+      <div class="fulfilment-toggle" style="margin-bottom:16px;">
+        <button class="ft-btn active" id="ft-pickup" onclick="selFulfilment('pickup')">🏪 Pickup</button>
+        <button class="ft-btn" id="ft-delivery" onclick="selFulfilment('delivery')">🚚 Delivery</button>
+      </div>
+      <div class="pickup-fields" id="pickup-fields">
+        <div class="v-lbl">Pickup Location</div>
+        <div class="m-cards" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:20px;">
+          <div class="m-card" id="loc-bu" onclick="selLocation('bu')"><span class="m-icon">📍</span><div class="m-name">BU / TTDI</div><div class="m-note">Bandar Utama · TTDI · Damansara</div></div>
+          <div class="m-card" id="loc-sub" onclick="selLocation('sub')"><span class="m-icon">📍</span><div class="m-name">Subang</div><div class="m-note">Subang · SS15</div></div>
+          <div class="m-card" id="loc-mk" onclick="selLocation('mk')"><span class="m-icon">📍</span><div class="m-name">Mont Kiara</div><div class="m-note">Mont Kiara area</div></div>
+        </div>
+      </div>
+      <div class="delivery-fields" id="delivery-fields">
+        <div class="delivery-note">🚚 Delivery is available within Klang Valley. A delivery fee applies based on distance. We'll confirm the fee via WhatsApp before processing your order.</div>
+        <div class="fg"><label class="fl">Delivery Address</label><input type="text" class="fi2" placeholder="Full address incl. unit, street, postcode" id="del-addr"></div>
+        <div class="fg"><label class="fl">Area / Postcode</label><input type="text" class="fi2" placeholder="e.g. Petaling Jaya 47810" id="del-area"></div>
+      </div>
+      <button class="mb mb-p" onclick="goStep(2)">Continue →</button>
+    </div>
+    <div class="m-step" id="step2">
+      <div class="si"><div class="sd done"></div><div class="sd active"></div><div class="sd"></div></div>
+      <div class="m-title">Your Details</div>
+      <div class="m-sub">Almost done — we'll confirm your pickup via WhatsApp.</div>
+      <div id="step2-pickup-info" style="background:rgba(74,124,36,0.07);border:1.5px solid rgba(74,124,36,0.2);border-radius:12px;padding:14px 16px;margin-bottom:18px;font-size:0.84rem;color:var(--green);line-height:1.7;">
+        📍 <strong>Pickup Location:</strong> <span id="locName">—</span><br>
+        🕐 Ready within 1–2 hours after order confirmation.<br>
+        🧊 Kept frozen until you collect.
+      </div>
+      <div id="step2-delivery-info" style="display:none;background:rgba(245,197,24,0.1);border:1.5px solid rgba(245,197,24,0.35);border-radius:12px;padding:14px 16px;margin-bottom:18px;font-size:0.84rem;color:var(--brown);line-height:1.7;">
+        🚚 <strong>Delivery to:</strong> <span id="delAddrDisplay">—</span><br>
+        💬 We'll confirm delivery fee &amp; ETA via WhatsApp.<br>
+        🧊 Packed in insulated packaging.
+      </div>
+      <div class="fg"><label class="fl">Full Name</label><input type="text" class="fi2" placeholder="e.g. Ahmad Rizal" id="fn"></div>
+      <div class="fg"><label class="fl">WhatsApp Number</label><input type="tel" class="fi2" placeholder="e.g. 012-345 6789" id="fp"></div>
+      <div class="fg"><label class="fl">Notes (optional)</label><textarea class="fta" placeholder="e.g. Allergies, preferred collection time..." id="fnotes"></textarea></div>
+      <button class="mb mb-p" onclick="goStep(3)">Review Order →</button>
+      <button class="mb mb-s" onclick="goStep(1)">← Back</button>
+    </div>
+    <div class="m-step" id="step3">
+      <div class="si"><div class="sd done"></div><div class="sd done"></div><div class="sd active"></div></div>
+      <div class="m-title">Review &amp; Pay</div>
+      <div class="m-sub">Double-check your order before confirming.</div>
+      <div class="os">
+        <div class="or"><span>Musang King Gelato</span><span id="sip">RM 18.00</span></div>
+        <div class="or"><span>Flavour</span><span id="sv">Regular Sweet</span></div>
+        <div class="or"><span>Cup Size</span><span id="sCupSize">100ml</span></div>
+        <div class="or"><span>Quantity</span><span id="sQty">1 cup</span></div>
+        <div class="or"><span>Fulfilment</span><span id="sFulfilment">Pickup</span></div>
+        <div class="or" id="sLocRow"><span>Pickup Location</span><span id="sLoc">—</span></div>
+        <div class="or" id="sAddrRow" style="display:none"><span>Delivery Address</span><span id="sAddr">—</span></div>
+        <div class="or"><span>Pickup</span><span style="color:var(--green);font-weight:600;">FREE</span></div>
+        <div class="or tot"><span>Total</span><span id="st">RM 18.00</span></div>
+      </div>
+      <div class="fg">
+        <label class="fl">Payment Method</label>
+        <div class="pm"><span class="pb fpx">FPX Online Banking</span><span class="pb">Debit / Credit Card</span><span class="pb">TnG eWallet</span></div>
+        <select class="fs" id="fpay">
+          <option value="">Select payment method...</option>
+          <option value="fpx">FPX Online Banking (Recommended)</option>
+          <option value="card">Debit / Credit Card</option>
+          <option value="tng">Touch 'n Go eWallet</option>
+          <option value="boost">Boost</option>
+        </select>
+      </div>
+      <p style="font-size:0.71rem;color:var(--brown-light);margin-bottom:16px;line-height:1.6;">🔒 Payments processed securely via <strong>ToyyibPay</strong>. Dollop never stores your payment details.</p>
+      <button class="mb mb-p" onclick="placeOrder()">Confirm &amp; Pay →</button>
+      <button class="mb mb-s" onclick="goStep(2)">← Back</button>
+    </div>
+    <div class="m-step" id="step4">
+      <div class="ss"><div class="si2">✅</div>
+        <div class="st">Order Placed!</div>
+        <p class="ssub">Your Dollop is confirmed. Prepare your sinuses — we'll WhatsApp you shortly. 👑</p>
+        <div class="son" id="orderNo">ORDER #DLP-00000</div>
+        <button class="mb mb-p" onclick="closeModal()">Back to Home</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const cursor=document.getElementById('cursor');
+document.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';});
+
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.05,rootMargin:'0px 0px 80px 0px'});
+document.querySelectorAll('.reveal,.fr,.pcard').forEach(el=>obs.observe(el));
+// Fallback: force all visible after short delay (catches elements in viewport on load)
+function forceVisible(){document.querySelectorAll('.reveal,.fr,.pcard').forEach(el=>el.classList.add('visible'));}
+setTimeout(forceVisible,500);
+
+const sLinks=document.querySelectorAll('.sb-link');
+const secs=document.querySelectorAll('section[id]');
+const sObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const id=e.target.id;sLinks.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+id));}});},{threshold:0.4});
+secs.forEach(s=>sObs.observe(s));
+
+function toggleFaq(btn){const item=btn.closest('.fi');const was=item.classList.contains('open');document.querySelectorAll('.fi').forEach(i=>i.classList.remove('open'));if(!was)item.classList.add('open');}
+
+// State
+let price=18, sweet='regular', pickupLoc='', qty=1, cupSize='100ml', fulfilment='pickup', deliveryAddr='';
+const locLabels={bu:'Bandar Utama / TTDI / Damansara', sub:'Subang / SS15', mk:'Mont Kiara'};
+const pcQtys={reg:1,less:1};
+
+// Product card qty
+function pcQty(e,flavour,delta){
+  e.stopPropagation();
+  pcQtys[flavour]=Math.max(1,pcQtys[flavour]+delta);
+  document.getElementById('qty-'+flavour).textContent=pcQtys[flavour];
+}
+// Product card size
+function pcSelSz(e,flavour,ml,btn){
+  e.stopPropagation();
+  document.querySelectorAll('#sz-'+flavour+'-100,#sz-'+flavour+'-300').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+// Modal qty
+function modalQty(delta){
+  qty=Math.max(1,qty+delta);
+  document.getElementById('modal-qty').textContent=qty;
+}
+// Modal size
+function selSize(btn,p){
+  document.querySelectorAll('.sz-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  cupSize=btn.textContent.split('·')[0].trim();
+  price=p;
+}
+// Modal sweetness
+function selSweet(t){
+  sweet=t;
+  document.querySelectorAll('#sw-regular,#sw-less').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sw-'+t).classList.add('active');
+}
+// Modal location
+function selLocation(loc){
+  pickupLoc=loc;
+  document.querySelectorAll('#loc-bu,#loc-sub,#loc-mk').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('loc-'+loc).classList.add('selected');
+}
+function selFulfilment(type){
+  fulfilment=type;
+  document.getElementById('ft-pickup').classList.toggle('active',type==='pickup');
+  document.getElementById('ft-delivery').classList.toggle('active',type==='delivery');
+  document.getElementById('pickup-fields').classList.toggle('hide',type==='delivery');
+  document.getElementById('delivery-fields').classList.toggle('show',type==='delivery');
+  if(type==='delivery'){pickupLoc='delivery';}
+  else{pickupLoc='';}
+}
+// Open modal
+function openModal(){
+  qty=1;document.getElementById('modal-qty').textContent=1;
+  fulfilment='pickup';pickupLoc='';deliveryAddr='';
+  // Reset fulfilment toggle UI
+  const ftP=document.getElementById('ft-pickup');
+  const ftD=document.getElementById('ft-delivery');
+  const pf=document.getElementById('pickup-fields');
+  const df=document.getElementById('delivery-fields');
+  if(ftP){ftP.classList.add('active');ftD.classList.remove('active');}
+  if(pf){pf.classList.remove('hide');}
+  if(df){df.classList.remove('show');}
+  // Reset location selection
+  document.querySelectorAll('#loc-bu,#loc-sub,#loc-mk').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+  goStep(1);
+}
+function openModalWithFlavour(f){
+  selSweet(f);
+  openModal();
+}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');document.body.style.overflow='';}
+function handleOverlayClick(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
+
+function goStep(s){
+  if(s===2){
+    if(fulfilment==='pickup'){
+      if(!pickupLoc||pickupLoc==='delivery'){alert('Please select a pickup location.');return;}
+      document.getElementById('locName').textContent=locLabels[pickupLoc]||'—';
+      document.getElementById('step2-pickup-info').style.display='';
+      document.getElementById('step2-delivery-info').style.display='none';
+    } else {
+      const addr=document.getElementById('del-addr').value.trim();
+      if(!addr){alert('Please enter your delivery address.');return;}
+      deliveryAddr=addr+' — '+(document.getElementById('del-area').value.trim()||'');
+      document.getElementById('delAddrDisplay').textContent=deliveryAddr;
+      document.getElementById('step2-pickup-info').style.display='none';
+      document.getElementById('step2-delivery-info').style.display='';
+    }
+  }
+  if(s===3){
+    const n=document.getElementById('fn').value.trim();
+    const p=document.getElementById('fp').value.trim();
+    if(!n||!p){alert('Please fill in your name and WhatsApp number.');return;}
+    document.getElementById('sip').textContent='RM '+(price*qty).toFixed(2);
+    document.getElementById('sv').textContent=sweet==='regular'?'Regular Sweet':'Less Sweet';
+    document.getElementById('sCupSize').textContent=cupSize;
+    document.getElementById('sQty').textContent=qty+' cup'+(qty>1?'s':'');
+    document.getElementById('sFulfilment').textContent=fulfilment==='delivery'?'Delivery':'Pickup';
+    document.getElementById('sLocRow').style.display=fulfilment==='delivery'?'none':'';
+    document.getElementById('sAddrRow').style.display=fulfilment==='delivery'?'':'none';
+    document.getElementById('sLoc').textContent=locLabels[pickupLoc]||'—';
+    document.getElementById('sAddr').textContent=deliveryAddr||'—';
+    document.getElementById('st').textContent='RM '+(price*qty).toFixed(2)+(fulfilment==='delivery'?' + delivery fee':'');
+  }
+  document.querySelectorAll('.m-step').forEach(x=>x.classList.remove('active'));
+  document.getElementById('step'+s).classList.add('active');
+}
+
+function placeOrder(){
+  if(!document.getElementById('fpay').value){alert('Please select a payment method.');return;}
+  document.getElementById('orderNo').textContent='ORDER #DLP-'+String(Math.floor(Math.random()*90000)+10000);
+  goStep(4);
+}
+
+// Floating button — show after user scrolls past products section
+const floatBtn = document.getElementById('floatBtn');
+const productsSec = document.getElementById('products');
+if(floatBtn && productsSec){
+  // IntersectionObserver: fires when products leaves/enters viewport
+  const floatObs = new IntersectionObserver(([entry]) => {
+    floatBtn.classList.toggle('show', !entry.isIntersecting);
+  }, {threshold: 0});
+  floatObs.observe(productsSec);
+  // Fallback scroll — body is the scroll container (overflow:hidden auto)
+  function checkFloat(){
+    const r = productsSec.getBoundingClientRect();
+    floatBtn.classList.toggle('show', r.bottom < 100);
+  }
+  document.body.addEventListener('scroll', checkFloat, {passive:true});
+  window.addEventListener('scroll', checkFloat, {passive:true});
+  checkFloat();
+}
+
+// Hero carousel
+(function(){
+  const slides = document.querySelectorAll('.hero-slide');
+  const dots = document.querySelectorAll('.hero-dot');
+  let cur = 0, timer;
+  function goTo(n){
+    slides[cur].classList.remove('active');
+    dots[cur].classList.remove('active');
+    cur = (n + slides.length) % slides.length;
+    slides[cur].classList.add('active');
+    dots[cur].classList.add('active');
+  }
+  function next(){ goTo(cur + 1); }
+  function startAuto(){ timer = setInterval(next, 5000); }
+  function resetAuto(){ clearInterval(timer); startAuto(); }
+  dots.forEach((d,i) => d.addEventListener('click', ()=>{ goTo(i); resetAuto(); }));
+  startAuto();
+})();
+</script>
+
+<!-- FLOATING BUY BUTTON -->
+<button id="floatBtn" onclick="openModal()">
+  <span class="fb-pulse"></span>
+  Get Your Dollop
+</button>
+
+</body>
+</html>
