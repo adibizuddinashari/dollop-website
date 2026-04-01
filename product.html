@@ -22,9 +22,8 @@ body{font-family:'Barlow',sans-serif;font-weight:500;background:var(--cream);col
 a{text-decoration:none;color:inherit;}
 
 /* CURSOR */
-*{cursor:none!important;}
-#cursor{position:fixed;top:-100px;left:-100px;z-index:9999;pointer-events:none;transition:transform 0.15s ease;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.35));width:40px;height:40px;background:url('brand%20assets/durian%20cursor.png') center/contain no-repeat;}
-body:has(button:hover) #cursor,body:has(a:hover) #cursor{transform:scale(1.4) rotate(-15deg);}
+*{cursor:auto;}
+#cursor{display:none;}
 
 /* SIDEBAR */
 .sb{position:fixed;left:0;top:0;bottom:0;width:var(--sb);background:var(--brown);z-index:200;display:flex;flex-direction:column;align-items:center;padding:22px 0 18px;}
@@ -330,8 +329,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 
     <span class="ph-label">Cup Size</span>
     <div class="ph-sizes">
-      <button class="ph-sz active" onclick="selSize(this,18)">100ml · RM18</button>
-      <button class="ph-sz" onclick="selSize(this,18)">300ml · RM18</button>
+      <button class="ph-sz active" onclick="selSize(this,18)">50ml · RM18</button>
     </div>
 
     <div class="ph-cta-row">
@@ -457,9 +455,9 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
     </div>
   </div>
   <div class="ft-bot">
-    <span>© 2025 Dollop Sdn. Bhd. All rights reserved.</span>
+    <span>© 2025 Beyond Bites Sdn Bhd (202501026928) · All rights reserved.</span>
     <span>halal certified · no pork no lard</span>
-    <span>made with ❤️ in Malaysia</span>
+    <span>made with stinking good passion</span>
   </div>
 </footer>
 
@@ -480,8 +478,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
       </div>
       <div class="v-lbl">Cup Size</div>
       <div class="sz-sel" style="margin-bottom:20px;">
-        <button class="sz-btn active" onclick="selSize(this,18)">100ml · RM18</button>
-        <button class="sz-btn" onclick="selSize(this,18)">300ml · RM18</button>
+        <button class="sz-btn active" onclick="selSize(this,18)">50ml · RM18</button>
       </div>
       <div class="v-lbl">Quantity</div>
       <div style="display:flex;align-items:center;gap:0;border:1.5px solid rgba(59,31,10,0.14);border-radius:40px;width:fit-content;overflow:hidden;margin-bottom:20px;background:var(--cream);">
@@ -536,7 +533,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
       <div class="os">
         <div class="or"><span>Musang King Gelato</span><span id="sip">RM 18.00</span></div>
         <div class="or"><span>Flavour</span><span id="sv">Regular Sweet</span></div>
-        <div class="or"><span>Cup Size</span><span id="sCupSize">100ml</span></div>
+        <div class="or"><span>Cup Size</span><span id="sCupSize">50ml</span></div>
         <div class="or"><span>Quantity</span><span id="sQty">1 cup</span></div>
         <div class="or"><span>Fulfilment</span><span id="sFulfilment">Pickup</span></div>
         <div class="or" id="sLocRow"><span>Pickup Location</span><span id="sLoc">—</span></div>
@@ -544,26 +541,32 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
         <div class="or"><span>Pickup</span><span style="color:var(--green);font-weight:600;">FREE</span></div>
         <div class="or tot"><span>Total</span><span id="st">RM 18.00</span></div>
       </div>
-      <div class="fg">
-        <label class="fl">Payment Method</label>
-        <div class="pm"><span class="pb fpx">FPX Online Banking</span><span class="pb">Debit / Credit Card</span><span class="pb">TnG eWallet</span></div>
-        <select class="fs" id="fpay">
-          <option value="">Select payment method...</option>
-          <option value="fpx">FPX Online Banking (Recommended)</option>
-          <option value="card">Debit / Credit Card</option>
-          <option value="tng">Touch 'n Go eWallet</option>
-          <option value="boost">Boost</option>
-        </select>
+      <div style="background:rgba(74,124,36,0.07);border:1.5px solid rgba(74,124,36,0.22);border-radius:12px;padding:14px 16px;margin-bottom:18px;font-size:0.84rem;color:var(--brown);line-height:1.7;">
+        💸 <strong>How payment works:</strong><br>
+        After confirming, we'll WhatsApp you with a <strong>bank transfer QR code</strong>. Send your receipt and we'll process your order right away.
       </div>
-      <p style="font-size:0.71rem;color:var(--brown-light);margin-bottom:16px;line-height:1.6;">🔒 Payments processed securely via <strong>ToyyibPay</strong>. Dollop never stores your payment details.</p>
-      <button class="mb mb-p" onclick="placeOrder()">Confirm &amp; Pay →</button>
+      <button class="mb mb-p" id="confirmOrderBtn" onclick="placeOrder()">Confirm Order →</button>
       <button class="mb mb-s" onclick="goStep(2)">← Back</button>
     </div>
     <div class="m-step" id="step4">
-      <div class="ss"><div class="si2">✅</div>
-        <div class="st">Order Placed!</div>
-        <p class="ssub">Your Dollop is confirmed. Prepare your sinuses — we'll WhatsApp you shortly. 👑</p>
+      <div class="ss">
+        <div class="si2">✅</div>
+        <div class="st">Order Received!</div>
+        <p class="ssub">We'll WhatsApp you shortly with payment instructions and a QR code for bank transfer.</p>
         <div class="son" id="orderNo">ORDER #DLP-00000</div>
+        <div style="background:var(--white);border:1.5px solid rgba(59,31,10,0.1);border-radius:14px;padding:20px;margin:16px 0;text-align:center;">
+          <div style="font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--brown-light);margin-bottom:12px;">Scan to Pay</div>
+          <img src="images/Dollop gelato Duit Now QR.jpeg" alt="DuitNow QR" style="width:180px;height:180px;object-fit:contain;border-radius:10px;display:block;margin:0 auto 16px;">
+          <div style="font-size:0.82rem;color:var(--brown);line-height:1.9;border-top:1px solid rgba(59,31,10,0.08);padding-top:14px;text-align:left;">
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--brown-light);">Bank</span><strong>Maybank</strong></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--brown-light);">Account No.</span><strong>562106988173</strong></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--brown-light);">Account Name</span><strong>Beyond Bites Sdn Bhd</strong></div>
+          </div>
+        </div>
+        <div style="background:rgba(74,124,36,0.07);border:1.5px solid rgba(74,124,36,0.22);border-radius:12px;padding:14px 16px;margin-bottom:16px;font-size:0.84rem;color:var(--brown);line-height:1.8;text-align:left;">
+          📱 <strong>WhatsApp on file:</strong> <span id="confirmPhone" style="font-weight:600;color:var(--green);">—</span><br>
+          📌 <strong>Reply in that WhatsApp chat with your proof of payment</strong> (screenshot or photo of receipt) — we'll confirm your order right away.
+        </div>
         <button class="mb mb-p" onclick="closeModal()">Back to Home</button>
       </div>
     </div>
@@ -647,7 +650,7 @@ document.querySelectorAll('.ph-sz').forEach(btn => {
 });
 
 // ---- Modal state & logic (same as index.html) ----
-let price=18, sweet='regular', pickupLoc='', qty=1, cupSize='100ml', fulfilment='pickup', deliveryAddr='';
+let price=18, sweet='regular', pickupLoc='', qty=1, cupSize='50ml', fulfilment='pickup', deliveryAddr='';
 const locLabels={bu:'Bandar Utama / TTDI / Damansara', sub:'Subang / SS15', mk:'Mont Kiara'};
 
 function openModal(){document.getElementById('modalOverlay').classList.add('open');document.body.style.overflow='hidden';}
@@ -721,13 +724,57 @@ function goStep(n){
   document.querySelectorAll('.m-step').forEach(s=>s.classList.remove('active'));
   document.getElementById('step'+n).classList.add('active');
 }
-function placeOrder(){
-  const pay=document.getElementById('fpay').value;
-  if(!pay){alert('Please select a payment method.');return;}
-  const orderNum='DLP-'+String(Math.floor(10000+Math.random()*90000));
-  document.getElementById('orderNo').textContent='ORDER #'+orderNum;
-  document.querySelectorAll('.m-step').forEach(s=>s.classList.remove('active'));
-  document.getElementById('step4').classList.add('active');
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwZ_CO7O9tfYagvnCngshdK9spxS5z9awqJP3EoGa4tVHkLamynn8ccf5QB63MPHhpZIQ/exec';
+const COMPANY_WHATSAPP = '60109737017';
+
+async function placeOrder(){
+  const btn = document.getElementById('confirmOrderBtn');
+  const name     = document.getElementById('fn').value.trim();
+  const phone    = document.getElementById('fp').value.trim();
+  const notes    = document.getElementById('fnotes').value.trim();
+  const flavour  = sweet === 'regular' ? 'Regular Sweet' : 'Less Sweet';
+  const size     = cupSize;
+  const total    = 'RM ' + (price * qty).toFixed(2) + (fulfilment === 'delivery' ? ' + delivery fee' : '');
+  const location = fulfilment === 'delivery' ? (deliveryAddr || '—') : (locLabels[pickupLoc] || '—');
+  const orderNo  = 'DLP-' + String(Math.floor(Math.random() * 90000) + 10000);
+  const timestamp = new Date().toLocaleString('en-MY', {timeZone: 'Asia/Kuala_Lumpur'});
+  if (!name || !phone) { alert('Please fill in your name and WhatsApp number.'); goStep(2); return; }
+  btn.disabled = true;
+  btn.textContent = 'Sending order...';
+  const orderData = { timestamp, orderNo, name, phone, flavour, size, qty, fulfilment, location, total, notes };
+  const sheetPromise = (async () => {
+    if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') return;
+    try {
+      await fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(orderData) });
+    } catch (err) { console.warn('Sheet submission failed:', err); }
+  })();
+  const waMsg = [
+    `🍦 *NEW DOLLOP ORDER*`,
+    `━━━━━━━━━━━━━━━━━━━━`,
+    `📋 Order No: *${orderNo}*`,
+    `👤 Name: ${name}`,
+    `📱 WhatsApp: ${phone}`,
+    ``,
+    `🧁 Flavour: ${flavour}`,
+    `📦 Size: ${size}`,
+    `🔢 Qty: ${qty} cup${qty > 1 ? 's' : ''}`,
+    `🚚 Fulfilment: ${fulfilment === 'delivery' ? 'Delivery' : 'Pickup'}`,
+    `📍 Location: ${location}`,
+    `💰 Total: ${total}`,
+    notes ? `📝 Notes: ${notes}` : '',
+    ``,
+    `⏰ ${timestamp}`,
+    `━━━━━━━━━━━━━━━━━━━━`,
+    `(Saya akan lampirkan bukti pembayaran selepas transfer.) / (I will attach my proof of payment once transferred.)`
+  ].filter(Boolean).join('\n');
+  await Promise.race([sheetPromise, new Promise(r => setTimeout(r, 3000))]);
+  document.getElementById('orderNo').textContent = 'ORDER #' + orderNo;
+  document.getElementById('confirmPhone').textContent = phone;
+  btn.disabled = false;
+  btn.textContent = 'Confirm Order →';
+  goStep(4);
+  const waUrl = 'https://wa.me/' + COMPANY_WHATSAPP + '?text=' + encodeURIComponent(waMsg);
+  setTimeout(() => window.open(waUrl, '_blank'), 400);
 }
 </script>
 </body>
