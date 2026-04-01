@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dollop — Pure Musang King Gelato</title>
 <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;800&family=Bebas+Neue&family=Barrio&family=Anton&family=Bangers&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,500;0,800;1,600&family=Bebas+Neue&family=Barrio&family=Anton&family=Bangers&display=swap" rel="stylesheet">
 <style>
 @font-face { font-family:'Barlow'; src:url('brand assets/fonts/Barlow-Medium.ttf') format('truetype'); font-weight:500; font-style:normal; }
 @font-face { font-family:'Barlow'; src:url('brand assets/fonts/Barlow-Italic.ttf') format('truetype'); font-weight:400; font-style:italic; }
@@ -24,8 +24,8 @@ body{font-family:'Barlow',sans-serif;font-weight:500;background:var(--cream);col
 a{text-decoration:none;color:inherit;}
 
 /* CURSOR */
-*{cursor:none!important;}
-#cursor{position:fixed;top:-100px;left:-100px;z-index:9999;pointer-events:none;transition:transform 0.15s ease;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.35));width:40px;height:40px;background:url('brand%20assets/durian%20cursor.png') center/contain no-repeat;}
+*{cursor:auto;}
+#cursor{display:none;}
 body:has(button:hover) #cursor,body:has(a:hover) #cursor{transform:scale(1.4) rotate(-15deg);}
 
 /* SIDEBAR */
@@ -45,7 +45,7 @@ body:has(button:hover) #cursor,body:has(a:hover) #cursor{transform:scale(1.4) ro
 .main{margin-left:var(--sb);}
 
 /* HERO */
-.hero{position:relative;height:100vh;min-height:640px;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+.hero{position:relative;height:100vh;min-height:640px;overflow:hidden;}
 .hero-bg{position:absolute;inset:0;z-index:0;background:#1a1a1a;overflow:hidden;}
 .hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease;will-change:opacity;}
 .hero-slide.active{opacity:1;}
@@ -55,16 +55,19 @@ body:has(button:hover) #cursor,body:has(a:hover) #cursor{transform:scale(1.4) ro
 .hero-dot.active{background:var(--yellow);transform:scale(1.3);}
 .hero-grain{position:absolute;inset:0;z-index:1;opacity:0.35;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");}
 .hero-ov{position:absolute;inset:0;z-index:2;background:linear-gradient(to top,rgba(8,4,0,0.88) 0%,rgba(8,4,0,0.45) 50%,rgba(8,4,0,0.58) 100%);}
-.hero-c{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;padding:0 60px;max-width:1080px;}
-.hero-logo-top{height:1.4rem;width:auto;object-fit:contain;filter:brightness(0) invert(1);margin-bottom:10px;opacity:0.88;}
+.hero-c{display:none;}
+.hero-logo-top{position:absolute;top:55px;left:62px;width:clamp(160px,18vw,260px);height:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:0.88;z-index:3;}
 .hero-ey{font-size:0.68rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--green-light);font-weight:500;margin-bottom:10px;display:flex;align-items:center;gap:14px;}
 .hero-ey::before,.hero-ey::after{content:'';display:block;width:26px;height:1px;background:var(--green-light);}
-.hero-hl{font-family:'Barlow',sans-serif;font-weight:500;font-size:clamp(3.2rem,7.5vw,6rem);line-height:0.94;color:var(--cream);text-align:center;letter-spacing:0.02em;margin-bottom:12px;text-shadow:0 2px 40px rgba(0,0,0,0.55);}
+.hero-bottom-row{position:absolute;bottom:48px;left:52px;z-index:3;display:inline-flex;align-items:flex-end;gap:20px;}
+.hero-headline-wrap{flex:0 0 auto;}
+.hero-hl{font-family:'Barlow',sans-serif;font-weight:500;font-size:clamp(2.5rem,7.4vw,6.8rem);line-height:0.91;color:#fff8ee;text-align:left;letter-spacing:2.48px;text-shadow:0 2px 40px rgba(0,0,0,0.5);text-box:trim-both cap alphabetic;leading-trim:both;text-edge:cap alphabetic;}
+.hero-right-panel{flex-shrink:0;width:240px;display:flex;flex-direction:column;gap:12px;align-self:flex-end;}
 .hero-hl-line{display:block;}
-.hl-xbold{font-weight:800;}
+.hl-xbold{font-weight:800;font-family:'Barlow',sans-serif;}
+.hl-flavour{font-weight:600;font-style:italic;color:#f5c518;}
 .hl-barrio{font-family:'Barrio',cursive;font-weight:400;}
-.hl-anton{font-family:'Anton',sans-serif;font-weight:400;letter-spacing:0.01em;}
-.hero-stink{font-family:'Bangers',cursive;font-size:clamp(1rem,1.6vw,1.35rem);color:rgba(255,248,238,0.72);letter-spacing:0.08em;margin-bottom:28px;text-shadow:0 2px 12px rgba(0,0,0,0.4);}
+.hero-stink{font-family:'Bangers',cursive;font-size:clamp(1rem,1.5vw,1.35rem);color:rgba(255,248,238,0.72);letter-spacing:0.108em;line-height:1.3;text-shadow:0 2px 12px rgba(0,0,0,0.4);}
 .hero-pills{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-bottom:32px;}
 .hero-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,248,238,0.07);border:1px solid rgba(255,248,238,0.14);border-radius:40px;padding:6px 14px;font-size:0.76rem;font-weight:500;color:rgba(255,248,238,0.78);backdrop-filter:blur(4px);}
 .trust-bar{background:var(--brown);padding:0;display:flex;justify-content:center;align-items:stretch;border-bottom:3px solid var(--yellow);}
@@ -75,12 +78,12 @@ body:has(button:hover) #cursor,body:has(a:hover) #cursor{transform:scale(1.4) ro
 .trust-text{display:flex;flex-direction:column;gap:3px;}
 .trust-title{font-family:'Barlow',sans-serif;font-size:1.2rem;font-weight:700;font-style:italic;color:var(--cream);letter-spacing:-0.01em;line-height:1.1;}
 .trust-sub{font-family:'Barlow',sans-serif;font-size:0.75rem;font-weight:500;color:rgba(255,248,238,0.5);letter-spacing:0.06em;text-transform:uppercase;}
-.hero-btn{display:inline-flex;align-items:center;gap:11px;background:var(--yellow);color:var(--brown);font-family:'Bebas Neue',sans-serif;font-size:1.55rem;letter-spacing:0.2em;padding:17px 52px 18px 50px;border-radius:50px 44px 52px 46px;transition:transform 0.2s,box-shadow 0.2s;margin-bottom:13px;position:relative;overflow:hidden;border:none;}
+.hero-btn{display:flex;align-items:center;justify-content:center;width:100%;gap:11px;background:var(--yellow);color:var(--brown);font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.2em;padding:17px 32px;height:61.44px;border-radius:0;white-space:nowrap;transition:transform 0.2s,box-shadow 0.2s;margin-bottom:13px;position:relative;overflow:hidden;border:none;}
 .hero-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent 40%,rgba(255,255,255,0.18) 50%,transparent 60%);transform:translateX(-100%);transition:transform 0.5s;}
 .hero-btn:hover::after{transform:translateX(100%);}
 .hero-btn:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(245,197,24,0.38);}
 .hero-note{font-size:0.73rem;color:rgba(255,248,238,0.38);letter-spacing:0.04em;}
-.hero-badge{position:absolute;bottom:0;right:40px;z-index:4;display:flex;flex-direction:column;align-items:center;}
+.hero-badge{display:none !important;}
 .hero-badge-char{width:160px;height:auto;filter:drop-shadow(0 8px 24px rgba(0,0,0,0.4));animation:charFloat 3s ease-in-out infinite;}
 @keyframes charFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 .hero-badge-cloud{background:var(--yellow);color:var(--brown);font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.12em;padding:7px 18px;border-radius:40px 40px 40px 4px;border:2px solid var(--brown);box-shadow:0 4px 16px rgba(0,0,0,0.25);white-space:nowrap;margin-bottom:8px;position:relative;}
@@ -924,11 +927,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 /* Real logo + all hero-c children hidden until JS reveals them */
 /* Each hero element starts hidden independently */
 .hero-logo-top,
-.hero-ey,
-.hero-stink,
-.hero-pills,
-.hero-btn,
-.hero-note,
+.hero-bottom-row,
 .hero-scroll,
 .hero-badge,
 .hero-dots { opacity: 0; }
@@ -955,12 +954,11 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 .hero-badge { transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22,1,0.36,1); transform: translateX(30px) rotate(6deg) scale(0.88); }
 .hero-dots  { transition: opacity 0.5s ease; }
 
-.hero-ey.hi-show, .hero-stink.hi-show, .hero-pills.hi-show,
-.hero-btn.hi-show, .hero-note.hi-show, .hero-scroll.hi-show, .hero-dots.hi-show {
+.hero-scroll.hi-show, .hero-dots.hi-show,
+.hero-bottom-row.hi-show {
   opacity: 1 !important;
   transform: none !important;
 }
-.hero-btn.hi-show { transform: none !important; }
 .hero-badge.hi-show { opacity: 1 !important; transform: none !important; }
 .hero-logo-top.hi-show { opacity: 0.88 !important; }
 
@@ -1007,10 +1005,10 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 <section class="hero" id="hero">
   <div class="hero-bg hero-bg--intro" id="heroBg">
     <div class="hero-slide active" data-slide="0">
-      <img src="images/anshul-oS1XZMjWOoQ-unsplash 1.png" alt="Dollop lifestyle" loading="eager">
+      <img src="images/close-up-girl-eating-ice-cream.jpg" alt="Dollop lifestyle" loading="eager">
     </div>
     <div class="hero-slide" data-slide="1">
-      <img src="images/unsplash_-cQ2kQqpEB8.png" alt="Dollop lifestyle" loading="lazy">
+      <img src="images/medium-shot-girl-eating-ice-cream.jpg" alt="Dollop lifestyle" loading="lazy">
     </div>
     <div class="hero-slide" data-slide="2">
       <img src="images/unsplash_DNKGiUUoVkc.png" alt="Dollop lifestyle" loading="lazy">
@@ -1031,22 +1029,19 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
   </div>
   <div class="hero-grain"></div>
   <div class="hero-ov"></div>
-  <div class="hero-c">
-    <img src="brand assets/dollop logo.webp" alt="Dollop" class="hero-logo-top">
-    <div class="hero-ey">Locally Made · Musang King</div>
-    <div class="hero-hl">
-      <span class="hero-hl-line"><span class="hl-slide"><span class="hl-xbold">PURE</span> FLAVOUR</span></span>
-      <span class="hero-hl-line"><span class="hl-slide">THAT WILL <span class="hl-barrio">BLOW</span></span></span>
-      <span class="hero-hl-line"><span class="hl-slide">YOUR <span class="hl-anton">MIND</span></span></span>
+  <img src="brand assets/dollop logo.webp" alt="Dollop" class="hero-logo-top">
+  <div class="hero-bottom-row">
+    <div class="hero-headline-wrap">
+      <div class="hero-hl">
+        <span class="hero-hl-line"><span class="hl-slide"><span class="hl-xbold">PURE</span> <span class="hl-flavour">FLAVOUR</span></span></span>
+        <span class="hero-hl-line"><span class="hl-slide">YOUR THAT WILL</span></span>
+        <span class="hero-hl-line"><span class="hl-slide"><span class="hl-barrio">BLOW</span> YOUR <span class="hl-barrio">MIND</span></span></span>
+      </div>
     </div>
-    <p class="hero-stink">(and stink your mouth)</p>
-    <div class="hero-pills">
-      <span class="hero-pill">★★★★★ Legendary</span>
-      <span class="hero-pill">👑 100% Real Musang King</span>
-      <span class="hero-pill">🌿 No Artificial Flavours/Preservatives</span>
+    <div class="hero-right-panel">
+      <p class="hero-stink">THIS WILL stink your mouth</p>
+      <button class="hero-btn" onclick="openModal()">Get Your Dollop</button>
     </div>
-    <button class="hero-btn" onclick="openModal()">Get Your Dollop</button>
-    <p class="hero-note">🛒 Available at select carts · 🚚 Order via WhatsApp</p>
   </div>
   <img class="hero-logo-intro" src="brand assets/dollop logo.webp" alt="Dollop intro logo">
   <div class="hero-badge">
@@ -1448,83 +1443,45 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 // HERO CINEMATIC INTRO SEQUENCE
 // ============================================
 (function () {
-  const heroC       = document.querySelector('.hero-c');
-  const introLogo   = document.querySelector('.hero-logo-intro');
-  const realLogo    = document.querySelector('.hero-logo-top');
-  const eyebrow     = document.querySelector('.hero-ey');
-  const hlSlides    = document.querySelectorAll('.hl-slide');
-  const stink       = document.querySelector('.hero-stink');
-  const pills       = document.querySelector('.hero-pills');
-  const btn         = document.querySelector('.hero-btn');
-  const note        = document.querySelector('.hero-note');
-  const badge       = document.querySelector('.hero-badge');
-  const dots        = document.querySelector('.hero-dots');
-  const heroScroll  = document.querySelector('.hero-scroll');
+  const introLogo  = document.querySelector('.hero-logo-intro');
+  const realLogo   = document.querySelector('.hero-logo-top');
+  const hlSlides   = document.querySelectorAll('.hl-slide');
+  const badge      = document.querySelector('.hero-badge');
+  const dots       = document.querySelector('.hero-dots');
+  const heroScroll = document.querySelector('.hero-scroll');
+  const bottomRow  = document.querySelector('.hero-bottom-row');
 
   function show(el) { if (el) el.classList.add('hi-show'); }
 
-  // Measure real logo position relative to the intro logo's center origin
   function measureLogoOffset() {
-    const hero     = document.querySelector('.hero');
-    const heroBcr  = hero.getBoundingClientRect();
-    const logoBcr  = realLogo.getBoundingClientRect();
-    const introBcr = introLogo.getBoundingClientRect(); // currently 96px tall, centered
-
-    const heroCx = heroBcr.left + heroBcr.width  / 2;
-    const heroCy = heroBcr.top  + heroBcr.height / 2;
-
-    const logoCx = logoBcr.left + logoBcr.width  / 2;
-    const logoCy = logoBcr.top  + logoBcr.height / 2;
-
-    const dx = logoCx - heroCx;
-    const dy = logoCy - heroCy;
-
-    // Intro logo is 96px; real logo is ~22px (1.4rem)
-    // We need real logo to actually be measured from the DOM
-    const scale = logoBcr.height / 96;
-
-    introLogo.style.setProperty('--logo-dx', dx + 'px');
-    introLogo.style.setProperty('--logo-dy', dy + 'px');
-    introLogo.style.setProperty('--logo-scale', scale.toFixed(3));
+    const hero    = document.querySelector('.hero');
+    const heroBcr = hero.getBoundingClientRect();
+    const logoBcr = realLogo.getBoundingClientRect();
+    const heroCx  = heroBcr.left + heroBcr.width  / 2;
+    const heroCy  = heroBcr.top  + heroBcr.height / 2;
+    const logoCx  = logoBcr.left + logoBcr.width  / 2;
+    const logoCy  = logoBcr.top  + logoBcr.height / 2;
+    introLogo.style.setProperty('--logo-dx', (logoCx - heroCx) + 'px');
+    introLogo.style.setProperty('--logo-dy', (logoCy - heroCy) + 'px');
+    introLogo.style.setProperty('--logo-scale', (logoBcr.height / 96).toFixed(3));
   }
 
-  // Elements are already opacity:0 via CSS — measure layout directly
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       measureLogoOffset();
-
-      // ── Phase 2 @ 0.9s: intro logo pops in ──────────────────────────
-      setTimeout(() => {
-        introLogo.classList.add('phase-pop');
-      }, 900);
-
-      // ── Phase 3 @ 1.7s: logo moves to top position ──────────────────
+      setTimeout(() => introLogo.classList.add('phase-pop'), 900);
       setTimeout(() => {
         introLogo.classList.remove('phase-pop');
-        void introLogo.offsetWidth; // force repaint
+        void introLogo.offsetWidth;
         introLogo.classList.add('phase-move');
       }, 1700);
-
-      // ── Phase 4a @ 2.35s: real logo fades in as intro logo fades out ─
-      setTimeout(() => show(realLogo), 2350);
-
-      // ── Phase 4b @ 2.5s: eyebrow ─────────────────────────────────────
-      setTimeout(() => show(eyebrow), 2500);
-
-      // ── Phase 4c @ 2.65–2.95s: headline line wipes ───────────────────
-      hlSlides.forEach((line, i) => {
-        setTimeout(() => line.classList.add('hi-show'), 2650 + i * 160);
-      });
-
-      // ── Phase 5 @ 3.1s+: rest ────────────────────────────────────────
-      setTimeout(() => show(stink),      3100);
-      setTimeout(() => show(pills),      3280);
-      setTimeout(() => show(btn),        3440);
-      setTimeout(() => show(note),       3620);
+      setTimeout(() => show(realLogo),  2350);
+      setTimeout(() => show(bottomRow), 2500);
+      hlSlides.forEach((line, i) => setTimeout(() => line.classList.add('hi-show'), 2600 + i * 160));
       setTimeout(() => show(badge),      3050);
-      setTimeout(() => show(dots),       3700);
-      setTimeout(() => show(heroScroll), 3850);
-      setTimeout(() => document.body.classList.remove('intro-lock'), 4550);
+      setTimeout(() => show(dots),       3300);
+      setTimeout(() => show(heroScroll), 3500);
+      setTimeout(() => document.body.classList.remove('intro-lock'), 4200);
     });
   });
 })();
