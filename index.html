@@ -121,7 +121,7 @@ body:has(button:hover) #cursor,body:has(a:hover) #cursor{transform:scale(1.4) ro
 .pcard-sz.active{border-color:var(--green);background:var(--green);color:var(--cream);}
 .pcard-sz:hover:not(.active){border-color:var(--brown-mid);color:var(--brown);}
 .pcard-footer{display:flex;align-items:center;gap:12px;margin-top:auto;padding-top:18px;border-top:1px solid rgba(59,31,10,0.07);}
-.pcard-price{font-family:'Bebas Neue',sans-serif;font-size:2.1rem;letter-spacing:0.04em;color:var(--brown);line-height:1;white-space:nowrap;}
+.pcard-price{font-family:'Barlow',sans-serif;font-weight:700;font-size:1.15rem;letter-spacing:0.02em;color:var(--brown);line-height:1;white-space:nowrap;}
 .pcard-price small{font-size:0.75rem;letter-spacing:0.08em;color:var(--brown-light);font-family:'Barlow',sans-serif;font-weight:500;display:block;margin-top:1px;}
 .pcard-qty{display:flex;align-items:center;border:1.5px solid rgba(59,31,10,0.14);border-radius:40px;overflow:hidden;background:var(--cream);}
 .pcard-qty button{width:32px;height:36px;background:transparent;border:none;font-size:1.3rem;color:var(--brown);font-weight:300;transition:background 0.15s;line-height:1;display:flex;align-items:center;justify-content:center;}
@@ -1126,7 +1126,6 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
         <div class="pcard-sizes">
           <span class="pcard-size-lbl">Size:</span>
           <button class="pcard-sz active" id="sz-reg-50" onclick="pcSelSz(event,'reg',50,this)">50ml</button>
-          <button class="pcard-sz" id="sz-reg-300" onclick="p
         </div>
         <div class="pcard-footer">
           <div class="pcard-price">RM 18 <small>per cup</small></div>
@@ -1151,7 +1150,6 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
         <div class="pcard-sizes">
           <span class="pcard-size-lbl">Size:</span>
           <button class="pcard-sz active" id="sz-less-50" onclick="pcSelSz(event,'less',50,this)">50ml</button>
-          <button class="pcard-sz" id="sz-less-300" onclick="pc
         </div>
         <div class="pcard-footer">
           <div class="pcard-price">RM 18 <small>per cup</small></div>
