@@ -1424,10 +1424,10 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
         <div class="or"><span>Pickup</span><span style="color:var(--green);font-weight:600;">FREE</span></div>
         <div class="or tot"><span>Total</span><span id="st">RM 18.00</span></div>
       </div>
-      <div style="background:rgba(74,124,36,0.07);border:1.5px solid rgba(74,124,36,0.22);border-radius:12px;padding:14px 16px;margin-bottom:18px;font-size:0.84rem;color:var(--brown);line-height:1.7;">
+      <!--<div style="background:rgba(74,124,36,0.07);border:1.5px solid rgba(74,124,36,0.22);border-radius:12px;padding:14px 16px;margin-bottom:18px;font-size:0.84rem;color:var(--brown);line-height:1.7;">
         💸 <strong>How payment works:</strong><br>
         After confirming, we'll WhatsApp you with a <strong>bank transfer QR code</strong>. Send your receipt and we'll process your order right away.
-      </div>
+      </div> -->
       <button class="mb mb-p" id="confirmOrderBtn" onclick="placeOrder()">Confirm Order →</button>
       <button class="mb mb-s" onclick="goStep(2)">← Back</button>
     </div>
@@ -1450,7 +1450,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 
         <div style="background:rgba(74,124,36,0.07);border:1.5px solid rgba(74,124,36,0.22);border-radius:12px;padding:14px 16px;margin-bottom:16px;font-size:0.84rem;color:var(--brown);line-height:1.8;text-align:left;">
           📱 <strong>WhatsApp on file:</strong> <span id="confirmPhone" style="font-weight:600;color:var(--green);">—</span><br>
-          📌 <strong>Reply with your payment receipt</strong> once transferred — we'll confirm your order right away.
+          📌 <strong>Reply in that WhatsApp chat with your proof of payment</strong> (screenshot or photo of receipt) — we'll confirm your order right away.
         </div>
         <button class="mb mb-p" onclick="closeModal()">Back to Home</button>
       </div>
@@ -1759,7 +1759,7 @@ async function placeOrder(){
     ``,
     `⏰ ${timestamp}`,
     `━━━━━━━━━━━━━━━━━━━━`,
-    `Please send payment QR to customer.`
+    `(Saya akan lampirkan bukti pembayaran selepas transfer.) / (I will attach my proof of payment once transferred.)`
   ].filter(Boolean).join('\n');
 
   // Wait for sheet (max 3s) then open WhatsApp regardless
