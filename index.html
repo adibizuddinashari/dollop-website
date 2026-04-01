@@ -570,71 +570,85 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 }
 
 /* STORY: TESTIMONIALS */
-.story-testi {
+.brand-story {
   background: var(--cream);
-  padding: 80px 48px;
+  padding: 100px 48px;
   border-top: 1px solid rgba(59,31,10,0.06);
 }
-.st-inner { max-width: 1000px; margin: 0 auto; text-align: center; }
-.st-head-row { margin-bottom: 48px; }
-.st-head {
+.bs-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.bs-img-col { position: relative; }
+.bs-img-wrap {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.bs-img {
+  width: 100%;
+  height: 560px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+.bs-img-wrap:hover .bs-img { transform: scale(1.04); }
+.bs-img-tag {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: var(--yellow);
+  color: var(--brown);
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-size: 0.95rem;
+  letter-spacing: 0.15em;
+  padding: 8px 16px;
+  border-radius: 6px;
+}
+.bs-text-col { display: flex; flex-direction: column; gap: 20px; }
+.bs-head {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.8rem, 5vw, 4.8rem);
   line-height: 0.92;
   color: var(--brown);
   letter-spacing: 0.02em;
 }
-.st-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-.st-card {
-  background: var(--white);
-  border: 1.5px solid rgba(59,31,10,0.08);
-  border-radius: 18px;
-  padding: 30px 26px 24px;
-  position: relative;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.st-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 18px 48px rgba(59,31,10,0.1);
-}
-.st-ql {
-  font-size: 3.5rem;
-  line-height: 1;
-  color: var(--yellow);
-  font-family: Georgia, serif;
-  margin-bottom: 4px;
-  opacity: 0.85;
-  display: block;
-}
-.st-quote {
-  font-size: 0.92rem;
-  color: var(--brown-mid);
+.bs-head span { color: var(--green); }
+.bs-body {
+  font-size: 1rem;
+  color: var(--brown-light);
   line-height: 1.75;
-  margin-bottom: 22px;
-  padding-top: 4px;
 }
-.st-author { display: flex; align-items: center; gap: 12px; }
-.st-avatar {
-  width: 38px; height: 38px;
-  background: var(--yellow);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.2rem;
-  flex-shrink: 0;
+.bs-stats {
+  display: flex;
+  gap: 32px;
+  padding-top: 16px;
+  border-top: 1.5px solid rgba(59,31,10,0.1);
+  margin-top: 4px;
 }
-.st-name {
-  font-family: 'Barlow', sans-serif;
-  font-weight: 700;
-  font-style: italic;
-  font-size: 0.88rem;
+.bs-stat { display: flex; flex-direction: column; gap: 4px; }
+.bs-stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
   color: var(--brown);
+  line-height: 1;
+  letter-spacing: 0.04em;
 }
-.st-stars { font-size: 0.72rem; color: var(--yellow); letter-spacing: 0.05em; }
+.bs-stat-lbl {
+  font-size: 0.78rem;
+  color: var(--brown-light);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+@media (max-width: 768px) {
+  .bs-inner { grid-template-columns: 1fr; gap: 40px; }
+  .bs-img { height: 340px; }
+  .bs-stats { gap: 20px; }
+}
 
 /* STORY: WHERE TO FIND */
 .story-where {
@@ -1217,41 +1231,31 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 </section>
 
 <!-- STORY: TESTIMONIALS -->
-<section class="story-testi sec-enter-scale" id="testi">
-  <div class="st-inner">
-    <div class="st-head-row">
-      <div class="sec-lbl" style="color:var(--brown-light);">Stink Fans Speak</div>
-      <h2 class="st-head">WHAT PEOPLE<br>ARE SAYING.</h2>
+<section class="brand-story sec-enter" id="brand">
+  <div class="bs-inner">
+    <div class="bs-img-col reveal">
+      <div class="bs-img-wrap">
+        <img src="https://placehold.co/600x720/3b1f0a/f5c518?text=Behind+the+Brand" alt="Behind the Brand" class="bs-img">
+        <div class="bs-img-tag">Est. 2024 · Kuala Lumpur</div>
+      </div>
     </div>
-    <div class="st-grid sec-stagger">
-      <div class="st-card">
-        <span class="st-ql">&ldquo;</span><div class="st-quote">Bro this hits different. I ate the whole cup standing at the counter. No regrets.&rdquo;</div>
-        <div class="st-author">
-          <div class="st-avatar">😤</div>
-          <div>
-            <div class="st-name">Hafiz R.</div>
-            <div class="st-stars">★★★★★</div>
-          </div>
+    <div class="bs-text-col reveal">
+      <div class="sec-lbl">Behind the Brand</div>
+      <h2 class="bs-head">BORN FROM A<br><span>REAL OBSESSION.</span></h2>
+      <p class="bs-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <p class="bs-body">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <div class="bs-stats">
+        <div class="bs-stat">
+          <div class="bs-stat-num">100%</div>
+          <div class="bs-stat-lbl">Real Musang King</div>
         </div>
-      </div>
-      <div class="st-card" style="transition-delay:0.1s">
-        <span class="st-ql">&ldquo;</span><div class="st-quote">Finally a gelato that actually tastes like Musang King and not some sad durian perfume water.&rdquo;</div>
-        <div class="st-author">
-          <div class="st-avatar">🫠</div>
-          <div>
-            <div class="st-name">Priya K.</div>
-            <div class="st-stars">★★★★★</div>
-          </div>
+        <div class="bs-stat">
+          <div class="bs-stat-num">0</div>
+          <div class="bs-stat-lbl">Artificial flavours</div>
         </div>
-      </div>
-      <div class="st-card" style="transition-delay:0.2s">
-        <span class="st-ql">&ldquo;</span><div class="st-quote">My husband said don't buy it. I bought two. He finished his in 3 minutes.&rdquo;</div>
-        <div class="st-author">
-          <div class="st-avatar">😂</div>
-          <div>
-            <div class="st-name">Siti A.</div>
-            <div class="st-stars">★★★★★</div>
-          </div>
+        <div class="bs-stat">
+          <div class="bs-stat-num">D197</div>
+          <div class="bs-stat-lbl">Premium grade only</div>
         </div>
       </div>
     </div>
