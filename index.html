@@ -61,7 +61,7 @@ body:has(button:hover) #cursor,body:has(a:hover) #cursor{transform:scale(1.4) ro
 .hero-ey::before,.hero-ey::after{content:'';display:block;width:26px;height:1px;background:var(--green-light);}
 .hero-bottom-row{position:absolute;bottom:48px;left:52px;z-index:3;display:inline-flex;align-items:flex-end;gap:20px;}
 .hero-headline-wrap{flex:0 0 auto;}
-.hero-hl{font-family:'Barlow',sans-serif;font-weight:500;font-size:clamp(2.5rem,7.4vw,6.8rem);line-height:0.91;color:#fff8ee;text-align:left;letter-spacing:2.48px;text-shadow:0 2px 40px rgba(0,0,0,0.5);text-box:trim-both cap alphabetic;leading-trim:both;text-edge:cap alphabetic;}
+.hero-hl{font-family:'Barlow',sans-serif;font-weight:500;font-size:clamp(2.5rem,7.4vw,6.8rem);line-height:0.91;color:#fff8ee;text-align:left;letter-spacing:2.48px;text-shadow:0 2px 40px rgba(0,0,0,0.5);}
 .hero-right-panel{flex-shrink:0;width:240px;display:flex;flex-direction:column;gap:12px;align-self:flex-end;}
 .hero-hl-line{display:block;}
 .hl-xbold{font-weight:800;font-family:'Barlow',sans-serif;}
@@ -78,7 +78,7 @@ body:has(button:hover) #cursor,body:has(a:hover) #cursor{transform:scale(1.4) ro
 .trust-text{display:flex;flex-direction:column;gap:3px;}
 .trust-title{font-family:'Barlow',sans-serif;font-size:1.2rem;font-weight:700;font-style:italic;color:var(--cream);letter-spacing:-0.01em;line-height:1.1;}
 .trust-sub{font-family:'Barlow',sans-serif;font-size:0.75rem;font-weight:500;color:rgba(255,248,238,0.5);letter-spacing:0.06em;text-transform:uppercase;}
-.hero-btn{display:flex;align-items:center;justify-content:center;width:100%;gap:11px;background:var(--yellow);color:var(--brown);font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.2em;padding:17px 32px;height:61.44px;border-radius:0;white-space:nowrap;transition:transform 0.2s,box-shadow 0.2s;margin-bottom:13px;position:relative;overflow:hidden;border:none;}
+.hero-btn{display:flex;align-items:center;justify-content:center;width:100%;gap:11px;background:var(--yellow);color:var(--brown);font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.2em;padding:17px 52px;height:61.44px;border-radius:0;white-space:nowrap;transition:transform 0.2s,box-shadow 0.2s;margin-bottom:13px;position:relative;overflow:hidden;border:none;}
 .hero-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent 40%,rgba(255,255,255,0.18) 50%,transparent 60%);transform:translateX(-100%);transition:transform 0.5s;}
 .hero-btn:hover::after{transform:translateX(100%);}
 .hero-btn:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(245,197,24,0.38);}
@@ -1411,26 +1411,24 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
         <div class="or"><span>Pickup</span><span style="color:var(--green);font-weight:600;">FREE</span></div>
         <div class="or tot"><span>Total</span><span id="st">RM 18.00</span></div>
       </div>
-      <div class="fg">
-        <label class="fl">Payment Method</label>
-        <div class="pm"><span class="pb fpx">FPX Online Banking</span><span class="pb">Debit / Credit Card</span><span class="pb">TnG eWallet</span></div>
-        <select class="fs" id="fpay">
-          <option value="">Select payment method...</option>
-          <option value="fpx">FPX Online Banking (Recommended)</option>
-          <option value="card">Debit / Credit Card</option>
-          <option value="tng">Touch 'n Go eWallet</option>
-          <option value="boost">Boost</option>
-        </select>
+      <div style="background:rgba(74,124,36,0.07);border:1.5px solid rgba(74,124,36,0.22);border-radius:12px;padding:14px 16px;margin-bottom:18px;font-size:0.84rem;color:var(--brown);line-height:1.7;">
+        💸 <strong>How payment works:</strong><br>
+        After confirming, we'll WhatsApp you with a <strong>bank transfer QR code</strong>. Send your receipt and we'll process your order right away.
       </div>
-      <p style="font-size:0.71rem;color:var(--brown-light);margin-bottom:16px;line-height:1.6;">🔒 Payments processed securely via <strong>ToyyibPay</strong>. Dollop never stores your payment details.</p>
-      <button class="mb mb-p" onclick="placeOrder()">Confirm &amp; Pay →</button>
+      <button class="mb mb-p" id="confirmOrderBtn" onclick="placeOrder()">Confirm Order →</button>
       <button class="mb mb-s" onclick="goStep(2)">← Back</button>
     </div>
     <div class="m-step" id="step4">
-      <div class="ss"><div class="si2">✅</div>
-        <div class="st">Order Placed!</div>
-        <p class="ssub">Your Dollop is confirmed. Prepare your sinuses — we'll WhatsApp you shortly. 👑</p>
+      <div class="ss">
+        <div class="si2">✅</div>
+        <div class="st">Order Received!</div>
+        <p class="ssub">We'll WhatsApp you shortly with payment instructions and a QR code for bank transfer.</p>
         <div class="son" id="orderNo">ORDER #DLP-00000</div>
+        <div style="background:rgba(74,124,36,0.07);border:1.5px solid rgba(74,124,36,0.22);border-radius:12px;padding:14px 16px;margin:16px 0;font-size:0.84rem;color:var(--brown);line-height:1.8;text-align:left;">
+          📱 <strong>WhatsApp number on file:</strong><br>
+          <span id="confirmPhone" style="font-weight:600;color:var(--green);">—</span><br><br>
+          📌 <strong>Please keep this chat open</strong> — reply to our message with your payment receipt once done.
+        </div>
         <button class="mb mb-p" onclick="closeModal()">Back to Home</button>
       </div>
     </div>
@@ -1642,10 +1640,122 @@ function goStep(s){
   document.getElementById('step'+s).classList.add('active');
 }
 
-function placeOrder(){
-  if(!document.getElementById('fpay').value){alert('Please select a payment method.');return;}
-  document.getElementById('orderNo').textContent='ORDER #DLP-'+String(Math.floor(Math.random()*90000)+10000);
+// ============================================================
+// ORDER SUBMISSION — Google Sheets + WhatsApp
+// ============================================================
+// SETUP: Deploy a Google Apps Script Web App with the script
+// below and paste the URL into APPS_SCRIPT_URL.
+//
+// Apps Script code (Tools > Script Editor in Google Sheets):
+// ---------------------------------------------------------------
+// function doPost(e) {
+//   try {
+//     var data = JSON.parse(e.postData.contents);
+//     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+//     sheet.appendRow([
+//       data.timestamp, data.orderNo, data.name, data.phone,
+//       data.flavour, data.size, data.qty, data.fulfilment,
+//       data.location, data.total, data.notes, "Pending"
+//     ]);
+//     return ContentService.createTextOutput(JSON.stringify({status:"ok"}))
+//       .setMimeType(ContentService.MimeType.JSON);
+//   } catch(err) {
+//     return ContentService.createTextOutput(JSON.stringify({status:"error",msg:err.toString()}))
+//       .setMimeType(ContentService.MimeType.JSON);
+//   }
+// }
+// ---------------------------------------------------------------
+// Deploy: Extensions > Apps Script > Deploy > New deployment
+//         Type: Web App, Execute as: Me, Who has access: Anyone
+//         Copy the Web App URL and paste below.
+// ---------------------------------------------------------------
+
+const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
+const COMPANY_WHATSAPP = '60123456789'; // ← replace with real number
+
+async function placeOrder(){
+  const btn = document.getElementById('confirmOrderBtn');
+
+  // Gather all order data
+  const name     = document.getElementById('fn').value.trim();
+  const phone    = document.getElementById('fp').value.trim();
+  const notes    = document.getElementById('fnotes').value.trim();
+  const flavour  = sweet === 'regular' ? 'Regular Sweet' : 'Less Sweet';
+  const size     = cupSize;
+  const total    = 'RM ' + (price * qty).toFixed(2) + (fulfilment === 'delivery' ? ' + delivery fee' : '');
+  const location = fulfilment === 'delivery' ? (deliveryAddr || '—') : (locLabels[pickupLoc] || '—');
+  const orderNo  = 'DLP-' + String(Math.floor(Math.random() * 90000) + 10000);
+  const timestamp = new Date().toLocaleString('en-MY', {timeZone: 'Asia/Kuala_Lumpur'});
+
+  // Basic validation
+  if (!name || !phone) {
+    alert('Please fill in your name and WhatsApp number.');
+    goStep(2);
+    return;
+  }
+
+  // Loading state
+  btn.disabled = true;
+  btn.textContent = 'Sending order...';
+
+  const orderData = {
+    timestamp, orderNo, name, phone, flavour,
+    size, qty, fulfilment, location, total, notes
+  };
+
+  // ── Submit to Google Sheets (best-effort, non-blocking) ──
+  const sheetPromise = (async () => {
+    if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') return;
+    try {
+      await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderData)
+      });
+    } catch (err) {
+      console.warn('Sheet submission failed (order still sent via WhatsApp):', err);
+    }
+  })();
+
+  // ── Build WhatsApp message to company ──
+  const waMsg = [
+    `🍦 *NEW DOLLOP ORDER*`,
+    `━━━━━━━━━━━━━━━━━━━━`,
+    `📋 Order No: *${orderNo}*`,
+    `👤 Name: ${name}`,
+    `📱 WhatsApp: ${phone}`,
+    ``,
+    `🧁 Flavour: ${flavour}`,
+    `📦 Size: ${size}`,
+    `🔢 Qty: ${qty} cup${qty > 1 ? 's' : ''}`,
+    `🚚 Fulfilment: ${fulfilment === 'delivery' ? 'Delivery' : 'Pickup'}`,
+    `📍 Location: ${location}`,
+    `💰 Total: ${total}`,
+    notes ? `📝 Notes: ${notes}` : '',
+    ``,
+    `⏰ ${timestamp}`,
+    `━━━━━━━━━━━━━━━━━━━━`,
+    `Please send payment QR to customer.`
+  ].filter(Boolean).join('\n');
+
+  // Wait for sheet (max 3s) then open WhatsApp regardless
+  await Promise.race([sheetPromise, new Promise(r => setTimeout(r, 3000))]);
+
+  // ── Update success screen ──
+  document.getElementById('orderNo').textContent = 'ORDER #' + orderNo;
+  document.getElementById('confirmPhone').textContent = phone;
+
+  // Reset button
+  btn.disabled = false;
+  btn.textContent = 'Confirm Order →';
+
+  // Go to success step
   goStep(4);
+
+  // Open WhatsApp to company number
+  const waUrl = 'https://wa.me/' + COMPANY_WHATSAPP + '?text=' + encodeURIComponent(waMsg);
+  setTimeout(() => window.open(waUrl, '_blank'), 400);
 }
 
 // Floating button — show after user scrolls past products section
