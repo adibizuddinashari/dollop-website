@@ -54,7 +54,7 @@ body:has(button:hover) #cursor,body:has(a:hover) #cursor{transform:scale(1.4) ro
 .hero-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,248,238,0.35);border:none;cursor:pointer;transition:all 0.3s;padding:0;}
 .hero-dot.active{background:var(--yellow);transform:scale(1.3);}
 .hero-grain{position:absolute;inset:0;z-index:1;opacity:0.35;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");}
-.hero-ov{position:absolute;inset:0;z-index:2;background:linear-gradient(to top,rgba(8,4,0,0.88) 0%,rgba(8,4,0,0.45) 50%,rgba(8,4,0,0.58) 100%);}
+.hero-ov{position:absolute;inset:0;z-index:2;background:transparent;}
 .hero-c{display:none;}
 .hero-logo-top{position:absolute;top:55px;left:62px;width:clamp(160px,18vw,260px);height:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:0.88;z-index:3;}
 .hero-ey{font-size:0.68rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--green-light);font-weight:500;margin-bottom:10px;display:flex;align-items:center;gap:14px;}
@@ -78,7 +78,7 @@ body:has(button:hover) #cursor,body:has(a:hover) #cursor{transform:scale(1.4) ro
 .trust-text{display:flex;flex-direction:column;gap:3px;}
 .trust-title{font-family:'Barlow',sans-serif;font-size:1.2rem;font-weight:700;font-style:italic;color:var(--cream);letter-spacing:-0.01em;line-height:1.1;}
 .trust-sub{font-family:'Barlow',sans-serif;font-size:0.75rem;font-weight:500;color:rgba(255,248,238,0.5);letter-spacing:0.06em;text-transform:uppercase;}
-.hero-btn{display:flex;align-items:center;justify-content:center;width:100%;gap:11px;background:var(--yellow);color:var(--brown);font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.2em;padding:17px 32px;height:61.44px;border-radius:0;white-space:nowrap;transition:transform 0.2s,box-shadow 0.2s;margin-bottom:13px;position:relative;overflow:hidden;border:none;}
+.hero-btn{display:flex;align-items:center;justify-content:center;width:100%;gap:11px;background:var(--yellow);color:var(--brown);font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.2em;padding:17px 32px;height:61.44px;border-radius:0;white-space:nowrap;transition:transform 0.2s,box-shadow 0.2s;margin-bottom:27px;position:relative;overflow:hidden;border:none;}
 .hero-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent 40%,rgba(255,255,255,0.18) 50%,transparent 60%);transform:translateX(-100%);transition:transform 0.5s;}
 .hero-btn:hover::after{transform:translateX(100%);}
 .hero-btn:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(245,197,24,0.38);}
@@ -1670,7 +1670,7 @@ function goStep(s){
 //         Copy the Web App URL and paste below.
 // ---------------------------------------------------------------
 
-const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwZ_CO7O9tfYagvnCngshdK9spxS5z9awqJP3EoGa4tVHkLamynn8ccf5QB63MPHhpZIQ/exec';
 const COMPANY_WHATSAPP = '60109737017'; // Adib's number
 
 async function placeOrder(){
