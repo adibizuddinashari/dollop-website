@@ -1125,8 +1125,8 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
         <div class="pcard-desc">Classic durian richness — bold, creamy, unmistakably Musang King the way it was meant to be.</div>
         <div class="pcard-sizes">
           <span class="pcard-size-lbl">Size:</span>
-          <button class="pcard-sz active" id="sz-reg-100" onclick="pcSelSz(event,'reg',100,this)">100ml</button>
-          <button class="pcard-sz" id="sz-reg-300" onclick="pcSelSz(event,'reg',300,this)">300ml</button>
+          <button class="pcard-sz active" id="sz-reg-50" onclick="pcSelSz(event,'reg',50,this)">50ml</button>
+          <button class="pcard-sz" id="sz-reg-300" onclick="p
         </div>
         <div class="pcard-footer">
           <div class="pcard-price">RM 18 <small>per cup</small></div>
@@ -1150,8 +1150,8 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
         <div class="pcard-desc">Pure durian forward — the raw, intense Musang King experience for the true believer.</div>
         <div class="pcard-sizes">
           <span class="pcard-size-lbl">Size:</span>
-          <button class="pcard-sz active" id="sz-less-100" onclick="pcSelSz(event,'less',100,this)">100ml</button>
-          <button class="pcard-sz" id="sz-less-300" onclick="pcSelSz(event,'less',300,this)">300ml</button>
+          <button class="pcard-sz active" id="sz-less-50" onclick="pcSelSz(event,'less',50,this)">50ml</button>
+          <button class="pcard-sz" id="sz-less-300" onclick="pc
         </div>
         <div class="pcard-footer">
           <div class="pcard-price">RM 18 <small>per cup</small></div>
@@ -1363,8 +1363,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
       </div>
       <div class="v-lbl">Cup Size</div>
       <div class="sz-sel" style="margin-bottom:20px;">
-        <button class="sz-btn active" onclick="selSize(this,18)">100ml · RM18</button>
-        <button class="sz-btn" onclick="selSize(this,18)">300ml · RM18</button>
+        <button class="sz-btn active" onclick="selSize(this,18)">50ml · RM18</button>
       </div>
       <div class="v-lbl">Quantity</div>
       <div style="display:flex;align-items:center;gap:0;border:1.5px solid rgba(59,31,10,0.14);border-radius:40px;width:fit-content;overflow:hidden;margin-bottom:20px;background:var(--cream);">
@@ -1419,7 +1418,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
       <div class="os">
         <div class="or"><span>Musang King Gelato</span><span id="sip">RM 18.00</span></div>
         <div class="or"><span>Flavour</span><span id="sv">Regular Sweet</span></div>
-        <div class="or"><span>Cup Size</span><span id="sCupSize">100ml</span></div>
+        <div class="or"><span>Cup Size</span><span id="sCupSize">50ml</span></div>
         <div class="or"><span>Quantity</span><span id="sQty">1 cup</span></div>
         <div class="or"><span>Fulfilment</span><span id="sFulfilment">Pickup</span></div>
         <div class="or" id="sLocRow"><span>Pickup Location</span><span id="sLoc">—</span></div>
@@ -1557,7 +1556,7 @@ secs.forEach(s=>sObs.observe(s));
 function toggleFaq(btn){const item=btn.closest('.fi');const was=item.classList.contains('open');document.querySelectorAll('.fi').forEach(i=>i.classList.remove('open'));if(!was)item.classList.add('open');}
 
 // State
-let price=18, sweet='regular', pickupLoc='', qty=1, cupSize='100ml', fulfilment='pickup', deliveryAddr='';
+let price=18, sweet='regular', pickupLoc='', qty=1, cupSize='50ml', fulfilment='pickup', deliveryAddr='';
 const locLabels={bu:'Bandar Utama / TTDI / Damansara', sub:'Subang / SS15', mk:'Mont Kiara'};
 const pcQtys={reg:1,less:1};
 
