@@ -653,10 +653,22 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 /* STORY: WHERE TO FIND */
 .story-where {
   background: var(--green);
+  background-image: url('images/dollop-where to find your fix section.jpg');
+  background-size: cover;
+  background-position: center;
   padding: 80px 48px;
   position: relative;
   overflow: hidden;
 }
+.story-where::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.30);
+  pointer-events: none;
+  z-index: 0;
+}
+.sw-inner { position: relative; z-index: 1; }
 .story-where::before {
   content: '';
   position: absolute;
@@ -1330,7 +1342,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
   <div class="ft-bot">
     <span>© 2025 Dollop Sdn. Bhd. All rights reserved.</span>
     <span>halal certified · no pork no lard</span>
-    <span>made with ❤️ in Malaysia</span>
+    <span>made with stinking good passion</span>
   </div>
 </footer>
 
