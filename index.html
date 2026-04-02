@@ -384,7 +384,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
   background-image: url('images/durian-flesh.jpg');
   background-size: cover;
   background-position: center;
-  min-height: 720px;
+  min-height: 100vh;
   padding: 0;
   position: relative;
   overflow: hidden;
@@ -521,7 +521,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
   overflow: hidden;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  min-height: 720px;
+  min-height: 100vh;
 }
 .story-inside::after {
   content: '';
@@ -649,7 +649,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 .brand-story {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  height: 720px;
+  height: 100vh;
   padding: 0;
   position: relative;
   overflow: hidden;
@@ -735,6 +735,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
   background-image: url('images/dollop-where to find your fix section.jpg');
   background-size: cover;
   background-position: center;
+  min-height: 100vh;
   padding: 80px 48px;
   position: relative;
   overflow: hidden;
@@ -1086,7 +1087,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 .promo-btn{display:inline-flex;align-items:center;gap:10px;background:var(--yellow);color:var(--brown);font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:0.2em;padding:16px 38px;border-radius:50px 44px 52px 46px;border:2.5px solid rgba(59,31,10,0.3);transition:transform 0.2s,box-shadow 0.2s;white-space:nowrap;}
 .promo-btn:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(245,197,24,0.45);}
 .promo-char{position:absolute;right:280px;bottom:0;width:100px;opacity:0.18;filter:brightness(0) invert(1);pointer-events:none;}
-.promo-wrap{padding:80px 0;background:var(--cream);}
+.promo-wrap{min-height:100vh;background:var(--cream);display:flex;align-items:center;justify-content:center;padding:40px 0;}
 
 /* ── PARALLAX & SECTION STACK ─────────────────────────────── */
 .story-promise,
