@@ -1089,45 +1089,11 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 .promo-char{position:absolute;right:280px;bottom:0;width:100px;opacity:0.18;filter:brightness(0) invert(1);pointer-events:none;}
 .promo-wrap{min-height:100vh;background:var(--cream);display:flex;align-items:center;justify-content:center;padding:40px 0;}
 
-/* ── PARALLAX & SECTION STACK ─────────────────────────────── */
-.story-promise,
-.story-inside,
-.promo-wrap,
-.brand-story,
-.story-where {
-  position: relative;
-  z-index: 1;
-}
-/* Rounded card-stack top edge on every section after hero */
-.story-promise {
-  border-radius: 28px 28px 0 0;
-  margin-top: -28px;
-}
-.story-inside {
-  border-radius: 28px 28px 0 0;
-  margin-top: -28px;
-}
-.promo-wrap {
-  border-radius: 28px 28px 0 0;
-  margin-top: -28px;
-}
-.brand-story {
-  border-radius: 28px 28px 0 0;
-  margin-top: -28px;
-}
-.story-where {
-  border-radius: 28px 28px 0 0;
-  margin-top: -28px;
-}
-/* Parallax images — over-size so translateY never reveals edges */
 .si-img-col img,
 .bs-img-col .bs-img {
-  will-change: transform;
-  transform: translateY(0) scale(1.15);
-  transition: none;
+  transform: none;
+  will-change: auto;
 }
-/* Trust bar sits flush under hero */
-.trust-bar { position: relative; z-index: 2; }
 </style>
 </head>
 <body class="intro-lock">
