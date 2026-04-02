@@ -1299,19 +1299,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 
 <!-- STORY: TESTIMONIALS -->
 
-<div class="promo-wrap" id="promo">
-  <div class="promo">
-    <div class="promo-text">
-      <div class="promo-eyebrow">Limited Availability · Order Today</div>
-      <div class="promo-head">Order Now &amp; Get<br><span>Stinky Good</span> Guaranteed</div>
-      <p class="promo-sub">Fresh-made Musang King gelato picked up from your nearest cart. No freezer burn, no shortcuts — just the real stink.</p>
-    </div>
-    <div class="promo-cta">
-      <a href="product.html" class="promo-btn">Order Now</a>
-    </div>
-    <img src="brand assets/Dollop Character.webp" alt="" class="promo-char">
-  </div>
-</div>
+
 
 <section class="brand-story sec-enter" id="brand">
 
@@ -1948,8 +1936,8 @@ function galleryNav(dir) { galleryGo(galIdx + dir); }
 // ── FULL-PAGE SCROLL SYSTEM ──────────────────────────────────────────────────
 (function() {
   const MOBILE = () => window.innerWidth < 860;
-  const SECTION_IDS = ['hero','story','inside','promo','brand','where'];
-  const THRESHOLD = 280;
+  const SECTION_IDS = ['hero','story','inside','brand','where'];
+  const THRESHOLD = 80;
   const DURATION  = 900;
 
   let sections = [];
@@ -1991,6 +1979,8 @@ function galleryNav(dir) { galleryGo(galIdx + dir); }
 
   window.addEventListener('wheel', function(e) {
     if(MOBILE()) return;
+    // At last section scrolling down — release to normal scroll for footer
+    if(current === sections.length - 1 && e.deltaY > 0) return;
     e.preventDefault();
     if(busy) return;
     accum += e.deltaY;
