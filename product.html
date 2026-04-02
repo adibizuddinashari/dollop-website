@@ -48,13 +48,67 @@ a{text-decoration:none;color:inherit;}
 .bc-sep{opacity:0.35;}
 
 /* PRODUCT HERO */
-.ph{padding:36px 48px 60px;display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center;max-width:1200px;}
+.ph{padding:60px 48px 80px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;max-width:1200px;margin:0 auto;}
 
 /* Product Image Block */
-.ph-img-wrap{position:relative;border-radius:28px;overflow:hidden;aspect-ratio:1/1;background:radial-gradient(ellipse at 40% 30%,#8FBF3A 0%,#4A7C24 40%,#2D5016 75%,#1A3A0A 100%);}
+.ph-img-wrap{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:1/1;background:#fff;border:1.5px solid rgba(59,31,10,0.08);}
 .ph-img-wrap.less-bg{background:radial-gradient(ellipse at 60% 70%,#A8D458 0%,#6B9E2A 35%,#3A6A12 70%,#0D2205 100%);}
-.ph-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+.ph-img-wrap img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;padding:24px;}
 .ph-img-badge{position:absolute;top:20px;left:20px;background:var(--yellow);color:var(--brown);font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:5px 13px;border-radius:40px;border:1.5px solid rgba(59,31,10,0.15);}
+/* Stats row under image */
+.ph-stats{display:flex;align-items:center;margin-top:20px;border-top:1.5px solid rgba(59,31,10,0.1);padding-top:20px;}
+.ph-stat{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;gap:3px;}
+.ph-stat-num{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--brown);line-height:1;letter-spacing:0.04em;}
+.ph-stat-unit{font-size:0.65rem;color:var(--brown-light);letter-spacing:0.06em;margin-top:-2px;}
+.ph-stat-lbl{font-size:0.65rem;color:var(--brown-light);letter-spacing:0.05em;text-transform:uppercase;}
+.ph-stat-div{width:1px;height:40px;background:rgba(59,31,10,0.12);flex-shrink:0;}
+/* Feature box */
+.ph-features{display:grid;grid-template-columns:1fr 1fr;background:rgba(59,31,10,0.04);border:1.5px solid rgba(59,31,10,0.09);border-radius:12px;padding:20px 24px;margin-bottom:20px;gap:10px 16px;margin-top: 25px;}
+.ph-feat-item{font-size:0.84rem;color:var(--brown-mid);line-height:1.4;}
+/* Divider */
+.ph-divider{height:1px;background:rgba(59,31,10,0.1);margin:8px 0;}
+/* Accordion */
+.ph-accordion{border-top:1.5px solid rgba(59,31,10,0.1);}
+.ph-acc-trigger{width:100%;display:flex;align-items:center;justify-content:space-between;padding:10px 0;background:transparent;border:none;font-family:'Barlow',sans-serif;font-size:0.92rem;font-weight:500;color:var(--brown);cursor:pointer;letter-spacing:0.01em;}
+.ph-acc-trigger:hover{color:var(--green);}
+.ph-acc-icon{font-size:1.3rem;font-weight:300;color:var(--brown-light);transition:transform 0.2s;}
+.ph-acc-icon.open{transform:rotate(45deg);}
+.ph-acc-body{padding-bottom:20px;}
+.ph-acc-section{margin-bottom:16px;}
+.ph-acc-head{font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--brown-mid);margin-bottom:6px;}
+.ph-acc-body p{font-size:0.85rem;color:var(--brown-mid);line-height:1.65;margin:0;}
+.ph-acc-note{font-size:0.75rem;color:var(--brown-light);margin-bottom:10px;}
+/* Nut table inside accordion */
+.ph-acc-nut{width:100%;border-collapse:collapse;font-size:0.8rem;}
+.ph-acc-nut thead td{color:var(--brown-light);font-size:0.7rem;letter-spacing:0.06em;padding:4px 0;text-align:right;}
+.ph-acc-nut thead td:first-child{text-align:left;}
+.ph-acc-nut tr{border-top:1px solid rgba(59,31,10,0.07);}
+.ph-acc-nut td{padding:5px 0;color:var(--brown-mid);}
+.ph-acc-nut td:not(:first-child){text-align:right;}
+.ph-acc-nut .nut-big td{font-weight:600;color:var(--brown);}
+.ph-acc-nut .nut-sub td:first-child{padding-left:14px;font-size:0.75rem;}
+.ph-acc-nut tfoot td{font-size:0.68rem;color:var(--brown-light);padding-top:8px;}
+.ph-title-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+  margin-bottom: 8px;
+}
+.ph-price-tag {
+  padding-bottom: 6px;
+  flex-shrink: 0;
+}
+.ph-price-tag strong {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: var(--brown);
+  letter-spacing: 0.04em;
+}
+/* Available in */
+.ph-avail-lbl{font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--brown-mid);margin-bottom:10px;}
+/* Price (smaller, inline) */
+.ph-price-inline{font-size:0.9rem;color:var(--brown-light);margin-bottom:20px;}
+.ph-price-inline strong{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--brown);letter-spacing:0.04em;margin-right:4px;}
 .ph-char{position:absolute;bottom:-8px;right:20px;width:120px;height:auto;filter:drop-shadow(0 8px 20px rgba(0,0,0,0.35));animation:charFloat 3s ease-in-out infinite;pointer-events:none;}
 @keyframes charFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 
@@ -249,168 +303,169 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 </style>
 </head>
 <body>
-<div id="cursor"></div>
-
-<!-- SIDEBAR -->
-<nav class="sb">
-  <a href="index.html" class="sb-logo"><img src="brand assets/dollop logo.webp" alt="Dollop"></a>
-  <div class="sb-nav">
-    <a href="index.html#hero" class="sb-link">
-      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      <span class="sb-tip">Home</span>
-    </a>
-    <a href="index.html#products" class="sb-link active">
-      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
-      <span class="sb-tip">The Goods</span>
-    </a>
-    <a href="index.html#features" class="sb-link">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      <span class="sb-tip">Why Dollop</span>
-    </a>
-    <a href="index.html#faq" class="sb-link">
-      <svg viewBox="0 0 24 24"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      <span class="sb-tip">FAQ</span>
-    </a>
-    <div class="sb-div"></div>
-    <a href="#" class="sb-link" onclick="openModal();return false;">
-      <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-      <span class="sb-tip">Order Now</span>
-    </a>
-  </div>
-  <div class="sb-dot"></div>
-</nav>
-
-<div class="main">
-
-<!-- BREADCRUMB -->
-<div class="bc">
-  <a href="index.html">Home</a>
-  <span class="bc-sep">/</span>
-  <a href="index.html#products">Products</a>
-  <span class="bc-sep">/</span>
-  <span id="bc-current">Loading...</span>
-</div>
-
-<!-- PRODUCT HERO -->
-<section class="ph">
-  <!-- Image -->
-  <div class="ph-img-wrap" id="ph-img-wrap">
-    <img src="dollop packaging.webp" alt="Dollop packaging" id="ph-img">
-    <div class="ph-img-badge" id="ph-badge">Most Popular</div>
-  </div>
-
-  <!-- Info -->
-  <div class="ph-info">
-    <div class="ph-eyebrow">Musang King Gelato</div>
-    <div class="ph-name" id="ph-name">Regular Sweet</div>
-    <p class="ph-sub" id="ph-sub">Classic durian richness — bold, creamy, unmistakably Musang King the way it was meant to be.</p>
-
-    <div class="ph-rating">
-      <span class="ph-stars">★★★★★</span>
-      <span class="ph-rcount">4.9 · 200+ orders</span>
+  <div id="cursor"></div>
+  
+  <!-- SIDEBAR -->
+  <nav class="sb">
+    <a href="index.html" class="sb-logo"><img src="brand assets/dollop logo.webp" alt="Dollop"></a>
+    <div class="sb-nav">
+      <a href="index.html" class="sb-link">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span class="sb-tip">Back to Home</span>
+      </a>
+      <a href="#" class="sb-link active" id="sb-product">
+        <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        <span class="sb-tip">The Gelato</span>
+      </a>
+      <a href="#acc-ingredients" class="sb-link" id="sb-ingredients">
+        <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        <span class="sb-tip">Ingredients</span>
+      </a>
+      <a href="#acc-delivery" class="sb-link" id="sb-delivery">
+        <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        <span class="sb-tip">Delivery & Pickup</span>
+      </a>
+      <div class="sb-div"></div>
+      <a href="#" class="sb-link" onclick="openModal();return false;">
+        <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span class="sb-tip">Order Now</span>
+      </a>
     </div>
-
-    <div class="ph-price-row">
-      <div class="ph-price">RM 18</div>
-      <div class="ph-price-note">per cup · inclusive of GST</div>
+    <div class="sb-dot"></div>
+  </nav>
+  
+  <div class="main">
+    
+    <!-- BREADCRUMB -->
+    <div class="bc">
+      <a href="index.html">Home</a>
+      <span class="bc-sep">/</span>
+      <a href="index.html#products">Products</a>
+      <span class="bc-sep">/</span>
+      <span id="bc-current">Loading...</span>
     </div>
-
-    <span class="ph-label">Flavour</span>
-    <div class="ph-flavours">
-      <button class="ph-flav active" id="flav-regular" onclick="switchFlavour('regular')">
-        <span class="ph-fn">Regular Sweet</span>
-        <span class="ph-ft">Classic durian richness</span>
-      </button>
-      <button class="ph-flav" id="flav-less" onclick="switchFlavour('less')">
-        <span class="ph-fn">Less Sweet</span>
-        <span class="ph-ft">Pure durian forward</span>
-      </button>
-    </div>
-
-    <span class="ph-label">Cup Size</span>
-    <div class="ph-sizes">
-      <button class="ph-sz active" onclick="selSize(this,18)">50ml · RM18</button>
-    </div>
-
-    <div class="ph-cta-row">
-      <div class="ph-qty">
-        <button onclick="changeQty(-1)">−</button>
-        <span id="ph-qty-val">1</span>
-        <button onclick="changeQty(1)">+</button>
+    
+    <!-- PRODUCT HERO -->
+    <section class="ph">
+      
+      <!-- LEFT: Image + Stats -->
+      <div>
+        <div class="ph-img-wrap" id="ph-img-wrap">
+          <img src="images/dollop packaging.webp" alt="Dollop Gelato" id="ph-img">
+          <div class="ph-img-badge" id="ph-badge">Original Sweetness</div>
+        </div>
+        <div class="ph-stats">
+          <div class="ph-stat">
+            <span class="ph-stat-num">133</span>
+            <span class="ph-stat-unit">kcal per serving</span>
+            <span class="ph-stat-lbl">Energy</span>
+          </div>
+          <div class="ph-stat-div"></div>
+          <div class="ph-stat">
+            <span class="ph-stat-num">100%</span>
+            <span class="ph-stat-unit">Musang King</span>
+            <span class="ph-stat-lbl">Real Durian</span>
+          </div>
+          <div class="ph-stat-div"></div>
+          <div class="ph-stat">
+            <span class="ph-stat-num">14.4g</span>
+            <span class="ph-stat-unit">per serving</span>
+            <span class="ph-stat-lbl">Total Sugar</span>
+          </div>
+        </div>
       </div>
-      <button class="ph-order-btn" onclick="openModal()">
-        Get Your Dollop
-      </button>
+      
+      <!-- RIGHT: Info -->
+      <div class="ph-info">
+        <div class="ph-eyebrow">Musang King Gelato</div>
+        <div class="ph-title-row">
+          <div class="ph-name" id="ph-name">Gelato Title Here</div>
+          <div class="ph-price-tag"><strong id="ph-price">RM 18</strong></div>
+        </div>
+        
+        <div class="ph-rating">
+          <span class="ph-stars">★★★★★</span>
+          <span class="ph-rcount">4.9 · 200+ orders</span>
+        </div>
+        
+        <p class="ph-sub" id="ph-sub">Classic durian richness — bold, creamy, unmistakably Musang King the way it was meant to be.</p>
+        
+        <button class="ph-order-btn" onclick="openModal()" style="width:100%;">
+          Get Your Dollop
+        </button>
+    <!-- Feature box -->
+    <div class="ph-features">
+      <div class="ph-feat-item">— 100% Real Musang King</div>
+      <div class="ph-feat-item">— No Artificial Flavours</div>
+      <div class="ph-feat-item">— Halal Certified</div>
+      <div class="ph-feat-item">— Freshly Made</div>
+      <div class="ph-feat-item">— Small Batch</div>
+      <div class="ph-feat-item">— Premium Grade D197</div>
     </div>
 
-    <div class="ph-trust">
-      <span class="ph-tpill">👑 100% Real Musang King</span>
-      <span class="ph-tpill">🌿 No Artificial Flavours</span>
-      <span class="ph-tpill">✅ Halal Certified</span>
-      <span class="ph-tpill">🧊 Freshly Made</span>
+
+    <!-- Accordion: Ingredients & Nutrition -->
+    <div class="ph-accordion" id="acc-ingredients">
+      <button class="ph-acc-trigger" onclick="toggleAcc(this)">
+        <span>Ingredients &amp; Nutrition Facts</span>
+        <span class="ph-acc-icon">+</span>
+      </button>
+      <div class="ph-acc-body" style="display:none;">
+        <div class="ph-acc-section">
+          <div class="ph-acc-head">Ingredients</div>
+          <p>Water, MSK Durian, Milk, Cream, Sugar, Trehalose, Skimmed Milk Powder, Dextrose. Stabiliser: Guar Gum (E412), Cellulose Gum (E466), Carrageenan (E407).</p>
+        </div>
+        <div class="ph-acc-section">
+          <div class="ph-acc-head">Allergen Info</div>
+          <p><strong>Contains:</strong> Milk &nbsp;·&nbsp; <strong>May Contain:</strong> Traces of eggs, nuts &nbsp;·&nbsp; Halal certified · No pork · No alcohol</p>
+        </div>
+        <div class="ph-acc-section">
+          <div class="ph-acc-head">Storage</div>
+          <p>Store at or below −18°C. Best consumed within 4 weeks after opening. Production Date / Best Before: refer to the bottom of container.</p>
+        </div>
+        <div class="ph-acc-section">
+          <div class="ph-acc-head">Nutrition Information</div>
+          <div class="ph-acc-note">Serving per Container: 1 &nbsp;·&nbsp; Serving Size: 80g (1 Cup)</div>
+          <table class="ph-acc-nut">
+            <thead>
+              <tr><td></td><td>Per Serving</td><td>Per 100g</td></tr>
+            </thead>
+            <tbody>
+              <tr class="nut-big"><td>Energy</td><td>133 kcal</td><td>166 kcal</td></tr>
+              <tr class="nut-big"><td>Protein</td><td>2.8 g</td><td>3.5 g</td></tr>
+              <tr class="nut-big"><td>Total Fat</td><td>3.8 g</td><td>4.7 g</td></tr>
+              <tr class="nut-sub"><td>Saturated Fat</td><td>2.2 g</td><td>2.8 g</td></tr>
+              <tr class="nut-sub"><td>Trans Fat</td><td>0.1 g</td><td>0.1 g</td></tr>
+              <tr class="nut-big"><td>Cholesterol</td><td>8 mg</td><td>10 mg</td></tr>
+              <tr class="nut-big"><td>Carbohydrate</td><td>22.0 g</td><td>27.5 g</td></tr>
+              <tr class="nut-sub"><td>Total Sugar</td><td id="nut-sugar">14.4 g</td><td>18.0 g</td></tr>
+              <tr class="nut-big"><td>Dietary Fibre</td><td>1.1 g</td><td>1.4 g</td></tr>
+              <tr class="nut-big"><td>Sodium</td><td>28 mg</td><td>34 mg</td></tr>
+            </tbody>
+            <tfoot><tr><td colspan="3">*1 kcal = 4.2 kJ</td></tr></tfoot>
+          </table>
+        </div>
+      </div>
+
+      <div id="acc-delivery"></div><button class="ph-acc-trigger" onclick="toggleAcc(this)" style="border-top:1px solid rgba(59,31,10,0.1);">
+        <span>Delivery &amp; Pickup</span>
+        <span class="ph-acc-icon">+</span>
+      </button>
+      <div class="ph-acc-body" style="display:none;">
+        <div class="ph-acc-section">
+          <p>Available for pickup at Bandar Utama / TTDI / Damansara, Subang / SS15, and Mont Kiara. Delivery available — fee applies based on location. Order via WhatsApp after placing your order.</p>
+        </div>
+      </div>
     </div>
+
+    <div class="ph-divider"></div>
+    
   </div>
+
 </section>
 
 <!-- DETAILS -->
-<section class="pd">
-  <div class="pd-inner">
-    <div>
-      <div class="pd-head">Details</div>
-      <p class="pd-desc" id="pd-desc">Our Musang King Gelato is made in small batches using real Musang King durian pulp — no shortcuts, no filler, just the honest intensity of the King of Fruits. Lightly sweet and intensely durian-forward, it's alive with the legendary stink that true believers live for.</p>
 
-      <div class="pd-section">
-        <div class="pd-section-title">Ingredients</div>
-        <ul class="pd-list">
-          <li>Water, MSK Durian, Milk, Cream, Sugar, Trehalose, Skimmed Milk Powder, Dextrose</li>
-          <li>Stabiliser: Guar Gum (E412), Cellulose Gum (E466), Carrageenan (E407)</li>
-        </ul>
-      </div>
-
-      <div class="pd-section">
-        <div class="pd-section-title">Allergen Info</div>
-        <ul class="pd-list">
-          <li><strong>Contains:</strong> Milk</li>
-          <li><strong>May Contain:</strong> Traces of eggs, nuts</li>
-          <li>Halal certified · No pork · No lard · No alcohol</li>
-        </ul>
-      </div>
-
-      <div class="pd-section">
-        <div class="pd-section-title">Storage</div>
-        <ul class="pd-list">
-          <li>Store at or below −18°C</li>
-          <li>Best consumed within 4 weeks after opening</li>
-          <li>Production Date / Best Before: refer to the bottom of container</li>
-        </ul>
-      </div>
-    </div>
-
-    <div>
-      <div class="pd-nutrition">
-        <div class="pd-nut-title">Nutrition Information</div>
-        <div class="pd-nut-note">Serving per Container: 1 &nbsp;·&nbsp; Serving Size: 80g (1 Cup)</div>
-        <div class="pd-nut-header">
-          <span></span>
-          <span class="pd-nut-hcol">Per Serving</span>
-          <span class="pd-nut-hcol">Per 100g</span>
-        </div>
-        <div class="pd-nut-row big"><span class="pd-nut-label">Energy</span><span class="pd-nut-val">133 kcal</span><span class="pd-nut-val2">166 kcal</span></div>
-        <div class="pd-nut-divider"></div>
-        <div class="pd-nut-row big"><span class="pd-nut-label">Protein</span><span class="pd-nut-val">2.8 g</span><span class="pd-nut-val2">3.5 g</span></div>
-        <div class="pd-nut-row big"><span class="pd-nut-label">Total Fat</span><span class="pd-nut-val">3.8 g</span><span class="pd-nut-val2">4.7 g</span></div>
-        <div class="pd-nut-row sub"><span class="pd-nut-label">Saturated Fat</span><span class="pd-nut-val">2.2 g</span><span class="pd-nut-val2">2.8 g</span></div>
-        <div class="pd-nut-row sub"><span class="pd-nut-label">Trans Fat</span><span class="pd-nut-val">0.1 g</span><span class="pd-nut-val2">0.1 g</span></div>
-        <div class="pd-nut-row big"><span class="pd-nut-label">Cholesterol</span><span class="pd-nut-val">8 mg</span><span class="pd-nut-val2">10 mg</span></div>
-        <div class="pd-nut-row big"><span class="pd-nut-label">Carbohydrate</span><span class="pd-nut-val">22.0 g</span><span class="pd-nut-val2">27.5 g</span></div>
-        <div class="pd-nut-row sub"><span class="pd-nut-label">Total Sugar</span><span class="pd-nut-val" id="nut-sugar">14.4 g</span><span class="pd-nut-val2">18.0 g</span></div>
-        <div class="pd-nut-row big"><span class="pd-nut-label">Dietary Fibre</span><span class="pd-nut-val">1.1 g</span><span class="pd-nut-val2">1.4 g</span></div>
-        <div class="pd-nut-row big"><span class="pd-nut-label">Sodium</span><span class="pd-nut-val">28 mg</span><span class="pd-nut-val2">34 mg</span></div>
-        <div class="pd-nut-footer">*1 kcal = 4.2 kJ</div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- MARQUEE 
 <div class="mq">
@@ -422,8 +477,8 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 -->
 
 
-<!-- PROMO BANNER -->
-<div class="promo">
+<!-- PROMO BANNER 
+<div class="promo" id="promo">
   <div class="promo-text">
     <div class="promo-eyebrow">Limited Availability · Order Today</div>
     <div class="promo-head">Order Now &amp; Get<br><span>Stinky Good</span> Guaranteed</div>
@@ -434,6 +489,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
   </div>
   <img src="brand assets/Dollop Character.webp" alt="" class="promo-char">
 </div>
+-->
 
 <!-- FOOTER -->
 <footer id="footer">
@@ -471,14 +527,10 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
       <div class="si"><div class="sd active"></div><div class="sd"></div><div class="sd"></div></div>
       <div class="m-title">Get Your Dollop</div>
       <div class="m-sub">Choose your size and how you'd like to get your stink on.</div>
-      <div class="v-lbl">Flavour</div>
-      <div class="v-sel" style="margin-bottom:20px;">
-        <button class="vb active" id="sw-regular" onclick="selSweet('regular')"><span class="vn">Regular Sweet</span><span class="vnt">Classic durian richness</span></button>
-        <button class="vb" id="sw-less" onclick="selSweet('less')"><span class="vn">Less Sweet</span><span class="vnt">Pure durian forward</span></button>
-      </div>
       <div class="v-lbl">Cup Size</div>
       <div class="sz-sel" style="margin-bottom:20px;">
         <button class="sz-btn active" onclick="selSize(this,18)">50ml · RM18</button>
+        <button class="sz-btn" onclick="selSize(this,30)">100ml · RM30</button>
       </div>
       <div class="v-lbl">Quantity</div>
       <div style="display:flex;align-items:center;gap:0;border:1.5px solid rgba(59,31,10,0.14);border-radius:40px;width:fit-content;overflow:hidden;margin-bottom:20px;background:var(--cream);">
@@ -580,7 +632,7 @@ document.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';curso
 // Product data
 const products = {
   regular: {
-    name: 'Regular Sweet',
+    name: 'Gelato Title Here',
     sub: 'Classic durian richness — bold, creamy, unmistakably Musang King the way it was meant to be.',
     desc: 'Our Musang King Gelato is made in small batches using real Musang King durian pulp — no shortcuts, no filler, just the honest intensity of the King of Fruits. Lightly sweet and intensely durian-forward, it\'s alive with the legendary stink that true believers live for.',
     badge: 'Most Popular',
@@ -603,22 +655,17 @@ let currentFlavour = params.get('flavour') === 'less' ? 'less' : 'regular';
 
 function applyProduct(flavour) {
   const p = products[flavour];
-  document.getElementById('ph-name').textContent = p.name;
-  document.getElementById('ph-sub').textContent = p.sub;
-  document.getElementById('pd-desc').textContent = p.desc;
-  document.getElementById('ph-badge').textContent = p.badge;
-  document.getElementById('nut-sugar').textContent = p.sugar;
-  document.getElementById('bc-current').textContent = p.name;
+  const set = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
+  set('ph-name', p.name);
+  set('ph-sub', p.sub);
+  set('pd-desc', p.desc);
+  set('ph-badge', p.badge);
+  set('nut-sugar', p.sugar);
+  set('bc-current', p.name);
   document.title = 'Dollop — ' + p.name;
   const wrap = document.getElementById('ph-img-wrap');
-  wrap.className = 'ph-img-wrap' + (p.imgClass ? ' ' + p.imgClass : '');
-  // Flavour buttons
-  document.getElementById('flav-regular').classList.toggle('active', flavour === 'regular');
-  document.getElementById('flav-less').classList.toggle('active', flavour === 'less');
-  // Modal flavour
-  document.getElementById('sw-regular').classList.toggle('active', flavour === 'regular');
-  document.getElementById('sw-less').classList.toggle('active', flavour === 'less');
-  sweet = flavour === 'less' ? 'less' : 'regular';
+  if(wrap) wrap.className = 'ph-img-wrap' + (p.imgClass ? ' ' + p.imgClass : '');
+  sweet = 'regular';
 }
 
 function switchFlavour(f) {
@@ -630,15 +677,20 @@ function switchFlavour(f) {
   window.history.replaceState({}, '', url);
 }
 
+// ---- Modal state & logic ----
+let price=18, sweet='regular', pickupLoc='', qty=1, cupSize='50ml', fulfilment='pickup', deliveryAddr='';
+
 applyProduct(currentFlavour);
 
 // Page qty
 let pageQty = 1;
 function changeQty(d) {
   pageQty = Math.max(1, pageQty + d);
-  document.getElementById('ph-qty-val').textContent = pageQty;
+  const qv = document.getElementById('ph-qty-val');
+  if(qv) qv.textContent = pageQty;
   qty = pageQty;
-  document.getElementById('modal-qty').textContent = pageQty;
+  const mq = document.getElementById('modal-qty');
+  if(mq) mq.textContent = pageQty;
 }
 
 // Size selector (page)
@@ -649,14 +701,19 @@ document.querySelectorAll('.ph-sz').forEach(btn => {
   });
 });
 
-// ---- Modal state & logic (same as index.html) ----
-let price=18, sweet='regular', pickupLoc='', qty=1, cupSize='50ml', fulfilment='pickup', deliveryAddr='';
 const locLabels={bu:'Bandar Utama / TTDI / Damansara', sub:'Subang / SS15', mk:'Mont Kiara'};
 
 function openModal(){document.getElementById('modalOverlay').classList.add('open');document.body.style.overflow='hidden';}
 function closeModal(){document.getElementById('modalOverlay').classList.remove('open');document.body.style.overflow='';}
 function handleOverlayClick(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
 
+function toggleAcc(btn){
+  const body=btn.nextElementSibling;
+  const icon=btn.querySelector('.ph-acc-icon');
+  const open=body.style.display!=='none';
+  body.style.display=open?'none':'block';
+  if(icon) icon.classList.toggle('open',!open);
+}
 function selSweet(t){
   sweet=t;
   document.querySelectorAll('#sw-regular,#sw-less').forEach(b=>b.classList.remove('active'));
@@ -664,10 +721,12 @@ function selSweet(t){
 }
 function selSize(btn,p){
   price=p;
-  document.querySelectorAll('.sz-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.sz-btn,.ph-sz').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   const txt=btn.textContent;
-  cupSize=txt.includes('300')? '300ml':'100ml';
+  cupSize=txt.includes('100')? '100ml':'50ml';
+  const priceEl=document.getElementById('ph-price');
+  if(priceEl) priceEl.textContent='RM '+p;
 }
 function modalQty(d){qty=Math.max(1,qty+d);document.getElementById('modal-qty').textContent=qty;}
 function selFulfilment(type){
@@ -706,7 +765,7 @@ function goStep(n){
     if(!name||!phone){alert('Please fill in your name and WhatsApp number.');return;}
     const total=(price*qty).toFixed(2);
     document.getElementById('sip').textContent='RM '+price+'.00';
-    document.getElementById('sv').textContent=sweet==='less'?'Less Sweet':'Regular Sweet';
+    document.getElementById('sv').textContent='Dollop Gelato';
     document.getElementById('sCupSize').textContent=cupSize;
     document.getElementById('sQty').textContent=qty+' cup'+(qty>1?'s':'');
     document.getElementById('sFulfilment').textContent=fulfilment==='delivery'?'Delivery':'Pickup';
@@ -732,7 +791,7 @@ async function placeOrder(){
   const name     = document.getElementById('fn').value.trim();
   const phone    = document.getElementById('fp').value.trim();
   const notes    = document.getElementById('fnotes').value.trim();
-  const flavour  = sweet === 'regular' ? 'Regular Sweet' : 'Less Sweet';
+  const flavour  = 'Dollop Gelato';
   const size     = cupSize;
   const total    = 'RM ' + (price * qty).toFixed(2) + (fulfilment === 'delivery' ? ' + delivery fee' : '');
   const location = fulfilment === 'delivery' ? (deliveryAddr || '—') : (locLabels[pickupLoc] || '—');
