@@ -26,20 +26,22 @@ a{text-decoration:none;color:inherit;}
 #cursor{display:none;}
 
 /* SIDEBAR */
-.sb{position:fixed;left:0;top:0;bottom:0;width:var(--sb);background:var(--brown);z-index:200;display:flex;flex-direction:column;align-items:center;padding:22px 0 18px;}
-.sb-logo{width:44px;height:44px;margin-bottom:28px;display:flex;align-items:center;justify-content:center;}
-.sb-logo img{width:42px;height:42px;object-fit:contain;}
-.sb-nav{display:flex;flex-direction:column;gap:4px;flex:1;align-items:center;}
-.sb-link{width:42px;height:42px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:rgba(255,248,238,0.3);transition:color 0.2s,background 0.2s;position:relative;}
-.sb-link:hover,.sb-link.active{color:var(--yellow);background:rgba(245,197,24,0.1);}
+.sb{position:fixed;top:0;left:0;right:0;height:64px;background:#FFF8EE;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 40px;border-bottom:1px solid rgba(59,31,10,0.08);box-shadow:0 2px 16px rgba(59,31,10,0.06);}
+.sb-logo{display:flex;align-items:center;text-decoration:none;flex-shrink:0;}
+.sb-logo img{height:38px;width:auto;object-fit:contain;}
+.sb-nav{display:flex;flex-direction:row;gap:4px;align-items:center;}
+.sb-link{padding:8px 16px;font-family:'Barlow',sans-serif;font-size:0.88rem;font-weight:500;letter-spacing:0.04em;color:rgba(59,31,10,0.55);border-radius:8px;text-decoration:none;transition:color 0.2s,background 0.2s;}
+.sb-link:hover,.sb-link.active{color:var(--brown);background:rgba(59,31,10,0.06);}
 .sb-link svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
-.sb-tip{position:absolute;left:calc(100% + 10px);top:50%;transform:translateY(-50%);background:var(--thorn);color:var(--cream);font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;padding:4px 9px;border-radius:4px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.15s;}
+.sb-tip{display:none;}
 .sb-link:hover .sb-tip{opacity:1;}
-.sb-div{width:22px;height:1px;background:rgba(255,248,238,0.1);margin:6px 0;}
-.sb-dot{width:6px;height:6px;border-radius:50%;background:var(--yellow);margin-top:auto;margin-bottom:2px;box-shadow:0 0 8px var(--yellow);}
+.sb-div{display:none;}
+.sb-dot{display:none;}
+.sb-cta{padding:9px 22px;background:var(--brown);color:var(--yellow);font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.12em;border-radius:40px;text-decoration:none;white-space:nowrap;transition:opacity 0.2s;}
+.sb-cta:hover{opacity:0.85;}
 
 /* MAIN */
-.main{margin-left:var(--sb);}
+.main{margin-left:0;margin-top:64px;}
 
 /* BREADCRUMB */
 .bc{padding:18px 48px 0;display:flex;align-items:center;gap:8px;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--brown-light);}
@@ -288,7 +290,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 
 /* MOBILE */
 @media(max-width:860px){
-  .sb{display:none;}.main{margin-left:0;}
+  .sb{padding:0 20px;height:52px;}.main{margin-left:0;}
   .ph{grid-template-columns:1fr;padding:24px 24px 48px;gap:32px;}
   .pd-inner{grid-template-columns:1fr;gap:36px;}
   .pd,.bc{padding-left:24px;padding-right:24px;}
@@ -307,31 +309,16 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
   
   <!-- SIDEBAR -->
   <nav class="sb">
-    <a href="index.html" class="sb-logo"><img src="brand assets/Dollop_Logo Rebrand_OL-01.png" alt="Dollop"></a>
+    <a href="index.html" class="sb-logo">
+      <img src="brand assets/Dollop_Logo Rebrand_OL-01.png" alt="Dollop">
+    </a>
     <div class="sb-nav">
-      <a href="index.html" class="sb-link">
-        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        <span class="sb-tip">Back to Home</span>
-      </a>
-      <a href="#" class="sb-link active" id="sb-product">
-        <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-        <span class="sb-tip">The Gelato</span>
-      </a>
-      <a href="#acc-ingredients" class="sb-link" id="sb-ingredients">
-        <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-        <span class="sb-tip">Ingredients</span>
-      </a>
-      <a href="#acc-delivery" class="sb-link" id="sb-delivery">
-        <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-        <span class="sb-tip">Delivery & Pickup</span>
-      </a>
-      <div class="sb-div"></div>
-      <a href="#" class="sb-link" onclick="openModal();return false;">
-        <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-        <span class="sb-tip">Order Now</span>
-      </a>
+      <a href="index.html" class="sb-link">Home</a>
+      <a href="#" class="sb-link active" id="sb-product">The Gelato</a>
+      <a href="#acc-ingredients" class="sb-link" id="sb-ingredients">Ingredients</a>
+      <a href="#acc-delivery" class="sb-link" id="sb-delivery">Delivery & Pickup</a>
     </div>
-    <div class="sb-dot"></div>
+    <a href="#" class="sb-cta" onclick="openModal();return false;">Order Now</a>
   </nav>
   
   <div class="main">
