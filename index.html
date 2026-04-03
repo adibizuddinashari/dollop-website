@@ -54,9 +54,9 @@ body:has(button:hover) #cursor,body:has(a:hover) #cursor{transform:scale(1.4) ro
 .hero-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,248,238,0.35);border:none;cursor:pointer;transition:all 0.3s;padding:0;}
 .hero-dot.active{background:var(--yellow);transform:scale(1.3);}
 .hero-grain{position:absolute;inset:0;z-index:1;opacity:0.35;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");}
-.hero-ov{position:absolute;inset:0;z-index:2;background:linear-gradient(to top,rgba(8,4,0,0.72) 0%,rgba(8,4,0,0.3) 35%,transparent 65%);}
+.hero-ov{position:absolute;inset:0;z-index:2;background:linear-gradient(to bottom,rgba(255,248,238,0.55) 0%,rgba(255,248,238,0.15) 25%,transparent 50%,rgba(8,4,0,0.45) 80%,rgba(8,4,0,0.72) 100%);}
 .hero-c{display:none;}
-.hero-logo-top{position:absolute;top:55px;left:62px;width:clamp(160px,18vw,260px);height:auto;object-fit:contain;opacity:0.88;z-index:3;}
+.hero-logo-top{position:absolute;top:48px;left:50%;transform:translateX(-50%);width:clamp(140px,16vw,220px);height:auto;object-fit:contain;opacity:1;z-index:3;}
 .hero-ey{font-size:0.68rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--green-light);font-weight:500;margin-bottom:10px;display:flex;align-items:center;gap:14px;}
 .hero-ey::before,.hero-ey::after{content:'';display:block;width:26px;height:1px;background:var(--green-light);}
 .hero-bottom-row{position:absolute;bottom:48px;left:52px;z-index:3;display:inline-flex;align-items:flex-end;gap:20px;}
@@ -1103,7 +1103,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
   /* Hero */
   .hero-bottom-row{left:24px;right:24px;bottom:56px;flex-direction:column;align-items:flex-start;gap:16px;}
   .hero-right-panel{width:100%;}
-  .hero-logo-top{left:24px;top:24px;}
+  .hero-logo-top{left:50%;transform:translateX(-50%);top:24px;}
   .hero-dots{bottom:14px;}
 
   /* Story-Promise */
