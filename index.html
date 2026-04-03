@@ -428,7 +428,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 .sp-head {
   font-family: 'Barlow', sans-serif;
   font-weight: 500;
-  font-size: clamp(3rem, 6.5vw, 6.5rem);
+  font-size: clamp(2.5rem, 5vw, 4.8rem);
   line-height: 0.91;
   color: var(--cream);
   letter-spacing: 2px;
@@ -438,7 +438,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 .sp-one { font-weight: 900; }
 .sp-obsession { font-family: 'Barrio', cursive; letter-spacing: 1px; }
 .sp-sub {
-  font-size: 0.88rem;
+  font-size: 1rem;
   color: rgba(255,248,238,0.55);
   line-height: 1.75;
   max-width: 460px;
@@ -548,7 +548,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 .si-head {
   font-family: 'Barlow', sans-serif;
   font-weight: 500;
-  font-size: clamp(2.8rem, 5.5vw, 5rem);
+  font-size: clamp(2.5rem, 7.4vw, 6.8rem);
   line-height: 0.91;
   color: var(--brown);
   letter-spacing: 2px;
@@ -689,7 +689,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 .bs-head {
   font-family: 'Barlow', sans-serif;
   font-weight: 500;
-  font-size: clamp(2.8rem, 5vw, 4.8rem);
+  font-size: clamp(2.5rem, 4.2vw, 4.8rem);
   line-height: 0.91;
   color: var(--brown);
   letter-spacing: 2px;
@@ -762,7 +762,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 .sw-head {
   font-family: 'Barlow', sans-serif;
   font-weight: 500;
-  font-size: clamp(2.8rem, 5.5vw, 5rem);
+  font-size: clamp(2.5rem, 7.4vw, 6.8rem);
   line-height: 0.91;
   color: var(--cream);
   letter-spacing: 2px;
@@ -879,7 +879,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 
 /* Mobile responsive for new sections */
 @media(max-width:860px) {
-  .sp-inner { grid-template-columns: 1fr; gap: 40px; }
+  .sp-inner { flex-direction: column; align-items: flex-start; padding: 48px 24px; gap: 32px; }
   .sp-right { order: -1; }
   .sp-char-img { max-width: 260px; margin: 0 auto; display: block; }
   .story-promise,.story-inside,.story-testi,.story-where { padding: 60px 24px; }
@@ -1097,6 +1097,45 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 
 /* ── FULL-PAGE SCROLL ────────────────────────────────────────── */
 /* full-page scroll active — sections scroll into view */
+
+/* ── MOBILE OVERRIDES (max-width: 860px) ──────────────────────────────────── */
+@media(max-width:860px){
+
+  /* Hero */
+  .hero-bottom-row{left:24px;right:24px;bottom:56px;flex-direction:column;align-items:flex-start;gap:16px;}
+  .hero-right-panel{width:100%;}
+  .hero-logo-top{left:24px;top:24px;}
+  .hero-dots{bottom:14px;}
+
+  /* Story-Promise */
+  .sp-right{height:260px;width:100%;}
+  .sp-right-text{max-width:100%;text-align:left;}
+  .sp-head{font-size:clamp(2rem,6vw,3rem);}
+  .sp-benefits{max-width:100%;}
+
+  /* Story-Inside */
+  .story-inside{grid-template-columns:1fr;min-height:auto;}
+  .si-inner{padding:48px 24px;}
+  .si-img-col{height:55vmax;}
+  .si-overlay-content{display:none;}
+  .si-head{font-size:clamp(2rem,6vw,3rem);}
+
+  /* Brand-Story */
+  .brand-story{grid-template-columns:1fr;height:auto;min-height:100svh;}
+  .bs-img-col{height:45vmax;}
+  .bs-text-col{padding:36px 24px 48px;}
+  .bs-head{font-size:clamp(2rem,6vw,3rem);}
+
+  /* Trust bar hidden on mobile (visible via normal scroll between sections) */
+  .trust-bar{display:none;}
+
+  /* Float widget */
+  #floatWidget{bottom:16px;right:16px;}
+  #floatChar{width:60px;height:60px;}
+  #floatBubble{font-size:0.8rem;padding:8px 14px;}
+
+}
+/* ── END MOBILE OVERRIDES ────────────────────────────────────────────────── */
 </style>
 </head>
 <body class="intro-lock">
@@ -1169,9 +1208,9 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
   <div class="hero-bottom-row">
     <div class="hero-headline-wrap">
       <div class="hero-hl">
-        <span class="hero-hl-line"><span class="hl-slide"><span class="hl-xbold">PURE</span> <span class="hl-flavour">FLAVOUR</span></span></span>
-        <span class="hero-hl-line"><span class="hl-slide">YOUR THAT WILL</span></span>
-        <span class="hero-hl-line"><span class="hl-slide"><span class="hl-barrio">BLOW</span> YOUR <span class="hl-barrio">MIND</span></span></span>
+        <span class="hero-hl-line"><span class="hl-slide"><span class="hl-xbold">PURE</span> <span class="hl-flavour">FLAVOUR</span>
+        <span class="hero-hl-line"><span class="hl-slide">THAT WILL <span class="hl-barrio">BLOW</span>
+        <span class="hero-hl-line"><span class="hl-slide"> YOUR <span class="hl-barrio">MIND</span></span></span>
       </div>
     </div>
     <div class="hero-right-panel">
@@ -1255,8 +1294,8 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 
     <!-- RIGHT: Heading + Sub, bottom-right -->
     <div class="sp-right-text reveal">
-      <div class="sec-lbl" style="color:rgba(255,248,238,0.5);text-align:right;margin-bottom:12px;">The Story</div>
-      <h2 class="sp-head">BUILT ON<br><span class="sp-one">ONE</span><br><span class="sp-obsession">OBSESSION.</span></h2>
+      <div class="sec-lbl" style="color:rgba(255,248,238,0.5);text-align:right;margin-bottom:10px;">The Story</div>
+      <h2 class="sp-head">BUILT ON<br><span class="sp-one" style="white-space:nowrap">ONE <span class="sp-obsession">OBSESSION.</span></span></h2>
       <p class="sp-sub">No shortcuts. No fillers. No "durian flavouring". Just the real, pungent, glorious Musang King — the way your favourite uncle eats it at the pasar malam, minus the awkward family drama.</p>
     </div>
 
