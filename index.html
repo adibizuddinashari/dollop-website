@@ -33,12 +33,14 @@ body:has(button:hover) #cursor,body:has(a:hover) #cursor{transform:scale(1.4) ro
 .sb-logo{display:flex;align-items:center;justify-content:center;text-decoration:none;}
 .sb-logo img{height:38px;width:auto;object-fit:contain;}
 .sb-nav{display:flex;flex-direction:row;gap:4px;align-items:center;}
-.sb-link{padding:8px 16px;font-family:'Barlow',sans-serif;font-size:0.88rem;font-weight:500;letter-spacing:0.04em;color:rgba(59,31,10,0.55);border-radius:8px;text-decoration:none;transition:color 0.2s,background 0.2s;}
-.sb-link:hover,.sb-link.active{color:var(--brown);background:rgba(59,31,10,0.06);}
+.sb-link{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:rgba(59,31,10,0.4);text-decoration:none;transition:color 0.2s,background 0.2s;position:relative;}
+.sb-link:hover,.sb-link.active{color:var(--brown);background:rgba(59,31,10,0.07);}
 .sb-cta{padding:10px 26px;background:#2D5016;color:#FFF8EE;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.12em;border-radius:40px;text-decoration:none;white-space:nowrap;transition:background 0.3s ease,color 0.3s ease,transform 0.2s ease;justify-self:end;}
 .sb-cta:hover{background:#F5C518;color:#3B1F0A;transform:translateY(-1px);}
 .sb-link svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
-.sb-tip{display:none;}
+.sb-tip{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--brown);color:var(--cream);font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;padding:4px 10px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.15s;}
+.sb-tip::before{content:'';position:absolute;bottom:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-bottom-color:var(--brown);}
+.sb-link:hover .sb-tip{opacity:1;}
 
 .sb-div{width:22px;height:1px;background:rgba(255,248,238,0.1);margin:6px 0;}
 .sb-dot{width:6px;height:6px;border-radius:50%;background:var(--yellow);margin-top:auto;margin-bottom:2px;box-shadow:0 0 8px var(--yellow);}
@@ -1170,11 +1172,26 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 <!-- SIDEBAR -->
 <nav class="sb">
   <div class="sb-nav">
-    <a href="#hero" class="sb-link active">Home</a>
-    <a href="#story" class="sb-link">The Story</a>
-    <a href="#inside" class="sb-link">What's Inside</a>
-    <a href="#brand" class="sb-link">Our Brand</a>
-    <a href="#where" class="sb-link">Find Us</a>
+    <a href="#hero" class="sb-link active">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span class="sb-tip">Home</span>
+    </a>
+    <a href="#story" class="sb-link">
+      <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <span class="sb-tip">The Story</span>
+    </a>
+    <a href="#inside" class="sb-link">
+      <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      <span class="sb-tip">What's Inside</span>
+    </a>
+    <a href="#brand" class="sb-link">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span class="sb-tip">Our Brand</span>
+    </a>
+    <a href="#where" class="sb-link">
+      <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <span class="sb-tip">Find Us</span>
+    </a>
   </div>
   <a href="#hero" class="sb-logo">
     <img src="brand assets/Dollop_Logo Rebrand_OL-01.png" alt="Dollop">
