@@ -35,6 +35,8 @@ body:has(button:hover) #cursor,body:has(a:hover) #cursor{transform:scale(1.4) ro
 .sb-nav{display:flex;flex-direction:row;gap:4px;align-items:center;}
 .sb-link{padding:8px 16px;font-family:'Barlow',sans-serif;font-size:0.88rem;font-weight:500;letter-spacing:0.04em;color:rgba(59,31,10,0.55);border-radius:8px;text-decoration:none;transition:color 0.2s,background 0.2s;}
 .sb-link:hover,.sb-link.active{color:var(--brown);background:rgba(59,31,10,0.06);}
+.sb-cta{padding:10px 26px;background:#2D5016;color:#FFF8EE;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.12em;border-radius:40px;text-decoration:none;white-space:nowrap;transition:background 0.3s ease,color 0.3s ease,transform 0.2s ease;flex-shrink:0;}
+.sb-cta:hover{background:#F5C518;color:#3B1F0A;transform:translateY(-1px);}
 .sb-link svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 .sb-tip{display:none;}
 
@@ -1135,9 +1137,34 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 
 }
 /* ── END MOBILE OVERRIDES ────────────────────────────────────────────────── */
+
+/* ── SITE INTRO OVERLAY ─────────────────────────────────────────────────── */
+#siteIntro {
+  position: fixed;
+  inset: 0;
+  background: #FFF8EE;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+#introLogo {
+  height: 80px;
+  width: auto;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: none;
+}
+/* nav items start hidden for reveal */
+.sb-nav, .sb-cta { opacity: 0; transition: opacity 0.5s ease; }
+/* ── END INTRO OVERLAY ───────────────────────────────────────────────────── */
 </style>
 </head>
 <body class="intro-lock">
+<div id="siteIntro">
+  <img id="introLogo" src="brand assets/Dollop_Logo Rebrand_OL-01.png" alt="Dollop">
+</div>
 <div id="cursor"></div>
 
 <!-- SIDEBAR -->
@@ -1199,7 +1226,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
       <a href="product.html" class="hero-btn">Get Your Dollop</a>
     </div>
   </div>
-  <img class="hero-logo-intro" src="brand assets/Dollop_Logo Rebrand_OL-01.png" alt="Dollop intro logo">
+  <!-- intro logo moved to overlay -->
   <div class="hero-badge">
     <div class="hero-badge-cloud">Stinky Good</div>
     <img class="hero-badge-char" src="brand assets/Dollop Character.webp" alt="Dollop Character">
@@ -1583,50 +1610,66 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 <script>
 
 // ============================================
-// HERO CINEMATIC INTRO SEQUENCE
+// SITE INTRO SEQUENCE
 // ============================================
 (function () {
-  const introLogo  = document.querySelector('.hero-logo-intro');
-  const realLogo   = document.querySelector('.hero-logo-top');
-  const hlSlides   = document.querySelectorAll('.hl-slide');
-  const badge      = document.querySelector('.hero-badge');
-  const dots       = document.querySelector('.hero-dots');
-  const heroScroll = document.querySelector('.hero-scroll');
-  const bottomRow  = document.querySelector('.hero-bottom-row');
+  const overlay   = document.getElementById('siteIntro');
+  const iLogo     = document.getElementById('introLogo');
+  const navLogo   = document.querySelector('.sb-logo img');
+  const sbNav     = document.querySelector('.sb-nav');
+  const sbCta     = document.querySelector('.sb-cta');
+  const hlSlides  = document.querySelectorAll('.hl-slide');
+  const heroScroll= document.querySelector('.hero-scroll');
+  const bottomRow = document.querySelector('.hero-bottom-row');
+  const dots      = document.querySelector('.hero-dots');
 
-  function show(el) { if (el) el.classList.add('hi-show'); }
+  function show(el) { if (el) { el.style.opacity = '1'; } }
 
-  function measureLogoOffset() {
-    const hero    = document.querySelector('.hero');
-    const heroBcr = hero.getBoundingClientRect();
-    const logoBcr = realLogo.getBoundingClientRect();
-    const heroCx  = heroBcr.left + heroBcr.width  / 2;
-    const heroCy  = heroBcr.top  + heroBcr.height / 2;
-    const logoCx  = logoBcr.left + logoBcr.width  / 2;
-    const logoCy  = logoBcr.top  + logoBcr.height / 2;
-    introLogo.style.setProperty('--logo-dx', (logoCx - heroCx) + 'px');
-    introLogo.style.setProperty('--logo-dy', (logoCy - heroCy) + 'px');
-    introLogo.style.setProperty('--logo-scale', (logoBcr.height / 96).toFixed(3));
-  }
+  // Step 1 — logo pops in at center of cream screen
+  setTimeout(() => {
+    iLogo.style.transition = 'opacity 0.5s ease, transform 0.6s cubic-bezier(0.34,1.56,0.64,1)';
+    iLogo.style.opacity = '1';
+    iLogo.style.transform = 'scale(1)';
+  }, 300);
 
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      measureLogoOffset();
-      setTimeout(() => introLogo.classList.add('phase-pop'), 900);
-      setTimeout(() => {
-        introLogo.classList.remove('phase-pop');
-        void introLogo.offsetWidth;
-        introLogo.classList.add('phase-move');
-      }, 1700);
-      setTimeout(() => show(realLogo),  2350);
-      setTimeout(() => show(bottomRow), 2500);
-      hlSlides.forEach((line, i) => setTimeout(() => line.classList.add('hi-show'), 2600 + i * 160));
-      setTimeout(() => show(badge),      3050);
-      setTimeout(() => show(dots),       3300);
-      setTimeout(() => show(heroScroll), 3500);
-      setTimeout(() => document.body.classList.remove('intro-lock'), 4200);
-    });
-  });
+  // Step 2 — logo flies to navbar position
+  setTimeout(() => {
+    const navLogoBcr  = navLogo.getBoundingClientRect();
+    const iLogoBcr    = iLogo.getBoundingClientRect();
+    // Center of intro logo
+    const fromCx = iLogoBcr.left + iLogoBcr.width / 2;
+    const fromCy = iLogoBcr.top  + iLogoBcr.height / 2;
+    // Center of nav logo target
+    const toCx   = navLogoBcr.left + navLogoBcr.width / 2;
+    const toCy   = navLogoBcr.top  + navLogoBcr.height / 2;
+    const dx = toCx - fromCx;
+    const dy = toCy - fromCy;
+    const scale = navLogoBcr.height / iLogoBcr.height;
+
+    iLogo.style.transition = 'transform 0.7s cubic-bezier(0.65,0,0.35,1), opacity 0.3s ease 0.5s';
+    iLogo.style.transform  = `translate(${dx}px, ${dy}px) scale(${scale})`;
+    iLogo.style.opacity    = '0';
+  }, 1200);
+
+  // Step 3 — fade out overlay, reveal page
+  setTimeout(() => {
+    overlay.style.transition = 'opacity 0.6s ease';
+    overlay.style.opacity = '0';
+    show(sbNav);
+    show(sbCta);
+  }, 1750);
+
+  // Step 4 — remove overlay, reveal hero content
+  setTimeout(() => {
+    overlay.style.display = 'none';
+    document.body.classList.remove('intro-lock');
+  }, 2400);
+
+  // Step 5 — hero content cascades in
+  setTimeout(() => show(bottomRow), 2000);
+  hlSlides.forEach((line, i) => setTimeout(() => line.classList.add('hi-show'), 2100 + i * 160));
+  setTimeout(() => show(dots),       2600);
+  setTimeout(() => show(heroScroll), 2800);
 })();
 
 const cursor=document.getElementById('cursor');
