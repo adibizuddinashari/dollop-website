@@ -29,20 +29,20 @@ a{text-decoration:none;color:inherit;}
 body:has(button:hover) #cursor,body:has(a:hover) #cursor{transform:scale(1.4) rotate(-15deg);}
 
 /* SIDEBAR */
-.sb{position:fixed;left:0;top:0;bottom:0;width:var(--sb);background:var(--brown);z-index:200;display:flex;flex-direction:column;align-items:center;padding:22px 0 18px;}
-.sb-logo{width:44px;height:44px;margin-bottom:28px;display:flex;align-items:center;justify-content:center;}
-.sb-logo img{width:42px;height:42px;object-fit:contain;}
-.sb-nav{display:flex;flex-direction:column;gap:4px;flex:1;align-items:center;}
-.sb-link{width:42px;height:42px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:rgba(255,248,238,0.3);transition:color 0.2s,background 0.2s;position:relative;}
-.sb-link:hover,.sb-link.active{color:var(--yellow);background:rgba(245,197,24,0.1);}
+.sb{position:fixed;top:0;left:0;right:0;height:64px;background:#FFF8EE;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 40px;border-bottom:1px solid rgba(59,31,10,0.08);box-shadow:0 2px 16px rgba(59,31,10,0.06);}
+.sb-logo{display:flex;align-items:center;text-decoration:none;flex-shrink:0;}
+.sb-logo img{height:38px;width:auto;object-fit:contain;}
+.sb-nav{display:flex;flex-direction:row;gap:4px;align-items:center;}
+.sb-link{padding:8px 16px;font-family:'Barlow',sans-serif;font-size:0.88rem;font-weight:500;letter-spacing:0.04em;color:rgba(59,31,10,0.55);border-radius:8px;text-decoration:none;transition:color 0.2s,background 0.2s;}
+.sb-link:hover,.sb-link.active{color:var(--brown);background:rgba(59,31,10,0.06);}
 .sb-link svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
-.sb-tip{position:absolute;left:calc(100% + 10px);top:50%;transform:translateY(-50%);background:var(--thorn);color:var(--cream);font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;padding:4px 9px;border-radius:4px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.15s;}
-.sb-link:hover .sb-tip{opacity:1;}
+.sb-tip{display:none;}
+
 .sb-div{width:22px;height:1px;background:rgba(255,248,238,0.1);margin:6px 0;}
 .sb-dot{width:6px;height:6px;border-radius:50%;background:var(--yellow);margin-top:auto;margin-bottom:2px;box-shadow:0 0 8px var(--yellow);}
 
 /* MAIN */
-.main{margin-left:var(--sb);}
+.main{margin-left:0;}
 
 /* HERO */
 .hero{position:relative;height:100vh;min-height:640px;overflow:hidden;}
@@ -56,7 +56,7 @@ body:has(button:hover) #cursor,body:has(a:hover) #cursor{transform:scale(1.4) ro
 .hero-grain{position:absolute;inset:0;z-index:1;opacity:0.35;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");}
 .hero-ov{position:absolute;inset:0;z-index:2;background:linear-gradient(to bottom,rgba(255,248,238,0.55) 0%,rgba(255,248,238,0.15) 25%,transparent 50%,rgba(8,4,0,0.45) 80%,rgba(8,4,0,0.72) 100%);}
 .hero-c{display:none;}
-.hero-logo-top{position:absolute;top:48px;left:50%;transform:translateX(-50%);width:clamp(140px,16vw,220px);height:auto;object-fit:contain;opacity:1;z-index:3;}
+.hero-logo-top{display:none;position:absolute;top:48px;left:50%;transform:translateX(-50%);width:clamp(140px,16vw,220px);height:auto;object-fit:contain;opacity:1;z-index:3;}
 .hero-ey{font-size:0.68rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--green-light);font-weight:500;margin-bottom:10px;display:flex;align-items:center;gap:14px;}
 .hero-ey::before,.hero-ey::after{content:'';display:block;width:26px;height:1px;background:var(--green-light);}
 .hero-bottom-row{position:absolute;bottom:48px;left:52px;z-index:3;display:inline-flex;align-items:flex-end;gap:20px;}
@@ -299,7 +299,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 
 /* MOBILE */
 @media(max-width:860px){
-  .sb{display:none;}.main{margin-left:0;}
+  .sb{padding:0 20px;height:52px;}.sb-nav{gap:0;}.sb-link{padding:6px 10px;font-size:0.78rem;}.sb-cta{padding:7px 16px;font-size:0.88rem;}
   .pg2{grid-template-columns:1fr;}
   
   .features,.faq,.products{padding:52px 24px;}
@@ -999,7 +999,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 }
 
 /* Phase 2+3 — Centre logo: pop in, hold, then shrink-move to top */
-.hero-logo-intro {
+.hero-logo-intro{display:none;} .hero-logo-intro--hidden {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1142,35 +1142,17 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 
 <!-- SIDEBAR -->
 <nav class="sb">
-  <a href="#hero" class="sb-logo"><img src="brand assets/durian cursor.png" alt="Dollop"></a>
+  <a href="#hero" class="sb-logo">
+    <img src="brand assets/Dollop_Logo Rebrand_OL-01.png" alt="Dollop">
+  </a>
   <div class="sb-nav">
-    <a href="#hero" class="sb-link active">
-      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      <span class="sb-tip">Home</span>
-    </a>
-    <a href="#story" class="sb-link">
-      <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-      <span class="sb-tip">The Story</span>
-    </a>
-    <a href="#inside" class="sb-link">
-      <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-      <span class="sb-tip">What's Inside</span>
-    </a>
-    <a href="#brand" class="sb-link">
-      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      <span class="sb-tip">Our Brand</span>
-    </a>
-    <a href="#where" class="sb-link">
-      <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      <span class="sb-tip">Find Us</span>
-    </a>
-    <div class="sb-div"></div>
-    <a href="product.html" class="sb-link">
-      <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-      <span class="sb-tip">Order Now</span>
-    </a>
+    <a href="#hero" class="sb-link active">Home</a>
+    <a href="#story" class="sb-link">The Story</a>
+    <a href="#inside" class="sb-link">What's Inside</a>
+    <a href="#brand" class="sb-link">Our Brand</a>
+    <a href="#where" class="sb-link">Find Us</a>
   </div>
-  <div class="sb-dot"></div>
+  <a href="product.html" class="sb-cta">Order Now</a>
 </nav>
 
 <div class="main">
