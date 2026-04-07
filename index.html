@@ -387,7 +387,8 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
   background: var(--brown);
   background-image: url('images/durian-flesh.jpg');
   background-size: cover;
-  background-position: center;
+  background-position: center 50%;
+  will-change: background-position;
   min-height: 100vh;
   padding: 0;
   position: relative;
@@ -666,9 +667,10 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
 }
 .bs-img {
   width: 100%;
-  height: 100%;
+  height: 115%;
   object-fit: cover;
   display: block;
+  will-change: transform;
 }
 .bs-img-wrap:hover .bs-img { transform: scale(1.04); }
 .bs-img-tag {
@@ -1123,7 +1125,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
   .story-inside{grid-template-columns:1fr;min-height:auto;padding:0;}
   .si-inner{padding:48px 24px;}
   .si-img-col{height:320px;}
-  .si-img-col img{width:100%;height:100%;object-fit:cover;display:block;}
+  .si-img-col img{width:100%;height:115%;object-fit:cover;display:block;will-change:transform;}
   .si-overlay-content{display:flex;right:16px;bottom:16px;left:16px;}
   .si-halal{flex-wrap:wrap;justify-content:flex-start;}
   .si-halal-text{font-size:0.7rem;}
@@ -2152,6 +2154,30 @@ function galleryNav(dir) { galleryGo(galIdx + dir); }
       if(!lerpRunning) { lerpRunning = true; requestAnimationFrame(lerpTick); }
     });
   });
+
+  // Parallax on section images
+  const parallaxItems = [
+    { el: document.querySelector('.bs-img'), factor: 0.25 },
+    { el: document.querySelector('.si-img-col img'), factor: 0.2 },
+    { el: document.getElementById('promise'), factor: 0.15, bg: true },
+  ].filter(item => item.el);
+
+  function updateParallax() {
+    const scrollY = lerpCurrent;
+    parallaxItems.forEach(({ el, factor, bg }) => {
+      const rect = el.getBoundingClientRect();
+      const center = rect.top + rect.height / 2 - window.innerHeight / 2;
+      if(bg) {
+        const pct = 50 + center * factor * 0.05;
+        el.style.backgroundPosition = 'center ' + pct + '%';
+      } else {
+        const offset = center * factor;
+        el.style.transform = 'translateY(' + offset + 'px)';
+      }
+    });
+    requestAnimationFrame(updateParallax);
+  }
+  requestAnimationFrame(updateParallax);
 })();
 // ── END SCROLL REVEAL ──────────────────────────────────────────────────────
 </script>
