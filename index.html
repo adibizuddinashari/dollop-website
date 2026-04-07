@@ -2081,28 +2081,9 @@ function galleryNav(dir) { galleryGo(galIdx + dir); }
 </div>
 
 <script>
-// ── FULL-PAGE SCROLL SYSTEM ──────────────────────────────────────────────────
+// ── SCROLL REVEAL + SIDEBAR ────────────────────────────────────────────────
 (function() {
-  const MOBILE = () => window.innerWidth < 860;
   const SECTION_IDS = ['hero','trust','story','inside','brand','where'];
-  const THRESHOLD = 80;
-  const DURATION  = 900;
-
-  let sections = [];
-  let current  = 0;
-  let busy     = false;
-  let accum    = 0;
-
-  function getSections() {
-    sections = SECTION_IDS.map(id => document.getElementById(id)).filter(Boolean);
-  }
-
-  function updateSidebar(idx) {
-    const id = sections[idx] && sections[idx].id;
-    document.querySelectorAll('.sb-link').forEach(l => l.classList.remove('active'));
-    const a = document.querySelector('.sb-link[href="#' + id + '"]');
-    if(a) a.classList.add('active');
-  }
 
   function revealSection(el) {
     el.querySelectorAll('.sec-enter,.sec-enter-left,.reveal,.sec-stagger').forEach(e => {
@@ -2110,62 +2091,37 @@ function galleryNav(dir) { galleryGo(galIdx + dir); }
     });
   }
 
-  function goTo(idx) {
-    if(idx < 0 || idx >= sections.length) return;
-    current = idx;
-    busy    = true;
-    accum   = 0;
-    document.documentElement.classList.add('fp-active');
-    sections[idx].scrollIntoView({ behavior: 'smooth' });
-    revealSection(sections[idx]);
-    updateSidebar(idx);
-    setTimeout(() => {
-      busy = false;
-      if(idx === sections.length - 1) document.documentElement.classList.remove('fp-active');
-    }, DURATION);
+  function updateSidebar(id) {
+    document.querySelectorAll('.sb-link').forEach(l => l.classList.remove('active'));
+    const a = document.querySelector('.sb-link[href="#' + id + '"]');
+    if(a) a.classList.add('active');
   }
 
-  window.addEventListener('wheel', function(e) {
-    if(MOBILE()) return;
-    // At last section scrolling down — release to normal scroll for footer
-    if(current === sections.length - 1 && e.deltaY > 0) return;
-    e.preventDefault();
-    if(busy) return;
-    accum += e.deltaY;
-    if(accum >  THRESHOLD) goTo(current + 1);
-    if(accum < -THRESHOLD) goTo(current - 1);
-  }, { passive: false });
+  // Reveal on scroll via IntersectionObserver
+  const sections = SECTION_IDS.map(id => document.getElementById(id)).filter(Boolean);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) {
+        revealSection(entry.target);
+        updateSidebar(entry.target.id);
+      }
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(s => observer.observe(s));
 
-  let touchY = 0;
-  window.addEventListener('touchstart', e => { touchY = e.touches[0].clientY; }, { passive: true });
-  window.addEventListener('touchend', function(e) {
-    if(MOBILE() || busy) return;
-    const dy = touchY - e.changedTouches[0].clientY;
-    if(Math.abs(dy) > 60) goTo(current + (dy > 0 ? 1 : -1));
-  }, { passive: true });
+  // Reveal hero immediately
+  revealSection(sections[0]);
 
-  window.addEventListener('keydown', function(e) {
-    if(MOBILE() || busy) return;
-    if(e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); goTo(current + 1); }
-    if(e.key === 'ArrowUp'   || e.key === 'PageUp'  ) { e.preventDefault(); goTo(current - 1); }
-  });
-
+  // Smooth scroll for nav links
   document.querySelectorAll('.sb-nav .sb-link[href^="#"]').forEach(link => {
     link.addEventListener('click', function(e) {
-      if(MOBILE()) return;
       e.preventDefault();
-      const id  = this.getAttribute('href').slice(1);
-      const idx = sections.findIndex(s => s.id === id);
-      if(idx >= 0) goTo(idx);
+      const el = document.getElementById(this.getAttribute('href').slice(1));
+      if(el) el.scrollIntoView({ behavior: 'smooth' });
     });
   });
-
-  getSections();
-  document.documentElement.classList.add('fp-active');
-  revealSection(sections[0]);
-  updateSidebar(0);
 })();
-// ── END FULL-PAGE SCROLL ──────────────────────────────────────────────────────
+// ── END SCROLL REVEAL ──────────────────────────────────────────────────────
 </script>
 
 <script>
