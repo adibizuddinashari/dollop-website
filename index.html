@@ -19,7 +19,7 @@
   --thorn:#1A3A0A; --white:#FFFDF7; --sb:64px;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:auto;}
 body{font-family:'Barlow',sans-serif;font-weight:500;background:var(--cream);color:var(--brown);overflow-x:hidden;}
 a{text-decoration:none;color:inherit;}
 
@@ -2112,12 +2112,38 @@ function galleryNav(dir) { galleryGo(galIdx + dir); }
   // Reveal hero immediately
   revealSection(sections[0]);
 
+  // Custom smooth scroll with duration control
+  function smoothScrollTo(targetY, duration) {
+    const startY = window.scrollY;
+    const diff = targetY - startY;
+    let start = null;
+    function ease(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2; } // ease in-out cubic
+    function step(ts) {
+      if(!start) start = ts;
+      const elapsed = ts - start;
+      const progress = Math.min(elapsed / duration, 1);
+      window.scrollTo(0, startY + diff * ease(progress));
+      if(progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
   // Smooth scroll for nav links
   document.querySelectorAll('.sb-nav .sb-link[href^="#"]').forEach(link => {
     link.addEventListener('click', function(e) {
       e.preventDefault();
       const el = document.getElementById(this.getAttribute('href').slice(1));
-      if(el) el.scrollIntoView({ behavior: 'smooth' });
+      if(el) smoothScrollTo(el.getBoundingClientRect().top + window.scrollY, 1200);
+    });
+  });
+
+  // Intercept all anchor links with # on page
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function(e) {
+      const el = document.getElementById(this.getAttribute('href').slice(1));
+      if(!el) return;
+      e.preventDefault();
+      smoothScrollTo(el.getBoundingClientRect().top + window.scrollY, 1200);
     });
   });
 })();
