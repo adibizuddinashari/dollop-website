@@ -1449,15 +1449,15 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
     <p class="bs-body">Thirty years later, the recipe has been perfected, and Mum gave it two thumbs up 👍👍. So it's now time to share it with the world.</p>
     <div class="bs-stats">
       <div class="bs-stat">
-        <div class="bs-stat-num">100%</div>
+        <div class="bs-stat-num" data-count="100" data-suffix="%">100%</div>
         <div class="bs-stat-lbl">Real Musang King</div>
       </div>
       <div class="bs-stat">
-        <div class="bs-stat-num">0</div>
+        <div class="bs-stat-num" data-count="0">0</div>
         <div class="bs-stat-lbl">Artificial flavours</div>
       </div>
       <div class="bs-stat">
-        <div class="bs-stat-num">D197</div>
+        <div class="bs-stat-num" data-scramble="D197">D197</div>
         <div class="bs-stat-lbl">Premium grade only</div>
       </div>
     </div>
@@ -2153,6 +2153,53 @@ function galleryNav(dir) { galleryGo(galIdx + dir); }
     });
   });
 
+
+  // Number counter animation
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.count);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1800;
+    const start = performance.now();
+    function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+    function tick(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const value = Math.round(easeOut(progress) * target);
+      el.textContent = value + suffix;
+      if(progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function animateScramble(el) {
+    const final = el.dataset.scramble;
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let frame = 0;
+    const totalFrames = 24;
+    function tick() {
+      el.textContent = final.split('').map((c, i) => {
+        if(frame > totalFrames * (i / final.length) * 1.5) return c;
+        return chars[Math.floor(Math.random() * chars.length)];
+      }).join('');
+      frame++;
+      if(frame <= totalFrames * 1.5) requestAnimationFrame(tick);
+      else el.textContent = final;
+    }
+    requestAnimationFrame(tick);
+  }
+
+  // Trigger when brand section enters view
+  const brandSection = document.getElementById('brand');
+  let countersRun = false;
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting && !countersRun) {
+        countersRun = true;
+        document.querySelectorAll('.bs-stat-num[data-count]').forEach(animateCounter);
+        document.querySelectorAll('.bs-stat-num[data-scramble]').forEach(animateScramble);
+      }
+    });
+  }, { threshold: 0.4 });
+  if(brandSection) counterObserver.observe(brandSection);
 })();
 // ── END SCROLL REVEAL ──────────────────────────────────────────────────────
 </script>
