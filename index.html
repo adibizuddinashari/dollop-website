@@ -74,7 +74,7 @@ body:has(button:hover) #cursor,body:has(a:hover) #cursor{transform:scale(1.4) ro
 .hl-barrio{font-family:'Barrio',cursive;font-weight:400;}
 .hero-pills{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-bottom:32px;}
 .hero-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,248,238,0.07);border:1px solid rgba(255,248,238,0.14);border-radius:40px;padding:6px 14px;font-size:0.76rem;font-weight:500;color:rgba(255,248,238,0.78);backdrop-filter:blur(4px);}
-.trust-bar{background:var(--brown);padding:0;display:flex;justify-content:center;align-items:stretch;border-bottom:3px solid var(--yellow);}
+.trust-bar{background:var(--brown);padding:0;display:flex;justify-content:center;align-items:center;border-bottom:3px solid var(--yellow);min-height:100vh;}
 .trust-items{display:flex;align-items:center;justify-content:center;gap:0;width:100%;max-width:900px;flex-wrap:wrap;}
 .trust-item{display:flex;align-items:center;gap:16px;padding:28px 48px;position:relative;flex:1;min-width:240px;}
 .trust-item:not(:last-child)::after{content:'';position:absolute;right:0;top:20%;bottom:20%;width:1px;background:rgba(255,248,238,0.15);}
@@ -1319,7 +1319,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
 </section>
 
 <!-- TRUST BAR -->
-<div class="trust-bar">
+<section id="trust" class="trust-bar">
   <div class="trust-items">
     <div class="trust-item">
       <span class="trust-icon">🌿</span>
@@ -1341,8 +1341,9 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
         <span class="trust-title">100% Real Musang King</span>
         <span class="trust-sub">The king of durians, period</span>
       </div>
-    </div>
-  </div>
+    <</section>
+
+<!-- >
 </div>
 
 <!-- STORY: THE KING'S PROMISE -->
@@ -2083,7 +2084,7 @@ function galleryNav(dir) { galleryGo(galIdx + dir); }
 // ── FULL-PAGE SCROLL SYSTEM ──────────────────────────────────────────────────
 (function() {
   const MOBILE = () => window.innerWidth < 860;
-  const SECTION_IDS = ['hero','story','inside','brand','where'];
+  const SECTION_IDS = ['hero','trust','story','inside','brand','where'];
   const THRESHOLD = 80;
   const DURATION  = 900;
 
