@@ -547,6 +547,8 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
 .si-head-row { margin-bottom: 0; }
 .si-left-text { text-align: left; flex-shrink: 0; max-width: 560px; }
 .si-right-content { display: flex; flex-direction: column; gap: 20px; }.si-img-col { position: relative; overflow: hidden; }
+.si-img-col img { transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+.si-img-col:hover img { transform: scale(1.06); }
 .si-img-col::after { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to bottom, rgba(255,248,238,0.55) 0%, rgba(255,248,238,0.15) 25%, transparent 50%, rgba(8,4,0,0.45) 80%, rgba(8,4,0,0.72) 100%); pointer-events: none; }.si-img-col img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
 .si-actually { font-weight: 900; }
 .si-cup { font-family: 'Barrio', cursive; letter-spacing: 1px; }
@@ -669,8 +671,9 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-.bs-img-wrap:hover .bs-img { transform: scale(1.04); }
+.bs-img-col:hover .bs-img { transform: scale(1.06); }
 .bs-img-tag {
   position: absolute;
   bottom: 20px;
@@ -1562,7 +1565,11 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
     <div class="ft-brand">
       <img src="brand assets/Dollop_Logo Rebrand_OL-01.png" alt="Dollop" class="ft-logo">
       <p class="ft-tagline">Pure Musang King Gelato. One Flavour. No apologies.</p>
-      <div class="ft-soc"><a href="#">IG</a><a href="#">TT</a><a href="#">FB</a></div>
+      <div class="ft-soc">
+        <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div>
     </div>
     <div class="ft-cols">
       <div class="ft-col">
