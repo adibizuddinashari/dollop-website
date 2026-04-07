@@ -17,7 +17,7 @@
   --thorn:#1A3A0A; --white:#FFFDF7; --sb:64px;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:auto;}
 body{font-family:'Barlow',sans-serif;font-weight:500;background:var(--cream);color:var(--brown);overflow-x:hidden;}
 a{text-decoration:none;color:inherit;}
 
@@ -892,6 +892,48 @@ async function placeOrder(){
   const waUrl = 'https://wa.me/' + COMPANY_WHATSAPP + '?text=' + encodeURIComponent(waMsg);
   setTimeout(() => window.open(waUrl, '_blank'), 400);
 }
+
+// Framer-style lerp smooth scroll
+(function() {
+  let lerpTarget = window.scrollY;
+  let lerpCurrent = window.scrollY;
+  let lerpRunning = false;
+  const LERP_FACTOR = 0.06;
+
+  function lerpTick() {
+    const dist = lerpTarget - lerpCurrent;
+    if(Math.abs(dist) < 0.5) {
+      lerpCurrent = lerpTarget;
+      window.scrollTo(0, lerpCurrent);
+      lerpRunning = false;
+      return;
+    }
+    lerpCurrent += dist * LERP_FACTOR;
+    window.scrollTo(0, lerpCurrent);
+    requestAnimationFrame(lerpTick);
+  }
+
+  function startLerp(delta) {
+    const maxY = document.body.scrollHeight - window.innerHeight;
+    lerpTarget = Math.max(0, Math.min(lerpTarget + delta, maxY));
+    if(!lerpRunning) { lerpRunning = true; requestAnimationFrame(lerpTick); }
+  }
+
+  window.addEventListener('wheel', function(e) {
+    e.preventDefault();
+    startLerp(e.deltaY * 1.8);
+  }, { passive: false });
+
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function(e) {
+      const el = document.getElementById(this.getAttribute('href').slice(1));
+      if(!el) return;
+      e.preventDefault();
+      lerpTarget = Math.max(0, Math.min(el.getBoundingClientRect().top + window.scrollY, document.body.scrollHeight - window.innerHeight));
+      if(!lerpRunning) { lerpRunning = true; requestAnimationFrame(lerpTick); }
+    });
+  });
+})();
 </script>
 </body>
 </html>
