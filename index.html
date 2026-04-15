@@ -72,6 +72,10 @@ body:has(button:hover) #cursor,body:has(a:hover) #cursor{transform:scale(1.4) ro
 .hl-flavour{font-weight:600;font-style:italic;color:#f5c518;}
 .hero-stink{font-family:'Bangers',cursive;font-size:clamp(1rem,1.5vw,1.35rem);color:rgba(255,248,238,0.72);letter-spacing:0.108em;line-height:1.3;text-shadow:0 2px 12px rgba(0,0,0,0.4);}
 .hl-barrio{font-family:'Barrio',cursive;font-weight:400;}
+.hl-stinky{font-size:clamp(2.5rem,7.4vw,6.8rem);line-height:0.91;letter-spacing:1px;}
+.hl-line2{font-size:clamp(2.5rem,7.4vw,6.8rem);line-height:0.91;font-weight:500;letter-spacing:2.48px;color:#fff8ee;font-family:'Barlow',sans-serif;}
+.hl-boldital{font-weight:700;font-style:italic;font-family:'Barlow',sans-serif;}
+.hl-line3{font-size:clamp(1rem,1.8vw,1.6rem);font-weight:400;font-style:italic;color:rgba(255,248,238,0.72);letter-spacing:0.04em;}
 .hero-pills{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-bottom:32px;}
 .hero-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,248,238,0.07);border:1px solid rgba(255,248,238,0.14);border-radius:40px;padding:6px 14px;font-size:0.76rem;font-weight:500;color:rgba(255,248,238,0.78);backdrop-filter:blur(4px);}
 .trust-bar{background:var(--brown);padding:0;display:flex;justify-content:center;align-items:stretch;border-bottom:3px solid var(--yellow);}
@@ -662,14 +666,13 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
   position: relative;
   overflow: hidden;
 }
-.bs-img {
+.bs-vid {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: opacity 0.8s ease;
 }
-.bs-img-col:hover .bs-img { transform: scale(1.06); }
 .bs-img-tag {
   position: absolute;
   bottom: 20px;
@@ -737,7 +740,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
 /* STORY: WHERE TO FIND */
 .story-where {
   background: var(--green);
-  background-image: url('images/dollop-where to find your fix section.jpg');
+  background-image: url('images/unsplash_fHsX0eS5X9Y.png');
   background-size: cover;
   background-position: center;
   min-height: 100vh;
@@ -1203,6 +1206,19 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
   .sb-nav,.sb-cta{opacity:1 !important;}
 }
 /* ── END MOBILE NAV ──────────────────────────────────────────────────────── */
+
+/* SWAP ANIMATION */
+.hl-swap-wrap{display:inline-block;overflow:hidden;position:relative;vertical-align:top;height:1.05em;}
+.hl-swap{display:block;white-space:nowrap;font-weight:600;font-style:italic;color:#f5c518;position:absolute;top:0;left:0;}
+
+#hl-pure-e.hidden{opacity:0;transform:translateX(0.05em);}
+
+
+
+@keyframes swap-out{0%{transform:translateY(0);opacity:1}100%{transform:translateY(-110%);opacity:0}}
+@keyframes swap-in{0%{transform:translateY(110%);opacity:0}100%{transform:translateY(0);opacity:1}}
+.hl-swap.leaving{animation:swap-out 0.45s cubic-bezier(0.4,0,0.2,1) forwards;}
+.hl-swap.entering{animation:swap-in 0.45s cubic-bezier(0.4,0,0.2,1) forwards;}
 </style>
 </head>
 <body class="intro-lock">
@@ -1269,19 +1285,22 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
 <section class="hero" id="hero">
   <div class="hero-bg hero-bg--intro" id="heroBg">
     <div class="hero-slide active" data-slide="0">
-      <img src="images/close-up-girl-eating-ice-cream.jpg" alt="Dollop lifestyle" loading="eager">
+      <img src="images/Dollop Pure Flavour.png" alt="Dollop Pure Flavour" loading="eager">
     </div>
     <div class="hero-slide" data-slide="1">
-      <img src="images/medium-shot-girl-eating-ice-cream.jpg" alt="Dollop lifestyle" loading="lazy">
+      <img src="images/Dollop Pure Joy.png" alt="Dollop Pure Joy" loading="lazy">
     </div>
     <div class="hero-slide" data-slide="2">
-      <img src="images/unsplash_DNKGiUUoVkc.png" alt="Dollop lifestyle" loading="lazy">
+      <img src="images/Dollop Pure Love.png" alt="Dollop Pure Love" loading="lazy">
     </div>
     <div class="hero-slide" data-slide="3">
-      <img src="images/unsplash_fHsX0eS5X9Y.png" alt="Dollop lifestyle" loading="lazy">
+      <img src="images/Dollop Pure Mess.png" alt="Dollop Pure Mess" loading="lazy">
     </div>
     <div class="hero-slide" data-slide="4">
-      <img src="images/unsplash_t2csAFCOBu4.png" alt="Dollop lifestyle" loading="lazy">
+      <img src="images/Dollop Pure Dollop.png" alt="Dollop Pure Dollop" loading="lazy">
+    </div>
+    <div class="hero-slide" data-slide="5">
+      <img src="images/Dollop Pure Ori.png" alt="Dollop Pure Ori" loading="lazy">
     </div>
   </div>
   <div class="hero-dots" id="heroDots">
@@ -1290,6 +1309,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
     <button class="hero-dot" data-dot="2" aria-label="Slide 3"></button>
     <button class="hero-dot" data-dot="3" aria-label="Slide 4"></button>
     <button class="hero-dot" data-dot="4" aria-label="Slide 5"></button>
+    <button class="hero-dot" data-dot="5" aria-label="Slide 6"></button>
   </div>
   <div class="hero-grain"></div>
   <div class="hero-ov"></div>
@@ -1297,9 +1317,11 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
   <div class="hero-bottom-row">
     <div class="hero-headline-wrap">
       <div class="hero-hl">
-        <span class="hero-hl-line"><span class="hl-slide"><span class="hl-xbold">PURE</span> <span class="hl-flavour">FLAVOUR</span>
-        <span class="hero-hl-line"><span class="hl-slide">THAT WILL <span class="hl-barrio">BLOW</span>
-        <span class="hero-hl-line"><span class="hl-slide"> YOUR <span class="hl-barrio">MIND</span></span></span>
+        <span class="hero-hl-line"><span class="hl-slide">
+          <span class="hl-xbold">PURE</span> <span class="hl-swap-wrap"><span class="hl-swap hl-flavour">FLAVOUR</span></span>
+        </span></span>
+        <span class="hero-hl-line"><span class="hl-slide hl-stinky"><span class="hl-barrio">STINKY</span> NEVER</span></span>
+        <span class="hero-hl-line"><span class="hl-slide hl-stinky">FELT THIS <span class="hl-barrio">GOOD.</span></span></span>
       </div>
     </div>
     <div class="hero-right-panel">
@@ -1410,7 +1432,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
 
   <!-- LEFT: Fill image column -->
   <div class="bs-img-col">
-    <img src="images/WhatsApp Image 2026-04-04 at 09.52.44.jpeg" alt="Behind the Brand" class="bs-img">
+    <video class="bs-vid" id="bsVid" src="videos/Durian_Gelato_Scooped_Into_Cup.mp4" muted playsinline autoplay preload="auto"></video>
     <div class="bs-img-tag">Est. 2024 · Kuala Lumpur</div>
   </div>
 
@@ -2035,6 +2057,8 @@ if(floatBtn && heroSec){
     cur = (n + slides.length) % slides.length;
     slides[cur].classList.add('active');
     dots[cur].classList.add('active');
+    // Sync headline text with slide
+    if(window.heroSwapToIndex) window.heroSwapToIndex(cur);
   }
   function next(){ goTo(cur + 1); }
   function startAuto(){ timer = setInterval(next, 5000); }
@@ -2052,6 +2076,63 @@ function galleryGo(n) {
   slides[galIdx].classList.add('active');
 }
 function galleryNav(dir) { galleryGo(galIdx + dir); }
+
+// Hero headline swap animation
+(function(){
+  const words = ['FLAVOUR','JOY','LOVE','MESS','DOLLOP','ORI'];
+  let current = 0;
+  function swapToIndex(target) {
+    if(target === current) return;
+    var wrap = document.querySelector('.hl-swap-wrap');
+    if(!wrap) return;
+    var leaving = wrap.querySelector('.hl-swap:not(.entering)');
+    if(leaving) {
+      wrap.style.width = leaving.offsetWidth + 'px';
+      var entering = document.createElement('span');
+      entering.className = 'hl-swap hl-flavour entering';
+      entering.textContent = words[target];
+      wrap.appendChild(entering);
+      leaving.classList.add('leaving');
+      setTimeout(function(){
+        if(leaving) leaving.remove();
+        entering.classList.remove('entering');
+        wrap.style.width = entering.offsetWidth + 'px';
+        current = target;
+      }, 450);
+    }
+  }
+
+  function swapWord(){
+    const next = (current + 1) % words.length;
+    const wrap = document.querySelector('.hl-swap-wrap');
+    if(!wrap) return;
+    const leaving = wrap.querySelector('.hl-swap');
+    // Pin wrap width so layout stays stable during animation
+    if(leaving) wrap.style.width = leaving.offsetWidth + 'px';
+    const entering = document.createElement('span');
+    entering.className = 'hl-swap hl-flavour entering';
+    entering.textContent = words[next];
+    wrap.appendChild(entering);
+    if(leaving) leaving.classList.add('leaving');
+
+
+    setTimeout(function(){
+      if(leaving) leaving.remove();
+      entering.classList.remove('entering');
+      wrap.style.width = entering.offsetWidth + 'px';
+      current = next;
+    }, 450);
+  }
+  // Set initial wrap width
+  window.heroSwapToIndex = swapToIndex;
+  (function initWrap(){
+    var wrap = document.querySelector('.hl-swap-wrap');
+    var first = wrap && wrap.querySelector('.hl-swap');
+    if(wrap && first && first.offsetWidth) { wrap.style.width = first.offsetWidth + 'px'; }
+    else { setTimeout(initWrap, 100); }
+  })();
+  // Text swap is now driven by the image carousel (heroSwapToIndex)
+})();
 </script>
 
 <!-- FLOATING CHARACTER -->
@@ -2181,7 +2262,55 @@ function galleryNav(dir) { galleryGo(galIdx + dir); }
   }, { threshold: 0.4 });
   if(brandSection) counterObserver.observe(brandSection);
 })();
-// ── END SCROLL REVEAL ──────────────────────────────────────────────────────
+// ── END SCROLL REVEAL ────
+
+// ── BRAND VIDEO LOOP WITH PAUSE ─────────────────────────────────────────────
+(function() {
+  var vid = document.getElementById('bsVid');
+  if(!vid) return;
+  var PAUSE_MS = 1800;
+  var FADE_MS  = 800;
+
+  function doLoop() {
+    // Fade out
+    vid.style.opacity = '0';
+    setTimeout(function() {
+      vid.pause();
+      vid.currentTime = 0;
+      // Hold pause
+      setTimeout(function() {
+        vid.play().catch(function(){});
+        vid.style.opacity = '1';
+      }, PAUSE_MS);
+    }, FADE_MS);
+  }
+
+  // Trigger loop near end via timeupdate (once duration is known)
+  var triggered = false;
+  vid.addEventListener('timeupdate', function() {
+    if(!triggered && vid.duration && vid.currentTime >= vid.duration - (FADE_MS / 1000 + 0.1)) {
+      triggered = true;
+      doLoop();
+      setTimeout(function() { triggered = false; }, PAUSE_MS + FADE_MS * 2 + 500);
+    }
+  });
+
+  // Fallback: ended event
+  vid.addEventListener('ended', function() {
+    if(!triggered) doLoop();
+  });
+
+  // Autoplay when in viewport
+  var vidObs = new IntersectionObserver(function(entries) {
+    if(entries[0].isIntersecting) {
+      vid.play().catch(function(){});
+      vidObs.disconnect();
+    }
+  }, { threshold: 0.1 });
+  vidObs.observe(vid);
+  vid.play().catch(function(){});
+})();
+──────────────────────────────────────────────────
 </script>
 
 <script>
