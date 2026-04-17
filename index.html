@@ -1299,9 +1299,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
     <div class="hero-slide" data-slide="4">
       <img src="images/Dollop Pure Dollop.png" alt="Dollop Pure Dollop" loading="lazy">
     </div>
-    <div class="hero-slide" data-slide="5">
-      <img src="images/Dollop Pure Ori.png" alt="Dollop Pure Ori" loading="lazy">
-    </div>
+
   </div>
   <div class="hero-dots" id="heroDots">
     <button class="hero-dot active" data-dot="0" aria-label="Slide 1"></button>
@@ -1309,7 +1307,6 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
     <button class="hero-dot" data-dot="2" aria-label="Slide 3"></button>
     <button class="hero-dot" data-dot="3" aria-label="Slide 4"></button>
     <button class="hero-dot" data-dot="4" aria-label="Slide 5"></button>
-    <button class="hero-dot" data-dot="5" aria-label="Slide 6"></button>
   </div>
   <div class="hero-grain"></div>
   <div class="hero-ov"></div>
@@ -2079,7 +2076,7 @@ function galleryNav(dir) { galleryGo(galIdx + dir); }
 
 // Hero headline swap animation
 (function(){
-  const words = ['FLAVOUR','JOY','LOVE','MESS','DOLLOP','ORI'];
+  const words = ['FLAVOUR','JOY','LOVE','MESS','DOLLOP'];
   let current = 0;
   function swapToIndex(target) {
     if(target === current) return;
