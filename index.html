@@ -57,6 +57,10 @@ body:has(button:hover) #cursor,body:has(a:hover) #cursor{transform:scale(1.4) ro
 .hero-dots{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:5;display:flex;gap:8px;}
 .hero-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,248,238,0.35);border:none;cursor:pointer;transition:all 0.3s;padding:0;}
 .hero-dot.active{background:var(--yellow);transform:scale(1.3);}
+.hero-prev,.hero-next{position:absolute;top:50%;transform:translateY(-50%);z-index:5;background:rgba(255,248,238,0.15);border:1px solid rgba(255,248,238,0.25);backdrop-filter:blur(6px);color:#fff8ee;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background 0.2s,transform 0.2s;}
+.hero-prev{left:24px;}
+.hero-next{right:24px;}
+.hero-prev:hover,.hero-next:hover{background:rgba(255,248,238,0.3);transform:translateY(-50%) scale(1.08);}
 .hero-grain{position:absolute;inset:0;z-index:1;opacity:0.35;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");}
 .hero-ov{position:absolute;inset:0;z-index:2;background:linear-gradient(to bottom,rgba(255,248,238,0.45) 0%,rgba(255,248,238,0.1) 20%,transparent 45%,transparent 55%,rgba(0,0,0,0.45) 85%,rgba(0,0,0,0.65) 100%);}
 .hero-c{display:none;}
@@ -1309,6 +1313,8 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
     <button class="hero-dot" data-dot="4" aria-label="Slide 5"></button>
   </div>
   <div class="hero-grain"></div>
+  <button class="hero-prev" id="heroPrev" aria-label="Previous slide"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+  <button class="hero-next" id="heroNext" aria-label="Next slide"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
   <div class="hero-ov"></div>
   <img src="brand assets/Dollop_Logo Rebrand_OL-01.png" alt="Dollop" class="hero-logo-top">
   <div class="hero-bottom-row">
@@ -2061,6 +2067,8 @@ if(floatBtn && heroSec){
   function startAuto(){ timer = setInterval(next, 5000); }
   function resetAuto(){ clearInterval(timer); startAuto(); }
   dots.forEach((d,i) => d.addEventListener('click', ()=>{ goTo(i); resetAuto(); }));
+  document.getElementById('heroPrev').addEventListener('click', ()=>{ goTo(cur-1); resetAuto(); });
+  document.getElementById('heroNext').addEventListener('click', ()=>{ goTo(cur+1); resetAuto(); });
   startAuto();
 })();
 
