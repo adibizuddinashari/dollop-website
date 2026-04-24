@@ -2085,13 +2085,15 @@ function galleryNav(dir) { galleryGo(galIdx + dir); }
 // Hero headline swap animation
 (function(){
   const words = ['FLAVOUR','JOY','LOVE','MESS','DOLLOP'];
-  let current = 0;
+  let current = 0, isAnimating = false, pendingTarget = null;
   function swapToIndex(target) {
     if(target === current) return;
+    if(isAnimating) { pendingTarget = target; return; }
     var wrap = document.querySelector('.hl-swap-wrap');
     if(!wrap) return;
     var leaving = wrap.querySelector('.hl-swap:not(.entering)');
     if(leaving) {
+      isAnimating = true;
       wrap.style.width = leaving.offsetWidth + 'px';
       var entering = document.createElement('span');
       entering.className = 'hl-swap hl-flavour entering';
@@ -2103,6 +2105,14 @@ function galleryNav(dir) { galleryGo(galIdx + dir); }
         entering.classList.remove('entering');
         wrap.style.width = entering.offsetWidth + 'px';
         current = target;
+        isAnimating = false;
+        if(pendingTarget !== null && pendingTarget !== current) {
+          var next = pendingTarget;
+          pendingTarget = null;
+          swapToIndex(next);
+        } else {
+          pendingTarget = null;
+        }
       }, 450);
     }
   }
