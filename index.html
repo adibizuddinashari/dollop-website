@@ -2058,6 +2058,21 @@ if(floatBtn && heroSec){
   floatObs.observe(heroSec);
 }
 
+// Floating character — lift above footer when footer comes into view
+(function(){
+  const ftEl = document.getElementById('footer');
+  const wgt  = document.getElementById('floatWidget');
+  if(!ftEl || !wgt) return;
+  const BASE = 28;
+  function reposition(){
+    const rect = ftEl.getBoundingClientRect();
+    const overlap = window.innerHeight - rect.top;
+    wgt.style.bottom = (overlap > 0 ? overlap + BASE : BASE) + 'px';
+  }
+  window.addEventListener('scroll', reposition, { passive: true });
+  reposition();
+})();
+
 // Hero carousel
 (function(){
   const slides = document.querySelectorAll('.hero-slide');
