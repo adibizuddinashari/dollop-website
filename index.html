@@ -337,7 +337,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
   gap: 10px;
   opacity: 1;
   pointer-events: auto;
-  transition: opacity 0.4s ease;
+  transition: bottom 0.25s ease, opacity 0.4s ease;
 }
 #floatBubble {
   background: var(--brown);
@@ -1608,8 +1608,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
       <div class="m-sub">Choose your size and how you'd like to get your stink on.</div>
       <div class="v-lbl">Cup Size</div>
       <div class="sz-sel" style="margin-bottom:20px;">
-        <button class="sz-btn active" onclick="selSize(this,18)">50ml · RM18</button>
-        <button class="sz-btn" onclick="selSize(this,30)">100ml · RM30</button>
+        <button class="sz-btn active" onclick="selSize(this,18)">80g · RM18</button>
       </div>
       <div class="v-lbl">Quantity</div>
       <div style="display:flex;align-items:center;gap:0;border:1.5px solid rgba(59,31,10,0.14);border-radius:40px;width:fit-content;overflow:hidden;margin-bottom:20px;background:var(--cream);">
@@ -1624,10 +1623,8 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
       </div>
       <div class="pickup-fields" id="pickup-fields">
         <div class="v-lbl">Pickup Location</div>
-        <div class="m-cards" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:20px;">
-          <div class="m-card" id="loc-bu" onclick="selLocation('bu')"><span class="m-icon">📍</span><div class="m-name">BU / TTDI</div><div class="m-note">Bandar Utama · TTDI · Damansara</div></div>
-          <div class="m-card" id="loc-sub" onclick="selLocation('sub')"><span class="m-icon">📍</span><div class="m-name">Subang</div><div class="m-note">Subang · SS15</div></div>
-          <div class="m-card" id="loc-mk" onclick="selLocation('mk')"><span class="m-icon">📍</span><div class="m-name">Mont Kiara</div><div class="m-note">Mont Kiara area</div></div>
+        <div class="m-cards" style="grid-template-columns:1fr;margin-bottom:20px;">
+          <div class="m-card selected" id="loc-sa" onclick="selLocation('sa')"><span class="m-icon">📍</span><div class="m-name">Shah Alam</div><div class="m-note">1282, Jalan Bukit Kemuning · 40640 Shah Alam, Selangor</div></div>
         </div>
       </div>
       <div class="delivery-fields" id="delivery-fields">
@@ -1818,8 +1815,8 @@ secs.forEach(s=>sObs.observe(s));
 function toggleFaq(btn){const item=btn.closest('.fi');const was=item.classList.contains('open');document.querySelectorAll('.fi').forEach(i=>i.classList.remove('open'));if(!was)item.classList.add('open');}
 
 // State
-let price=18, sweet='regular', pickupLoc='', qty=1, cupSize='50ml', fulfilment='pickup', deliveryAddr='';
-const locLabels={bu:'Bandar Utama / TTDI / Damansara', sub:'Subang / SS15', mk:'Mont Kiara'};
+let price=18, sweet='regular', pickupLoc='sa', qty=1, cupSize='80g', fulfilment='pickup', deliveryAddr='';
+const locLabels={sa:'Shah Alam (Jalan Bukit Kemuning)'};
 const pcQtys={reg:1,less:1};
 
 // Product card qty
@@ -1873,7 +1870,7 @@ function selFulfilment(type){
 // Open modal
 function openModal(){
   qty=1;document.getElementById('modal-qty').textContent=1;
-  fulfilment='pickup';pickupLoc='';deliveryAddr='';
+  fulfilment='pickup';pickupLoc='sa';deliveryAddr='';
   // Reset fulfilment toggle UI
   const ftP=document.getElementById('ft-pickup');
   const ftD=document.getElementById('ft-delivery');
