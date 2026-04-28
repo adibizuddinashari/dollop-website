@@ -847,6 +847,41 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
   margin-bottom: 4px;
 }
 .sw-loc-note { font-size: 0.78rem; color: rgb(255, 255, 255); }
+.sw-map-wrap { display: flex; flex-direction: column; }
+.sw-map-frame {
+  width: 100%;
+  height: 240px;
+  border: none;
+  border-radius: 12px 12px 0 0;
+  display: block;
+}
+.sw-addr-block {
+  background: rgba(255,248,238,0.10);
+  border: 1px solid rgba(255,248,238,0.14);
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.sw-addr-text {
+  font-size: 0.82rem;
+  color: var(--cream);
+  line-height: 1.5;
+}
+.sw-dir-link {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: 0.82rem;
+  color: var(--yellow);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+.sw-dir-link:hover { opacity: 0.75; }
 .sw-order-card {
   background: var(--yellow);
   border-radius: 18px;
@@ -1518,24 +1553,24 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
   <div class="sw-inner">
     <div class="sw-head-row reveal">
       <h2 class="sw-head">WHERE TO<br><span class="sw-find">FIND</span> YOUR <span class="sw-fix">FIX.</span></h2>
-      <p class="sw-sub">Three pickup zones across the Klang Valley — or order for delivery straight to your door.</p>
+      <p class="sw-sub">One pickup location in Shah Alam. Order ahead and it'll be cold and ready when you arrive.</p>
     </div>
     <div class="sw-cols">
       <div class="sw-locs reveal">
-        <div class="sw-lbl">📍 Pickup Zones</div>
-        <div class="sw-loc-cards sec-stagger">
-          <a class="sw-loc sw-loc--link" href="https://www.google.com/maps?q=Bandar+Utama+TTDI+Damansara+Kuala+Lumpur" target="_blank" rel="noopener">
-            <div class="sw-loc-name">BU · TTDI · Damansara <span class="sw-loc-arrow">↗</span></div>
-            <div class="sw-loc-note">Bandar Utama, TTDI, and surrounding area</div>
-          </a>
-          <a class="sw-loc sw-loc--link" href="https://www.google.com/maps?q=SS15+Subang+Jaya+Selangor" target="_blank" rel="noopener">
-            <div class="sw-loc-name">Subang · SS15 <span class="sw-loc-arrow">↗</span></div>
-            <div class="sw-loc-note">Subang Jaya, SS15, and nearby townships</div>
-          </a>
-          <a class="sw-loc sw-loc--link" href="https://www.google.com/maps?q=Mont+Kiara+Kuala+Lumpur" target="_blank" rel="noopener">
-            <div class="sw-loc-name">Mont Kiara <span class="sw-loc-arrow">↗</span></div>
-            <div class="sw-loc-note">Mont Kiara, Sri Hartamas, Duta</div>
-          </a>
+        <div class="sw-lbl">📍 Our Location</div>
+        <div class="sw-map-wrap">
+          <iframe
+            class="sw-map-frame"
+            src="https://maps.google.com/maps?q=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor&output=embed"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Dollop pickup location"
+          ></iframe>
+          <div class="sw-addr-block">
+            <div class="sw-addr-text">1282, Jalan Bukit Kemuning<br>40640 Shah Alam, Selangor</div>
+            <a class="sw-dir-link" href="https://www.google.com/maps/search/?api=1&query=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor" target="_blank" rel="noopener">Get Directions ↗</a>
+          </div>
         </div>
       </div>
       <div class="sw-order reveal" style="transition-delay:0.12s">
