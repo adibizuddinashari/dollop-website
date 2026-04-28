@@ -226,6 +226,10 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
 .ft-ct{font-size:0.66rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--yellow);margin-bottom:16px;font-weight:500;}
 .ft-col a{display:block;font-size:0.84rem;color:rgba(255,248,238,0.48);margin-bottom:10px;transition:color 0.2s;}
 .ft-col a:hover{color:var(--cream);}
+.ft-addr{font-style:normal;font-size:0.84rem;color:rgba(255,248,238,0.48);line-height:1.75;display:flex;gap:9px;align-items:flex-start;}
+.ft-addr svg{flex-shrink:0;margin-top:3px;opacity:0.55;}
+.ft-addr a{color:rgba(255,248,238,0.48);text-decoration:none;}
+.ft-addr a:hover{color:var(--cream);text-decoration:underline;}
 .ft-bot{padding:17px 0;display:flex;justify-content:space-between;align-items:center;font-size:0.7rem;color:rgba(255,248,238,0.26);}
 
 /* MODAL */
@@ -557,6 +561,13 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
         <div class="ft-ct">Info</div>
         <a href="index.html#faq">FAQ</a><a href="#">Delivery Info</a><a href="#">Contact Us</a><a href="#">Wholesale</a>
       </div>
+      <div class="ft-col">
+        <div class="ft-ct">Find Us</div>
+        <address class="ft-addr">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <a href="https://www.google.com/maps/search/?api=1&query=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor" target="_blank" rel="noopener">1282, Jalan Bukit Kemuning,<br>40640 Shah Alam,<br>Selangor ↗</a>
+        </address>
+      </div>
     </div>
   </div>
   <div class="ft-bot">
@@ -609,7 +620,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
       <div class="m-title">Your Details</div>
       <div class="m-sub">Almost done — we'll confirm your pickup via WhatsApp.</div>
       <div id="step2-pickup-info" style="background:rgba(74,124,36,0.07);border:1.5px solid rgba(74,124,36,0.2);border-radius:12px;padding:14px 16px;margin-bottom:18px;font-size:0.84rem;color:var(--green);line-height:1.7;">
-        📍 <strong>Pickup Location:</strong> <span id="locName">—</span><br>
+        📍 <strong>Pickup Location:</strong> <a id="locName" href="https://www.google.com/maps/search/?api=1&query=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor" target="_blank" rel="noopener" style="color:var(--green);text-decoration:underline;font-weight:500;">1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor ↗</a><br>
         🕐 Ready within 1–2 hours after order confirmation.<br>
         🧊 Kept frozen until you collect.
       </div>
@@ -634,7 +645,7 @@ footer{background:var(--brown);padding:52px 48px 0;color:var(--cream);}
         <div class="or"><span>Cup Size</span><span id="sCupSize">50ml</span></div>
         <div class="or"><span>Quantity</span><span id="sQty">1 cup</span></div>
         <div class="or"><span>Fulfilment</span><span id="sFulfilment">Pickup</span></div>
-        <div class="or" id="sLocRow"><span>Pickup Location</span><span id="sLoc">—</span></div>
+        <div class="or" id="sLocRow"><span>Pickup Location</span><a id="sLoc" href="https://www.google.com/maps/search/?api=1&query=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor" target="_blank" rel="noopener" style="color:var(--green);text-decoration:underline;font-size:0.8rem;text-align:right;max-width:200px;">1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor ↗</a></div>
         <div class="or" id="sAddrRow" style="display:none"><span>Delivery Address</span><span id="sAddr">—</span></div>
         <div class="or"><span>Pickup</span><span style="color:var(--green);font-weight:600;">FREE</span></div>
         <div class="or tot"><span>Total</span><span id="st">RM 18.00</span></div>
@@ -755,7 +766,7 @@ document.querySelectorAll('.ph-sz').forEach(btn => {
   });
 });
 
-const locLabels={sa:'Shah Alam (Jalan Bukit Kemuning)'};
+const locLabels={sa:'1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor'};
 
 function openModal(){document.getElementById('modalOverlay').classList.add('open');document.body.style.overflow='hidden';}
 function closeModal(){document.getElementById('modalOverlay').classList.remove('open');document.body.style.overflow='';}
@@ -807,7 +818,7 @@ function goStep(n){
     const di=document.getElementById('step2-delivery-info');
     if(fulfilment==='pickup'){
       pi.style.display='block';di.style.display='none';
-      document.getElementById('locName').textContent=locLabels[pickupLoc]||pickupLoc;
+      document.getElementById('locName').innerHTML='<a href="https://www.google.com/maps/search/?api=1&query=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor" target="_blank" rel="noopener" style="color:var(--green);text-decoration:underline;font-weight:500;">1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor ↗</a>';
     } else {
       pi.style.display='none';di.style.display='block';
       document.getElementById('delAddrDisplay').textContent=deliveryAddr;
@@ -826,7 +837,7 @@ function goStep(n){
     if(fulfilment==='pickup'){
       document.getElementById('sLocRow').style.display='';
       document.getElementById('sAddrRow').style.display='none';
-      document.getElementById('sLoc').textContent=locLabels[pickupLoc]||pickupLoc;
+      document.getElementById('sLoc').innerHTML='<a href="https://www.google.com/maps/search/?api=1&query=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor" target="_blank" rel="noopener" style="color:var(--green);text-decoration:underline;font-size:0.8rem;">1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor ↗</a>';
     } else {
       document.getElementById('sLocRow').style.display='none';
       document.getElementById('sAddrRow').style.display='';

@@ -1639,7 +1639,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
       <div class="m-title">Your Details</div>
       <div class="m-sub">Almost done — we'll confirm your pickup via WhatsApp.</div>
       <div id="step2-pickup-info" style="background:rgba(74,124,36,0.07);border:1.5px solid rgba(74,124,36,0.2);border-radius:12px;padding:14px 16px;margin-bottom:18px;font-size:0.84rem;color:var(--green);line-height:1.7;">
-        📍 <strong>Pickup Location:</strong> <span id="locName">—</span><br>
+        📍 <strong>Pickup Location:</strong> <a id="locName" href="https://www.google.com/maps/search/?api=1&query=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor" target="_blank" rel="noopener" style="color:var(--green);text-decoration:underline;font-weight:500;">1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor ↗</a><br>
         🕐 Ready within 1–2 hours after order confirmation.<br>
         🧊 Kept frozen until you collect.
       </div>
@@ -1664,7 +1664,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
         <div class="or"><span>Cup Size</span><span id="sCupSize">50ml</span></div>
         <div class="or"><span>Quantity</span><span id="sQty">1 cup</span></div>
         <div class="or"><span>Fulfilment</span><span id="sFulfilment">Pickup</span></div>
-        <div class="or" id="sLocRow"><span>Pickup Location</span><span id="sLoc">—</span></div>
+        <div class="or" id="sLocRow"><span>Pickup Location</span><a id="sLoc" href="https://www.google.com/maps/search/?api=1&query=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor" target="_blank" rel="noopener" style="color:var(--green);text-decoration:underline;font-size:0.8rem;text-align:right;max-width:200px;">1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor ↗</a></div>
         <div class="or" id="sAddrRow" style="display:none"><span>Delivery Address</span><span id="sAddr">—</span></div>
         <div class="or"><span>Pickup</span><span style="color:var(--green);font-weight:600;">FREE</span></div>
         <div class="or tot"><span>Total</span><span id="st">RM 18.00</span></div>
@@ -1816,7 +1816,7 @@ function toggleFaq(btn){const item=btn.closest('.fi');const was=item.classList.c
 
 // State
 let price=18, sweet='regular', pickupLoc='sa', qty=1, cupSize='80g', fulfilment='pickup', deliveryAddr='';
-const locLabels={sa:'Shah Alam (Jalan Bukit Kemuning)'};
+const locLabels={sa:'1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor'};
 const pcQtys={reg:1,less:1};
 
 // Product card qty
@@ -1896,7 +1896,7 @@ function goStep(s){
   if(s===2){
     if(fulfilment==='pickup'){
       if(!pickupLoc||pickupLoc==='delivery'){alert('Please select a pickup location.');return;}
-      document.getElementById('locName').textContent=locLabels[pickupLoc]||'—';
+      document.getElementById('locName').innerHTML='<a href="https://www.google.com/maps/search/?api=1&query=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor" target="_blank" rel="noopener" style="color:var(--green);text-decoration:underline;font-weight:500;">1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor ↗</a>';
       document.getElementById('step2-pickup-info').style.display='';
       document.getElementById('step2-delivery-info').style.display='none';
     } else {
@@ -1919,7 +1919,7 @@ function goStep(s){
     document.getElementById('sFulfilment').textContent=fulfilment==='delivery'?'Delivery':'Pickup';
     document.getElementById('sLocRow').style.display=fulfilment==='delivery'?'none':'';
     document.getElementById('sAddrRow').style.display=fulfilment==='delivery'?'':'none';
-    document.getElementById('sLoc').textContent=locLabels[pickupLoc]||'—';
+    document.getElementById('sLoc').innerHTML='<a href="https://www.google.com/maps/search/?api=1&query=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor" target="_blank" rel="noopener" style="color:var(--green);text-decoration:underline;font-size:0.8rem;">1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor ↗</a>';
     document.getElementById('sAddr').textContent=deliveryAddr||'—';
     document.getElementById('st').textContent='RM '+(price*qty).toFixed(2)+(fulfilment==='delivery'?' + delivery fee':'');
   }
