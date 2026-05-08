@@ -1881,7 +1881,7 @@ function pcSelSz(e,flavour,ml,btn){
 }
 // Modal qty
 function modalQty(delta){
-  qty=Math.min(20,Math.max(1,qty+delta));
+  qty=Math.min(24,Math.max(1,qty+delta));
   document.getElementById('modal-qty').textContent=qty;
   var free=Math.floor(qty/5);
   var badge=document.getElementById('promo-badge');
