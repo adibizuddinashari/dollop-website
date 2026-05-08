@@ -348,7 +348,9 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
   padding: 10px 20px;
   border-radius: 20px 20px 4px 20px;
   box-shadow: 0 6px 24px rgba(59,31,10,0.25);
-  white-space: nowrap;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.25;
   cursor: pointer;
   transition: transform 0.2s, background 0.2s;
   border: 2px solid rgba(255,248,238,0.1);
@@ -1260,6 +1262,12 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
 @keyframes swap-in{0%{transform:translateY(110%);opacity:0}100%{transform:translateY(0);opacity:1}}
 .hl-swap.leaving{animation:swap-out 0.45s cubic-bezier(0.4,0,0.2,1) forwards;}
 .hl-swap.entering{animation:swap-in 0.45s cubic-bezier(0.4,0,0.2,1) forwards;}
+.ann-overlay{display:none;position:fixed;inset:0;z-index:600;background:rgba(18,8,2,0.70);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px;}
+.ann-overlay.open{display:flex;}
+.ann-card{position:relative;width:min(864px,74vw,74vh);aspect-ratio:1/1;background:var(--cream);border-radius:16px;overflow:hidden;}
+.ann-close{position:absolute;top:20px;right:20px;z-index:10;width:40px;height:40px;border-radius:50%;border:none;background:rgba(59,31,10,0.12);color:var(--brown);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s ease,transform 0.2s ease;}
+.ann-close:hover{background:rgba(59,31,10,0.22);transform:scale(1.1);}
+.ann-close:active{transform:scale(0.95);}
 </style>
 </head>
 <body class="intro-lock">
@@ -1650,6 +1658,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
         <span id="modal-qty" style="min-width:36px;text-align:center;font-weight:700;font-size:0.95rem;color:var(--brown);">1</span>
         <button style="width:40px;height:40px;background:transparent;border:none;font-size:1.4rem;color:var(--brown);font-weight:300;display:flex;align-items:center;justify-content:center;transition:background 0.15s;" onmouseover="this.style.background='rgba(59,31,10,0.07)'" onmouseout="this.style.background='transparent'" onclick="modalQty(1)">+</button>
       </div>
+      <div id="promo-badge" style="display:none;align-items:center;gap:8px;background:#fff3cd;border:1.5px solid #f5c518;border-radius:10px;padding:8px 14px;margin-bottom:16px;font-size:0.85rem;color:var(--brown);font-weight:600;">🎉 <span id="promo-badge-text">Buy 5, get 1 FREE cup!</span></div>
       <div class="v-lbl">Fulfilment</div>
       <div class="fulfilment-toggle" style="margin-bottom:16px;">
         <button class="ft-btn active" id="ft-pickup" onclick="selFulfilment('pickup')">🏪 Pickup</button>
@@ -1872,8 +1881,16 @@ function pcSelSz(e,flavour,ml,btn){
 }
 // Modal qty
 function modalQty(delta){
-  qty=Math.max(1,qty+delta);
+  qty=Math.min(20,Math.max(1,qty+delta));
   document.getElementById('modal-qty').textContent=qty;
+  var free=Math.floor(qty/5);
+  var badge=document.getElementById('promo-badge');
+  if(free>0){
+    badge.style.display='flex';
+    document.getElementById('promo-badge-text').textContent='Buy 5 get 1 FREE! You get '+free+' free cup'+(free>1?'s':'')+' — '+(qty+free)+' cups total.';
+  } else {
+    badge.style.display='none';
+  }
 }
 // Modal size
 function selSize(btn,p){
@@ -1951,13 +1968,13 @@ function goStep(s){
     document.getElementById('sip').textContent='RM '+(price*qty).toFixed(2);
     document.getElementById('sv').textContent='Dollop Gelato';
     document.getElementById('sCupSize').textContent=cupSize;
-    document.getElementById('sQty').textContent=qty+' cup'+(qty>1?'s':'');
+    var freeC=Math.floor(qty/5);document.getElementById('sQty').textContent=qty+' cup'+(qty>1?'s':'')+(freeC>0?' + '+freeC+' free':'');
     document.getElementById('sFulfilment').textContent=fulfilment==='delivery'?'Delivery':'Pickup';
     document.getElementById('sLocRow').style.display=fulfilment==='delivery'?'none':'';
     document.getElementById('sAddrRow').style.display=fulfilment==='delivery'?'':'none';
     document.getElementById('sLoc').innerHTML='<a href="https://www.google.com/maps/search/?api=1&query=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor" target="_blank" rel="noopener" style="color:var(--green);text-decoration:underline;font-size:0.8rem;">1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor ↗</a>';
     document.getElementById('sAddr').textContent=deliveryAddr||'—';
-    document.getElementById('st').textContent='RM '+(price*qty).toFixed(2)+(fulfilment==='delivery'?' + delivery fee':'');
+    var freeC2=Math.floor(qty/5);document.getElementById('st').textContent='RM '+(price*qty).toFixed(2)+(fulfilment==='delivery'?' + delivery fee':'')+(freeC2>0?' ('+freeC2+' cup'+(freeC2>1?'s':'')+' free)':'');
   }
   document.querySelectorAll('.m-step').forEach(x=>x.classList.remove('active'));
   document.getElementById('step'+s).classList.add('active');
@@ -2005,7 +2022,8 @@ async function placeOrder(){
   const notes    = document.getElementById('fnotes').value.trim();
   const flavour  = 'Dollop Gelato';
   const size     = cupSize;
-  const total    = 'RM ' + (price * qty).toFixed(2) + (fulfilment === 'delivery' ? ' + delivery fee' : '');
+  const freeCups = Math.floor(qty/5);
+  const total    = 'RM ' + (price * qty).toFixed(2) + (fulfilment === 'delivery' ? ' + delivery fee' : '') + (freeCups > 0 ? ' (' + freeCups + ' cup' + (freeCups > 1 ? 's' : '') + ' free)' : '');
   const location = fulfilment === 'delivery' ? (deliveryAddr || '—') : (locLabels[pickupLoc] || '—');
   const orderNo  = 'DLP-' + String(Math.floor(Math.random() * 90000) + 10000);
   const timestamp = new Date().toLocaleString('en-MY', {timeZone: 'Asia/Kuala_Lumpur'});
@@ -2051,7 +2069,7 @@ async function placeOrder(){
     ``,
     `🧁 Flavour: ${flavour}`,
     `📦 Size: ${size}`,
-    `🔢 Qty: ${qty} cup${qty > 1 ? 's' : ''}`,
+    `🔢 Qty: ${qty} cup${qty > 1 ? 's' : ''}${Math.floor(qty/5)>0?' + '+Math.floor(qty/5)+' FREE cup'+(Math.floor(qty/5)>1?'s':'')+' (Buy 5 Free 1 Promo)':''}  →  ${qty+Math.floor(qty/5)} cups total`,
     `🚚 Fulfilment: ${fulfilment === 'delivery' ? 'Delivery' : 'Pickup'}`,
     `📍 Location: ${location}`,
     `💰 Total: ${total}`,
@@ -2209,7 +2227,7 @@ function galleryNav(dir) { galleryGo(galIdx + dir); }
 
 <!-- FLOATING CHARACTER -->
 <div id="floatWidget">
-  <div id="floatBubble" onclick="openModal()">Order Here 👆</div>
+  <div id="floatBubble" onclick="openModal()">Happy Mother's Day<br><span style="font-size:0.82em;opacity:0.85;">Buy 5 Free 1 Promo</span></div>
   <img src="brand assets/Dollop Character.webp" alt="Dollop" id="floatChar" onclick="openModal()">
 </div>
 
@@ -2391,5 +2409,29 @@ function toggleMobMenu() {
   document.getElementById('mobOverlay').classList.toggle('open');
 }
 </script>
+<script>
+(function(){
+  function initAnn(){
+    var overlay=document.getElementById('annOverlay');
+    var card=document.getElementById('annCard');
+    var btn=document.getElementById('annClose');
+    if(!overlay||!card||!btn)return;
+    function closeAnn(){overlay.classList.remove('open');}
+    setTimeout(function(){overlay.classList.add('open');},400);
+    btn.addEventListener('click',closeAnn);
+    overlay.addEventListener('click',function(e){if(!card.contains(e.target))closeAnn();});
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initAnn);}
+  else{initAnn();}
+})();
+</script>
+<div class="ann-overlay" id="annOverlay">
+  <div class="ann-card" id="annCard">
+    <button class="ann-close" id="annClose" aria-label="Close announcement">&#x2715;</button>
+    <a href="product.html" style="display:block;width:100%;height:100%;">
+      <img src="announcements/mothers-day.jpg" alt="Announcement" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.style.display='none'">
+    </a>
+  </div>
+</div>
 </body>
 </html>
