@@ -333,6 +333,8 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
   .sb-cta-icon{display:block;color:#FFF8EE;}
 }
 /* ── END MOBILE NAV ───────────────────────────────────────────────────────── */
+#soldout-toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(16px);background:#1a0a00;color:#fff;font-family:inherit;font-size:0.92rem;padding:12px 24px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity 0.3s,transform 0.3s;z-index:9999;white-space:nowrap;}
+#soldout-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
 </head>
 <body>
@@ -767,7 +769,8 @@ document.querySelectorAll('.ph-sz').forEach(btn => {
 
 const locLabels={sa:'1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor'};
 
-function openModal(){document.getElementById('modalOverlay').classList.add('open');document.body.style.overflow='hidden';}
+function showSoldOutToast(){var t=document.getElementById('soldout-toast');if(!t)return;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3000);}
+function openModal(){if(SOLD_OUT){showSoldOutToast();return;}document.getElementById('modalOverlay').classList.add('open');document.body.style.overflow='hidden';}
 function closeModal(){document.getElementById('modalOverlay').classList.remove('open');document.body.style.overflow='';}
 function handleOverlayClick(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
 
@@ -861,7 +864,9 @@ function goStep(n){
   document.getElementById('step'+n).classList.add('active');
 }
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwZ_CO7O9tfYagvnCngshdK9spxS5z9awqJP3EoGa4tVHkLamynn8ccf5QB63MPHhpZIQ/exec';
+const SOLD_OUT = true;
 const COMPANY_WHATSAPP = '60142676333';
+if(SOLD_OUT){document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('.ph-order-btn,.promo-btn').forEach(function(b){b.textContent='Sold Out';b.disabled=true;b.style.opacity='0.55';b.style.cursor='not-allowed';});});}
 
 async function placeOrder(){
   const btn = document.getElementById('confirmOrderBtn');
@@ -956,5 +961,6 @@ async function placeOrder(){
   });
 })();
 </script>
+<div id="soldout-toast">We’re currently sold out — check back soon!</div>
 </body>
 </html>

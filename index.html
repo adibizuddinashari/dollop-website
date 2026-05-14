@@ -1262,12 +1262,9 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
 @keyframes swap-in{0%{transform:translateY(110%);opacity:0}100%{transform:translateY(0);opacity:1}}
 .hl-swap.leaving{animation:swap-out 0.45s cubic-bezier(0.4,0,0.2,1) forwards;}
 .hl-swap.entering{animation:swap-in 0.45s cubic-bezier(0.4,0,0.2,1) forwards;}
-.ann-overlay{display:none;position:fixed;inset:0;z-index:600;background:rgba(18,8,2,0.70);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px;}
-.ann-overlay.open{display:flex;}
-.ann-card{position:relative;width:min(864px,74vw,74vh);aspect-ratio:1/1;background:var(--cream);border-radius:16px;overflow:hidden;}
-.ann-close{position:absolute;top:20px;right:20px;z-index:10;width:40px;height:40px;border-radius:50%;border:none;background:rgba(59,31,10,0.12);color:var(--brown);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s ease,transform 0.2s ease;}
-.ann-close:hover{background:rgba(59,31,10,0.22);transform:scale(1.1);}
-.ann-close:active{transform:scale(0.95);}
+
+#soldout-toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(16px);background:#1a0a00;color:#fff;font-family:inherit;font-size:0.92rem;padding:12px 24px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity 0.3s,transform 0.3s;z-index:9999;white-space:nowrap;}
+#soldout-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
 </head>
 <body class="intro-lock">
@@ -1924,6 +1921,7 @@ function selFulfilment(type){
 }
 // Open modal
 function openModal(){
+  if(SOLD_OUT){showSoldOutToast();return;}
   qty=1;document.getElementById('modal-qty').textContent=1;
   fulfilment='pickup';pickupLoc='sa';deliveryAddr='';
   // Reset fulfilment toggle UI
@@ -1946,6 +1944,7 @@ function openModalWithFlavour(f){
 }
 function closeModal(){document.getElementById('modalOverlay').classList.remove('open');document.body.style.overflow='';}
 function handleOverlayClick(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
+function showSoldOutToast(){var t=document.getElementById('soldout-toast');if(!t)return;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3000);}
 
 function goStep(s){
   if(s===2){
@@ -2014,6 +2013,8 @@ function goStep(s){
 //         Copy the Web App URL and paste below.
 // ---------------------------------------------------------------
 
+const SOLD_OUT = true;
+if(SOLD_OUT){document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('.pcard-order-btn,.sw-order-btn').forEach(function(b){b.textContent='Sold Out';b.disabled=true;b.style.opacity='0.55';b.style.cursor='not-allowed';});var fc=document.getElementById('floatChar');if(fc){fc.onclick=function(){showSoldOutToast();};}});}
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwZ_CO7O9tfYagvnCngshdK9spxS5z9awqJP3EoGa4tVHkLamynn8ccf5QB63MPHhpZIQ/exec';
 const COMPANY_WHATSAPP = '60142676333'; // Adib's number
 
@@ -2231,7 +2232,6 @@ function galleryNav(dir) { galleryGo(galIdx + dir); }
 
 <!-- FLOATING CHARACTER -->
 <div id="floatWidget">
-  <div id="floatBubble" onclick="openModal()">Happy Mother's Day<br><span style="font-size:0.82em;opacity:0.85;">Buy 5 Free 1 Promo</span></div>
   <img src="brand assets/Dollop Character.webp" alt="Dollop" id="floatChar" onclick="openModal()">
 </div>
 
@@ -2413,29 +2413,8 @@ function toggleMobMenu() {
   document.getElementById('mobOverlay').classList.toggle('open');
 }
 </script>
-<script>
-(function(){
-  function initAnn(){
-    var overlay=document.getElementById('annOverlay');
-    var card=document.getElementById('annCard');
-    var btn=document.getElementById('annClose');
-    if(!overlay||!card||!btn)return;
-    function closeAnn(){overlay.classList.remove('open');}
-    setTimeout(function(){overlay.classList.add('open');},400);
-    btn.addEventListener('click',closeAnn);
-    overlay.addEventListener('click',function(e){if(!card.contains(e.target))closeAnn();});
-  }
-  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initAnn);}
-  else{initAnn();}
-})();
-</script>
-<div class="ann-overlay" id="annOverlay">
-  <div class="ann-card" id="annCard">
-    <button class="ann-close" id="annClose" aria-label="Close announcement">&#x2715;</button>
-    <a href="product.html" style="display:block;width:100%;height:100%;">
-      <img src="announcements/mothers-day.jpg" alt="Announcement" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.style.display='none'">
-    </a>
-  </div>
-</div>
+
+
+<div id="soldout-toast">We’re currently sold out — check back soon!</div>
 </body>
 </html>
