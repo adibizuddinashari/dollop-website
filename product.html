@@ -637,6 +637,8 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
       <div class="m-title">Review &amp; Pay</div>
       <div class="m-sub">Double-check your order before confirming.</div>
       <div class="os">
+        <div class="or"><span>Name</span><span id="sName">—</span></div>
+        <div class="or"><span>WhatsApp</span><span id="sPhone">—</span></div>
         <div class="or"><span>Musang King Gelato</span><span id="sip">RM 15.00</span></div>
         <div class="or"><span>Flavour</span><span id="sv">Regular Sweet</span></div>
         <div class="or"><span>Cup Size</span><span id="sCupSize">50ml</span></div>
@@ -836,6 +838,8 @@ function goStep(n){
     const name=document.getElementById('fn').value.trim();
     const phone=document.getElementById('fp').value.trim();
     if(!name||!phone){alert('Please fill in your name and WhatsApp number.');return;}
+    document.getElementById('sName').textContent=name;
+    document.getElementById('sPhone').textContent=phone;
     const total=(price*qty).toFixed(2);
     document.getElementById('sip').textContent='RM '+price+'.00';
     document.getElementById('sv').textContent='Dollop Gelato';
