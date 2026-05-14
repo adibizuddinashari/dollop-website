@@ -378,7 +378,7 @@ function saveConfig() {
 
   fetch(APPS_SCRIPT_URL, {
     method: 'POST',
-    headers: {'Content-Type':'application/json'},
+    headers: {'Content-Type':'text/plain'},
     body: JSON.stringify({type:'config', password: _pw, data: cfg})
   })
   .then(function(r){ return r.json(); })
