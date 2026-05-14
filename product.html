@@ -433,7 +433,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
       <div class="ph-info">
         <div class="ph-title-row">
           <div class="ph-name" id="ph-name">Musang King Gelato</div>
-          <div class="ph-price-tag"><strong style="text-decoration:line-through;opacity:0.45;font-size:1.2rem;margin-right:6px;letter-spacing:0.04em;font-family:'Bebas Neue',sans-serif;">RM 18</strong><strong id="ph-price">RM 15</strong></div>
+          <div class="ph-price-tag"><strong id="ph-price-was" style="text-decoration:line-through;opacity:0.45;font-size:1.2rem;margin-right:6px;letter-spacing:0.04em;font-family:'Bebas Neue',sans-serif;">RM 18</strong><strong id="ph-price">RM 15</strong></div>
         </div>
         
         <p class="ph-sub" id="ph-sub">Classic durian richness — bold, creamy, unmistakably Musang King the way it was meant to be.</p>
@@ -793,6 +793,20 @@ function applyConfig(cfg) {
     var fc2 = document.getElementById('floatChar');
     if (fc2) { fc2.onclick = function(){ openModal(); }; }
   }
+
+
+  // PRICES
+  var priceWas = document.getElementById('price-was');
+  var priceReg = document.getElementById('price-reg');
+  var phPrice  = document.getElementById('ph-price');
+  var phPriceWas = document.getElementById('ph-price-was');
+  var szBtns   = document.querySelectorAll('.sz-btn');
+  if (priceWas)   priceWas.textContent   = 'RM ' + c.ORIGINAL_PRICE;
+  if (priceReg)   priceReg.textContent   = 'RM ' + c.PRICE;
+  if (phPrice)    phPrice.textContent    = 'RM ' + c.PRICE;
+  if (phPriceWas) phPriceWas.textContent = 'RM ' + c.ORIGINAL_PRICE;
+  szBtns.forEach(function(b){ b.textContent = '80g · RM' + c.PRICE; });
+  price = c.PRICE;
 
   // ANNOUNCEMENT popup
   var annOverlay = document.getElementById('annOverlay');

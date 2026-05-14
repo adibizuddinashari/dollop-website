@@ -6,6 +6,8 @@ const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyrNUT8-k4JzC41
 const COMPANY_WHATSAPP = '60142676333';
 
 const DEFAULT_CONFIG = {
+  ORIGINAL_PRICE:         18,  // strikethrough price
+  PRICE:                  15,  // current selling price
   SOLD_OUT:               true,   // true = disable ordering, show "Sold Out"
   MAX_QTY:                24,     // maximum cups per order
   PROMO_ACTIVE:           true,   // true = show "Buy 5 Free 1" badge

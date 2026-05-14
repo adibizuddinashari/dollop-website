@@ -156,6 +156,30 @@
       </div>
     </div>
 
+      <div class="row">
+        <div>
+          <div class="row-label">Current Price (RM)</div>
+          <div class="row-sub">The selling price shown to customers</div>
+        </div>
+        <div class="num-input">
+          <button onclick="stepNum('priceNow',-1)">−</button>
+          <input type="number" id="priceNow" min="1" max="999" value="15">
+          <button onclick="stepNum('priceNow',1)">+</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <div class="row-label">Original Price (RM)</div>
+          <div class="row-sub">The crossed-out "was" price (set to 0 to hide it)</div>
+        </div>
+        <div class="num-input">
+          <button onclick="stepNum('priceWas',-1)">−</button>
+          <input type="number" id="priceWas" min="0" max="999" value="18">
+          <button onclick="stepNum('priceWas',1)">+</button>
+        </div>
+      </div>
+
     <!-- Promo -->
     <div class="section">
       <div class="section-title">Promo</div>
@@ -314,6 +338,8 @@ function applyToForm(cfg) {
   document.getElementById('soldOutToggle').checked = !!cfg.SOLD_OUT;
   updateSoldBadge(!!cfg.SOLD_OUT);
   document.getElementById('maxQty').value     = cfg.MAX_QTY || 24;
+  document.getElementById('priceNow').value   = cfg.PRICE || 15;
+  document.getElementById('priceWas').value   = cfg.ORIGINAL_PRICE !== undefined ? cfg.ORIGINAL_PRICE : 18;
   document.getElementById('promoToggle').checked = cfg.PROMO_ACTIVE !== false;
   document.getElementById('promoThresh').value = cfg.PROMO_THRESHOLD || 5;
   document.getElementById('promoFree').value   = cfg.PROMO_FREE || 1;
@@ -368,6 +394,8 @@ function saveConfig() {
   var cfg = {
     SOLD_OUT:               document.getElementById('soldOutToggle').checked,
     MAX_QTY:                parseInt(document.getElementById('maxQty').value, 10) || 24,
+    PRICE:                  parseInt(document.getElementById('priceNow').value, 10) || 15,
+    ORIGINAL_PRICE:         parseInt(document.getElementById('priceWas').value, 10) || 0,
     PROMO_ACTIVE:           document.getElementById('promoToggle').checked,
     PROMO_THRESHOLD:        parseInt(document.getElementById('promoThresh').value, 10) || 5,
     PROMO_FREE:             parseInt(document.getElementById('promoFree').value, 10) || 1,

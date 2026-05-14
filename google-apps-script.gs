@@ -76,7 +76,7 @@ function saveConfig(data) {
   var sheet = ss.getSheetByName(CONFIG_SHEET);
   if (!sheet) sheet = ss.insertSheet(CONFIG_SHEET);
 
-  var keys = ['SOLD_OUT','MAX_QTY','PROMO_ACTIVE','PROMO_THRESHOLD','PROMO_FREE',
+  var keys = ['ORIGINAL_PRICE','PRICE','SOLD_OUT','MAX_QTY','PROMO_ACTIVE','PROMO_THRESHOLD','PROMO_FREE',
               'ANNOUNCEMENT_ACTIVE','ANNOUNCEMENT_IMAGE_URL','ANNOUNCEMENT_LINK'];
 
   // Write headers if missing
@@ -118,7 +118,7 @@ function jsonResponse(obj) {
 
 function defaultConfig() {
   return {
-    SOLD_OUT: true, MAX_QTY: 24,
+    ORIGINAL_PRICE: 18, PRICE: 15, SOLD_OUT: true, MAX_QTY: 24,
     PROMO_ACTIVE: true, PROMO_THRESHOLD: 5, PROMO_FREE: 1,
     ANNOUNCEMENT_ACTIVE: false, ANNOUNCEMENT_IMAGE_URL: '', ANNOUNCEMENT_LINK: 'product.html'
   };

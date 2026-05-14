@@ -1968,6 +1968,20 @@ function applyConfig(cfg) {
     if (fc2) { fc2.onclick = function(){ openModal(); }; }
   }
 
+
+  // PRICES
+  var priceWas = document.getElementById('price-was');
+  var priceReg = document.getElementById('price-reg');
+  var phPrice  = document.getElementById('ph-price');
+  var phPriceWas = document.getElementById('ph-price-was');
+  var szBtns   = document.querySelectorAll('.sz-btn');
+  if (priceWas)   priceWas.textContent   = 'RM ' + c.ORIGINAL_PRICE;
+  if (priceReg)   priceReg.textContent   = 'RM ' + c.PRICE;
+  if (phPrice)    phPrice.textContent    = 'RM ' + c.PRICE;
+  if (phPriceWas) phPriceWas.textContent = 'RM ' + c.ORIGINAL_PRICE;
+  szBtns.forEach(function(b){ b.textContent = '80g · RM' + c.PRICE; });
+  price = c.PRICE;
+
   // ANNOUNCEMENT popup
   var annOverlay = document.getElementById('annOverlay');
   if (annOverlay) {
