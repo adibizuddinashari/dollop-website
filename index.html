@@ -1266,6 +1266,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
 #soldout-toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(16px);background:#1a0a00;color:#fff;font-family:inherit;font-size:0.92rem;padding:12px 24px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity 0.3s,transform 0.3s;z-index:9999;white-space:nowrap;}
 #soldout-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
+<script src="site-config.js"></script>
 </head>
 <body class="intro-lock">
 <div id="siteIntro">
@@ -1546,7 +1547,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
           <div class="pcard-price-num"><span id="price-was" style="text-decoration:line-through;opacity:0.45;font-size:1.25rem;letter-spacing:0.04em;margin-right:6px;">RM 18</span><span id="price-reg">RM 15</span></div>
           <div class="pcard-price-note">per cup · inclusive of GST</div>
         </div>
-        <button class="pcard-order-btn" onclick="openModal()">Order Now</button>
+        <button class="pcard-order-btn" data-orig-text="Order Now" onclick="openModal()">Order Now</button>
       </div>
     </div>
   </div>
@@ -1582,7 +1583,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
         <div class="sw-order-card">
           <div class="sw-order-title">ONE CLICK AWAY</div>
           <p class="sw-order-sub">Choose your location, pick your flavour, set a time. We'll have it cold and ready when you arrive.</p>
-          <a href="product.html" class="sw-order-btn">Order Now</a>
+          <a href="product.html" class="sw-order-btn" data-orig-text="Order Now">Order Now</a>
           <div class="sw-order-note">Also available via WhatsApp for bulk & events</div>
         </div>
       </div>
@@ -1880,7 +1881,7 @@ function pcSelSz(e,flavour,ml,btn){
 }
 // Modal qty
 function modalQty(delta){
-  qty=Math.min(24,Math.max(1,qty+delta));
+  qty=Math.min((window.SITE_CFG&&window.SITE_CFG.MAX_QTY)||24,Math.max(1,qty+delta));
   document.getElementById('modal-qty').textContent=qty;
   var free=Math.floor(qty/5);
   var badge=document.getElementById('promo-badge');
@@ -1921,7 +1922,7 @@ function selFulfilment(type){
 }
 // Open modal
 function openModal(){
-  if(SOLD_OUT){showSoldOutToast();return;}
+  if(window.SITE_CFG && window.SITE_CFG.SOLD_OUT){showSoldOutToast();return;}
   qty=1;document.getElementById('modal-qty').textContent=1;
   fulfilment='pickup';pickupLoc='sa';deliveryAddr='';
   // Reset fulfilment toggle UI
@@ -1945,6 +1946,50 @@ function openModalWithFlavour(f){
 function closeModal(){document.getElementById('modalOverlay').classList.remove('open');document.body.style.overflow='';}
 function handleOverlayClick(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
 function showSoldOutToast(){var t=document.getElementById('soldout-toast');if(!t)return;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3000);}
+// ── Dynamic config (loaded from Apps Script) ─────────────────────────────────
+function applyConfig(cfg) {
+  window.SITE_CFG = Object.assign({}, DEFAULT_CONFIG, cfg);
+  var c = window.SITE_CFG;
+
+  // SOLD_OUT — update buttons and float character
+  if (c.SOLD_OUT) {
+    document.querySelectorAll('.pcard-order-btn,.sw-order-btn,.ph-order-btn,.promo-btn').forEach(function(b){
+      b.textContent = 'Sold Out'; b.disabled = true;
+      b.style.opacity = '0.55'; b.style.cursor = 'not-allowed';
+    });
+    var fc = document.getElementById('floatChar');
+    if (fc) { fc.onclick = function(){ showSoldOutToast(); }; }
+  } else {
+    document.querySelectorAll('.pcard-order-btn,.sw-order-btn,.ph-order-btn,.promo-btn').forEach(function(b){
+      b.textContent = b.dataset.origText || b.textContent;
+      b.disabled = false; b.style.opacity = ''; b.style.cursor = '';
+    });
+    var fc2 = document.getElementById('floatChar');
+    if (fc2) { fc2.onclick = function(){ openModal(); }; }
+  }
+
+  // ANNOUNCEMENT popup
+  var annOverlay = document.getElementById('annOverlay');
+  if (annOverlay) {
+    if (c.ANNOUNCEMENT_ACTIVE && c.ANNOUNCEMENT_IMAGE_URL) {
+      var img  = document.getElementById('ann-img');
+      var link = document.getElementById('ann-link');
+      if (img)  img.src  = toDriveDirectUrl(c.ANNOUNCEMENT_IMAGE_URL);
+      if (link) link.href = c.ANNOUNCEMENT_LINK || 'product.html';
+      setTimeout(function(){ annOverlay.classList.add('open'); }, 400);
+    }
+  }
+}
+
+function loadAndApplyConfig() {
+  fetch(APPS_SCRIPT_URL + '?type=config', {cache:'no-cache'})
+    .then(function(r){ return r.json(); })
+    .then(function(cfg){ applyConfig(cfg); })
+    .catch(function(){ applyConfig(DEFAULT_CONFIG); });
+}
+
+document.addEventListener('DOMContentLoaded', loadAndApplyConfig);
+
 
 function goStep(s){
   if(s===2){
@@ -2013,10 +2058,6 @@ function goStep(s){
 //         Copy the Web App URL and paste below.
 // ---------------------------------------------------------------
 
-const SOLD_OUT = true;
-if(SOLD_OUT){document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('.pcard-order-btn,.sw-order-btn').forEach(function(b){b.textContent='Sold Out';b.disabled=true;b.style.opacity='0.55';b.style.cursor='not-allowed';});var fc=document.getElementById('floatChar');if(fc){fc.onclick=function(){showSoldOutToast();};}});}
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwZ_CO7O9tfYagvnCngshdK9spxS5z9awqJP3EoGa4tVHkLamynn8ccf5QB63MPHhpZIQ/exec';
-const COMPANY_WHATSAPP = '60142676333'; // Adib's number
 
 async function placeOrder(){
   const btn = document.getElementById('confirmOrderBtn');
@@ -2416,5 +2457,21 @@ function toggleMobMenu() {
 
 
 <div id="soldout-toast">We’re currently sold out — check back soon!</div>
+<!-- ANNOUNCEMENT OVERLAY (config-driven) -->
+<div class="ann-overlay" id="annOverlay">
+  <div class="ann-card" id="annCard">
+    <button class="ann-close" id="annClose" aria-label="Close">&times;</button>
+    <a id="ann-link" href="product.html" style="display:block;width:100%;height:100%;">
+      <img id="ann-img" src="" alt="Announcement" style="width:100%;height:100%;object-fit:cover;display:block;">
+    </a>
+  </div>
+</div>
+<script>(function(){
+  var o=document.getElementById('annOverlay'),c=document.getElementById('annCard'),b=document.getElementById('annClose');
+  if(!o||!c||!b)return;
+  function close(){o.classList.remove('open');}
+  b.addEventListener('click',close);
+  o.addEventListener('click',function(e){if(!c.contains(e.target))close();});
+})();</script>
 </body>
 </html>

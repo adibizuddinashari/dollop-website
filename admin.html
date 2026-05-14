@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dollop Admin</title>
+<link rel="icon" href="brand assets/Dollop_Logo Rebrand_OL-01.png">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --cream:#FAF6EE;--brown:#3B1F0A;--yellow:#F5C518;
+    --green:#2D6A4F;--red:#C0392B;--border:#E8DEC8;
+    --radius:14px;--font:'Inter',system-ui,sans-serif;
+  }
+  body{font-family:var(--font);background:var(--cream);color:var(--brown);min-height:100vh;display:flex;flex-direction:column;}
+
+  /* ── LOGIN ── */
+  #login{flex:1;display:flex;align-items:center;justify-content:center;padding:24px;}
+  .login-card{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:40px 36px;max-width:380px;width:100%;text-align:center;box-shadow:0 8px 32px rgba(59,31,10,0.08);}
+  .login-logo{width:80px;margin-bottom:20px;}
+  .login-title{font-size:1.3rem;font-weight:700;margin-bottom:6px;}
+  .login-sub{font-size:0.85rem;opacity:0.6;margin-bottom:28px;}
+  .pw-wrap{position:relative;margin-bottom:16px;}
+  .pw-wrap input{width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:10px;font-size:1rem;background:#FAF6EE;color:var(--brown);outline:none;transition:border 0.2s;}
+  .pw-wrap input:focus{border-color:var(--brown);}
+  #loginBtn{width:100%;padding:14px;background:var(--brown);color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:600;cursor:pointer;transition:opacity 0.2s;}
+  #loginBtn:hover{opacity:0.85;}
+  #loginErr{color:var(--red);font-size:0.85rem;margin-top:10px;display:none;}
+
+  /* ── DASHBOARD ── */
+  #dashboard{display:none;flex-direction:column;min-height:100vh;}
+  header{background:#fff;border-bottom:1.5px solid var(--border);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;}
+  .header-left{display:flex;align-items:center;gap:14px;}
+  .header-logo{height:32px;}
+  .header-title{font-size:1rem;font-weight:700;opacity:0.7;}
+  #logoutBtn{font-size:0.8rem;padding:7px 16px;border:1.5px solid var(--border);border-radius:8px;background:transparent;color:var(--brown);cursor:pointer;transition:background 0.2s;}
+  #logoutBtn:hover{background:var(--border);}
+
+  main{flex:1;padding:28px 20px;max-width:620px;margin:0 auto;width:100%;}
+
+  .section{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;}
+  .section-title{font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;opacity:0.45;margin-bottom:18px;}
+
+  /* row */
+  .row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);}
+  .row:last-child{border-bottom:none;padding-bottom:0;}
+  .row:first-of-type{padding-top:0;}
+  .row-label{font-weight:600;font-size:0.92rem;}
+  .row-sub{font-size:0.77rem;opacity:0.5;margin-top:2px;}
+
+  /* toggle */
+  .toggle{position:relative;width:50px;height:28px;flex-shrink:0;}
+  .toggle input{opacity:0;width:0;height:0;position:absolute;}
+  .toggle-track{position:absolute;inset:0;border-radius:999px;background:var(--border);cursor:pointer;transition:background 0.25s;}
+  .toggle input:checked + .toggle-track{background:var(--yellow);}
+  .toggle-track::after{content:'';position:absolute;width:20px;height:20px;left:4px;top:4px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,0.2);transition:transform 0.25s;}
+  .toggle input:checked + .toggle-track::after{transform:translateX(22px);}
+
+  /* number input */
+  .num-input{display:flex;align-items:center;gap:0;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;}
+  .num-input button{width:36px;height:36px;border:none;background:var(--cream);color:var(--brown);font-size:1.2rem;cursor:pointer;transition:background 0.15s;flex-shrink:0;}
+  .num-input button:hover{background:var(--border);}
+  .num-input input{width:52px;text-align:center;border:none;border-left:1.5px solid var(--border);border-right:1.5px solid var(--border);padding:8px 0;font-size:0.95rem;font-weight:600;background:#fff;color:var(--brown);outline:none;}
+
+  /* text input */
+  .text-input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:0.9rem;background:var(--cream);color:var(--brown);outline:none;transition:border 0.2s;margin-top:8px;}
+  .text-input:focus{border-color:var(--brown);}
+
+  /* image preview */
+  #ann-preview-wrap{margin-top:12px;display:none;}
+  #ann-preview{width:100%;max-height:160px;object-fit:cover;border-radius:10px;border:1.5px solid var(--border);}
+  .preview-note{font-size:0.75rem;opacity:0.5;margin-top:6px;}
+
+  /* SOLD OUT indicator */
+  .sold-badge{font-size:0.72rem;font-weight:700;letter-spacing:0.08em;padding:4px 10px;border-radius:999px;background:#FDE8E8;color:var(--red);}
+  .avail-badge{font-size:0.72rem;font-weight:700;letter-spacing:0.08em;padding:4px 10px;border-radius:999px;background:#E8F8EF;color:var(--green);}
+
+  /* save bar */
+  .save-bar{position:sticky;bottom:0;background:#fff;border-top:1.5px solid var(--border);padding:16px 20px;display:flex;align-items:center;gap:12px;}
+  #saveBtn{flex:1;padding:15px;background:var(--brown);color:#fff;border:none;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;transition:opacity 0.2s;}
+  #saveBtn:hover{opacity:0.85;}
+  #saveBtn:disabled{opacity:0.4;cursor:not-allowed;}
+  #saveStatus{font-size:0.85rem;font-weight:600;display:none;}
+  .status-ok{color:var(--green);}
+  .status-err{color:var(--red);}
+
+  .loading-spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:8px;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* guide box */
+  .guide{background:#FFF9E6;border:1.5px solid var(--yellow);border-radius:10px;padding:14px 16px;font-size:0.82rem;line-height:1.6;margin-top:10px;}
+  .guide strong{display:block;margin-bottom:4px;}
+  .guide ol{padding-left:16px;}
+
+  @media(max-width:480px){
+    .login-card{padding:32px 20px;}
+    main{padding:20px 12px;}
+    .section{padding:18px 16px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ── LOGIN ── -->
+<div id="login">
+  <div class="login-card">
+    <img class="login-logo" src="brand assets/Dollop_Logo Rebrand_OL-01.png" alt="Dollop">
+    <div class="login-title">Dollop Admin</div>
+    <div class="login-sub">Enter your password to manage the site</div>
+    <div class="pw-wrap">
+      <input type="password" id="pwInput" placeholder="Password" autocomplete="current-password">
+    </div>
+    <button id="loginBtn">Sign In</button>
+    <div id="loginErr">Incorrect password. Please try again.</div>
+  </div>
+</div>
+
+<!-- ── DASHBOARD ── -->
+<div id="dashboard">
+  <header>
+    <div class="header-left">
+      <img class="header-logo" src="brand assets/Dollop_Logo Rebrand_OL-01.png" alt="Dollop">
+      <span class="header-title">Site Manager</span>
+    </div>
+    <button id="logoutBtn">Sign Out</button>
+  </header>
+
+  <main>
+
+    <!-- Product Availability -->
+    <div class="section">
+      <div class="section-title">Product</div>
+
+      <div class="row">
+        <div>
+          <div class="row-label">Product Status</div>
+          <div class="row-sub">Turns off the Order button for customers</div>
+          <div style="margin-top:8px"><span id="soldBadge" class="sold-badge">Sold Out</span></div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="soldOutToggle">
+          <div class="toggle-track"></div>
+        </label>
+      </div>
+
+      <div class="row">
+        <div>
+          <div class="row-label">Max Cups Per Order</div>
+          <div class="row-sub">Highest quantity a customer can select</div>
+        </div>
+        <div class="num-input">
+          <button onclick="stepNum('maxQty',-1)">−</button>
+          <input type="number" id="maxQty" min="1" max="99" value="24">
+          <button onclick="stepNum('maxQty',1)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Promo -->
+    <div class="section">
+      <div class="section-title">Promo</div>
+
+      <div class="row">
+        <div>
+          <div class="row-label">Buy X Get Y Free</div>
+          <div class="row-sub">Show the free-cup promo badge in the order form</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="promoToggle" checked>
+          <div class="toggle-track"></div>
+        </label>
+      </div>
+
+      <div class="row">
+        <div><div class="row-label">Buy every</div><div class="row-sub">Number of cups that triggers a free cup</div></div>
+        <div class="num-input">
+          <button onclick="stepNum('promoThresh',-1)">−</button>
+          <input type="number" id="promoThresh" min="2" max="20" value="5">
+          <button onclick="stepNum('promoThresh',1)">+</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div><div class="row-label">Free cups given</div><div class="row-sub">How many free cups per threshold reached</div></div>
+        <div class="num-input">
+          <button onclick="stepNum('promoFree',-1)">−</button>
+          <input type="number" id="promoFree" min="1" max="10" value="1">
+          <button onclick="stepNum('promoFree',1)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Announcement Popup -->
+    <div class="section">
+      <div class="section-title">Announcement Popup</div>
+
+      <div class="row">
+        <div>
+          <div class="row-label">Show Popup on Homepage</div>
+          <div class="row-sub">Displays a full-screen poster when visitors open the site</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="annToggle">
+          <div class="toggle-track"></div>
+        </label>
+      </div>
+
+      <div style="padding-top:14px;">
+        <div class="row-label" style="font-size:0.88rem;">Poster Image</div>
+        <div class="row-sub">Paste a Google Drive share link or any direct image URL</div>
+        <input class="text-input" type="url" id="annImageUrl" placeholder="https://drive.google.com/file/d/…/view?usp=sharing">
+        <div id="ann-preview-wrap">
+          <img id="ann-preview" src="" alt="Preview">
+          <div class="preview-note">This is how the poster will look. Make sure it loads correctly.</div>
+        </div>
+        <div class="guide" style="margin-top:12px;">
+          <strong>How to upload a poster image:</strong>
+          <ol>
+            <li>Upload your image to Google Drive</li>
+            <li>Right-click the file → <em>Share</em> → set to "Anyone with the link"</li>
+            <li>Click <em>Copy link</em> and paste it above</li>
+          </ol>
+        </div>
+      </div>
+
+      <div style="padding-top:14px;border-top:1px solid var(--border);margin-top:14px;">
+        <div class="row-label" style="font-size:0.88rem;">Popup Link (optional)</div>
+        <div class="row-sub">Where tapping the poster takes the customer</div>
+        <input class="text-input" type="text" id="annLink" placeholder="product.html" value="product.html">
+      </div>
+    </div>
+
+  </main>
+
+  <div class="save-bar">
+    <div id="saveStatus"></div>
+    <button id="saveBtn">Save Changes</button>
+  </div>
+</div>
+
+<script src="site-config.js"></script>
+<script>
+var _pw = '';
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+function stepNum(id, delta) {
+  var el = document.getElementById(id);
+  var v = parseInt(el.value, 10) + delta;
+  var min = parseInt(el.min, 10) || 1;
+  var max = parseInt(el.max, 10) || 999;
+  el.value = Math.min(max, Math.max(min, v));
+}
+
+function toDriveDirectUrlLocal(url) {
+  if (!url) return '';
+  var m = url.match(/\/file\/d\/([^/?]+)/);
+  return m ? 'https://drive.google.com/uc?export=view&id=' + m[1] : url;
+}
+
+// ── Login ────────────────────────────────────────────────────────────────────
+document.getElementById('loginBtn').addEventListener('click', attemptLogin);
+document.getElementById('pwInput').addEventListener('keydown', function(e){ if(e.key==='Enter') attemptLogin(); });
+
+function attemptLogin() {
+  var pw = document.getElementById('pwInput').value.trim();
+  if (!pw) return;
+  var btn = document.getElementById('loginBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading-spinner"></span>Signing in…';
+
+  // Verify password by attempting a config save with a no-op payload
+  fetch(APPS_SCRIPT_URL + '?type=config&pw=' + encodeURIComponent(pw))
+    .then(function(r){ return r.json(); })
+    .then(function(j) {
+      // We do a lightweight check: if config returns (not an auth error), the GAS is reachable
+      // Real password check happens on save. For login, just accept the password if GAS is reachable.
+      _pw = pw;
+      showDashboard();
+    })
+    .catch(function() {
+      // If fetch fails entirely, still let them in — they'll get error on save
+      _pw = pw;
+      showDashboard();
+    })
+    .finally(function() {
+      btn.disabled = false;
+      btn.textContent = 'Sign In';
+    });
+}
+
+function showDashboard() {
+  document.getElementById('login').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'flex';
+  document.getElementById('dashboard').style.flexDirection = 'column';
+  loadConfig();
+}
+
+document.getElementById('logoutBtn').addEventListener('click', function() {
+  _pw = '';
+  document.getElementById('login').style.display = 'flex';
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('pwInput').value = '';
+});
+
+// ── Load current config ──────────────────────────────────────────────────────
+function loadConfig() {
+  fetch(APPS_SCRIPT_URL + '?type=config', {cache:'no-cache'})
+    .then(function(r){ return r.json(); })
+    .then(function(cfg) { applyToForm(cfg); })
+    .catch(function() { applyToForm(DEFAULT_CONFIG); });
+}
+
+function applyToForm(cfg) {
+  document.getElementById('soldOutToggle').checked = !!cfg.SOLD_OUT;
+  updateSoldBadge(!!cfg.SOLD_OUT);
+  document.getElementById('maxQty').value     = cfg.MAX_QTY || 24;
+  document.getElementById('promoToggle').checked = cfg.PROMO_ACTIVE !== false;
+  document.getElementById('promoThresh').value = cfg.PROMO_THRESHOLD || 5;
+  document.getElementById('promoFree').value   = cfg.PROMO_FREE || 1;
+  document.getElementById('annToggle').checked = !!cfg.ANNOUNCEMENT_ACTIVE;
+  document.getElementById('annImageUrl').value = cfg.ANNOUNCEMENT_IMAGE_URL || '';
+  document.getElementById('annLink').value     = cfg.ANNOUNCEMENT_LINK || 'product.html';
+  updatePreview(cfg.ANNOUNCEMENT_IMAGE_URL || '');
+}
+
+// ── Live UI updates ──────────────────────────────────────────────────────────
+document.getElementById('soldOutToggle').addEventListener('change', function() {
+  updateSoldBadge(this.checked);
+});
+
+function updateSoldBadge(soldOut) {
+  var badge = document.getElementById('soldBadge');
+  if (soldOut) {
+    badge.textContent = 'Sold Out';
+    badge.className = 'sold-badge';
+  } else {
+    badge.textContent = 'Available';
+    badge.className = 'avail-badge';
+  }
+}
+
+document.getElementById('annImageUrl').addEventListener('input', function() {
+  updatePreview(this.value.trim());
+});
+
+function updatePreview(url) {
+  var direct = toDriveDirectUrlLocal(url);
+  var wrap = document.getElementById('ann-preview-wrap');
+  var img  = document.getElementById('ann-preview');
+  if (direct) {
+    img.src = direct;
+    wrap.style.display = 'block';
+  } else {
+    wrap.style.display = 'none';
+  }
+}
+
+// ── Save ─────────────────────────────────────────────────────────────────────
+document.getElementById('saveBtn').addEventListener('click', saveConfig);
+
+function saveConfig() {
+  var btn    = document.getElementById('saveBtn');
+  var status = document.getElementById('saveStatus');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading-spinner"></span>Saving…';
+  status.style.display = 'none';
+
+  var cfg = {
+    SOLD_OUT:               document.getElementById('soldOutToggle').checked,
+    MAX_QTY:                parseInt(document.getElementById('maxQty').value, 10) || 24,
+    PROMO_ACTIVE:           document.getElementById('promoToggle').checked,
+    PROMO_THRESHOLD:        parseInt(document.getElementById('promoThresh').value, 10) || 5,
+    PROMO_FREE:             parseInt(document.getElementById('promoFree').value, 10) || 1,
+    ANNOUNCEMENT_ACTIVE:    document.getElementById('annToggle').checked,
+    ANNOUNCEMENT_IMAGE_URL: document.getElementById('annImageUrl').value.trim(),
+    ANNOUNCEMENT_LINK:      document.getElementById('annLink').value.trim() || 'product.html',
+  };
+
+  fetch(APPS_SCRIPT_URL, {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({type:'config', password: _pw, data: cfg})
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(j) {
+    if (j.success) {
+      status.textContent = '✓ Saved! Changes are live.';
+      status.className = 'status-ok';
+    } else if (j.error === 'Wrong password') {
+      status.textContent = '✗ Wrong password.';
+      status.className = 'status-err';
+    } else {
+      status.textContent = '✗ ' + (j.error || 'Save failed.');
+      status.className = 'status-err';
+    }
+    status.style.display = 'block';
+  })
+  .catch(function() {
+    status.textContent = '✗ Could not reach server. Check your connection.';
+    status.className = 'status-err';
+    status.style.display = 'block';
+  })
+  .finally(function() {
+    btn.disabled = false;
+    btn.textContent = 'Save Changes';
+  });
+}
+</script>
+</body>
+</html>

@@ -336,6 +336,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
 #soldout-toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(16px);background:#1a0a00;color:#fff;font-family:inherit;font-size:0.92rem;padding:12px 24px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity 0.3s,transform 0.3s;z-index:9999;white-space:nowrap;}
 #soldout-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
+<script src="site-config.js"></script>
 </head>
 <body>
   <div id="cursor"></div>
@@ -437,7 +438,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
         
         <p class="ph-sub" id="ph-sub">Classic durian richness — bold, creamy, unmistakably Musang King the way it was meant to be.</p>
         
-        <button class="ph-order-btn" onclick="openModal()" style="width:100%;">
+        <button class="ph-order-btn" data-orig-text="Get Your Dollop" onclick="openModal()" style="width:100%;">
           Get Your Dollop
         </button>
     <!-- Feature box -->
@@ -532,7 +533,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
     <p class="promo-sub">Fresh-made Musang King gelato picked up from your nearest cart. No freezer burn, no shortcuts — just the real stink.</p>
   </div>
   <div class="promo-cta">
-    <button class="promo-btn" onclick="openModal()">Order Now</button>
+    <button class="promo-btn" data-orig-text="Order Now" onclick="openModal()">Order Now</button>
   </div>
   <img src="brand assets/Dollop Character.webp" alt="" class="promo-char">
 </div>
@@ -770,7 +771,51 @@ document.querySelectorAll('.ph-sz').forEach(btn => {
 const locLabels={sa:'1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor'};
 
 function showSoldOutToast(){var t=document.getElementById('soldout-toast');if(!t)return;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3000);}
-function openModal(){if(SOLD_OUT){showSoldOutToast();return;}document.getElementById('modalOverlay').classList.add('open');document.body.style.overflow='hidden';}
+
+// ── Dynamic config (loaded from Apps Script) ─────────────────────────────────
+function applyConfig(cfg) {
+  window.SITE_CFG = Object.assign({}, DEFAULT_CONFIG, cfg);
+  var c = window.SITE_CFG;
+
+  // SOLD_OUT — update buttons and float character
+  if (c.SOLD_OUT) {
+    document.querySelectorAll('.pcard-order-btn,.sw-order-btn,.ph-order-btn,.promo-btn').forEach(function(b){
+      b.textContent = 'Sold Out'; b.disabled = true;
+      b.style.opacity = '0.55'; b.style.cursor = 'not-allowed';
+    });
+    var fc = document.getElementById('floatChar');
+    if (fc) { fc.onclick = function(){ showSoldOutToast(); }; }
+  } else {
+    document.querySelectorAll('.pcard-order-btn,.sw-order-btn,.ph-order-btn,.promo-btn').forEach(function(b){
+      b.textContent = b.dataset.origText || b.textContent;
+      b.disabled = false; b.style.opacity = ''; b.style.cursor = '';
+    });
+    var fc2 = document.getElementById('floatChar');
+    if (fc2) { fc2.onclick = function(){ openModal(); }; }
+  }
+
+  // ANNOUNCEMENT popup
+  var annOverlay = document.getElementById('annOverlay');
+  if (annOverlay) {
+    if (c.ANNOUNCEMENT_ACTIVE && c.ANNOUNCEMENT_IMAGE_URL) {
+      var img  = document.getElementById('ann-img');
+      var link = document.getElementById('ann-link');
+      if (img)  img.src  = toDriveDirectUrl(c.ANNOUNCEMENT_IMAGE_URL);
+      if (link) link.href = c.ANNOUNCEMENT_LINK || 'product.html';
+      setTimeout(function(){ annOverlay.classList.add('open'); }, 400);
+    }
+  }
+}
+
+function loadAndApplyConfig() {
+  fetch(APPS_SCRIPT_URL + '?type=config', {cache:'no-cache'})
+    .then(function(r){ return r.json(); })
+    .then(function(cfg){ applyConfig(cfg); })
+    .catch(function(){ applyConfig(DEFAULT_CONFIG); });
+}
+
+document.addEventListener('DOMContentLoaded', loadAndApplyConfig);
+function openModal(){if(window.SITE_CFG&&window.SITE_CFG.SOLD_OUT){showSoldOutToast();return;}document.getElementById('modalOverlay').classList.add('open');document.body.style.overflow='hidden';}
 function closeModal(){document.getElementById('modalOverlay').classList.remove('open');document.body.style.overflow='';}
 function handleOverlayClick(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
 
@@ -796,7 +841,7 @@ function selSize(btn,p){
   if(priceEl) priceEl.textContent='RM '+p;
 }
 function modalQty(d){
-  qty=Math.min(24,Math.max(1,qty+d));
+  qty=Math.min((window.SITE_CFG&&window.SITE_CFG.MAX_QTY)||24,Math.max(1,qty+d));
   document.getElementById('modal-qty').textContent=qty;
   var free=Math.floor(qty/5);
   var badge=document.getElementById('promo-badge');
@@ -863,10 +908,6 @@ function goStep(n){
   document.querySelectorAll('.m-step').forEach(s=>s.classList.remove('active'));
   document.getElementById('step'+n).classList.add('active');
 }
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwZ_CO7O9tfYagvnCngshdK9spxS5z9awqJP3EoGa4tVHkLamynn8ccf5QB63MPHhpZIQ/exec';
-const SOLD_OUT = true;
-const COMPANY_WHATSAPP = '60142676333';
-if(SOLD_OUT){document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('.ph-order-btn,.promo-btn').forEach(function(b){b.textContent='Sold Out';b.disabled=true;b.style.opacity='0.55';b.style.cursor='not-allowed';});});}
 
 async function placeOrder(){
   const btn = document.getElementById('confirmOrderBtn');
