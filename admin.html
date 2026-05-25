@@ -66,10 +66,6 @@
   .text-input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:0.9rem;background:var(--cream);color:var(--brown);outline:none;transition:border 0.2s;margin-top:8px;}
   .text-input:focus{border-color:var(--brown);}
 
-  /* image preview */
-  #ann-preview-wrap{margin-top:12px;display:none;}
-  #ann-preview{width:100%;max-height:160px;object-fit:cover;border-radius:10px;border:1.5px solid var(--border);}
-  .preview-note{font-size:0.75rem;opacity:0.5;margin-top:6px;}
 
   /* SOLD OUT indicator */
   .sold-badge{font-size:0.72rem;font-weight:700;letter-spacing:0.08em;padding:4px 10px;border-radius:999px;background:#FDE8E8;color:var(--red);}
@@ -180,79 +176,7 @@
         </div>
       </div>
 
-    <!-- Promo -->
-    <div class="section">
-      <div class="section-title">Promo</div>
 
-      <div class="row">
-        <div>
-          <div class="row-label">Buy X Get Y Free</div>
-          <div class="row-sub">Show the free-cup promo badge in the order form</div>
-        </div>
-        <label class="toggle">
-          <input type="checkbox" id="promoToggle" checked>
-          <div class="toggle-track"></div>
-        </label>
-      </div>
-
-      <div class="row">
-        <div><div class="row-label">Buy every</div><div class="row-sub">Number of cups that triggers a free cup</div></div>
-        <div class="num-input">
-          <button onclick="stepNum('promoThresh',-1)">−</button>
-          <input type="number" id="promoThresh" min="2" max="20" value="5">
-          <button onclick="stepNum('promoThresh',1)">+</button>
-        </div>
-      </div>
-
-      <div class="row">
-        <div><div class="row-label">Free cups given</div><div class="row-sub">How many free cups per threshold reached</div></div>
-        <div class="num-input">
-          <button onclick="stepNum('promoFree',-1)">−</button>
-          <input type="number" id="promoFree" min="1" max="10" value="1">
-          <button onclick="stepNum('promoFree',1)">+</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Announcement Popup -->
-    <div class="section">
-      <div class="section-title">Announcement Popup</div>
-
-      <div class="row">
-        <div>
-          <div class="row-label">Show Popup on Homepage</div>
-          <div class="row-sub">Displays a full-screen poster when visitors open the site</div>
-        </div>
-        <label class="toggle">
-          <input type="checkbox" id="annToggle">
-          <div class="toggle-track"></div>
-        </label>
-      </div>
-
-      <div style="padding-top:14px;">
-        <div class="row-label" style="font-size:0.88rem;">Poster Image</div>
-        <div class="row-sub">Paste a Google Drive share link or any direct image URL</div>
-        <input class="text-input" type="url" id="annImageUrl" placeholder="https://drive.google.com/file/d/…/view?usp=sharing">
-        <div id="ann-preview-wrap">
-          <img id="ann-preview" src="" alt="Preview">
-          <div class="preview-note">This is how the poster will look. Make sure it loads correctly.</div>
-        </div>
-        <div class="guide" style="margin-top:12px;">
-          <strong>How to upload a poster image:</strong>
-          <ol>
-            <li>Upload your image to Google Drive</li>
-            <li>Right-click the file → <em>Share</em> → set to "Anyone with the link"</li>
-            <li>Click <em>Copy link</em> and paste it above</li>
-          </ol>
-        </div>
-      </div>
-
-      <div style="padding-top:14px;border-top:1px solid var(--border);margin-top:14px;">
-        <div class="row-label" style="font-size:0.88rem;">Popup Link (optional)</div>
-        <div class="row-sub">Where tapping the poster takes the customer</div>
-        <input class="text-input" type="text" id="annLink" placeholder="product.html" value="product.html">
-      </div>
-    </div>
 
   </main>
 
@@ -340,13 +264,6 @@ function applyToForm(cfg) {
   document.getElementById('maxQty').value     = cfg.MAX_QTY || 24;
   document.getElementById('priceNow').value   = cfg.PRICE || 15;
   document.getElementById('priceWas').value   = cfg.ORIGINAL_PRICE !== undefined ? cfg.ORIGINAL_PRICE : 18;
-  document.getElementById('promoToggle').checked = cfg.PROMO_ACTIVE !== false;
-  document.getElementById('promoThresh').value = cfg.PROMO_THRESHOLD || 5;
-  document.getElementById('promoFree').value   = cfg.PROMO_FREE || 1;
-  document.getElementById('annToggle').checked = !!cfg.ANNOUNCEMENT_ACTIVE;
-  document.getElementById('annImageUrl').value = cfg.ANNOUNCEMENT_IMAGE_URL || '';
-  document.getElementById('annLink').value     = cfg.ANNOUNCEMENT_LINK || 'product.html';
-  updatePreview(cfg.ANNOUNCEMENT_IMAGE_URL || '');
 }
 
 // ── Live UI updates ──────────────────────────────────────────────────────────
@@ -365,21 +282,6 @@ function updateSoldBadge(soldOut) {
   }
 }
 
-document.getElementById('annImageUrl').addEventListener('input', function() {
-  updatePreview(this.value.trim());
-});
-
-function updatePreview(url) {
-  var direct = toDriveDirectUrlLocal(url);
-  var wrap = document.getElementById('ann-preview-wrap');
-  var img  = document.getElementById('ann-preview');
-  if (direct) {
-    img.src = direct;
-    wrap.style.display = 'block';
-  } else {
-    wrap.style.display = 'none';
-  }
-}
 
 // ── Save ─────────────────────────────────────────────────────────────────────
 document.getElementById('saveBtn').addEventListener('click', saveConfig);
@@ -396,12 +298,6 @@ function saveConfig() {
     MAX_QTY:                parseInt(document.getElementById('maxQty').value, 10) || 24,
     PRICE:                  parseInt(document.getElementById('priceNow').value, 10) || 15,
     ORIGINAL_PRICE:         parseInt(document.getElementById('priceWas').value, 10) || 0,
-    PROMO_ACTIVE:           document.getElementById('promoToggle').checked,
-    PROMO_THRESHOLD:        parseInt(document.getElementById('promoThresh').value, 10) || 5,
-    PROMO_FREE:             parseInt(document.getElementById('promoFree').value, 10) || 1,
-    ANNOUNCEMENT_ACTIVE:    document.getElementById('annToggle').checked,
-    ANNOUNCEMENT_IMAGE_URL: document.getElementById('annImageUrl').value.trim(),
-    ANNOUNCEMENT_LINK:      document.getElementById('annLink').value.trim() || 'product.html',
   };
 
   fetch(APPS_SCRIPT_URL, {

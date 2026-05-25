@@ -8,14 +8,8 @@ const COMPANY_WHATSAPP = '60142676333';
 const DEFAULT_CONFIG = {
   ORIGINAL_PRICE:         0,   // strikethrough price (0 = hide strikethrough)
   PRICE:                  18,  // current selling price
-  SOLD_OUT:               true,   // true = disable ordering, show "Sold Out"
+  SOLD_OUT:               false,   // true = disable ordering, show "Sold Out"
   MAX_QTY:                24,     // maximum cups per order
-  PROMO_ACTIVE:           true,   // true = show "Buy 5 Free 1" badge
-  PROMO_THRESHOLD:        5,      // buy X cups...
-  PROMO_FREE:             1,      // ...get Y free
-  ANNOUNCEMENT_ACTIVE:    false,  // true = show popup on page load
-  ANNOUNCEMENT_IMAGE_URL: '',     // direct image URL or Google Drive share link
-  ANNOUNCEMENT_LINK:      'product.html',
 };
 
 // Applied once config is fetched (or falls back to DEFAULT_CONFIG)

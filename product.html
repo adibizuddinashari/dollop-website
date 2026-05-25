@@ -192,18 +192,6 @@ a{text-decoration:none;color:inherit;}
 .pd-nut-divider{height:2px;background:rgba(59,31,10,0.12);margin:4px 0;}
 .pd-nut-footer{font-size:0.68rem;color:var(--brown-light);margin-top:12px;padding-top:10px;border-top:1px solid rgba(59,31,10,0.07);}
 
-/* PROMO BANNER */
-.promo{margin:0 48px 64px;background:var(--brown);border-radius:22px;padding:52px 60px;display:flex;align-items:center;justify-content:space-between;gap:32px;overflow:hidden;position:relative;}
-.promo::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(245,197,24,0.12) 0%,transparent 60%),radial-gradient(ellipse at 10% 80%,rgba(140,198,63,0.08) 0%,transparent 50%);pointer-events:none;}
-.promo-text{position:relative;z-index:1;}
-.promo-eyebrow{font-size:0.68rem;letter-spacing:0.26em;text-transform:uppercase;color:rgba(255,248,238,0.4);margin-bottom:10px;}
-.promo-head{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4vw,3.4rem);letter-spacing:0.06em;color:var(--cream);line-height:1;margin-bottom:10px;}
-.promo-head span{color:var(--yellow);}
-.promo-sub{font-size:0.88rem;color:rgba(255,248,238,0.45);line-height:1.6;max-width:380px;}
-.promo-cta{position:relative;z-index:1;flex-shrink:0;}
-.promo-btn{display:inline-flex;align-items:center;gap:10px;background:var(--yellow);color:var(--brown);font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:0.2em;padding:16px 38px;border-radius:50px 44px 52px 46px;border:2.5px solid rgba(59,31,10,0.3);transition:transform 0.2s,box-shadow 0.2s;white-space:nowrap;}
-.promo-btn:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(245,197,24,0.45);}
-.promo-char{position:absolute;right:280px;bottom:0;width:100px;opacity:0.18;filter:brightness(0) invert(1);pointer-events:none;}
 
 /* MARQUEE 
 .mq{overflow:hidden;background:var(--brown);padding:15px 0;}
@@ -299,8 +287,6 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
   .ph{grid-template-columns:1fr;padding:24px 24px 48px;gap:32px;}
   .pd-inner{grid-template-columns:1fr;gap:36px;}
   .pd,.bc{padding-left:24px;padding-right:24px;}
-  .promo{flex-direction:column;text-align:center;padding:36px 28px;margin:0 24px 48px;}
-  .promo-sub{margin:0 auto;}
   footer{padding:40px 24px 0;}
   .ft-top{flex-direction:column;}
   .ft-cols{flex-direction:column;gap:24px;}
@@ -525,19 +511,6 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
 -->
 
 
-<!-- PROMO BANNER 
-<div class="promo" id="promo">
-  <div class="promo-text">
-    <div class="promo-eyebrow">Limited Availability · Order Today</div>
-    <div class="promo-head">Order Now &amp; Get<br><span>Stinky Good</span> Guaranteed</div>
-    <p class="promo-sub">Fresh-made Musang King gelato picked up from your nearest cart. No freezer burn, no shortcuts — just the real stink.</p>
-  </div>
-  <div class="promo-cta">
-    <button class="promo-btn" data-orig-text="Order Now" onclick="openModal()">Order Now</button>
-  </div>
-  <img src="brand assets/Dollop Character.webp" alt="" class="promo-char">
-</div>
--->
 
 <!-- FOOTER -->
 <footer id="footer">
@@ -596,7 +569,6 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
         <span id="modal-qty" style="min-width:36px;text-align:center;font-weight:700;font-size:0.95rem;color:var(--brown);">1</span>
         <button style="width:40px;height:40px;background:transparent;border:none;font-size:1.4rem;color:var(--brown);font-weight:300;display:flex;align-items:center;justify-content:center;transition:background 0.15s;" onmouseover="this.style.background='rgba(59,31,10,0.07)'" onmouseout="this.style.background='transparent'" onclick="modalQty(1)">+</button>
       </div>
-      <div id="promo-badge" style="display:none;align-items:center;gap:8px;background:#fff3cd;border:1.5px solid #f5c518;border-radius:10px;padding:8px 14px;margin-bottom:16px;font-size:0.85rem;color:var(--brown);font-weight:600;">🎉 <span id="promo-badge-text">Buy 5, get 1 FREE cup!</span></div>
       <div class="v-lbl">Fulfilment</div>
       <div class="fulfilment-toggle" style="margin-bottom:16px;">
         <button class="ft-btn active" id="ft-pickup" onclick="selFulfilment('pickup')">🏪 Pickup</button>
@@ -779,14 +751,14 @@ function applyConfig(cfg) {
 
   // SOLD_OUT — update buttons and float character
   if (c.SOLD_OUT) {
-    document.querySelectorAll('.pcard-order-btn,.sw-order-btn,.ph-order-btn,.promo-btn').forEach(function(b){
+    document.querySelectorAll('.pcard-order-btn,.sw-order-btn,.ph-order-btn').forEach(function(b){
       b.textContent = 'Sold Out'; b.disabled = true;
       b.style.opacity = '0.55'; b.style.cursor = 'not-allowed';
     });
     var fc = document.getElementById('floatChar');
     if (fc) { fc.onclick = function(){ showSoldOutToast(); }; }
   } else {
-    document.querySelectorAll('.pcard-order-btn,.sw-order-btn,.ph-order-btn,.promo-btn').forEach(function(b){
+    document.querySelectorAll('.pcard-order-btn,.sw-order-btn,.ph-order-btn').forEach(function(b){
       b.textContent = b.dataset.origText || b.textContent;
       b.disabled = false; b.style.opacity = ''; b.style.cursor = '';
     });
@@ -809,17 +781,6 @@ function applyConfig(cfg) {
   szBtns.forEach(function(b){ b.textContent = '80g · RM' + c.PRICE; });
   price = c.PRICE;
 
-  // ANNOUNCEMENT popup
-  var annOverlay = document.getElementById('annOverlay');
-  if (annOverlay) {
-    if (c.ANNOUNCEMENT_ACTIVE && c.ANNOUNCEMENT_IMAGE_URL) {
-      var img  = document.getElementById('ann-img');
-      var link = document.getElementById('ann-link');
-      if (img)  img.src  = toDriveDirectUrl(c.ANNOUNCEMENT_IMAGE_URL);
-      if (link) link.href = c.ANNOUNCEMENT_LINK || 'product.html';
-      setTimeout(function(){ annOverlay.classList.add('open'); }, 400);
-    }
-  }
 }
 
 function loadAndApplyConfig() {
@@ -858,14 +819,6 @@ function selSize(btn,p){
 function modalQty(d){
   qty=Math.min((window.SITE_CFG&&window.SITE_CFG.MAX_QTY)||24,Math.max(1,qty+d));
   document.getElementById('modal-qty').textContent=qty;
-  var free=Math.floor(qty/5);
-  var badge=document.getElementById('promo-badge');
-  if(free>0){
-    badge.style.display='flex';
-    document.getElementById('promo-badge-text').textContent='Buy 5 get 1 FREE! You get '+free+' free cup'+(free>1?'s':'')+' — '+(qty+free)+' cups total.';
-  } else {
-    badge.style.display='none';
-  }
 }
 function selFulfilment(type){
   fulfilment=type;
@@ -955,7 +908,7 @@ async function placeOrder(){
     ``,
     `🧁 Flavour: ${flavour}`,
     `📦 Size: ${size}`,
-    `🔢 Qty: ${qty} cup${qty > 1 ? 's' : ''}${Math.floor(qty/5)>0?' + '+Math.floor(qty/5)+' FREE cup'+(Math.floor(qty/5)>1?'s':'')+' (Buy 5 Free 1 Promo)':''}  →  ${qty+Math.floor(qty/5)} cups total`,
+    `🔢 Qty: ${qty} cup${qty > 1 ? 's' : ''}`,
     `🚚 Fulfilment: ${fulfilment === 'delivery' ? 'Delivery' : 'Pickup'}`,
     `📍 Location: ${location}`,
     `💰 Total: ${total}`,
