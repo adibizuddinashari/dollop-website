@@ -433,7 +433,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
       <div class="ph-info">
         <div class="ph-title-row">
           <div class="ph-name" id="ph-name">Musang King Gelato</div>
-          <div class="ph-price-tag"><strong id="ph-price-was" style="text-decoration:line-through;opacity:0.45;font-size:1.2rem;margin-right:6px;letter-spacing:0.04em;font-family:'Bebas Neue',sans-serif;">RM 18</strong><strong id="ph-price">RM 15</strong></div>
+          <div class="ph-price-tag"><strong id="ph-price-was" style="text-decoration:line-through;opacity:0.45;font-size:1.2rem;margin-right:6px;letter-spacing:0.04em;font-family:'Bebas Neue',sans-serif;display:none;">RM 18</strong><strong id="ph-price">RM 18</strong></div>
         </div>
         
         <p class="ph-sub" id="ph-sub">Classic durian richness — bold, creamy, unmistakably Musang King the way it was meant to be.</p>
@@ -588,7 +588,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
       <div class="m-sub">Choose your size and how you'd like to get your stink on.</div>
       <div class="v-lbl">Cup Size</div>
       <div class="sz-sel" style="margin-bottom:20px;">
-        <button class="sz-btn active" onclick="selSize(this,15)">80g · RM15</button>
+        <button class="sz-btn active" onclick="selSize(this,18)">80g · RM18</button>
       </div>
       <div class="v-lbl">Quantity</div>
       <div style="display:flex;align-items:center;gap:0;border:1.5px solid rgba(59,31,10,0.14);border-radius:40px;width:fit-content;overflow:hidden;margin-bottom:20px;background:var(--cream);">
@@ -642,7 +642,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
       <div class="os">
         <div class="or"><span>Name</span><span id="sName">—</span></div>
         <div class="or"><span>WhatsApp</span><span id="sPhone">—</span></div>
-        <div class="or"><span>Musang King Gelato</span><span id="sip">RM 15.00</span></div>
+        <div class="or"><span>Musang King Gelato</span><span id="sip">RM 18.00</span></div>
         <div class="or"><span>Flavour</span><span id="sv">Regular Sweet</span></div>
         <div class="or"><span>Cup Size</span><span id="sCupSize">50ml</span></div>
         <div class="or"><span>Quantity</span><span id="sQty">1 cup</span></div>
@@ -650,7 +650,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
         <div class="or" id="sLocRow"><span>Pickup Location</span><a id="sLoc" href="https://www.google.com/maps/search/?api=1&query=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor" target="_blank" rel="noopener" style="color:var(--green);text-decoration:underline;font-size:0.8rem;text-align:right;max-width:200px;">1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor ↗</a></div>
         <div class="or" id="sAddrRow" style="display:none"><span>Delivery Address</span><span id="sAddr">—</span></div>
         <div class="or"><span>Pickup</span><span style="color:var(--green);font-weight:600;">FREE</span></div>
-        <div class="or tot"><span>Total</span><span id="st">RM 15.00</span></div>
+        <div class="or tot"><span>Total</span><span id="st">RM 18.00</span></div>
       </div>
       <div style="background:rgba(74,124,36,0.07);border:1.5px solid rgba(74,124,36,0.22);border-radius:12px;padding:14px 16px;margin-bottom:18px;font-size:0.84rem;color:var(--brown);line-height:1.7;">
         💸 <strong>How payment works:</strong><br>
@@ -745,7 +745,7 @@ function switchFlavour(f) {
 }
 
 // ---- Modal state & logic ----
-let price=15, sweet='regular', pickupLoc='sa', qty=1, cupSize='80g', fulfilment='pickup', deliveryAddr='';
+let price=18, sweet='regular', pickupLoc='sa', qty=1, cupSize='80g', fulfilment='pickup', deliveryAddr='';
 
 applyProduct(currentFlavour);
 
@@ -801,10 +801,11 @@ function applyConfig(cfg) {
   var phPrice  = document.getElementById('ph-price');
   var phPriceWas = document.getElementById('ph-price-was');
   var szBtns   = document.querySelectorAll('.sz-btn');
-  if (priceWas)   priceWas.textContent   = 'RM ' + c.ORIGINAL_PRICE;
+  var showWas  = c.ORIGINAL_PRICE && c.ORIGINAL_PRICE !== c.PRICE;
+  if (priceWas)   { priceWas.textContent = 'RM ' + c.ORIGINAL_PRICE; priceWas.style.display = showWas ? 'inline' : 'none'; }
   if (priceReg)   priceReg.textContent   = 'RM ' + c.PRICE;
   if (phPrice)    phPrice.textContent    = 'RM ' + c.PRICE;
-  if (phPriceWas) phPriceWas.textContent = 'RM ' + c.ORIGINAL_PRICE;
+  if (phPriceWas) { phPriceWas.textContent = 'RM ' + c.ORIGINAL_PRICE; phPriceWas.style.display = showWas ? 'inline' : 'none'; }
   szBtns.forEach(function(b){ b.textContent = '80g · RM' + c.PRICE; });
   price = c.PRICE;
 

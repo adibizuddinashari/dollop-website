@@ -1544,7 +1544,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
           <button class="pcard-sz-new" id="sz-reg-100" onclick="pcSelSz(event,'reg',100,this)">100ml</button>
         </div>
         <div class="pcard-price-line">
-          <div class="pcard-price-num"><span id="price-was" style="text-decoration:line-through;opacity:0.45;font-size:1.25rem;letter-spacing:0.04em;margin-right:6px;">RM 18</span><span id="price-reg">RM 15</span></div>
+          <div class="pcard-price-num"><span id="price-was" style="text-decoration:line-through;opacity:0.45;font-size:1.25rem;letter-spacing:0.04em;margin-right:6px;display:none;">RM 18</span><span id="price-reg">RM 18</span></div>
           <div class="pcard-price-note">per cup · inclusive of GST</div>
         </div>
         <button class="pcard-order-btn" data-orig-text="Order Now" onclick="openModal()">Order Now</button>
@@ -1648,7 +1648,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
       <div class="m-sub">Choose your size and how you'd like to get your stink on.</div>
       <div class="v-lbl">Cup Size</div>
       <div class="sz-sel" style="margin-bottom:20px;">
-        <button class="sz-btn active" onclick="selSize(this,15)">80g · RM15</button>
+        <button class="sz-btn active" onclick="selSize(this,18)">80g · RM18</button>
       </div>
       <div class="v-lbl">Quantity</div>
       <div style="display:flex;align-items:center;gap:0;border:1.5px solid rgba(59,31,10,0.14);border-radius:40px;width:fit-content;overflow:hidden;margin-bottom:20px;background:var(--cream);">
@@ -1702,7 +1702,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
       <div class="os">
         <div class="or"><span>Name</span><span id="sName">—</span></div>
         <div class="or"><span>WhatsApp</span><span id="sPhone">—</span></div>
-        <div class="or"><span>Musang King Gelato</span><span id="sip">RM 15.00</span></div>
+        <div class="or"><span>Musang King Gelato</span><span id="sip">RM 18.00</span></div>
         <div class="or"><span>Flavour</span><span id="sv">Regular Sweet</span></div>
         <div class="or"><span>Cup Size</span><span id="sCupSize">50ml</span></div>
         <div class="or"><span>Quantity</span><span id="sQty">1 cup</span></div>
@@ -1710,7 +1710,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
         <div class="or" id="sLocRow"><span>Pickup Location</span><a id="sLoc" href="https://www.google.com/maps/search/?api=1&query=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor" target="_blank" rel="noopener" style="color:var(--green);text-decoration:underline;font-size:0.8rem;text-align:right;max-width:200px;">1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor ↗</a></div>
         <div class="or" id="sAddrRow" style="display:none"><span>Delivery Address</span><span id="sAddr">—</span></div>
         <div class="or"><span>Pickup</span><span style="color:var(--green);font-weight:600;">FREE</span></div>
-        <div class="or tot"><span>Total</span><span id="st">RM 15.00</span></div>
+        <div class="or tot"><span>Total</span><span id="st">RM 18.00</span></div>
       </div>
       <!--<div style="background:rgba(74,124,36,0.07);border:1.5px solid rgba(74,124,36,0.22);border-radius:12px;padding:14px 16px;margin-bottom:18px;font-size:0.84rem;color:var(--brown);line-height:1.7;">
         💸 <strong>How payment works:</strong><br>
@@ -1858,7 +1858,7 @@ secs.forEach(s=>sObs.observe(s));
 function toggleFaq(btn){const item=btn.closest('.fi');const was=item.classList.contains('open');document.querySelectorAll('.fi').forEach(i=>i.classList.remove('open'));if(!was)item.classList.add('open');}
 
 // State
-let price=15, sweet='regular', pickupLoc='sa', qty=1, cupSize='80g', fulfilment='pickup', deliveryAddr='';
+let price=18, sweet='regular', pickupLoc='sa', qty=1, cupSize='80g', fulfilment='pickup', deliveryAddr='';
 const locLabels={sa:'1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor'};
 const pcQtys={reg:1,less:1};
 
@@ -1873,7 +1873,7 @@ function pcSelSz(e,flavour,ml,btn){
   e.stopPropagation();
   document.querySelectorAll('#sz-'+flavour+'-50,#sz-'+flavour+'-100').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  const prices={50:15,100:30};
+  const prices={50:18,100:30};
   const el=document.getElementById('price-'+flavour);
   if(el) el.textContent='RM '+prices[ml];
   const wasEl=document.getElementById('price-was');
@@ -1975,10 +1975,11 @@ function applyConfig(cfg) {
   var phPrice  = document.getElementById('ph-price');
   var phPriceWas = document.getElementById('ph-price-was');
   var szBtns   = document.querySelectorAll('.sz-btn');
-  if (priceWas)   priceWas.textContent   = 'RM ' + c.ORIGINAL_PRICE;
+  var showWas  = c.ORIGINAL_PRICE && c.ORIGINAL_PRICE !== c.PRICE;
+  if (priceWas)   { priceWas.textContent = 'RM ' + c.ORIGINAL_PRICE; priceWas.style.display = showWas ? 'inline' : 'none'; }
   if (priceReg)   priceReg.textContent   = 'RM ' + c.PRICE;
   if (phPrice)    phPrice.textContent    = 'RM ' + c.PRICE;
-  if (phPriceWas) phPriceWas.textContent = 'RM ' + c.ORIGINAL_PRICE;
+  if (phPriceWas) { phPriceWas.textContent = 'RM ' + c.ORIGINAL_PRICE; phPriceWas.style.display = showWas ? 'inline' : 'none'; }
   szBtns.forEach(function(b){ b.textContent = '80g · RM' + c.PRICE; });
   price = c.PRICE;
 
