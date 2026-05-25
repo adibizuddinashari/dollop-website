@@ -55,6 +55,8 @@ function getConfig() {
   cfg.SOLD_OUT            = cfg.SOLD_OUT === true || cfg.SOLD_OUT === 'TRUE' || cfg.SOLD_OUT === 'true';
   cfg.PROMO_ACTIVE        = cfg.PROMO_ACTIVE === true || cfg.PROMO_ACTIVE === 'TRUE' || cfg.PROMO_ACTIVE === 'true';
   cfg.ANNOUNCEMENT_ACTIVE = cfg.ANNOUNCEMENT_ACTIVE === true || cfg.ANNOUNCEMENT_ACTIVE === 'TRUE' || cfg.ANNOUNCEMENT_ACTIVE === 'true';
+  cfg.PRICE               = Number(cfg.PRICE) || 18;
+  cfg.ORIGINAL_PRICE      = Number(cfg.ORIGINAL_PRICE) || 0;
   cfg.MAX_QTY             = Number(cfg.MAX_QTY) || 24;
   cfg.PROMO_THRESHOLD     = Number(cfg.PROMO_THRESHOLD) || 5;
   cfg.PROMO_FREE          = Number(cfg.PROMO_FREE) || 1;
@@ -79,10 +81,8 @@ function saveConfig(data) {
   var keys = ['ORIGINAL_PRICE','PRICE','SOLD_OUT','MAX_QTY','PROMO_ACTIVE','PROMO_THRESHOLD','PROMO_FREE',
               'ANNOUNCEMENT_ACTIVE','ANNOUNCEMENT_IMAGE_URL','ANNOUNCEMENT_LINK'];
 
-  // Write headers if missing
-  if (sheet.getLastRow() < 1) {
-    sheet.getRange(1, 1, 1, keys.length).setValues([keys]);
-  }
+  // Always rewrite headers to stay in sync with the keys list
+  sheet.getRange(1, 1, 1, keys.length).setValues([keys]);
   // Write values to row 2
   var row = keys.map(function(k) { return cfg[k] !== undefined ? cfg[k] : ''; });
   sheet.getRange(2, 1, 1, keys.length).setValues([row]);
@@ -118,7 +118,7 @@ function jsonResponse(obj) {
 
 function defaultConfig() {
   return {
-    ORIGINAL_PRICE: 18, PRICE: 15, SOLD_OUT: true, MAX_QTY: 24,
+    ORIGINAL_PRICE: 0, PRICE: 18, SOLD_OUT: false, MAX_QTY: 24,
     PROMO_ACTIVE: true, PROMO_THRESHOLD: 5, PROMO_FREE: 1,
     ANNOUNCEMENT_ACTIVE: false, ANNOUNCEMENT_IMAGE_URL: '', ANNOUNCEMENT_LINK: 'product.html'
   };
