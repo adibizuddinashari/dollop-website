@@ -1597,7 +1597,8 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
       <div class="m-sub">Choose your size and how you'd like to get your stink on.</div>
       <div class="v-lbl">Cup Size</div>
       <div class="sz-sel" style="margin-bottom:20px;">
-        <button class="sz-btn active" onclick="selSize(this,18)">80g · RM18</button>
+        <button class="sz-btn active" id="sz-80g" onclick="selSize(this,18)">80g · RM18</button>
+        <button class="sz-btn" onclick="selSize(this,75)">410g · RM75</button>
       </div>
       <div class="v-lbl">Quantity</div>
       <div style="display:flex;align-items:center;gap:0;border:1.5px solid rgba(59,31,10,0.14);border-radius:40px;width:fit-content;overflow:hidden;margin-bottom:20px;background:var(--cream);">
@@ -1920,8 +1921,9 @@ function applyConfig(cfg) {
   if (priceReg)   priceReg.textContent   = 'RM ' + c.PRICE;
   if (phPrice)    phPrice.textContent    = 'RM ' + c.PRICE;
   if (phPriceWas) { phPriceWas.textContent = 'RM ' + c.ORIGINAL_PRICE; phPriceWas.style.display = showWas ? 'inline' : 'none'; }
-  szBtns.forEach(function(b){ b.textContent = '80g · RM' + c.PRICE; });
-  price = c.PRICE;
+  var btn80 = document.getElementById('sz-80g');
+  if (btn80) { btn80.textContent = '80g · RM' + c.PRICE; }
+  if (btn80 && btn80.classList.contains('active')) { price = c.PRICE; }
 
 }
 
