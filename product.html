@@ -3,7 +3,8 @@
 <head>
 <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="brand assets/Dollop Favicon.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dollop — Product</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;800&family=Bebas+Neue&family=Barrio&family=Anton&family=Bangers&display=swap" rel="stylesheet">
 <style>
@@ -135,9 +136,13 @@ a{text-decoration:none;color:inherit;}
 /* Size selector */
 .ph-label{font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--brown-mid);margin-bottom:10px;display:block;}
 .ph-sizes{display:flex;gap:8px;margin-bottom:22px;}
-.ph-sz{padding:9px 22px;border:1.5px solid rgba(59,31,10,0.16);border-radius:40px;background:transparent;font-family:'Barlow',sans-serif;font-size:0.84rem;font-weight:500;color:var(--brown-mid);transition:all 0.2s;}
-.ph-sz.active{border-color:var(--green);background:var(--green);color:var(--cream);}
-.ph-sz:hover:not(.active){border-color:var(--brown-mid);color:var(--brown);}
+.ph-sz-row{display:flex;gap:10px;margin-top:12px;}
+.ph-sz{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 10px 12px;border:1.5px solid rgba(59,31,10,0.13);border-radius:16px;background:#fff;cursor:pointer;transition:border-color 0.18s,background 0.18s,box-shadow 0.18s;text-align:center;}
+.ph-sz.active{border-color:var(--green);background:rgba(107,158,42,0.06);box-shadow:0 0 0 3px rgba(107,158,42,0.15);}
+.ph-sz:hover:not(.active){border-color:rgba(59,31,10,0.3);background:rgba(59,31,10,0.02);}
+.ph-sz-img{width:88px;height:88px;object-fit:contain;}
+.ph-sz-name{font-family:'Barlow',sans-serif;font-size:0.8rem;font-weight:700;color:var(--brown);letter-spacing:0.02em;line-height:1.2;}
+.ph-sz-price{font-family:'Barlow',sans-serif;font-size:0.75rem;font-weight:400;color:var(--brown-mid);margin-top:2px;}
 
 /* Flavour toggle */
 .ph-flavours{display:flex;gap:8px;margin-bottom:24px;}
@@ -352,7 +357,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
     </a>
   </div>
   <a href="index.html" class="sb-logo">
-    <img src="brand assets/Dollop_Logo Rebrand_OL-01.png" alt="Dollop">
+    <img src="brand assets/Dollop Logo.png" alt="Dollop">
   </a>
   <a href="#" class="sb-cta" onclick="openModal();return false;">
     <span class="sb-cta-text">Order Now</span>
@@ -391,8 +396,20 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
       <!-- LEFT: Image + Stats -->
       <div>
         <div class="ph-img-wrap" id="ph-img-wrap">
-          <img src="images/cup design new-mockup.png" alt="Dollop Gelato" id="ph-img">
+          <img src="images/Dollop Cup Design.png" alt="Dollop Gelato" id="ph-img">
           <div class="ph-img-badge" id="ph-badge">Original Sweetness</div>
+        </div>
+        <div class="ph-sz-row">
+          <button class="ph-sz active" data-size="80g" onclick="selSize(this,18)">
+            <img class="ph-sz-img" src="images/Dollop Cup Design.png" alt="80g Cup">
+            <div class="ph-sz-name">80g Cup</div>
+            <div class="ph-sz-price">RM 18</div>
+          </button>
+          <button class="ph-sz" data-size="410g" onclick="selSize(this,75)">
+            <img class="ph-sz-img" src="images/Dollop Pint Design.png" alt="410g Pint">
+            <div class="ph-sz-name">410g Pint</div>
+            <div class="ph-sz-price">RM 75</div>
+          </button>
         </div>
         <div class="ph-stats">
           <div class="ph-stat">
@@ -515,7 +532,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
 <footer id="footer">
   <div class="ft-top">
     <div class="ft-brand">
-      <img src="brand assets/Dollop_Logo Rebrand_OL-01.png" alt="Dollop" class="ft-logo">
+      <img src="brand assets/Dollop Logo.png" alt="Dollop" class="ft-logo">
       <p class="ft-tagline">Pure Musang King Gelato. One Flavour. No apologies.</p>
       <div class="ft-soc">
         <a href="https://www.facebook.com/dollop.gelato" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
@@ -559,8 +576,8 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
       <div class="m-sub">Choose your size and how you'd like to get your stink on.</div>
       <div class="v-lbl">Cup Size</div>
       <div class="sz-sel" style="margin-bottom:20px;">
-        <button class="sz-btn active" id="sz-80g" onclick="selSize(this,18)">80g · RM18</button>
-        <button class="sz-btn" onclick="selSize(this,75)">410g · RM75</button>
+        <button class="sz-btn active" id="sz-80g" data-size="80g" onclick="selSize(this,18)">80g · RM18</button>
+        <button class="sz-btn" data-size="410g" onclick="selSize(this,75)">410g · RM75</button>
       </div>
       <div class="v-lbl">Quantity</div>
       <div style="display:flex;align-items:center;gap:0;border:1.5px solid rgba(59,31,10,0.14);border-radius:40px;width:fit-content;overflow:hidden;margin-bottom:20px;background:var(--cream);">
@@ -568,6 +585,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
         <span id="modal-qty" style="min-width:36px;text-align:center;font-weight:700;font-size:0.95rem;color:var(--brown);">1</span>
         <button style="width:40px;height:40px;background:transparent;border:none;font-size:1.4rem;color:var(--brown);font-weight:300;display:flex;align-items:center;justify-content:center;transition:background 0.15s;" onmouseover="this.style.background='rgba(59,31,10,0.07)'" onmouseout="this.style.background='transparent'" onclick="modalQty(1)">+</button>
       </div>
+      <div id="promo-badge" style="display:none;align-items:center;gap:8px;background:#fff3cd;border:1.5px solid #f5c518;border-radius:10px;padding:8px 14px;margin-bottom:16px;font-size:0.85rem;color:var(--brown);font-weight:600;">🎉 <span id="promo-badge-text">Buy 5, get 1 FREE cup!</span></div>
       <div class="v-lbl">Fulfilment</div>
       <div class="fulfilment-toggle" style="margin-bottom:16px;">
         <button class="ft-btn active" id="ft-pickup" onclick="selFulfilment('pickup')">🏪 Pickup</button>
@@ -717,6 +735,19 @@ function switchFlavour(f) {
 
 // ---- Modal state & logic ----
 let price=18, sweet='regular', pickupLoc='sa', qty=1, cupSize='80g', fulfilment='pickup', deliveryAddr='';
+function calcFree(q,sz){return sz==='410g'?Math.floor(q/2)*2:Math.floor(q/5);}
+function updatePromoBadge(){
+  var badge=document.getElementById('promo-badge');
+  var badgeText=document.getElementById('promo-badge-text');
+  if(!badge||!badgeText)return;
+  var free=calcFree(qty,cupSize);
+  if(free>0){
+    badgeText.textContent=cupSize==='410g'?'Buy 2 pints, get 2 FREE cups!':'Buy 5, get 1 FREE cup!';
+    badge.style.display='flex';
+  } else {
+    badge.style.display='none';
+  }
+}
 
 applyProduct(currentFlavour);
 
@@ -731,13 +762,7 @@ function changeQty(d) {
   if(mq) mq.textContent = pageQty;
 }
 
-// Size selector (page)
-document.querySelectorAll('.ph-sz').forEach(btn => {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('.ph-sz').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-  });
-});
+// Size selector handled by selSize()
 
 const locLabels={sa:'1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor'};
 
@@ -812,13 +837,17 @@ function selSize(btn,p){
   document.querySelectorAll('.sz-btn,.ph-sz').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   const txt=btn.textContent;
-  cupSize=txt.split('·')[0].trim();
+  cupSize=btn.getAttribute('data-size')||txt.split('·')[0].trim();
   const priceEl=document.getElementById('ph-price');
   if(priceEl) priceEl.textContent='RM '+p;
+  const imgEl=document.getElementById('ph-img');
+  if(imgEl) imgEl.src=cupSize==='410g'?'images/Dollop Pint Design.png':'images/Dollop Cup Design.png';
+  updatePromoBadge();
 }
 function modalQty(d){
   qty=Math.min((window.SITE_CFG&&window.SITE_CFG.MAX_QTY)||24,Math.max(1,qty+d));
   document.getElementById('modal-qty').textContent=qty;
+  updatePromoBadge();
 }
 function selFulfilment(type){
   fulfilment=type;
@@ -860,7 +889,7 @@ function goStep(n){
     document.getElementById('sip').textContent='RM '+price+'.00';
     document.getElementById('sv').textContent='Dollop Gelato';
     document.getElementById('sCupSize').textContent=cupSize;
-    var freeC=Math.floor(qty/5);document.getElementById('sQty').textContent=qty+' cup'+(qty>1?'s':'')+(freeC>0?' + '+freeC+' free':'');
+    var freeC=calcFree(qty,cupSize);document.getElementById('sQty').textContent=qty+' cup'+(qty>1?'s':'')+(freeC>0?' + '+freeC+' free':'');
     document.getElementById('sFulfilment').textContent=fulfilment==='delivery'?'Delivery':'Pickup';
     if(fulfilment==='pickup'){
       document.getElementById('sLocRow').style.display='';
@@ -871,7 +900,7 @@ function goStep(n){
       document.getElementById('sAddrRow').style.display='';
       document.getElementById('sAddr').textContent=deliveryAddr;
     }
-    var freeC2=Math.floor(qty/5);document.getElementById('st').textContent='RM '+total+(freeC2>0?' ('+freeC2+' cup'+(freeC2>1?'s':'')+' free)':'');
+    var freeC2=calcFree(qty,cupSize);document.getElementById('st').textContent='RM '+total+(freeC2>0?' ('+freeC2+' cup'+(freeC2>1?'s':'')+' free)':'');
   }
   document.querySelectorAll('.m-step').forEach(s=>s.classList.remove('active'));
   document.getElementById('step'+n).classList.add('active');
@@ -884,7 +913,7 @@ async function placeOrder(){
   const notes    = document.getElementById('fnotes').value.trim();
   const flavour  = 'Dollop Gelato';
   const size     = cupSize;
-  const freeCups = Math.floor(qty/5);
+  const freeCups = calcFree(qty,cupSize);
   const total    = 'RM ' + (price * qty).toFixed(2) + (fulfilment === 'delivery' ? ' + delivery fee' : '') + (freeCups > 0 ? ' (' + freeCups + ' cup' + (freeCups > 1 ? 's' : '') + ' free)' : '');
   const location = fulfilment === 'delivery' ? (deliveryAddr || '—') : (locLabels[pickupLoc] || '—');
   const orderNo  = 'DLP-' + String(Math.floor(Math.random() * 90000) + 10000);

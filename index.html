@@ -4,7 +4,8 @@
 <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async>
 </script>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="brand assets/Dollop Favicon.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dollop — Pure Musang King Gelato</title>
 <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,500;0,800;1,600&family=Bebas+Neue&family=Barrio&family=Anton&family=Bangers&display=swap" rel="stylesheet">
@@ -1227,12 +1228,18 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
 
 #soldout-toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(16px);background:#1a0a00;color:#fff;font-family:inherit;font-size:0.92rem;padding:12px 24px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity 0.3s,transform 0.3s;z-index:9999;white-space:nowrap;}
 #soldout-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.ann-overlay{display:none;position:fixed;inset:0;z-index:600;background:rgba(18,8,2,0.70);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px;}
+.ann-overlay.open{display:flex;}
+.ann-card{position:relative;width:min(864px,74vw,74vh);aspect-ratio:1/1;background:var(--cream);border-radius:16px;overflow:hidden;}
+.ann-close{position:absolute;top:20px;right:20px;z-index:10;width:40px;height:40px;border-radius:50%;border:none;background:rgba(59,31,10,0.12);color:var(--brown);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s ease,transform 0.2s ease;}
+.ann-close:hover{background:rgba(59,31,10,0.22);transform:scale(1.1);}
+.ann-close:active{transform:scale(0.95);}
 </style>
 <script src="site-config.js"></script>
 </head>
 <body class="intro-lock">
 <div id="siteIntro">
-  <img id="introLogo" src="brand assets/Dollop_Logo Rebrand_OL-01.png" alt="Dollop">
+  <img id="introLogo" src="brand assets/Dollop Logo.png" alt="Dollop">
 </div>
 <div id="cursor"></div>
 
@@ -1265,7 +1272,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
     </a>
   </div>
   <a href="#hero" class="sb-logo">
-    <img src="brand assets/Dollop_Logo Rebrand_OL-01.png" alt="Dollop">
+    <img src="brand assets/Dollop Logo.png" alt="Dollop">
   </a>
   <a href="product.html" class="sb-cta">
     <span class="sb-cta-text">Order Now</span>
@@ -1320,7 +1327,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
   <button class="hero-prev" id="heroPrev" aria-label="Previous slide"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
   <button class="hero-next" id="heroNext" aria-label="Next slide"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
   <div class="hero-ov"></div>
-  <img src="brand assets/Dollop_Logo Rebrand_OL-01.png" alt="Dollop" class="hero-logo-top">
+  <img src="brand assets/Dollop Logo.png" alt="Dollop" class="hero-logo-top">
   <div class="hero-bottom-row">
     <div class="hero-headline-wrap">
       <div class="hero-hl">
@@ -1428,7 +1435,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
 
   <!-- LEFT: Fill image column -->
   <div class="bs-img-col">
-    <video class="bs-vid" id="bsVid" src="videos/Durian_Gelato_Scooped_Into_Cup.mp4" muted playsinline autoplay preload="auto"></video>
+    <video class="bs-vid" id="bsVid" src="videos/Durian_Gelato_Scooped_Into_Cup_New.mp4" muted playsinline autoplay preload="auto"></video>
     <div class="bs-img-tag">Est. 2024 · Kuala Lumpur</div>
   </div>
 
@@ -1553,7 +1560,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
 <footer id="footer">
   <div class="ft-top">
     <div class="ft-brand">
-      <img src="brand assets/Dollop_Logo Rebrand_OL-01.png" alt="Dollop" class="ft-logo">
+      <img src="brand assets/Dollop Logo.png" alt="Dollop" class="ft-logo">
       <p class="ft-tagline">Pure Musang King Gelato. One Flavour.&nbsp;No apologies.</p>
       <div class="ft-soc">
         <a href="https://www.facebook.com/dollop.gelato" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
@@ -1606,6 +1613,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
         <span id="modal-qty" style="min-width:36px;text-align:center;font-weight:700;font-size:0.95rem;color:var(--brown);">1</span>
         <button style="width:40px;height:40px;background:transparent;border:none;font-size:1.4rem;color:var(--brown);font-weight:300;display:flex;align-items:center;justify-content:center;transition:background 0.15s;" onmouseover="this.style.background='rgba(59,31,10,0.07)'" onmouseout="this.style.background='transparent'" onclick="modalQty(1)">+</button>
       </div>
+      <div id="promo-badge" style="display:none;align-items:center;gap:8px;background:#fff3cd;border:1.5px solid #f5c518;border-radius:10px;padding:8px 14px;margin-bottom:16px;font-size:0.85rem;color:var(--brown);font-weight:600;">🎉 <span id="promo-badge-text">Buy 5, get 1 FREE cup!</span></div>
       <div class="v-lbl">Fulfilment</div>
       <div class="fulfilment-toggle" style="margin-bottom:16px;">
         <button class="ft-btn active" id="ft-pickup" onclick="selFulfilment('pickup')">🏪 Pickup</button>
@@ -1829,9 +1837,23 @@ function pcSelSz(e,flavour,ml,btn){
   if(wasEl) wasEl.style.display=ml===50?'inline':'none';
 }
 // Modal qty
+function calcFree(q,sz){return sz==='410g'?Math.floor(q/2)*2:Math.floor(q/5);}
+function updatePromoBadge(){
+  var badge=document.getElementById('promo-badge');
+  var badgeText=document.getElementById('promo-badge-text');
+  if(!badge||!badgeText)return;
+  var free=calcFree(qty,cupSize);
+  if(free>0){
+    badgeText.textContent=cupSize==='410g'?'Buy 2 pints, get 2 FREE cups!':'Buy 5, get 1 FREE cup!';
+    badge.style.display='flex';
+  } else {
+    badge.style.display='none';
+  }
+}
 function modalQty(delta){
   qty=Math.min((window.SITE_CFG&&window.SITE_CFG.MAX_QTY)||24,Math.max(1,qty+delta));
   document.getElementById('modal-qty').textContent=qty;
+  updatePromoBadge();
 }
 // Modal size
 function selSize(btn,p){
@@ -1839,6 +1861,7 @@ function selSize(btn,p){
   btn.classList.add('active');
   cupSize=btn.textContent.split('·')[0].trim();
   price=p;
+  updatePromoBadge();
 }
 // Modal sweetness
 function selSweet(t){
@@ -1962,13 +1985,13 @@ function goStep(s){
     document.getElementById('sip').textContent='RM '+(price*qty).toFixed(2);
     document.getElementById('sv').textContent='Dollop Gelato';
     document.getElementById('sCupSize').textContent=cupSize;
-    var freeC=Math.floor(qty/5);document.getElementById('sQty').textContent=qty+' cup'+(qty>1?'s':'')+(freeC>0?' + '+freeC+' free':'');
+    var freeC=calcFree(qty,cupSize);document.getElementById('sQty').textContent=qty+' cup'+(qty>1?'s':'')+(freeC>0?' + '+freeC+' free':'');
     document.getElementById('sFulfilment').textContent=fulfilment==='delivery'?'Delivery':'Pickup';
     document.getElementById('sLocRow').style.display=fulfilment==='delivery'?'none':'';
     document.getElementById('sAddrRow').style.display=fulfilment==='delivery'?'':'none';
     document.getElementById('sLoc').innerHTML='<a href="https://www.google.com/maps/search/?api=1&query=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor" target="_blank" rel="noopener" style="color:var(--green);text-decoration:underline;font-size:0.8rem;">1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor ↗</a>';
     document.getElementById('sAddr').textContent=deliveryAddr||'—';
-    var freeC2=Math.floor(qty/5);document.getElementById('st').textContent='RM '+(price*qty).toFixed(2)+(fulfilment==='delivery'?' + delivery fee':'')+(freeC2>0?' ('+freeC2+' cup'+(freeC2>1?'s':'')+' free)':'');
+    var freeC2=calcFree(qty,cupSize);document.getElementById('st').textContent='RM '+(price*qty).toFixed(2)+(fulfilment==='delivery'?' + delivery fee':'')+(freeC2>0?' ('+freeC2+' cup'+(freeC2>1?'s':'')+' free)':'');
   }
   document.querySelectorAll('.m-step').forEach(x=>x.classList.remove('active'));
   document.getElementById('step'+s).classList.add('active');
@@ -2014,7 +2037,7 @@ async function placeOrder(){
   const notes    = document.getElementById('fnotes').value.trim();
   const flavour  = 'Dollop Gelato';
   const size     = cupSize;
-  const freeCups = Math.floor(qty/5);
+  const freeCups = calcFree(qty,cupSize);
   const total    = 'RM ' + (price * qty).toFixed(2) + (fulfilment === 'delivery' ? ' + delivery fee' : '') + (freeCups > 0 ? ' (' + freeCups + ' cup' + (freeCups > 1 ? 's' : '') + ' free)' : '');
   const location = fulfilment === 'delivery' ? (deliveryAddr || '—') : (locLabels[pickupLoc] || '—');
   const orderNo  = 'DLP-' + String(Math.floor(Math.random() * 90000) + 10000);
@@ -2219,6 +2242,7 @@ function galleryNav(dir) { galleryGo(galIdx + dir); }
 
 <!-- FLOATING CHARACTER -->
 <div id="floatWidget">
+  <div id="floatBubble" onclick="openModal()">Happy Father’s Day<br><span style="font-size:0.82em;opacity:0.85;">Buy 5 Free 1 Promo</span></div>
   <img src="brand assets/Dollop Character.webp" alt="Dollop" id="floatChar" onclick="openModal()">
 </div>
 
@@ -2403,5 +2427,29 @@ function toggleMobMenu() {
 
 
 <div id="soldout-toast">We’re currently sold out — check back soon!</div>
+<script>
+(function(){
+  function initAnn(){
+    var overlay=document.getElementById('annOverlay');
+    var card=document.getElementById('annCard');
+    var btn=document.getElementById('annClose');
+    if(!overlay||!card||!btn)return;
+    function closeAnn(){overlay.classList.remove('open');}
+    setTimeout(function(){overlay.classList.add('open');},400);
+    btn.addEventListener('click',closeAnn);
+    overlay.addEventListener('click',function(e){if(!card.contains(e.target))closeAnn();});
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initAnn);}
+  else{initAnn();}
+})();
+</script>
+<div class="ann-overlay" id="annOverlay">
+  <div class="ann-card" id="annCard">
+    <button class="ann-close" id="annClose" aria-label="Close announcement">&#x2715;</button>
+    <a href="product.html" style="display:block;width:100%;height:100%;">
+      <img src="announcements/Dollop_Fathers Day post_pop up.png" alt="Father's Day Promotion" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.style.display='none'">
+    </a>
+  </div>
+</div>
 </body>
 </html>
