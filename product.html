@@ -328,6 +328,23 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
 #soldout-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
 <script src="site-config.js"></script>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2040554866886258');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=2040554866886258&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
   <div id="cursor"></div>
@@ -816,7 +833,7 @@ function loadAndApplyConfig() {
 }
 
 document.addEventListener('DOMContentLoaded', loadAndApplyConfig);
-function openModal(){if(window.SITE_CFG&&window.SITE_CFG.SOLD_OUT){showSoldOutToast();return;}document.getElementById('modalOverlay').classList.add('open');document.body.style.overflow='hidden';}
+function openModal(){if(window.SITE_CFG&&window.SITE_CFG.SOLD_OUT){showSoldOutToast();return;}document.getElementById('modalOverlay').classList.add('open');document.body.style.overflow='hidden';if(typeof fbq!=='undefined') fbq('track','InitiateCheckout');}
 function closeModal(){document.getElementById('modalOverlay').classList.remove('open');document.body.style.overflow='';}
 function handleOverlayClick(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
 
@@ -953,6 +970,7 @@ async function placeOrder(){
   btn.disabled = false;
   btn.textContent = 'Confirm Order →';
   goStep(4);
+  if(typeof fbq!=='undefined') fbq('track','Purchase',{value:(price*qty).toFixed(2),currency:'MYR'});
   const waUrl = 'https://wa.me/' + COMPANY_WHATSAPP + '?text=' + encodeURIComponent(waMsg);
   setTimeout(() => window.open(waUrl, '_blank'), 400);
 }
