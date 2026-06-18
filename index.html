@@ -1998,6 +1998,7 @@ function goStep(s){
     const n=document.getElementById('fn').value.trim();
     const p=document.getElementById('fp').value.trim();
     if(!n||!p){alert('Please fill in your name and WhatsApp number.');return;}
+    if(typeof fbq!=='undefined') fbq('track','Lead');
     document.getElementById('sName').textContent=n;
     document.getElementById('sPhone').textContent=p;
     document.getElementById('sip').textContent='RM '+(price*qty).toFixed(2);

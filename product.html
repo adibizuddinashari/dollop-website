@@ -767,6 +767,7 @@ function updatePromoBadge(){
 }
 
 applyProduct(currentFlavour);
+if(typeof fbq!=='undefined') fbq('track','ViewContent',{content_name:'Musang King Gelato',content_type:'product',currency:'MYR',value:18});
 
 // Page qty
 let pageQty = 1;
@@ -900,6 +901,7 @@ function goStep(n){
     const name=document.getElementById('fn').value.trim();
     const phone=document.getElementById('fp').value.trim();
     if(!name||!phone){alert('Please fill in your name and WhatsApp number.');return;}
+    if(typeof fbq!=='undefined') fbq('track','Lead');
     document.getElementById('sName').textContent=name;
     document.getElementById('sPhone').textContent=phone;
     const total=(price*qty).toFixed(2);
