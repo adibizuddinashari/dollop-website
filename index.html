@@ -1933,7 +1933,17 @@ function openModalWithFlavour(f){
   selSweet(f);
   openModal();
 }
-function closeModal(){document.getElementById('modalOverlay').classList.remove('open');document.body.style.overflow='';}
+function closeModal(){
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow='';
+  setTimeout(function(){
+    goStep(1);
+    qty=1;document.getElementById('modal-qty').textContent=1;
+    ['fn','fp','fnotes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+    var btn=document.getElementById('confirmOrderBtn');if(btn){btn.disabled=false;btn.textContent='Confirm Order';}
+    updatePromoBadge();
+  },350);
+}
 function handleOverlayClick(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
 function showSoldOutToast(){var t=document.getElementById('soldout-toast');if(!t)return;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3000);}
 // ── Dynamic config (loaded from Apps Script) ─────────────────────────────────
