@@ -645,6 +645,7 @@ src="https://www.facebook.com/tr?id=2040554866886258&ev=PageView&noscript=1"
       </div>
       <div class="fg"><label class="fl">Full Name</label><input type="text" class="fi2" placeholder="e.g. Ahmad Rizal" id="fn"></div>
       <div class="fg"><label class="fl">WhatsApp Number</label><input type="tel" class="fi2" placeholder="e.g. 012-345 6789" id="fp"></div>
+      <div class="fg"><label class="fl">Email (optional)</label><input type="email" class="fi2" placeholder="e.g. yourname@email.com" id="fe"></div>
       <div class="fg"><label class="fl">Notes (optional)</label><textarea class="fta" placeholder="e.g. Allergies, preferred collection time..." id="fnotes"></textarea></div>
       <button class="mb mb-p" onclick="goStep(3)">Review Order →</button>
       <button class="mb mb-s" onclick="goStep(1)">← Back</button>
@@ -656,6 +657,7 @@ src="https://www.facebook.com/tr?id=2040554866886258&ev=PageView&noscript=1"
       <div class="os">
         <div class="or"><span>Name</span><span id="sName">—</span></div>
         <div class="or"><span>WhatsApp</span><span id="sPhone">—</span></div>
+        <div class="or" id="sEmailRow"><span>Email</span><span id="sEmail">—</span></div>
         <div class="or"><span>Musang King Gelato</span><span id="sip">RM 18.00</span></div>
         <div class="or"><span>Flavour</span><span id="sv">Regular Sweet</span></div>
         <div class="or"><span>Cup Size</span><span id="sCupSize">50ml</span></div>
@@ -849,7 +851,7 @@ function closeModal(){
   setTimeout(function(){
     goStep(1);
     qty=1;document.getElementById('modal-qty').textContent=1;
-    ['fn','fp','fnotes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+    ['fn','fp','fe','fnotes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
     var btn=document.getElementById('confirmOrderBtn');if(btn){btn.disabled=false;btn.textContent='Confirm Order';}
     updatePromoBadge();
   },350);
@@ -929,6 +931,7 @@ function goStep(n){
     if(typeof fbq!=='undefined') fbq('track','Lead');
     document.getElementById('sName').textContent=name;
     document.getElementById('sPhone').textContent=phone;
+    const email=document.getElementById('fe').value.trim();document.getElementById('sEmail').textContent=email||'—';document.getElementById('sEmailRow').style.display=email?'':'none';
     const total=(price*qty).toFixed(2);
     document.getElementById('sip').textContent='RM '+price+'.00';
     document.getElementById('sv').textContent='Dollop Gelato';
@@ -955,6 +958,7 @@ async function placeOrder(){
   const name     = document.getElementById('fn').value.trim();
   const phone    = document.getElementById('fp').value.trim();
   const notes    = document.getElementById('fnotes').value.trim();
+  const email    = document.getElementById('fe').value.trim();
   const flavour  = 'Dollop Gelato';
   const size     = cupSize;
   const freeCups = calcFree(qty,cupSize);
@@ -965,7 +969,7 @@ async function placeOrder(){
   if (!name || !phone) { alert('Please fill in your name and WhatsApp number.'); goStep(2); return; }
   btn.disabled = true;
   btn.textContent = 'Sending order...';
-  const orderData = { timestamp, orderNo, name, phone, flavour, size, qty, fulfilment, location, total, notes };
+  const orderData = { timestamp, orderNo, name, phone, email, flavour, size, qty, fulfilment, location, total, notes };
   const sheetPromise = (async () => {
     if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') return;
     try {
@@ -978,6 +982,7 @@ async function placeOrder(){
     `📋 Order No: *${orderNo}*`,
     `👤 Name: ${name}`,
     `📱 WhatsApp: ${phone}`,
+    email ? `📧 Email: ${email}` : '',
     ``,
     `🧁 Flavour: ${flavour}`,
     `📦 Size: ${size}`,
