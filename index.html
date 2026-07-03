@@ -1234,6 +1234,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
 .ann-close{position:absolute;top:20px;right:20px;z-index:10;width:40px;height:40px;border-radius:50%;border:none;background:rgba(59,31,10,0.12);color:var(--brown);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s ease,transform 0.2s ease;}
 .ann-close:hover{background:rgba(59,31,10,0.22);transform:scale(1.1);}
 .ann-close:active{transform:scale(0.95);}
+
 </style>
 <script src="site-config.js"></script>
 <!-- Meta Pixel Code -->
@@ -1971,6 +1972,18 @@ function applyConfig(cfg) {
   }
 
 
+  // ANNOUNCEMENT POPUP
+  var annOverlay = document.getElementById('annOverlay');
+  if (annOverlay) {
+    if (c.ANNOUNCEMENT_ACTIVE && c.ANNOUNCEMENT_IMAGE_URL) {
+      var annImg = document.getElementById('annImg');
+      var annLink = document.getElementById('annLink');
+      if (annImg) annImg.src = toDriveDirectUrl(c.ANNOUNCEMENT_IMAGE_URL);
+      if (annLink) annLink.href = c.ANNOUNCEMENT_LINK || 'product.html';
+      setTimeout(function(){ annOverlay.classList.add('open'); }, 600);
+    }
+  }
+
   // PRICES
   var priceWas = document.getElementById('price-was');
   var priceReg = document.getElementById('price-reg');
@@ -1989,10 +2002,12 @@ function applyConfig(cfg) {
 }
 
 function loadAndApplyConfig() {
+  var local = localStorage.getItem('dollop_config');
+  if (local) { try { applyConfig(JSON.parse(local)); } catch(e){} }
   fetch(APPS_SCRIPT_URL + '?type=config', {cache:'no-cache'})
     .then(function(r){ return r.json(); })
-    .then(function(cfg){ applyConfig(cfg); })
-    .catch(function(){ applyConfig(DEFAULT_CONFIG); });
+    .then(function(cfg){ localStorage.setItem('dollop_config', JSON.stringify(cfg)); applyConfig(cfg); })
+    .catch(function(){ if (!local) applyConfig(DEFAULT_CONFIG); });
 }
 
 document.addEventListener('DOMContentLoaded', loadAndApplyConfig);
@@ -2285,7 +2300,6 @@ function galleryNav(dir) { galleryGo(galIdx + dir); }
 
 <!-- FLOATING CHARACTER -->
 <div id="floatWidget">
-  <div id="floatBubble" onclick="openModal()">Happy Father’s Day<br><span style="font-size:0.82em;opacity:0.85;">Buy 5 Free 1 Promo</span></div>
   <img src="brand assets/Dollop Character.webp" alt="Dollop" id="floatChar" onclick="openModal()">
 </div>
 
@@ -2472,25 +2486,20 @@ function toggleMobMenu() {
 <div id="soldout-toast">We’re currently sold out — check back soon!</div>
 <script>
 (function(){
-  function initAnn(){
-    var overlay=document.getElementById('annOverlay');
-    var card=document.getElementById('annCard');
-    var btn=document.getElementById('annClose');
-    if(!overlay||!card||!btn)return;
-    function closeAnn(){overlay.classList.remove('open');}
-    setTimeout(function(){overlay.classList.add('open');},400);
-    btn.addEventListener('click',closeAnn);
-    overlay.addEventListener('click',function(e){if(!card.contains(e.target))closeAnn();});
-  }
-  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initAnn);}
-  else{initAnn();}
+  var overlay=document.getElementById('annOverlay');
+  var card=document.getElementById('annCard');
+  var btn=document.getElementById('annClose');
+  if(!overlay||!card||!btn)return;
+  function closeAnn(){overlay.classList.remove('open');}
+  btn.addEventListener('click',closeAnn);
+  overlay.addEventListener('click',function(e){if(!card.contains(e.target))closeAnn();});
 })();
 </script>
 <div class="ann-overlay" id="annOverlay">
   <div class="ann-card" id="annCard">
     <button class="ann-close" id="annClose" aria-label="Close announcement">&#x2715;</button>
-    <a href="product.html" style="display:block;width:100%;height:100%;">
-      <img src="announcements/Dollop_Fathers Day post_pop up.png" alt="Father's Day Promotion" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.style.display='none'">
+    <a id="annLink" href="product.html" style="display:block;width:100%;height:100%;">
+      <img id="annImg" src="" alt="Announcement" style="width:100%;height:100%;object-fit:cover;display:block;">
     </a>
   </div>
 </div>

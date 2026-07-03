@@ -123,7 +123,7 @@
 
   <main>
 
-    <!-- Product Availability -->
+    <!-- Product -->
     <div class="section">
       <div class="section-title">Product</div>
 
@@ -141,6 +141,30 @@
 
       <div class="row">
         <div>
+          <div class="row-label">Current Price (RM)</div>
+          <div class="row-sub">The selling price shown to customers</div>
+        </div>
+        <div class="num-input">
+          <button onclick="stepNum('priceNow',-1)">−</button>
+          <input type="number" id="priceNow" min="1" max="999" value="18">
+          <button onclick="stepNum('priceNow',1)">+</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <div class="row-label">Original Price (RM)</div>
+          <div class="row-sub">Crossed-out "was" price shown beside current price. Set to 0 to hide it.</div>
+        </div>
+        <div class="num-input">
+          <button onclick="stepNum('priceWas',-1)">−</button>
+          <input type="number" id="priceWas" min="0" max="999" value="0">
+          <button onclick="stepNum('priceWas',1)">+</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
           <div class="row-label">Max Cups Per Order</div>
           <div class="row-sub">Highest quantity a customer can select</div>
         </div>
@@ -152,29 +176,73 @@
       </div>
     </div>
 
+    <!-- Promotion -->
+    <div class="section">
+      <div class="section-title">Promotion</div>
+
       <div class="row">
         <div>
-          <div class="row-label">Current Price (RM)</div>
-          <div class="row-sub">The selling price shown to customers</div>
+          <div class="row-label">Promo Active</div>
+          <div class="row-sub">Shows the "Buy X Get Y Free" badge on the product page</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="promoToggle">
+          <div class="toggle-track"></div>
+        </label>
+      </div>
+
+      <div class="row">
+        <div>
+          <div class="row-label">Buy (Threshold)</div>
+          <div class="row-sub">Number of cups customer needs to buy to qualify</div>
         </div>
         <div class="num-input">
-          <button onclick="stepNum('priceNow',-1)">−</button>
-          <input type="number" id="priceNow" min="1" max="999" value="15">
-          <button onclick="stepNum('priceNow',1)">+</button>
+          <button onclick="stepNum('promoThreshold',-1)">−</button>
+          <input type="number" id="promoThreshold" min="1" max="99" value="5">
+          <button onclick="stepNum('promoThreshold',1)">+</button>
         </div>
       </div>
 
       <div class="row">
         <div>
-          <div class="row-label">Original Price (RM)</div>
-          <div class="row-sub">The crossed-out "was" price (set to 0 to hide it)</div>
+          <div class="row-label">Get Free (Cups)</div>
+          <div class="row-sub">Number of free cups given when threshold is reached</div>
         </div>
         <div class="num-input">
-          <button onclick="stepNum('priceWas',-1)">−</button>
-          <input type="number" id="priceWas" min="0" max="999" value="18">
-          <button onclick="stepNum('priceWas',1)">+</button>
+          <button onclick="stepNum('promoFree',-1)">−</button>
+          <input type="number" id="promoFree" min="1" max="99" value="1">
+          <button onclick="stepNum('promoFree',1)">+</button>
         </div>
       </div>
+    </div>
+
+    <!-- Announcement Popup -->
+    <div class="section">
+      <div class="section-title">Announcement Popup</div>
+
+      <div class="row">
+        <div>
+          <div class="row-label">Show Popup</div>
+          <div class="row-sub">Displays a popup image when visitors arrive on the homepage</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="annToggle">
+          <div class="toggle-track"></div>
+        </label>
+      </div>
+
+      <div style="padding:14px 0 0">
+        <div class="row-label" style="font-size:0.88rem;">Popup Image</div>
+        <div class="row-sub" style="margin-bottom:8px;">Share your image from Google Drive, then paste the link here. Make sure sharing is set to "Anyone with the link".</div>
+        <input type="url" id="annImageUrl" class="text-input" placeholder="https://drive.google.com/file/d/…/view">
+      </div>
+
+      <div style="padding:14px 0 0">
+        <div class="row-label" style="font-size:0.88rem;">Popup Link</div>
+        <div class="row-sub" style="margin-bottom:8px;">Page that opens when a customer clicks the popup</div>
+        <input type="text" id="annLink" class="text-input" placeholder="product.html" value="product.html">
+      </div>
+    </div>
 
 
 
@@ -182,6 +250,7 @@
 
   <div class="save-bar">
     <div id="saveStatus"></div>
+    <button id="previewBtn" style="padding:15px 18px;background:transparent;color:var(--brown);border:1.5px solid var(--border);border-radius:12px;font-size:0.9rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:background 0.2s;" onclick="previewSite()">Preview Site</button>
     <button id="saveBtn">Save Changes</button>
   </div>
 </div>
@@ -252,18 +321,26 @@ document.getElementById('logoutBtn').addEventListener('click', function() {
 
 // ── Load current config ──────────────────────────────────────────────────────
 function loadConfig() {
+  var local = localStorage.getItem('dollop_config');
+  if (local) { try { applyToForm(JSON.parse(local)); } catch(e){} }
   fetch(APPS_SCRIPT_URL + '?type=config', {cache:'no-cache'})
     .then(function(r){ return r.json(); })
     .then(function(cfg) { applyToForm(cfg); })
-    .catch(function() { applyToForm(DEFAULT_CONFIG); });
+    .catch(function() { if (!local) applyToForm(DEFAULT_CONFIG); });
 }
 
 function applyToForm(cfg) {
   document.getElementById('soldOutToggle').checked = !!cfg.SOLD_OUT;
   updateSoldBadge(!!cfg.SOLD_OUT);
-  document.getElementById('maxQty').value     = cfg.MAX_QTY || 24;
-  document.getElementById('priceNow').value   = cfg.PRICE || 15;
-  document.getElementById('priceWas').value   = cfg.ORIGINAL_PRICE !== undefined ? cfg.ORIGINAL_PRICE : 18;
+  document.getElementById('maxQty').value        = cfg.MAX_QTY || 24;
+  document.getElementById('priceNow').value      = cfg.PRICE !== undefined ? cfg.PRICE : 18;
+  document.getElementById('priceWas').value      = cfg.ORIGINAL_PRICE !== undefined ? cfg.ORIGINAL_PRICE : 0;
+  document.getElementById('promoToggle').checked = !!cfg.PROMO_ACTIVE;
+  document.getElementById('promoThreshold').value = cfg.PROMO_THRESHOLD || 5;
+  document.getElementById('promoFree').value      = cfg.PROMO_FREE || 1;
+  document.getElementById('annToggle').checked   = !!cfg.ANNOUNCEMENT_ACTIVE;
+  document.getElementById('annImageUrl').value   = cfg.ANNOUNCEMENT_IMAGE_URL || '';
+  document.getElementById('annLink').value       = cfg.ANNOUNCEMENT_LINK || 'product.html';
 }
 
 // ── Live UI updates ──────────────────────────────────────────────────────────
@@ -294,11 +371,20 @@ function saveConfig() {
   status.style.display = 'none';
 
   var cfg = {
-    SOLD_OUT:               document.getElementById('soldOutToggle').checked,
-    MAX_QTY:                parseInt(document.getElementById('maxQty').value, 10) || 24,
-    PRICE:                  parseInt(document.getElementById('priceNow').value, 10) || 15,
-    ORIGINAL_PRICE:         parseInt(document.getElementById('priceWas').value, 10) || 0,
+    SOLD_OUT:                 document.getElementById('soldOutToggle').checked,
+    MAX_QTY:                  parseInt(document.getElementById('maxQty').value, 10) || 24,
+    PRICE:                    parseInt(document.getElementById('priceNow').value, 10) || 18,
+    ORIGINAL_PRICE:           parseInt(document.getElementById('priceWas').value, 10) || 0,
+    PROMO_ACTIVE:             document.getElementById('promoToggle').checked,
+    PROMO_THRESHOLD:          parseInt(document.getElementById('promoThreshold').value, 10) || 5,
+    PROMO_FREE:               parseInt(document.getElementById('promoFree').value, 10) || 1,
+    ANNOUNCEMENT_ACTIVE:      document.getElementById('annToggle').checked,
+    ANNOUNCEMENT_IMAGE_URL:   document.getElementById('annImageUrl').value.trim(),
+    ANNOUNCEMENT_LINK:        document.getElementById('annLink').value.trim() || 'product.html',
   };
+
+  // Save to localStorage immediately so the website reflects changes on refresh
+  localStorage.setItem('dollop_config', JSON.stringify(cfg));
 
   fetch(APPS_SCRIPT_URL, {
     method: 'POST',
@@ -308,13 +394,13 @@ function saveConfig() {
   .then(function(r){ return r.json(); })
   .then(function(j) {
     if (j.success) {
-      status.textContent = '✓ Saved! Changes are live.';
+      status.textContent = '✓ Saved & synced to server.';
       status.className = 'status-ok';
     } else if (j.error === 'Wrong password') {
-      status.textContent = '✗ Wrong password.';
+      status.textContent = '✓ Saved locally. ✗ Wrong password — not synced to server.';
       status.className = 'status-err';
     } else {
-      status.textContent = '✗ ' + (j.error || 'Save failed.');
+      status.textContent = '✓ Saved locally. Server: ' + (j.error || 'sync failed.');
       status.className = 'status-err';
     }
     status.style.display = 'block';
@@ -328,6 +414,24 @@ function saveConfig() {
     btn.disabled = false;
     btn.textContent = 'Save Changes';
   });
+}
+
+function previewSite() {
+  // Write current form state to localStorage so preview reflects latest settings
+  var cfg = {
+    SOLD_OUT:                 document.getElementById('soldOutToggle').checked,
+    MAX_QTY:                  parseInt(document.getElementById('maxQty').value, 10) || 24,
+    PRICE:                    parseInt(document.getElementById('priceNow').value, 10) || 18,
+    ORIGINAL_PRICE:           parseInt(document.getElementById('priceWas').value, 10) || 0,
+    PROMO_ACTIVE:             document.getElementById('promoToggle').checked,
+    PROMO_THRESHOLD:          parseInt(document.getElementById('promoThreshold').value, 10) || 5,
+    PROMO_FREE:               parseInt(document.getElementById('promoFree').value, 10) || 1,
+    ANNOUNCEMENT_ACTIVE:      document.getElementById('annToggle').checked,
+    ANNOUNCEMENT_IMAGE_URL:   document.getElementById('annImageUrl').value.trim(),
+    ANNOUNCEMENT_LINK:        document.getElementById('annLink').value.trim() || 'product.html',
+  };
+  localStorage.setItem('dollop_config', JSON.stringify(cfg));
+  window.open('index.html', '_blank');
 }
 </script>
 </body>

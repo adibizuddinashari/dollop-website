@@ -1,15 +1,21 @@
 // ─── DOLLOP SITE CONFIG ────────────────────────────────────────────────────
 // This file holds fallback defaults used if the remote config cannot be loaded.
-// Edit PRICE/ORIGINAL_PRICE here as a fallback when the admin panel cannot reach the backend.
+// Edit these values as a fallback when the admin panel cannot reach the backend.
 
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwYbmE2awZ4NJXnflppZw4jSoWN3DxNKXZB5RkFBPUNGNALS2gtJQ2Bxfp0iGv9-VTB6Q/exec';
 const COMPANY_WHATSAPP = '60142676333';
 
 const DEFAULT_CONFIG = {
-  ORIGINAL_PRICE:         0,   // strikethrough price (0 = hide strikethrough)
-  PRICE:                  18,  // current selling price
+  ORIGINAL_PRICE:         0,       // strikethrough price (0 = hide strikethrough)
+  PRICE:                  18,      // current selling price
   SOLD_OUT:               false,   // true = disable ordering, show "Sold Out"
-  MAX_QTY:                24,     // maximum cups per order
+  MAX_QTY:                24,      // maximum cups per order
+  PROMO_ACTIVE:           false,   // true = show "Buy X Get Y Free" badge
+  PROMO_THRESHOLD:        5,       // cups needed to trigger free cups
+  PROMO_FREE:             1,       // number of free cups given
+  ANNOUNCEMENT_ACTIVE:    false,   // true = show popup announcement on homepage
+  ANNOUNCEMENT_IMAGE_URL: '',      // Google Drive share link for popup image
+  ANNOUNCEMENT_LINK:      'product.html', // where clicking the popup goes
 };
 
 // Applied once config is fetched (or falls back to DEFAULT_CONFIG)

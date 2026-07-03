@@ -421,7 +421,7 @@ src="https://www.facebook.com/tr?id=2040554866886258&ev=PageView&noscript=1"
       <!-- LEFT: Image + Stats -->
       <div>
         <div class="ph-img-wrap" id="ph-img-wrap">
-          <img src="announcements/Dollop_Fathers Day post_pop up.png" alt="Dollop Gelato" id="ph-img" style="padding:0;object-fit:cover;">
+          <img src="images/Dollop Cup Design.png" alt="Dollop Gelato" id="ph-img" style="padding:24px;object-fit:contain;">
           <div class="ph-img-badge" id="ph-badge">Original Sweetness</div>
         </div>
         <div class="ph-sz-row">
@@ -762,14 +762,21 @@ function switchFlavour(f) {
 
 // ---- Modal state & logic ----
 let price=18, sweet='regular', pickupLoc='sa', qty=1, cupSize='80g', fulfilment='pickup', deliveryAddr='';
-function calcFree(q,sz){return sz==='410g'?Math.floor(q/2)*2:Math.floor(q/5);}
+function calcFree(q,sz){
+  var cfg=window.SITE_CFG||{};
+  var t=cfg.PROMO_THRESHOLD||5;var f=cfg.PROMO_FREE||1;
+  return sz==='410g'?Math.floor(q/2)*2:Math.floor(q/t)*f;
+}
 function updatePromoBadge(){
   var badge=document.getElementById('promo-badge');
   var badgeText=document.getElementById('promo-badge-text');
   if(!badge||!badgeText)return;
+  var cfg=window.SITE_CFG||{};
+  if(!cfg.PROMO_ACTIVE){badge.style.display='none';return;}
   var free=calcFree(qty,cupSize);
   if(free>0){
-    badgeText.textContent=cupSize==='410g'?'Buy 2 pints, get 2 FREE cups!':'Buy 5, get 1 FREE cup!';
+    var t=cfg.PROMO_THRESHOLD||5;var f=cfg.PROMO_FREE||1;
+    badgeText.textContent=cupSize==='410g'?'Buy 2 pints, get 2 FREE cups!':'Buy '+t+', get '+f+' FREE cup'+(f>1?'s':'')+'!';
     badge.style.display='flex';
   } else {
     badge.style.display='none';
@@ -837,10 +844,12 @@ function applyConfig(cfg) {
 }
 
 function loadAndApplyConfig() {
+  var local = localStorage.getItem('dollop_config');
+  if (local) { try { applyConfig(JSON.parse(local)); } catch(e){} }
   fetch(APPS_SCRIPT_URL + '?type=config', {cache:'no-cache'})
     .then(function(r){ return r.json(); })
-    .then(function(cfg){ applyConfig(cfg); })
-    .catch(function(){ applyConfig(DEFAULT_CONFIG); });
+    .then(function(cfg){ localStorage.setItem('dollop_config', JSON.stringify(cfg)); applyConfig(cfg); })
+    .catch(function(){ if (!local) applyConfig(DEFAULT_CONFIG); });
 }
 
 document.addEventListener('DOMContentLoaded', loadAndApplyConfig);
@@ -870,13 +879,7 @@ function selSweet(t){
   document.querySelectorAll('#sw-regular,#sw-less').forEach(b=>b.classList.remove('active'));
   document.getElementById('sw-'+t).classList.add('active');
 }
-let _idleTimer=null;
-function _showPromo(){
-  const el=document.getElementById('ph-img');
-  if(el){el.src='announcements/Dollop_Fathers Day post_pop up.png';el.style.padding='0';el.style.objectFit='cover';}
-}
 function selSize(btn,p){
-  if(_idleTimer){clearTimeout(_idleTimer);_idleTimer=null;}
   price=p;
   document.querySelectorAll('.sz-btn,.ph-sz').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
@@ -887,7 +890,6 @@ function selSize(btn,p){
   const imgEl=document.getElementById('ph-img');
   if(imgEl){imgEl.src=cupSize==='410g'?'images/Dollop Pint Design.png':'images/Dollop Cup Design.png';imgEl.style.padding='24px';imgEl.style.objectFit='contain';}
   updatePromoBadge();
-  _idleTimer=setTimeout(_showPromo,30000);
 }
 function modalQty(d){
   qty=Math.min((window.SITE_CFG&&window.SITE_CFG.MAX_QTY)||24,Math.max(1,qty+d));
