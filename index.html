@@ -1853,7 +1853,7 @@ function pcSelSz(e,flavour,ml,btn){
   if(wasEl) wasEl.style.display=ml===50?'inline':'none';
 }
 // Modal qty
-function calcFree(q,sz){return sz==='410g'?Math.floor(q/2)*2:Math.floor(q/5);}
+function calcFree(q,sz){var cfg=window.SITE_CFG||{};if(!cfg.PROMO_ACTIVE)return 0;var t=cfg.PROMO_THRESHOLD||5;var f=cfg.PROMO_FREE||1;return sz==='410g'?Math.floor(q/2)*2:Math.floor(q/t)*f;}
 function updatePromoBadge(){
   var badge=document.getElementById('promo-badge');
   var badgeText=document.getElementById('promo-badge-text');

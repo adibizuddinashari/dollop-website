@@ -898,6 +898,7 @@ function switchToFlavour(slug) {
 let price=18, sweet='regular', pickupLoc='sa', qty=1, cupSize='80g', fulfilment='pickup', deliveryAddr='';
 function calcFree(q,sz){
   var cfg=window.SITE_CFG||{};
+  if(!cfg.PROMO_ACTIVE) return 0;
   var t=cfg.PROMO_THRESHOLD||5;var f=cfg.PROMO_FREE||1;
   return sz==='410g'?Math.floor(q/2)*2:Math.floor(q/t)*f;
 }
