@@ -508,6 +508,7 @@ src="https://www.facebook.com/tr?id=2040554866886258&ev=PageView&noscript=1"
 
     <!-- Accordion: Ingredients & Nutrition -->
     <div class="ph-accordion" id="acc-ingredients">
+      <div id="acc-nutrition-section">
       <button class="ph-acc-trigger" onclick="toggleAcc(this)">
         <span>Ingredients &amp; Nutrition Facts</span>
         <span class="ph-acc-icon">+</span>
@@ -549,6 +550,7 @@ src="https://www.facebook.com/tr?id=2040554866886258&ev=PageView&noscript=1"
         </div>
       </div>
 
+      </div><!-- /acc-nutrition-section -->
       <div id="acc-delivery"></div><button class="ph-acc-trigger" onclick="toggleAcc(this)" style="border-top:1px solid rgba(59,31,10,0.1);">
         <span>Delivery &amp; Pickup</span>
         <span class="ph-acc-icon">+</span>
@@ -782,11 +784,24 @@ function applyProduct() {
     }
   }
 
-  // Price tag (hide for coming-soon; update price to flavour-specific value)
+  // Price tag (hide for coming-soon; show strikethrough original price if set)
   var priceTag = document.querySelector('.ph-price-tag');
   if (priceTag) priceTag.style.display = f.priceCup ? '' : 'none';
-  var phPriceEl = document.getElementById('ph-price');
+  var phPriceEl    = document.getElementById('ph-price');
+  var phPriceWasEl = document.getElementById('ph-price-was');
   if (phPriceEl && f.priceCup) phPriceEl.textContent = 'RM ' + f.priceCup;
+  if (phPriceWasEl) {
+    if (f.originalPriceCup) {
+      phPriceWasEl.textContent = 'RM ' + f.originalPriceCup;
+      phPriceWasEl.style.display = 'inline';
+    } else {
+      phPriceWasEl.style.display = 'none';
+    }
+  }
+
+  // Ingredients & Nutrition accordion — hide for flavours without nutrition data
+  var accNutr = document.getElementById('acc-nutrition-section');
+  if (accNutr) accNutr.style.display = (f.hasNutrition === false) ? 'none' : '';
 
   // Features
   var featEl = document.getElementById('phFeatures');
@@ -817,7 +832,9 @@ function applyProduct() {
     var nm0 = szBtns[0].querySelector('.ph-sz-name');
     if (nm0) nm0.textContent = cupSz + ' Cup';
     var pr0 = szBtns[0].querySelector('.ph-sz-price');
-    if (pr0) pr0.textContent = 'RM ' + cupP;
+    if (pr0) pr0.innerHTML = f.originalPriceCup
+      ? '<s style="opacity:0.38;font-size:0.8em;margin-right:3px;">RM ' + f.originalPriceCup + '</s>RM ' + cupP
+      : 'RM ' + cupP;
   }
   if (szBtns[1]) {
     szBtns[1].dataset.size = pintSz;
@@ -828,7 +845,9 @@ function applyProduct() {
     var nm1 = szBtns[1].querySelector('.ph-sz-name');
     if (nm1) nm1.textContent = pintSz + ' Pint';
     var pr1 = szBtns[1].querySelector('.ph-sz-price');
-    if (pr1) pr1.textContent = 'RM ' + pintP;
+    if (pr1) pr1.innerHTML = f.originalPricePint
+      ? '<s style="opacity:0.38;font-size:0.8em;margin-right:3px;">RM ' + f.originalPricePint + '</s>RM ' + pintP
+      : 'RM ' + pintP;
   }
   if (mSzBtns[0]) {
     mSzBtns[0].dataset.size = cupSz;
