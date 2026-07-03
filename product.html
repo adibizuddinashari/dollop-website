@@ -146,6 +146,13 @@ a{text-decoration:none;color:inherit;}
 
 /* Flavour toggle */
 .ph-flavours{display:flex;gap:8px;margin-bottom:24px;}
+.ph-flv-switcher{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.ph-flv-btn{padding:7px 18px;border:1.5px solid rgba(59,31,10,0.18);border-radius:40px;background:transparent;font-family:'Barlow',sans-serif;font-size:0.82rem;font-weight:500;color:rgba(59,31,10,0.55);cursor:pointer;transition:all 0.2s;}
+.ph-flv-btn.active,.ph-flv-btn:hover:not(.ph-flv-btn--soon){border-color:var(--brown);background:var(--brown);color:var(--cream);}
+.ph-flv-btn--soon{opacity:0.38;cursor:default;}
+.ph-coming-soon-box{background:#FAF6EE;border:1.5px solid rgba(59,31,10,0.14);border-radius:14px;padding:20px;text-align:center;margin-top:4px;}
+.ph-coming-soon-box strong{font-family:'Barlow',sans-serif;font-size:1.05rem;font-weight:500;letter-spacing:1px;display:block;margin-bottom:6px;}
+.ph-coming-soon-box p{font-size:0.82rem;color:rgba(59,31,10,0.55);line-height:1.6;margin-bottom:14px;}
 .ph-flav{flex:1;display:flex;flex-direction:column;align-items:flex-start;padding:11px 14px;border:2px solid rgba(59,31,10,0.12);border-radius:10px;background:transparent;text-align:left;transition:all 0.2s;position:relative;}
 .ph-flav.active{border-color:var(--green);background:rgba(74,124,36,0.07);}
 .ph-flav.active::after{content:'✓';position:absolute;top:7px;right:10px;font-size:0.72rem;color:var(--green);font-weight:700;}
@@ -328,6 +335,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
 #soldout-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
 <script src="site-config.js"></script>
+<script src="flavours.js"></script>
 <!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
@@ -436,7 +444,7 @@ src="https://www.facebook.com/tr?id=2040554866886258&ev=PageView&noscript=1"
             <div class="ph-sz-price">RM 75</div>
           </button>
         </div>
-        <div class="ph-stats">
+        <div class="ph-stats" id="phStats">
           <div class="ph-stat">
             <span class="ph-stat-num">133</span>
             <span class="ph-stat-unit">kcal per serving</span>
@@ -459,6 +467,8 @@ src="https://www.facebook.com/tr?id=2040554866886258&ev=PageView&noscript=1"
       
       <!-- RIGHT: Info -->
       <div class="ph-info">
+        <!-- Flavour switcher (rendered by JS) -->
+        <div id="phFlvSwitcher" class="ph-flv-switcher"></div>
         <div class="ph-title-row">
           <div class="ph-name" id="ph-name">Musang King Gelato</div>
           <div class="ph-price-tag"><strong id="ph-price-was" style="text-decoration:line-through;opacity:0.45;font-size:1.2rem;margin-right:6px;letter-spacing:0.04em;font-family:'Bebas Neue',sans-serif;display:none;">RM 18</strong><strong id="ph-price">RM 18</strong></div>
@@ -466,11 +476,28 @@ src="https://www.facebook.com/tr?id=2040554866886258&ev=PageView&noscript=1"
         
         <p class="ph-sub" id="ph-sub">Classic durian richness — bold, creamy, unmistakably Musang King the way it was meant to be.</p>
         
-        <button class="ph-order-btn" data-orig-text="Get Your Dollop" onclick="openModal()" style="width:100%;">
+        <!-- Sweetness toggle (shown only for hasSweetness flavours) -->
+        <div id="phSweetness" style="display:none;margin-bottom:20px;">
+          <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;opacity:0.42;margin-bottom:10px;">Sweetness Level</div>
+          <div class="ph-flavours">
+            <button class="ph-flv-btn active" id="sw-regular" onclick="selSweet('regular')">Regular Sweet</button>
+            <button class="ph-flv-btn" id="sw-less" onclick="selSweet('less')">Less Sweet</button>
+          </div>
+        </div>
+
+        <button class="ph-order-btn" id="phOrderBtn" data-orig-text="Get Your Dollop" onclick="openModal()" style="width:100%;">
           Get Your Dollop
         </button>
+
+        <!-- Coming Soon (shown only for unavailable flavours) -->
+        <div id="phComingSoon" class="ph-coming-soon-box" style="display:none;">
+          <strong>Something New Is Coming</strong>
+          <p>Follow us on Instagram to be the first to know when this drops.</p>
+          <a href="https://www.instagram.com/dollop.gelato" target="_blank" rel="noopener" style="display:inline-block;padding:10px 24px;background:var(--brown);color:var(--cream);border-radius:40px;font-family:'Bebas Neue',sans-serif;font-size:0.88rem;letter-spacing:0.1em;text-decoration:none;">Follow @dollop.gelato →</a>
+        </div>
+
     <!-- Feature box -->
-    <div class="ph-features">
+    <div class="ph-features" id="phFeatures">
       <div class="ph-feat-item">— 100% Real Musang King</div>
       <div class="ph-feat-item">— No Artificial Flavours</div>
       <div class="ph-feat-item">— Freshly Made</div>
@@ -568,7 +595,7 @@ src="https://www.facebook.com/tr?id=2040554866886258&ev=PageView&noscript=1"
     <div class="ft-cols">
       <div class="ft-col">
         <div class="ft-ct">The Goods</div>
-        <a href="index.html">Home</a><a href="product.html?flavour=regular">Regular Sweet</a><a href="product.html?flavour=less">Less Sweet</a><a href="#" onclick="openModal();return false;">Order Now</a>
+        <a href="index.html">Home</a><a href="index.html#products">Our Flavours</a><a href="product.html?flavour=musang-king">Musang King</a><a href="product.html?flavour=cempedak">Cempedak</a><a href="#" onclick="openModal();return false;">Order Now</a>
       </div>
       <div class="ft-col">
         <div class="ft-ct">Info</div>
@@ -713,50 +740,157 @@ const cursor=document.getElementById('cursor');
 document.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';});
 
 // Product data
-const products = {
-  regular: {
-    name: 'Musang King Gelato',
-    sub: 'Classic durian richness — bold, creamy, unmistakably Musang King the way it was meant to be.',
-    desc: 'Our Musang King Gelato is made in small batches using real Musang King durian pulp — no shortcuts, no filler, just the honest intensity of the King of Fruits. Lightly sweet and intensely durian-forward, it\'s alive with the legendary stink that true believers live for.',
-    badge: 'Most Popular',
-    sugar: '16g',
-    imgClass: ''
-  },
-  less: {
-    name: 'Less Sweet',
-    sub: 'Pure durian forward — the raw, intense Musang King experience for the true believer.',
-    desc: 'Our Less Sweet variant strips away the sugar to let the Musang King speak for itself. Raw, uncompromising durian intensity — this is gelato for the purist. If you think regular durian isn\'t durian-y enough, this is your cup.',
-    badge: 'For The Purist',
-    sugar: '9g',
-    imgClass: 'less-bg'
-  }
-};
-
-// Read URL param
+// Read URL param — now uses flavour slug, not sweetness key
 const params = new URLSearchParams(window.location.search);
-let currentFlavour = params.get('flavour') === 'less' ? 'less' : 'regular';
+let currentFlavour = params.get('flavour') || 'musang-king';
+if (!FLAVOURS[currentFlavour]) currentFlavour = 'musang-king';
+let currentSweet = 'regular';
 
-function applyProduct(flavour) {
-  const p = products[flavour];
-  const set = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
-  set('ph-name', p.name);
-  set('ph-sub', p.sub);
-  set('pd-desc', p.desc);
-  set('ph-badge', p.badge);
-  set('nut-sugar', p.sugar);
-  set('bc-current', p.name);
-  document.title = 'Dollop — ' + p.name;
-  const wrap = document.getElementById('ph-img-wrap');
-  if(wrap) wrap.className = 'ph-img-wrap' + (p.imgClass ? ' ' + p.imgClass : '');
-  sweet = 'regular';
+function applyProduct() {
+  var f = FLAVOURS[currentFlavour];
+  if (!f) return;
+
+  // Title + breadcrumb
+  document.title = 'Dollop — ' + f.fullName;
+  var bcEl = document.getElementById('bc-current');
+  if (bcEl) bcEl.textContent = f.fullName;
+
+  // Name, tagline, badge
+  var nameEl = document.getElementById('ph-name');  if (nameEl) nameEl.textContent = f.fullName;
+  var subEl  = document.getElementById('ph-sub');   if (subEl)  subEl.textContent  = f.tagline;
+  var badgeEl = document.getElementById('ph-badge'); if (badgeEl) badgeEl.textContent = f.badge;
+
+  // Hero image (reset to flavour photo; selSize() will override when user picks a size)
+  var imgEl = document.getElementById('ph-img');
+  if (imgEl) { imgEl.src = f.productImage; imgEl.style.padding = '24px'; imgEl.style.objectFit = 'contain'; }
+  var wrap = document.getElementById('ph-img-wrap');
+  if (wrap) wrap.className = 'ph-img-wrap';
+
+  // Stats
+  var statsEl = document.getElementById('phStats');
+  if (statsEl) {
+    if (f.stats.length) {
+      statsEl.style.display = '';
+      statsEl.innerHTML = f.stats.map(function(s, i) {
+        return (i > 0 ? '<div class="ph-stat-div"></div>' : '')
+          + '<div class="ph-stat"><span class="ph-stat-num">' + s.num + '</span>'
+          + (s.unit ? '<span class="ph-stat-unit">' + s.unit + '</span>' : '')
+          + '<span class="ph-stat-lbl">' + s.label + '</span></div>';
+      }).join('');
+    } else {
+      statsEl.style.display = 'none';
+    }
+  }
+
+  // Price tag (hide for coming-soon; update price to flavour-specific value)
+  var priceTag = document.querySelector('.ph-price-tag');
+  if (priceTag) priceTag.style.display = f.priceCup ? '' : 'none';
+  var phPriceEl = document.getElementById('ph-price');
+  if (phPriceEl && f.priceCup) phPriceEl.textContent = 'RM ' + f.priceCup;
+
+  // Features
+  var featEl = document.getElementById('phFeatures');
+  if (featEl) {
+    featEl.innerHTML = f.features.map(function(ft) {
+      return '<div class="ph-feat-item">— ' + ft + '</div>';
+    }).join('');
+  }
+
+  // Sweetness toggle
+  var sweetEl = document.getElementById('phSweetness');
+  if (sweetEl) sweetEl.style.display = f.hasSweetness ? 'block' : 'none';
+  if (f.hasSweetness) { currentSweet = 'regular'; selSweet('regular'); }
+
+  // Size buttons — update per flavour (sizes, prices, image visibility)
+  var szBtns = document.querySelectorAll('.ph-sz');
+  var mSzBtns = document.querySelectorAll('.sz-btn');
+  var cupP  = f.priceCup  || 18;
+  var pintP = f.pricePint || 75;
+  var cupSz  = f.sizeCup  || '80g';
+  var pintSz = f.sizePint || '410g';
+  if (szBtns[0]) {
+    szBtns[0].dataset.size = cupSz;
+    szBtns[0].setAttribute('onclick', 'selSize(this,' + cupP + ')');
+    szBtns[0].classList.add('active');
+    var img0 = szBtns[0].querySelector('.ph-sz-img');
+    if (img0) img0.style.display = f.hasImages ? '' : 'none';
+    var nm0 = szBtns[0].querySelector('.ph-sz-name');
+    if (nm0) nm0.textContent = cupSz + ' Cup';
+    var pr0 = szBtns[0].querySelector('.ph-sz-price');
+    if (pr0) pr0.textContent = 'RM ' + cupP;
+  }
+  if (szBtns[1]) {
+    szBtns[1].dataset.size = pintSz;
+    szBtns[1].setAttribute('onclick', 'selSize(this,' + pintP + ')');
+    szBtns[1].classList.remove('active');
+    var img1 = szBtns[1].querySelector('.ph-sz-img');
+    if (img1) img1.style.display = f.hasImages ? '' : 'none';
+    var nm1 = szBtns[1].querySelector('.ph-sz-name');
+    if (nm1) nm1.textContent = pintSz + ' Pint';
+    var pr1 = szBtns[1].querySelector('.ph-sz-price');
+    if (pr1) pr1.textContent = 'RM ' + pintP;
+  }
+  if (mSzBtns[0]) {
+    mSzBtns[0].dataset.size = cupSz;
+    mSzBtns[0].setAttribute('onclick', 'selSize(this,' + cupP + ')');
+    mSzBtns[0].textContent = cupSz + ' · RM' + cupP;
+    mSzBtns[0].classList.add('active');
+  }
+  if (mSzBtns[1]) {
+    mSzBtns[1].dataset.size = pintSz;
+    mSzBtns[1].setAttribute('onclick', 'selSize(this,' + pintP + ')');
+    mSzBtns[1].textContent = pintSz + ' · RM' + pintP;
+    mSzBtns[1].classList.remove('active');
+  }
+  price = cupP;
+  cupSize = cupSz;
+
+  // Flavour switcher pills
+  renderFlvSwitcher();
+
+  // Available vs Coming Soon
+  var orderBtn = document.getElementById('phOrderBtn');
+  var soonBox  = document.getElementById('phComingSoon');
+  var szRow    = document.querySelector('.ph-sz-row');
+  if (!f.available) {
+    if (orderBtn) orderBtn.style.display = 'none';
+    if (soonBox)  soonBox.style.display  = 'block';
+    if (szRow)    szRow.style.display    = 'none';
+  } else {
+    if (orderBtn) { orderBtn.style.display = ''; orderBtn.disabled = false; }
+    if (soonBox)  soonBox.style.display  = 'none';
+    if (szRow)    szRow.style.display    = '';
+  }
+
+  // Update order review label
+  var svEl = document.getElementById('sv');
+  if (svEl) svEl.textContent = f.hasSweetness ? 'Regular Sweet' : f.name;
 }
 
-function switchFlavour(f) {
-  currentFlavour = f;
-  applyProduct(f);
-  // Update URL without reload
-  const url = new URL(window.location.href);
-  url.searchParams.set('flavour', f);
+function renderFlvSwitcher() {
+  var sw = document.getElementById('phFlvSwitcher');
+  if (!sw || typeof FLAVOURS === 'undefined') return;
+  sw.innerHTML = Object.keys(FLAVOURS).filter(function(slug) {
+    return FLAVOURS[slug].available || FLAVOURS[slug].slug === 'coming-soon';
+  }).map(function(slug) {
+    var f = FLAVOURS[slug];
+    var isCurrent = slug === currentFlavour;
+    var isSoon = !f.available;
+    return '<button class="ph-flv-btn'
+      + (isCurrent ? ' active' : '')
+      + (isSoon ? ' ph-flv-btn--soon' : '') + '"'
+      + (!isSoon ? ' data-slug="' + slug + '" onclick="switchToFlavour(this.dataset.slug)"' : '')
+      + '>' + f.name + (isSoon ? ' — Soon' : '') + '</button>';
+  }).join('');
+}
+
+function switchToFlavour(slug) {
+  if (slug === currentFlavour || !FLAVOURS[slug]) return;
+  currentFlavour = slug;
+  currentSweet = 'regular';
+  applyProduct();
+  var url = new URL(window.location.href);
+  url.searchParams.set('flavour', slug);
   window.history.replaceState({}, '', url);
 }
 
@@ -783,7 +917,7 @@ function updatePromoBadge(){
   }
 }
 
-applyProduct(currentFlavour);
+applyProduct();
 if(typeof fbq!=='undefined') fbq('track','ViewContent',{content_name:'Musang King Gelato',content_type:'product',currency:'MYR',value:18});
 
 // Page qty
@@ -876,8 +1010,17 @@ function toggleAcc(btn){
 }
 function selSweet(t){
   sweet=t;
-  document.querySelectorAll('#sw-regular,#sw-less').forEach(b=>b.classList.remove('active'));
-  document.getElementById('sw-'+t).classList.add('active');
+  document.querySelectorAll('#sw-regular,#sw-less').forEach(function(b){b.classList.remove('active');});
+  var btn=document.getElementById('sw-'+t);if(btn)btn.classList.add('active');
+  var f=FLAVOURS[currentFlavour];
+  if(f&&f.sweetness&&f.sweetness[t]){
+    var wrap=document.getElementById('ph-img-wrap');
+    if(wrap)wrap.className='ph-img-wrap'+(f.sweetness[t].imgClass?' '+f.sweetness[t].imgClass:'');
+    var sugarEl=document.getElementById('nut-sugar');
+    if(sugarEl)sugarEl.textContent=f.sweetness[t].sugar;
+    var svEl=document.getElementById('sv');
+    if(svEl)svEl.textContent=f.sweetness[t].label;
+  }
 }
 function selSize(btn,p){
   price=p;
@@ -888,7 +1031,13 @@ function selSize(btn,p){
   const priceEl=document.getElementById('ph-price');
   if(priceEl) priceEl.textContent='RM '+p;
   const imgEl=document.getElementById('ph-img');
-  if(imgEl){imgEl.src=cupSize==='410g'?'images/Dollop Pint Design.png':'images/Dollop Cup Design.png';imgEl.style.padding='24px';imgEl.style.objectFit='contain';}
+  var flv = FLAVOURS[currentFlavour];
+  if(imgEl && flv && flv.hasImages){
+    var isPint = cupSize === (flv.sizePint || '410g');
+    imgEl.src = isPint ? 'images/Dollop Pint Design.png' : 'images/Dollop Cup Design.png';
+    imgEl.style.padding='24px';
+    imgEl.style.objectFit='contain';
+  }
   updatePromoBadge();
 }
 function modalQty(d){
@@ -961,7 +1110,9 @@ async function placeOrder(){
   const phone    = document.getElementById('fp').value.trim();
   const notes    = document.getElementById('fnotes').value.trim();
   const email    = document.getElementById('fe').value.trim();
-  const flavour  = 'Dollop Gelato';
+  var _flv=FLAVOURS[currentFlavour];
+  var _sweetLabel=(_flv&&_flv.sweetness&&_flv.sweetness[sweet])?' ('+_flv.sweetness[sweet].label+')':'';
+  const flavour=(_flv?_flv.fullName:'Dollop Gelato')+_sweetLabel;
   const size     = cupSize;
   const freeCups = calcFree(qty,cupSize);
   const total    = 'RM ' + (price * qty).toFixed(2) + (fulfilment === 'delivery' ? ' + delivery fee' : '') + (freeCups > 0 ? ' (' + freeCups + ' cup' + (freeCups > 1 ? 's' : '') + ' free)' : '');
