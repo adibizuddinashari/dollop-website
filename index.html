@@ -358,6 +358,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
   animation: bubblePop 3.5s ease-in-out infinite;
 }
 #floatBubble:hover { background: var(--yellow); color: var(--brown); transform: scale(1.04); }
+.fb-xbold { display: block; font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 1.3rem; letter-spacing: 0.02em; margin-top: 2px; }
 #floatChar {
   width: 120px;
   height: 120px;
@@ -1150,6 +1151,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
   #floatWidget{bottom:16px;right:16px;}
   #floatChar{width:90px;height:90px;}
   #floatBubble{font-size:0.8rem;padding:8px 14px;}
+  .fb-xbold{font-size:1.05rem;}
 
 }
 /* ── END MOBILE OVERRIDES ────────────────────────────────────────────────── */
@@ -2327,6 +2329,7 @@ function galleryNav(dir) { galleryGo(galIdx + dir); }
 
 <!-- FLOATING CHARACTER -->
 <div id="floatWidget">
+  <div id="floatBubble" onclick="openModal()">NEW FLAVOUR !<br><span class="fb-xbold">CEMPEDAK</span></div>
   <img src="brand assets/Dollop Character.webp" alt="Dollop" id="floatChar" onclick="openModal()">
 </div>
 
