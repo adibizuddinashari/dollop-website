@@ -2205,18 +2205,17 @@ async function placeOrder(){
   setTimeout(() => window.open(waUrl, '_blank'), 400);
 }
 
-// Floating character — show after user scrolls past hero
-const floatBtn = document.getElementById('floatWidget');
-const heroSec = document.getElementById('hero');
-if(floatBtn && heroSec){
-  const floatObs = new IntersectionObserver(([entry]) => {
-    floatBtn.classList.toggle('show', !entry.isIntersecting);
-  }, {threshold: 0});
-  floatObs.observe(heroSec);
-}
+// Floating character — show after user scrolls past hero; lift above footer when it comes into view
+document.addEventListener('DOMContentLoaded', function(){
+  const floatBtn = document.getElementById('floatWidget');
+  const heroSec = document.getElementById('hero');
+  if(floatBtn && heroSec){
+    const floatObs = new IntersectionObserver(([entry]) => {
+      floatBtn.classList.toggle('show', !entry.isIntersecting);
+    }, {threshold: 0});
+    floatObs.observe(heroSec);
+  }
 
-// Floating character — lift above footer when footer comes into view
-(function(){
   const ftEl = document.getElementById('footer');
   const wgt  = document.getElementById('floatWidget');
   if(!ftEl || !wgt) return;
@@ -2228,7 +2227,7 @@ if(floatBtn && heroSec){
   }
   window.addEventListener('scroll', reposition, { passive: true });
   reposition();
-})();
+});
 
 // Hero carousel
 (function(){
@@ -2506,7 +2505,7 @@ function galleryNav(dir) { galleryGo(galIdx + dir); }
   vidObs.observe(vid);
   vid.play().catch(function(){});
 })();
-──────────────────────────────────────────────────
+// ── END BRAND VIDEO LOOP ────────────────────────────────────────────────
 </script>
 
 <script>
