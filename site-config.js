@@ -23,6 +23,18 @@ window.SITE_CFG = Object.assign({}, DEFAULT_CONFIG);
 
 function toDriveDirectUrl(url) {
   if (!url) return '';
-  var m = url.match(/\/file\/d\/([^/?]+)/);
-  return m ? 'https://drive.google.com/uc?export=view&id=' + m[1] : url;
+  url = url.trim();
+  // Already a direct/thumbnail link — leave it as-is.
+  if (/drive\.google\.com\/(uc|thumbnail)/.test(url)) return url;
+  // Common share-link shapes:
+  //   https://drive.google.com/file/d/<ID>/view?usp=sharing
+  //   https://drive.google.com/open?id=<ID>
+  //   https://drive.google.com/uc?id=<ID>
+  //   https://drive.google.com/thumbnail?id=<ID>
+  var m = url.match(/\/file\/d\/([^/?]+)/) || url.match(/[?&]id=([^&]+)/);
+  if (!m) return url; // not a recognizable Drive link — return unchanged
+  // Use the thumbnail endpoint: more reliable for hotlinking in <img> tags
+  // than uc?export=view, which often serves an HTML interstitial instead
+  // of raw image bytes for files that aren't shared "Anyone with the link".
+  return 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w1000';
 }

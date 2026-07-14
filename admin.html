@@ -235,6 +235,10 @@
         <div class="row-label" style="font-size:0.88rem;">Popup Image</div>
         <div class="row-sub" style="margin-bottom:8px;">Share your image from Google Drive, then paste the link here. Make sure sharing is set to "Anyone with the link".</div>
         <input type="url" id="annImageUrl" class="text-input" placeholder="https://drive.google.com/file/d/…/view">
+        <div id="annImgPreviewWrap" style="display:none;margin-top:10px;">
+          <img id="annImgPreview" style="max-width:160px;max-height:160px;border-radius:10px;border:1.5px solid var(--border);display:block;">
+          <div id="annImgPreviewStatus" style="font-size:0.82rem;margin-top:6px;"></div>
+        </div>
       </div>
 
       <div style="padding:14px 0 0">
@@ -268,11 +272,43 @@ function stepNum(id, delta) {
   el.value = Math.min(max, Math.max(min, v));
 }
 
-function toDriveDirectUrlLocal(url) {
-  if (!url) return '';
-  var m = url.match(/\/file\/d\/([^/?]+)/);
-  return m ? 'https://drive.google.com/uc?export=view&id=' + m[1] : url;
-}
+// ── Popup image preview ─────────────────────────────────────────────────────
+// Lets the admin confirm the pasted Drive link actually resolves to an image
+// before saving, instead of only finding out when a visitor sees a broken popup.
+(function(){
+  var input = document.getElementById('annImageUrl');
+  if (!input) return;
+  var wrap = document.getElementById('annImgPreviewWrap');
+  var img = document.getElementById('annImgPreview');
+  var status = document.getElementById('annImgPreviewStatus');
+  var timer = null;
+
+  function updatePreview() {
+    var url = input.value.trim();
+    if (!url) { wrap.style.display = 'none'; return; }
+    wrap.style.display = 'block';
+    status.textContent = 'Loading preview…';
+    status.style.color = 'var(--brown)';
+    img.style.display = 'none';
+    img.onload = function(){
+      img.style.display = 'block';
+      status.textContent = '✓ Image loads correctly';
+      status.style.color = '#2e7d32';
+    };
+    img.onerror = function(){
+      img.style.display = 'none';
+      status.textContent = '✗ This link doesn\'t load as an image — check the Drive share link is set to "Anyone with the link"';
+      status.style.color = '#c62828';
+    };
+    img.src = toDriveDirectUrl(url);
+  }
+
+  input.addEventListener('input', function(){
+    clearTimeout(timer);
+    timer = setTimeout(updatePreview, 400);
+  });
+  input.addEventListener('blur', updatePreview);
+})();
 
 // ── Login ────────────────────────────────────────────────────────────────────
 document.getElementById('loginBtn').addEventListener('click', attemptLogin);
@@ -341,6 +377,7 @@ function applyToForm(cfg) {
   document.getElementById('annToggle').checked   = !!cfg.ANNOUNCEMENT_ACTIVE;
   document.getElementById('annImageUrl').value   = cfg.ANNOUNCEMENT_IMAGE_URL || '';
   document.getElementById('annLink').value       = cfg.ANNOUNCEMENT_LINK || 'product.html';
+  document.getElementById('annImageUrl').dispatchEvent(new Event('input'));
 }
 
 // ── Live UI updates ──────────────────────────────────────────────────────────

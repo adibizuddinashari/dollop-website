@@ -1972,9 +1972,14 @@ function applyConfig(cfg) {
     if (c.ANNOUNCEMENT_ACTIVE && c.ANNOUNCEMENT_IMAGE_URL) {
       var annImg = document.getElementById('annImg');
       var annLink = document.getElementById('annLink');
-      if (annImg) annImg.src = toDriveDirectUrl(c.ANNOUNCEMENT_IMAGE_URL);
       if (annLink) annLink.href = c.ANNOUNCEMENT_LINK || 'product.html';
-      setTimeout(function(){ annOverlay.classList.add('open'); }, 600);
+      if (annImg) {
+        annImg.onerror = function(){ annOverlay.classList.remove('open'); };
+        annImg.onload = function(){ setTimeout(function(){ annOverlay.classList.add('open'); }, 600); };
+        annImg.src = toDriveDirectUrl(c.ANNOUNCEMENT_IMAGE_URL);
+      } else {
+        setTimeout(function(){ annOverlay.classList.add('open'); }, 600);
+      }
     }
   }
 
@@ -2517,6 +2522,14 @@ function toggleMobMenu() {
 
 
 <div id="soldout-toast">We’re currently sold out — check back soon!</div>
+<div class="ann-overlay" id="annOverlay">
+  <div class="ann-card" id="annCard">
+    <button class="ann-close" id="annClose" aria-label="Close announcement">&#x2715;</button>
+    <a id="annLink" href="product.html" style="display:block;width:100%;height:100%;">
+      <img id="annImg" src="" alt="Announcement" style="width:100%;height:100%;object-fit:cover;display:block;">
+    </a>
+  </div>
+</div>
 <script>
 (function(){
   var overlay=document.getElementById('annOverlay');
@@ -2528,13 +2541,5 @@ function toggleMobMenu() {
   overlay.addEventListener('click',function(e){if(!card.contains(e.target))closeAnn();});
 })();
 </script>
-<div class="ann-overlay" id="annOverlay">
-  <div class="ann-card" id="annCard">
-    <button class="ann-close" id="annClose" aria-label="Close announcement">&#x2715;</button>
-    <a id="annLink" href="product.html" style="display:block;width:100%;height:100%;">
-      <img id="annImg" src="" alt="Announcement" style="width:100%;height:100%;object-fit:cover;display:block;">
-    </a>
-  </div>
-</div>
 </body>
 </html>
