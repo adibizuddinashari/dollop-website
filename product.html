@@ -1063,9 +1063,9 @@ function selSize(btn,p){
   if(priceEl) priceEl.textContent='RM '+p;
   const imgEl=document.getElementById('ph-img');
   var flv = FLAVOURS[currentFlavour];
-  if(imgEl && flv && flv.hasImages){
+  if(imgEl && flv && flv.pintImage){
     var isPint = cupSize === (flv.sizePint || '410g');
-    imgEl.src = isPint ? 'images/Dollop Pint Design.png' : 'images/Dollop Cup Design.png';
+    imgEl.src = isPint ? flv.pintImage : (flv.cupImage || flv.productImage);
     imgEl.style.padding='24px';
     imgEl.style.objectFit='contain';
   }
