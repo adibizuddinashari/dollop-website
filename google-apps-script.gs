@@ -103,6 +103,29 @@ function saveOrder(data) {
       data.flavour, data.size, data.qty, data.fulfilment,
       data.location, data.total, data.notes || ''
     ]);
+
+    // Send email notification to all recipients
+    var recipients = [
+      "general-pg@jump.com.my",
+      "bbgeneral@beyondbites.com.my",
+      "bryantyz@beyondbites.com.my",
+      "ngpm1016@beyondbites.com.my"
+    ].join(",");
+
+    var subject = "New Dollop Order: " + data.orderNo;
+    var body = "New order received!\n\n"
+      + "Order No: " + data.orderNo + "\n"
+      + "Name: " + data.name + "\n"
+      + "Phone: " + data.phone + "\n"
+      + "Flavour: " + data.flavour + "\n"
+      + "Size: " + data.size + "\n"
+      + "Qty: " + data.qty + "\n"
+      + "Fulfilment: " + data.fulfilment + "\n"
+      + "Location: " + data.location + "\n"
+      + "Total: " + data.total + "\n"
+      + "Notes: " + (data.notes || "—");
+    MailApp.sendEmail(recipients, subject, body);
+
     return jsonResponse({success: true});
   } catch(err) {
     return jsonResponse({error: err.toString()});
@@ -118,7 +141,7 @@ function jsonResponse(obj) {
 
 function defaultConfig() {
   return {
-    ORIGINAL_PRICE: 0, PRICE: 18, SOLD_OUT: false, MAX_QTY: 24,
+    ORIGINAL_PRICE: 18, PRICE: 15, SOLD_OUT: true, MAX_QTY: 24,
     PROMO_ACTIVE: true, PROMO_THRESHOLD: 5, PROMO_FREE: 1,
     ANNOUNCEMENT_ACTIVE: false, ANNOUNCEMENT_IMAGE_URL: '', ANNOUNCEMENT_LINK: 'product.html'
   };

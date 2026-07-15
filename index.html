@@ -369,6 +369,22 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
   transition: transform 0.2s;
 }
 #floatChar:hover { transform: scale(1.08); }
+#floatWaBtn {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #25D366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(37,211,102,0.45), 0 2px 8px rgba(59,31,10,0.15);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+#floatWaBtn:hover { transform: scale(1.08); box-shadow: 0 8px 26px rgba(37,211,102,0.55), 0 2px 8px rgba(59,31,10,0.2); }
+#floatWaBtn svg { width: 30px; height: 30px; display: block; }
 @keyframes charFloat {
   0%,100% { transform: translateY(0); }
   50%      { transform: translateY(-8px); }
@@ -1151,6 +1167,8 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
   #floatWidget{bottom:16px;right:16px;}
   #floatChar{width:90px;height:90px;}
   #floatBubble{font-size:0.8rem;padding:8px 14px;}
+  #floatWaBtn{width:48px;height:48px;}
+  #floatWaBtn svg{width:25px;height:25px;}
   .fb-xbold{font-size:1.05rem;}
 
 }
@@ -2212,6 +2230,11 @@ async function placeOrder(){
 
 // Floating character — show after user scrolls past hero; lift above footer when it comes into view
 document.addEventListener('DOMContentLoaded', function(){
+  const waBtn = document.getElementById('floatWaBtn');
+  if (waBtn) {
+    waBtn.href = 'https://wa.me/' + COMPANY_WHATSAPP + '?text=' + encodeURIComponent('Hi! I have a question about Dollop Gelato 🍨');
+  }
+
   const floatBtn = document.getElementById('floatWidget');
   const heroSec = document.getElementById('hero');
   if(floatBtn && heroSec){
@@ -2337,6 +2360,9 @@ function galleryNav(dir) { galleryGo(galIdx + dir); }
 
 <!-- FLOATING CHARACTER -->
 <div id="floatWidget">
+  <a id="floatWaBtn" href="#" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp">
+    <svg viewBox="0 0 32 32" fill="#fff"><path d="M16.004 3C9.376 3 4 8.373 4 15c0 2.29.638 4.43 1.744 6.256L4 29l7.955-2.086A11.94 11.94 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3zm0 21.7c-1.94 0-3.76-.51-5.34-1.4l-.383-.22-4.72 1.238 1.26-4.6-.25-.4A9.65 9.65 0 0 1 5.3 15c0-5.9 4.8-10.7 10.704-10.7S26.7 9.1 26.7 15 21.908 24.7 16.004 24.7zm5.87-8.02c-.32-.16-1.9-.94-2.196-1.05-.294-.107-.508-.16-.722.16-.213.32-.826 1.05-1.013 1.267-.187.213-.373.24-.693.08-.32-.16-1.35-.497-2.573-1.585-.95-.847-1.593-1.894-1.78-2.213-.187-.32-.02-.494.14-.653.144-.143.32-.373.48-.56.16-.187.213-.32.32-.533.107-.213.053-.4-.027-.56-.08-.16-.722-1.74-.99-2.386-.26-.626-.526-.54-.722-.55l-.615-.01c-.213 0-.56.08-.853.4-.293.32-1.12 1.093-1.12 2.667 0 1.573 1.147 3.093 1.307 3.307.16.213 2.256 3.44 5.467 4.827.764.33 1.36.527 1.826.673.767.244 1.466.21 2.02.127.617-.092 1.9-.777 2.166-1.527.267-.75.267-1.393.187-1.527-.08-.133-.293-.213-.613-.373z"/></svg>
+  </a>
   <div id="floatBubble" onclick="openModal()">NEW FLAVOUR !<br><span class="fb-xbold">CEMPEDAK</span></div>
   <img src="brand assets/Dollop Character.webp" alt="Dollop" id="floatChar" onclick="openModal()">
 </div>
