@@ -36,7 +36,7 @@ body:has(button:hover) #cursor,body:has(a:hover) #cursor{transform:scale(1.4) ro
 .sb-nav{display:flex;flex-direction:row;gap:4px;align-items:center;}
 .sb-link{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:rgba(59,31,10,0.4);text-decoration:none;transition:color 0.2s,background 0.2s;position:relative;}
 .sb-link:hover,.sb-link.active{color:var(--brown);background:rgba(59,31,10,0.07);}
-.sb-cta{padding:10px 26px;background:#2D5016;color:#FFF8EE;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.12em;border-radius:40px;text-decoration:none;white-space:nowrap;transition:background 0.3s ease,color 0.3s ease,transform 0.2s ease;justify-self:end;}
+.sb-cta{position:relative;padding:10px 26px;background:#2D5016;color:#FFF8EE;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.12em;border-radius:40px;text-decoration:none;white-space:nowrap;transition:background 0.3s ease,color 0.3s ease,transform 0.2s ease;justify-self:end;}
 .sb-cta:hover{background:#F5C518;color:#3B1F0A;transform:translateY(-1px);}
 .sb-link svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 .sb-tip{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--brown);color:var(--cream);font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;padding:4px 10px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.15s;}
@@ -307,6 +307,25 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
 .sz-btn{padding:6px 14px;border:1.5px solid rgba(59,31,10,0.17);border-radius:40px;background:transparent;font-family:'Barlow',sans-serif;font-size:0.78rem;font-weight:500;color:var(--brown-mid);transition:all 0.2s;}
 .sz-btn.active{border-color:var(--green);background:var(--green);color:var(--cream);}
 .sz-btn:hover:not(.active){border-color:var(--brown);}
+
+/* CART */
+.cart-list{margin-bottom:20px;}
+.cart-line{display:flex;align-items:center;gap:10px;background:var(--cream);border-radius:10px;padding:12px 14px;margin-bottom:8px;}
+.cart-line-info{flex:1;min-width:0;}
+.cart-line-name{font-weight:700;font-size:0.88rem;color:var(--brown);}
+.cart-line-size{font-size:0.74rem;color:var(--brown-light);margin-top:1px;}
+.cart-line-qty{display:flex;align-items:center;gap:0;border:1.5px solid rgba(59,31,10,0.14);border-radius:40px;overflow:hidden;background:#fff;flex-shrink:0;}
+.cart-line-qty button{width:26px;height:26px;background:transparent;border:none;font-size:1rem;color:var(--brown);cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.cart-line-qty button:hover{background:rgba(59,31,10,0.07);}
+.cart-line-qty span{min-width:20px;text-align:center;font-weight:700;font-size:0.82rem;}
+.cart-line-price{font-weight:700;font-size:0.84rem;color:var(--brown);min-width:64px;text-align:right;flex-shrink:0;}
+.cart-line-remove{width:26px;height:26px;flex-shrink:0;background:transparent;border:none;color:var(--brown-light);font-size:0.9rem;cursor:pointer;border-radius:50%;transition:background 0.15s,color 0.15s;}
+.cart-line-remove:hover{background:rgba(192,57,43,0.1);color:#C0392B;}
+.cart-subtotal{display:flex;justify-content:space-between;font-weight:700;font-size:0.95rem;color:var(--brown);padding:10px 2px 4px;}
+.cart-empty{text-align:center;padding:28px 10px;color:var(--brown-light);font-size:0.88rem;line-height:1.6;}
+.cart-badge{display:none;position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;padding:0 4px;border-radius:999px;background:#C0392B;color:#fff;font-family:'Barlow',sans-serif;font-size:0.66rem;font-weight:800;align-items:center;justify-content:center;line-height:1;}
+.cart-toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--green);color:#fff;font-family:inherit;font-size:0.88rem;font-weight:600;padding:12px 24px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity 0.3s,transform 0.3s;z-index:9999;white-space:nowrap;}
+.cart-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
 /* REVEAL */
 .reveal{opacity:0;transform:translateY(32px);transition:opacity 0.7s cubic-bezier(0.22,1,0.36,1),transform 0.7s cubic-bezier(0.22,1,0.36,1);}
@@ -1211,7 +1230,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
 .mob-drawer-close svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;}
 .mob-nav-link{font-family:'Barlow',sans-serif;font-size:1.1rem;font-weight:500;color:rgba(59,31,10,0.6);padding:14px 0;border-bottom:1px solid rgba(59,31,10,0.07);text-decoration:none;transition:color 0.15s;}
 .mob-nav-link:hover{color:var(--brown);}
-.mob-nav-cta{margin-top:auto;padding:14px 0;background:#2D5016;color:#FFF8EE;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.12em;border-radius:40px;text-align:center;text-decoration:none;}
+.mob-nav-cta{position:relative;margin-top:auto;padding:14px 0;background:#2D5016;color:#FFF8EE;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.12em;border-radius:40px;text-align:center;text-decoration:none;}
 .mob-drawer-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.3);z-index:9998;}
 .mob-drawer-overlay.open{display:block;}
 
@@ -1287,6 +1306,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
 </style>
 <script src="site-config.js"></script>
 <script src="flavours.js"></script>
+<script src="cart.js"></script>
 <!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
@@ -1353,6 +1373,7 @@ src="https://www.facebook.com/tr?id=2040554866886258&ev=PageView&noscript=1"
   <a href="product.html" class="sb-cta">
     <span class="sb-cta-text">Order Now</span>
     <svg class="sb-cta-icon" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    <span class="cart-badge">0</span>
   </a>
 </nav>
 <!-- Mobile nav drawer -->
@@ -1366,7 +1387,7 @@ src="https://www.facebook.com/tr?id=2040554866886258&ev=PageView&noscript=1"
     <a href="#inside" class="mob-nav-link" onclick="toggleMobMenu()">What's Inside</a>
     <a href="#brand"  class="mob-nav-link" onclick="toggleMobMenu()">Our Brand</a>
     <a href="#where"  class="mob-nav-link" onclick="toggleMobMenu()">Find Us</a>
-    <a href="product.html" class="mob-nav-cta">Order Now</a>
+    <a href="product.html" class="mob-nav-cta">Order Now<span class="cart-badge" style="top:2px;right:10px;">0</span></a>
   </div>
 </div>
 <div class="mob-drawer-overlay" id="mobOverlay" onclick="toggleMobMenu()"></div>
@@ -1638,20 +1659,17 @@ src="https://www.facebook.com/tr?id=2040554866886258&ev=PageView&noscript=1"
     <button class="m-close" onclick="closeModal()">✕</button>
     <div class="m-step active" id="step1">
       <div class="si"><div class="sd active"></div><div class="sd"></div><div class="sd"></div></div>
-      <div class="m-title">Get Your Dollop</div>
-      <div class="m-sub">Choose your size and how you'd like to get your stink on.</div>
+      <div class="m-title">Your Order</div>
+      <div class="m-sub">Add Musang King to your order, then let us know how you'd like to get your stink on.</div>
       <div class="v-lbl">Cup Size</div>
-      <div class="sz-sel" style="margin-bottom:20px;">
+      <div class="sz-sel" style="margin-bottom:12px;">
         <button class="sz-btn active" id="sz-80g" onclick="selSize(this,18)">80g · RM18</button>
         <button class="sz-btn" onclick="selSize(this,75)">410g · RM75</button>
       </div>
-      <div class="v-lbl">Quantity</div>
-      <div style="display:flex;align-items:center;gap:0;border:1.5px solid rgba(59,31,10,0.14);border-radius:40px;width:fit-content;overflow:hidden;margin-bottom:20px;background:var(--cream);">
-        <button style="width:40px;height:40px;background:transparent;border:none;font-size:1.4rem;color:var(--brown);font-weight:300;display:flex;align-items:center;justify-content:center;transition:background 0.15s;" onmouseover="this.style.background='rgba(59,31,10,0.07)'" onmouseout="this.style.background='transparent'" onclick="modalQty(-1)">−</button>
-        <span id="modal-qty" style="min-width:36px;text-align:center;font-weight:700;font-size:0.95rem;color:var(--brown);">1</span>
-        <button style="width:40px;height:40px;background:transparent;border:none;font-size:1.4rem;color:var(--brown);font-weight:300;display:flex;align-items:center;justify-content:center;transition:background 0.15s;" onmouseover="this.style.background='rgba(59,31,10,0.07)'" onmouseout="this.style.background='transparent'" onclick="modalQty(1)">+</button>
-      </div>
-      <div id="promo-badge" style="display:none;align-items:center;gap:8px;background:#fff3cd;border:1.5px solid #f5c518;border-radius:10px;padding:8px 14px;margin-bottom:16px;font-size:0.85rem;color:var(--brown);font-weight:600;">🎉 <span id="promo-badge-text">Buy 5, get 1 FREE cup!</span></div>
+      <button class="mb mb-s" style="margin-bottom:20px;" onclick="addCurrentToCart()">+ Add to Order</button>
+      <div class="v-lbl">Items</div>
+      <div id="cartList" class="cart-list"></div>
+      <div id="cartEmpty" class="cart-empty" style="display:none;">Your order is empty.<br>Pick a size above and tap "Add to Order", or browse other flavours on our <a href="product.html" style="color:var(--green);text-decoration:underline;">flavours page</a>.</div>
       <div class="v-lbl">Fulfilment</div>
       <div class="fulfilment-toggle" style="margin-bottom:16px;">
         <button class="ft-btn active" id="ft-pickup" onclick="selFulfilment('pickup')">🏪 Pickup</button>
@@ -1668,7 +1686,7 @@ src="https://www.facebook.com/tr?id=2040554866886258&ev=PageView&noscript=1"
         <div class="fg"><label class="fl">Delivery Address</label><input type="text" class="fi2" placeholder="Full address incl. unit, street, postcode" id="del-addr"></div>
         <div class="fg"><label class="fl">Area / Postcode</label><input type="text" class="fi2" placeholder="e.g. Petaling Jaya 47810" id="del-area"></div>
       </div>
-      <button class="mb mb-p" onclick="goStep(2)">Continue →</button>
+      <button class="mb mb-p" id="cartContinueBtn" onclick="goStep(2)">Continue →</button>
     </div>
     <div class="m-step" id="step2">
       <div class="si"><div class="sd done"></div><div class="sd active"></div><div class="sd"></div></div>
@@ -1699,14 +1717,12 @@ src="https://www.facebook.com/tr?id=2040554866886258&ev=PageView&noscript=1"
         <div class="or"><span>Name</span><span id="sName">—</span></div>
         <div class="or"><span>WhatsApp</span><span id="sPhone">—</span></div>
         <div class="or" id="sEmailRow"><span>Email</span><span id="sEmail">—</span></div>
-        <div class="or"><span>Musang King Gelato</span><span id="sip">RM 18.00</span></div>
-        <div class="or"><span>Flavour</span><span id="sv">Regular Sweet</span></div>
-        <div class="or"><span>Cup Size</span><span id="sCupSize">50ml</span></div>
-        <div class="or"><span>Quantity</span><span id="sQty">1 cup</span></div>
+        <div id="reviewItems"></div>
         <div class="or"><span>Fulfilment</span><span id="sFulfilment">Pickup</span></div>
         <div class="or" id="sLocRow"><span>Pickup Location</span><a id="sLoc" href="https://www.google.com/maps/search/?api=1&query=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor" target="_blank" rel="noopener" style="color:var(--green);text-decoration:underline;font-size:0.8rem;text-align:right;max-width:200px;">1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor ↗</a></div>
         <div class="or" id="sAddrRow" style="display:none"><span>Delivery Address</span><span id="sAddr">—</span></div>
-        <div class="or"><span>Pickup</span><span style="color:var(--green);font-weight:600;">FREE</span></div>
+        <div class="or" id="sPickupFeeRow"><span>Pickup</span><span style="color:var(--green);font-weight:600;">FREE</span></div>
+        <div class="or" id="sDeliveryFeeRow" style="display:none"><span>Delivery Fee</span><span>Confirmed via WhatsApp</span></div>
         <div class="or tot"><span>Total</span><span id="st">RM 18.00</span></div>
       </div>
       <!--<div style="background:rgba(74,124,36,0.07);border:1.5px solid rgba(74,124,36,0.22);border-radius:12px;padding:14px 16px;margin-bottom:18px;font-size:0.84rem;color:var(--brown);line-height:1.7;">
@@ -1855,7 +1871,7 @@ secs.forEach(s=>sObs.observe(s));
 function toggleFaq(btn){const item=btn.closest('.fi');const was=item.classList.contains('open');document.querySelectorAll('.fi').forEach(i=>i.classList.remove('open'));if(!was)item.classList.add('open');}
 
 // State
-let price=18, sweet='regular', pickupLoc='sa', qty=1, cupSize='80g', fulfilment='pickup', deliveryAddr='';
+let price=18, sweet='regular', pickupLoc='sa', cupSize='80g', fulfilment='pickup', deliveryAddr='';
 const locLabels={sa:'1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor'};
 const pcQtys={reg:1,less:1};
 
@@ -1876,32 +1892,62 @@ function pcSelSz(e,flavour,ml,btn){
   const wasEl=document.getElementById('price-was');
   if(wasEl) wasEl.style.display=ml===50?'inline':'none';
 }
-// Modal qty
-function calcFree(q,sz){var cfg=window.SITE_CFG||{};if(!cfg.PROMO_ACTIVE)return 0;var t=cfg.PROMO_THRESHOLD||5;var f=cfg.PROMO_FREE||1;return sz==='410g'?Math.floor(q/2)*2:Math.floor(q/t)*f;}
-function updatePromoBadge(){
-  var badge=document.getElementById('promo-badge');
-  var badgeText=document.getElementById('promo-badge-text');
-  if(!badge||!badgeText)return;
-  var free=calcFree(qty,cupSize);
-  if(free>0){
-    badgeText.textContent=cupSize==='410g'?'Buy 2 pints, get 2 FREE cups!':'Buy 5, get 1 FREE cup!';
-    badge.style.display='flex';
-  } else {
-    badge.style.display='none';
-  }
-}
-function modalQty(delta){
-  qty=Math.min((window.SITE_CFG&&window.SITE_CFG.MAX_QTY)||24,Math.max(1,qty+delta));
-  document.getElementById('modal-qty').textContent=qty;
-  updatePromoBadge();
-}
 // Modal size
 function selSize(btn,p){
   document.querySelectorAll('.sz-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   cupSize=btn.textContent.split('·')[0].trim();
   price=p;
-  updatePromoBadge();
+}
+
+// Adds the currently selected Musang King size to the shared cart (qty 1 per click).
+function addCurrentToCart(){
+  var f = (typeof FLAVOURS !== 'undefined' && FLAVOURS['musang-king']) ? FLAVOURS['musang-king'] : null;
+  var flavourName = f ? f.fullName : 'Musang King Gelato';
+  var isPint = cupSize === '410g';
+  addToCart({
+    flavourSlug: 'musang-king',
+    flavourName: flavourName,
+    sizeKey: cupSize,
+    sizeLabel: cupSize + (isPint ? ' Pint' : ' Cup'),
+    price: price,
+    qty: 1
+  });
+  showCartToast('Added Musang King (' + cupSize + (isPint ? ' Pint' : ' Cup') + ') to your order');
+}
+
+function showCartToast(msg){
+  var t = document.getElementById('cartToast');
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._hideTimer);
+  t._hideTimer = setTimeout(function(){ t.classList.remove('show'); }, 2600);
+}
+
+// Renders the cart line items into the modal's first step.
+function renderCartStep(){
+  var cart = getCart();
+  var listEl = document.getElementById('cartList');
+  var emptyEl = document.getElementById('cartEmpty');
+  var contBtn = document.getElementById('cartContinueBtn');
+  if (!listEl) return;
+  if (cart.length === 0) {
+    listEl.innerHTML = '';
+    if (emptyEl) emptyEl.style.display = 'block';
+    if (contBtn) contBtn.disabled = true;
+    return;
+  }
+  if (emptyEl) emptyEl.style.display = 'none';
+  if (contBtn) contBtn.disabled = false;
+  listEl.innerHTML = cart.map(function(item, i){
+    return '<div class="cart-line">'
+      + '<div class="cart-line-info"><div class="cart-line-name">' + item.flavourName + '</div><div class="cart-line-size">' + item.sizeLabel + '</div></div>'
+      + '<div class="cart-line-qty"><button onclick="updateCartQty(' + i + ',-1);renderCartStep();">−</button><span>' + item.qty + '</span><button onclick="updateCartQty(' + i + ',1);renderCartStep();">+</button></div>'
+      + '<div class="cart-line-price">RM ' + (item.price * item.qty).toFixed(2) + '</div>'
+      + '<button class="cart-line-remove" onclick="removeFromCart(' + i + ');renderCartStep();" aria-label="Remove">✕</button>'
+      + '</div>';
+  }).join('') + '<div class="cart-subtotal"><span>Subtotal</span><span>RM ' + cartTotal().toFixed(2) + '</span></div>';
 }
 // Modal sweetness
 function selSweet(t){
@@ -1928,7 +1974,6 @@ function selFulfilment(type){
 function openModal(){
   if(window.SITE_CFG && window.SITE_CFG.SOLD_OUT){showSoldOutToast();return;}
   if(typeof fbq!=='undefined') fbq('track','InitiateCheckout');
-  qty=1;document.getElementById('modal-qty').textContent=1;
   fulfilment='pickup';pickupLoc='sa';deliveryAddr='';
   // Reset fulfilment toggle UI
   const ftP=document.getElementById('ft-pickup');
@@ -1940,6 +1985,7 @@ function openModal(){
   if(df){df.classList.remove('show');}
   // Reset location selection
   document.querySelectorAll('#loc-bu,#loc-sub,#loc-mk').forEach(c=>c.classList.remove('selected'));
+  renderCartStep();
   document.getElementById('modalOverlay').classList.add('open');
   document.body.style.overflow='hidden';
   goStep(1);
@@ -1953,10 +1999,8 @@ function closeModal(){
   document.body.style.overflow='';
   setTimeout(function(){
     goStep(1);
-    qty=1;document.getElementById('modal-qty').textContent=1;
     ['fn','fp','fe','fnotes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
     var btn=document.getElementById('confirmOrderBtn');if(btn){btn.disabled=false;btn.textContent='Confirm Order';}
-    updatePromoBadge();
   },350);
 }
 function handleOverlayClick(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
@@ -2071,6 +2115,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function goStep(s){
   if(s===2){
+    if(getCart().length===0){alert('Please add at least one item to your order.');return;}
     if(fulfilment==='pickup'){
       if(!pickupLoc||pickupLoc==='delivery'){alert('Please select a pickup location.');return;}
       document.getElementById('locName').innerHTML='<a href="https://www.google.com/maps/search/?api=1&query=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor" target="_blank" rel="noopener" style="color:var(--green);text-decoration:underline;font-weight:500;">1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor ↗</a>';
@@ -2093,16 +2138,22 @@ function goStep(s){
     document.getElementById('sName').textContent=n;
     document.getElementById('sPhone').textContent=p;
     const em=document.getElementById('fe').value.trim();document.getElementById('sEmail').textContent=em||'—';document.getElementById('sEmailRow').style.display=em?'':'none';
-    document.getElementById('sip').textContent='RM '+(price*qty).toFixed(2);
-    document.getElementById('sv').textContent='Dollop Gelato';
-    document.getElementById('sCupSize').textContent=cupSize;
-    var freeC=calcFree(qty,cupSize);document.getElementById('sQty').textContent=qty+' cup'+(qty>1?'s':'')+(freeC>0?' + '+freeC+' free':'');
+    var cart=getCart();
+    var reviewEl=document.getElementById('reviewItems');
+    if(reviewEl){
+      reviewEl.innerHTML=cart.map(function(item){
+        return '<div class="or"><span>'+item.flavourName+' — '+item.sizeLabel+' × '+item.qty+'</span><span>RM '+(item.price*item.qty).toFixed(2)+'</span></div>';
+      }).join('');
+    }
+    const total=cartTotal().toFixed(2);
     document.getElementById('sFulfilment').textContent=fulfilment==='delivery'?'Delivery':'Pickup';
     document.getElementById('sLocRow').style.display=fulfilment==='delivery'?'none':'';
     document.getElementById('sAddrRow').style.display=fulfilment==='delivery'?'':'none';
+    document.getElementById('sPickupFeeRow').style.display=fulfilment==='delivery'?'none':'';
+    document.getElementById('sDeliveryFeeRow').style.display=fulfilment==='delivery'?'':'none';
     document.getElementById('sLoc').innerHTML='<a href="https://www.google.com/maps/search/?api=1&query=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor" target="_blank" rel="noopener" style="color:var(--green);text-decoration:underline;font-size:0.8rem;">1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor ↗</a>';
     document.getElementById('sAddr').textContent=deliveryAddr||'—';
-    var freeC2=calcFree(qty,cupSize);document.getElementById('st').textContent='RM '+(price*qty).toFixed(2)+(fulfilment==='delivery'?' + delivery fee':'')+(freeC2>0?' ('+freeC2+' cup'+(freeC2>1?'s':'')+' free)':'');
+    document.getElementById('st').textContent='RM '+total+(fulfilment==='delivery'?' + delivery fee':'');
   }
   document.querySelectorAll('.m-step').forEach(x=>x.classList.remove('active'));
   document.getElementById('step'+s).classList.add('active');
@@ -2147,10 +2198,12 @@ async function placeOrder(){
   const phone    = document.getElementById('fp').value.trim();
   const notes    = document.getElementById('fnotes').value.trim();
   const email    = document.getElementById('fe').value.trim();
-  const flavour  = 'Dollop Gelato';
-  const size     = cupSize;
-  const freeCups = calcFree(qty,cupSize);
-  const total    = 'RM ' + (price * qty).toFixed(2) + (fulfilment === 'delivery' ? ' + delivery fee' : '') + (freeCups > 0 ? ' (' + freeCups + ' cup' + (freeCups > 1 ? 's' : '') + ' free)' : '');
+  const cart     = getCart();
+  if (cart.length === 0) { alert('Your order is empty.'); goStep(1); return; }
+  const itemsSummary = cart.map(function(i){ return i.flavourName + ' (' + i.sizeLabel + ') x' + i.qty; }).join(', ');
+  const totalQty = cart.reduce(function(s,i){ return s + i.qty; }, 0);
+  const subtotal = cartTotal();
+  const total    = 'RM ' + subtotal.toFixed(2) + (fulfilment === 'delivery' ? ' + delivery fee' : '');
   const location = fulfilment === 'delivery' ? (deliveryAddr || '—') : (locLabels[pickupLoc] || '—');
   const orderNo  = 'DLP-' + String(Math.floor(Math.random() * 90000) + 10000);
   const timestamp = new Date().toLocaleString('en-MY', {timeZone: 'Asia/Kuala_Lumpur'});
@@ -2166,9 +2219,12 @@ async function placeOrder(){
   btn.disabled = true;
   btn.textContent = 'Sending order...';
 
+  // Note: the order-saving backend (Apps Script) still expects one flavour/size/qty per
+  // row, so a mixed cart is summarised into a single line here rather than split into
+  // multiple rows — avoids needing another backend redeploy for this cart prototype.
   const orderData = {
-    timestamp, orderNo, name, phone, email, flavour,
-    size, qty, fulfilment, location, total, notes
+    timestamp, orderNo, name, phone, email, flavour: itemsSummary,
+    size: 'Mixed', qty: totalQty, fulfilment, location, total, notes
   };
 
   // ── Submit to Google Sheets (best-effort, non-blocking) ──
@@ -2187,6 +2243,7 @@ async function placeOrder(){
   })();
 
   // ── Build WhatsApp message to company ──
+  const itemLines = cart.map(function(i){ return `  • ${i.flavourName} (${i.sizeLabel}) × ${i.qty} — RM ${(i.price*i.qty).toFixed(2)}`; }).join('\n');
   const waMsg = [
     `🍦 *NEW DOLLOP ORDER*`,
     `━━━━━━━━━━━━━━━━━━━━`,
@@ -2195,9 +2252,9 @@ async function placeOrder(){
     `📱 WhatsApp: ${phone}`,
     email ? `📧 Email: ${email}` : '',
     ``,
-    `🧁 Flavour: ${flavour}`,
-    `📦 Size: ${size}`,
-    `🔢 Qty: ${qty} cup${qty > 1 ? 's' : ''}`,
+    `🧁 Items:`,
+    itemLines,
+    ``,
     `🚚 Fulfilment: ${fulfilment === 'delivery' ? 'Delivery' : 'Pickup'}`,
     `📍 Location: ${location}`,
     `💰 Total: ${total}`,
@@ -2219,9 +2276,10 @@ async function placeOrder(){
   btn.disabled = false;
   btn.textContent = 'Confirm Order →';
 
+  clearCart();
   // Go to success step
   goStep(4);
-  if(typeof fbq!=='undefined') fbq('track','Purchase',{value:(price*qty).toFixed(2),currency:'MYR'});
+  if(typeof fbq!=='undefined') fbq('track','Purchase',{value:subtotal.toFixed(2),currency:'MYR'});
 
   // Open WhatsApp to company number
   const waUrl = 'https://wa.me/' + COMPANY_WHATSAPP + '?text=' + encodeURIComponent(waMsg);
@@ -2548,6 +2606,7 @@ function toggleMobMenu() {
 
 
 <div id="soldout-toast">We’re currently sold out — check back soon!</div>
+<div id="cartToast" class="cart-toast"></div>
 <div class="ann-overlay" id="annOverlay">
   <div class="ann-card" id="annCard">
     <button class="ann-close" id="annClose" aria-label="Close announcement">&#x2715;</button>
