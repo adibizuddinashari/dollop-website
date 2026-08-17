@@ -446,7 +446,7 @@ src="https://www.facebook.com/tr?id=2040554866886258&ev=PageView&noscript=1"
     <div class="bc">
       <a href="index.html">Home</a>
       <span class="bc-sep">/</span>
-      <a href="index.html#products">Products</a>
+      <a href="index.html#flavours">Products</a>
       <span class="bc-sep">/</span>
       <span id="bc-current">Loading...</span>
     </div>
@@ -626,7 +626,7 @@ src="https://www.facebook.com/tr?id=2040554866886258&ev=PageView&noscript=1"
     <div class="ft-cols">
       <div class="ft-col">
         <div class="ft-ct">The Goods</div>
-        <a href="index.html">Home</a><a href="index.html#products">Our Flavours</a><a href="product.html?flavour=musang-king">Musang King</a><a href="product.html?flavour=cempedak">Cempedak</a><a href="#" onclick="openModal();return false;">Order Now</a>
+        <a href="index.html">Home</a><a href="index.html#flavours">Our Flavours</a><a href="product.html?flavour=musang-king">Musang King</a><a href="product.html?flavour=cempedak">Cempedak</a><a href="product.html?flavour=soya-gula-melaka">Soya Gula Melaka</a><a href="product.html?flavour=pandan-coconut">Pandan Coconut</a><a href="#" onclick="openModal();return false;">Order Now</a>
       </div>
       <div class="ft-col">
         <div class="ft-ct">Info</div>
@@ -828,6 +828,7 @@ function applyProduct() {
   // Features
   var featEl = document.getElementById('phFeatures');
   if (featEl) {
+    featEl.style.display = f.features.length ? '' : 'none';
     featEl.innerHTML = f.features.map(function(ft) {
       return '<div class="ph-feat-item">— ' + ft + '</div>';
     }).join('');
@@ -911,9 +912,7 @@ function applyProduct() {
 function renderFlvSwitcher() {
   var sw = document.getElementById('phFlvSwitcher');
   if (!sw || typeof FLAVOURS === 'undefined') return;
-  sw.innerHTML = Object.keys(FLAVOURS).filter(function(slug) {
-    return FLAVOURS[slug].available || FLAVOURS[slug].slug === 'coming-soon';
-  }).map(function(slug) {
+  sw.innerHTML = Object.keys(FLAVOURS).map(function(slug) {
     var f = FLAVOURS[slug];
     var isCurrent = slug === currentFlavour;
     var isSoon = !f.available;
@@ -1029,11 +1028,17 @@ function applyConfig(cfg) {
   var showWas  = c.ORIGINAL_PRICE && c.ORIGINAL_PRICE !== c.PRICE;
   if (priceWas)   { priceWas.textContent = 'RM ' + c.ORIGINAL_PRICE; priceWas.style.display = showWas ? 'inline' : 'none'; }
   if (priceReg)   priceReg.textContent   = 'RM ' + c.PRICE;
-  if (phPrice)    phPrice.textContent    = 'RM ' + c.PRICE;
-  if (phPriceWas) { phPriceWas.textContent = 'RM ' + c.ORIGINAL_PRICE; phPriceWas.style.display = showWas ? 'inline' : 'none'; }
+  // PRICE/ORIGINAL_PRICE are admin-editable overrides for Musang King only —
+  // applying them regardless of currentFlavour clobbered other flavours'
+  // real prices (e.g. Cempedak showing RM18 instead of RM8) once this async
+  // config fetch resolved after applyProduct() had already set the right one.
+  if (currentFlavour === 'musang-king') {
+    if (phPrice)    phPrice.textContent    = 'RM ' + c.PRICE;
+    if (phPriceWas) { phPriceWas.textContent = 'RM ' + c.ORIGINAL_PRICE; phPriceWas.style.display = showWas ? 'inline' : 'none'; }
+  }
   var btn80 = document.getElementById('sz-80g');
   if (btn80) { btn80.textContent = '80g · RM' + c.PRICE; }
-  if (btn80 && btn80.classList.contains('active')) { price = c.PRICE; }
+  if (btn80 && btn80.classList.contains('active') && currentFlavour === 'musang-king') { price = c.PRICE; }
 
 }
 

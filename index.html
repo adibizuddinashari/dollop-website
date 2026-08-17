@@ -1280,7 +1280,7 @@ footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
 .flv-hd-lbl{font-size:0.62rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#4A7C24;margin-bottom:14px;}
 .flv-hd-title{font-family:'Barlow',sans-serif;font-weight:500;font-size:clamp(2.6rem,4.5vw,4rem);letter-spacing:2px;color:var(--brown);line-height:0.88;text-transform:uppercase;margin-bottom:18px;}
 .flv-hd-sub{font-size:0.88rem;color:rgba(59,31,10,0.5);max-width:380px;margin:0 auto;line-height:1.65;}
-.flv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:1100px;margin:0 auto;padding:0 32px 80px;}
+.flv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1240px;margin:0 auto;padding:0 32px 80px;}
 .flv-card{display:flex;flex-direction:column;background:#fff;border-radius:20px;overflow:hidden;border:1.5px solid rgba(59,31,10,0.08);text-decoration:none;color:inherit;transition:transform 0.3s ease,box-shadow 0.3s ease;}.flv-card:not(.flv-card--soon){cursor:pointer;}
 .flv-card:not(.flv-card--soon):hover{transform:translateY(-10px);box-shadow:0 28px 64px rgba(59,31,10,0.13);}
 .flv-card--soon{cursor:default;}
@@ -1448,6 +1448,20 @@ src="https://www.facebook.com/tr?id=2040554866886258&ev=PageView&noscript=1"
     <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
     scroll
   </div>
+</section>
+
+<!-- FLAVOUR GRID — revives the previously-dormant renderFlvGrid()/#flvGrid
+     (the JS below was already fully built, this page just never had the
+     matching HTML). Shows all 4 flavours from flavours.js: Musang King and
+     Cempedak orderable, Soya Gula Melaka and Pandan Coconut as Coming Soon
+     cards now that they have real product photography. -->
+<section id="flavours">
+  <div class="flv-hd">
+    <div class="flv-hd-lbl">Our Flavours</div>
+    <h2 class="flv-hd-title">Pick Your Obsession</h2>
+    <p class="flv-hd-sub">Four flavours. Zero shortcuts. Real fruit, small batch, always.</p>
+  </div>
+  <div class="flv-grid" id="flvGrid"><!-- rendered by renderFlvGrid() --></div>
 </section>
 
 
@@ -1626,7 +1640,7 @@ src="https://www.facebook.com/tr?id=2040554866886258&ev=PageView&noscript=1"
     <div class="ft-cols">
       <div class="ft-col">
         <div class="ft-ct">The Goods</div>
-        <a href="#">The Flavour</a><a href="#">Packages</a><a href="#">Find a Cart</a><a href="product.html">Order Now</a>
+        <a href="#flavours">The Flavour</a><a href="#">Packages</a><a href="#">Find a Cart</a><a href="product.html">Order Now</a>
       </div>
       <div class="ft-col">
         <div class="ft-ct">Info</div>
@@ -2074,8 +2088,11 @@ function renderFlvGrid(cfg) {
     var isSoon = !f.available;
     var href = 'product.html?flavour=' + f.slug;
     var badgeCls = isSoon ? 'flv-badge--soon' : (f.badge === 'New' ? 'flv-badge--new' : '');
+    // PRICE from config is an admin-editable override for Musang King only —
+    // every other flavour shows its own fixed priceCup from flavours.js.
+    var cardPrice = f.slug === 'musang-king' ? price : f.priceCup;
     var priceHtml = f.priceCup
-      ? '<div><div class="flv-card-price">RM ' + price + '</div><div class="flv-card-price-sub">per 80g cup</div></div>'
+      ? '<div><div class="flv-card-price">RM ' + cardPrice + '</div><div class="flv-card-price-sub">per ' + (f.sizeCup || '80g') + ' cup</div></div>'
       : '<div><div class="flv-card-price" style="font-size:1rem;letter-spacing:0.05em;opacity:0.38;">Stay Tuned</div></div>';
     var ctaHtml = isSoon
       ? '<span class="flv-card-cta flv-card-cta--soon">Coming Soon</span>'
