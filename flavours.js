@@ -79,51 +79,19 @@ const FLAVOURS = {
     sweetness: null
   },
 
-  // ── PLACEHOLDER — no copy/pricing approved yet; card photography only ──
-  'soya-gula-melaka': {
-    slug:         'soya-gula-melaka',
-    name:         'Soya Gula Melaka',
-    fullName:     'Soya Gula Melaka Gelato',
-    tagline:      'Coming soon.',
-    desc:         null,
+  'coming-soon': {
+    slug:         'coming-soon',
+    name:         'Coming Soon',
+    fullName:     'Something New',
+    tagline:      "Something new is brewing. Stay tuned.",
+    desc:         "The next chapter of Dollop is almost ready. Follow us on Instagram to be the first to know when it drops.",
     badge:        'Coming Soon',
     available:    false,
     hasSweetness: false,
-    sizeCup:      null,
-    sizePint:     null,
-    hasNutrition: false,
-    hasImages:    true,
-    cardImage:    'images/Soya With Gula Melaka.png',
-    productImage: 'images/Soya With Gula Melaka.png',
-    cupImage:     'images/Soya With Gula Melaka.png',
-    pintImage:    'images/Soya With Gula Melaka.png',
-    cardBg:       'radial-gradient(ellipse at 40% 30%,#D9B36B 0%,#A67C3D 40%,#6B4A1F 75%,#3B2A10 100%)',
-    priceCup:     null,
-    pricePint:    null,
-    stats: [],
-    features: [],
-    sweetness: null
-  },
-
-  // ── PLACEHOLDER — no copy/pricing approved yet; card photography only ──
-  'pandan-coconut': {
-    slug:         'pandan-coconut',
-    name:         'Pandan Coconut',
-    fullName:     'Pandan Coconut Gelato',
-    tagline:      'Coming soon.',
-    desc:         null,
-    badge:        'Coming Soon',
-    available:    false,
-    hasSweetness: false,
-    sizeCup:      null,
-    sizePint:     null,
-    hasNutrition: false,
-    hasImages:    true,
-    cardImage:    'images/Pandan Coconut.png',
-    productImage: 'images/Pandan Coconut.png',
-    cupImage:     'images/Pandan Coconut.png',
-    pintImage:    'images/Pandan Coconut.png',
-    cardBg:       'radial-gradient(ellipse at 40% 30%,#A8D4A0 0%,#6FA85E 40%,#3D6B2F 75%,#1F3A16 100%)',
+    hasImages:    false,
+    cardImage:    'https://placehold.co/600x500/3B1F0A/F5C518?text=?',
+    productImage: 'https://placehold.co/600x600/3B1F0A/F5C518?text=?',
+    cardBg:       'radial-gradient(ellipse at 50% 40%,#6B3A1A 0%,#3B1F0A 60%,#1A0A00 100%)',
     priceCup:     null,
     pricePint:    null,
     stats: [],
@@ -133,6 +101,6 @@ const FLAVOURS = {
 
 };
 
-// Controls which flavours show on the homepage grid, in this order.
+// Controls which flavours show on the homepage grid (max 3, in this order).
 // Swap slugs here to feature different ones without changing any HTML.
-const FEATURED_FLAVOURS = ['musang-king', 'cempedak', 'soya-gula-melaka', 'pandan-coconut'];
+const FEATURED_FLAVOURS = ['musang-king', 'cempedak', 'coming-soon'];
