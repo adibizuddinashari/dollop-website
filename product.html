@@ -205,7 +205,7 @@ a{text-decoration:none;color:inherit;}
 .pd-nut-footer{font-size:0.68rem;color:var(--brown-light);margin-top:12px;padding-top:10px;border-top:1px solid rgba(59,31,10,0.07);}
 
 /* MERDEKA COMBO */
-.combo-section{padding:100px 48px 32px;}
+.combo-section{padding:0 48px 32px;}
 .combo-card{max-width:920px;margin:0 auto;background:var(--white);border:1.5px solid rgba(59,31,10,0.09);border-radius:20px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;align-items:center;}
 .combo-img{width:100%;height:100%;object-fit:cover;display:block;}
 .combo-body{padding:40px 44px;}
@@ -221,7 +221,7 @@ a{text-decoration:none;color:inherit;}
 .combo-order-btn:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(245,197,24,0.4);}
 .combo-order-btn:disabled{opacity:0.55;cursor:not-allowed;transform:none;box-shadow:none;}
 @media(max-width:760px){
-  .combo-section{padding:76px 20px 24px;}
+  .combo-section{padding:0 20px 24px;}
   .combo-card{grid-template-columns:1fr;}
   .combo-img{aspect-ratio:1/1;}
   .combo-body{padding:32px 24px;}
@@ -231,7 +231,7 @@ a{text-decoration:none;color:inherit;}
    old single-product detail view. Card visuals reuse the .flv-* classes
    already defined on ../index.html for the homepage grid, ported here
    since this page keeps its own separate <style> block. */
-.flv-hd{text-align:center;padding:8px 24px 48px;max-width:640px;margin:0 auto;}
+.flv-hd{text-align:center;padding:56px 24px 40px;max-width:640px;margin:0 auto;}
 .flv-hd-lbl{font-size:0.62rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#4A7C24;margin-bottom:14px;}
 .flv-hd-title{font-family:'Barlow',sans-serif;font-weight:500;font-size:clamp(2.6rem,4.5vw,4rem);letter-spacing:2px;color:var(--brown);line-height:0.88;text-transform:uppercase;margin-bottom:18px;}
 .flv-hd-sub{font-size:0.88rem;color:rgba(59,31,10,0.5);max-width:380px;margin:0 auto;line-height:1.65;}
@@ -267,7 +267,7 @@ a{text-decoration:none;color:inherit;}
 @media(max-width:900px){.flv-grid{grid-template-columns:1fr 1fr;gap:20px;}}
 @media(max-width:560px){
   .flv-grid{grid-template-columns:1fr;gap:18px;padding:0 20px 80px;}
-  .flv-hd{padding:0 24px 36px;}
+  .flv-hd{padding:36px 24px 28px;}
   .shop-cart-bar{left:20px;right:20px;transform:none;justify-content:center;}
   .shop-cart-bar.show{bottom:20px;}
 }
@@ -509,6 +509,13 @@ src="https://www.facebook.com/tr?id=2040554866886258&ev=PageView&noscript=1"
   
   <div class="main">
 
+    <!-- SHOP HEADLINE -->
+    <div class="flv-hd">
+      <div class="flv-hd-lbl">Our Flavours</div>
+      <h1 class="flv-hd-title">Pick Your Obsession</h1>
+      <p class="flv-hd-sub">Four flavours. Zero shortcuts. Real fruit, small batch, always.</p>
+    </div>
+
     <!-- MERDEKA COMBO — Buy 4 Get 1 Free, RM45, using the official Merdeka
          promo graphic (also used for the homepage announcement popup). The
          "free" 5th cup is a fixed flavour (not customer-chosen) to keep
@@ -517,7 +524,7 @@ src="https://www.facebook.com/tr?id=2040554866886258&ev=PageView&noscript=1"
          rather it be Soya Gula Melaka or Pandan Coconut. -->
     <section class="combo-section" id="merdekaCombo">
       <div class="combo-card">
-        <img class="combo-img" src="images/Dollop Merdeka Combo Promo.jpg" alt="Buy 4 Get 1 Free — Dollop Gelato Merdeka lineup">
+        <img class="combo-img" src="brand assets/Dollop Merdeka Flavour_Web.jpg" alt="Buy 4 Get 1 Free — Dollop Gelato Merdeka lineup">
         <div class="combo-body">
           <div class="combo-badge">🇲🇾 Merdeka Special</div>
           <div class="combo-title">The Merdeka Combo</div>
@@ -542,11 +549,6 @@ src="https://www.facebook.com/tr?id=2040554866886258&ev=PageView&noscript=1"
          Replaces the old single-product detail view (flavour switcher,
          sweetness toggle, ingredients/nutrition accordion) with a
          Graeter's-style "see everything, pick what you want" grid. -->
-    <div class="flv-hd">
-      <div class="flv-hd-lbl">Our Flavours</div>
-      <h1 class="flv-hd-title">Pick Your Obsession</h1>
-      <p class="flv-hd-sub">Four flavours. Zero shortcuts. Real fruit, small batch, always.</p>
-    </div>
     <div class="flv-grid" id="shopGrid"><!-- rendered by renderShopGrid() --></div>
 
 
