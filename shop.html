@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Runs before the browser gets a chance to restore a mid-page scroll
+     position on refresh — see index.html for the full explanation. -->
+<script>if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dollop — Create Your Pack</title>
+<link rel="icon" href="brand assets/Dollop Favicon.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,500;0,700;0,800;1,600&family=Bebas+Neue&family=Barrio&family=Bangers&display=swap" rel="stylesheet">
+<style>
+@font-face { font-family:'Barlow'; src:url('brand assets/fonts/Barlow-Medium.ttf') format('truetype'); font-weight:500; font-style:normal; }
+@font-face { font-family:'Barlow'; src:url('brand assets/fonts/Barlow-Italic.ttf') format('truetype'); font-weight:400; font-style:italic; }
+@font-face { font-family:'Barlow'; src:url('brand assets/fonts/Barlow-BoldItalic.ttf') format('truetype'); font-weight:700; font-style:italic; }
+</style>
+<link rel="stylesheet" href="redesign.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="sb">
+  <button class="mob-menu-btn" id="mobMenuBtn" aria-label="Menu" onclick="toggleMobMenu()">
+    <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+  <a href="index.html" class="sb-logo">
+    <img src="brand assets/Dollop Logo.png" alt="Dollop">
+  </a>
+  <div class="sb-nav">
+    <a href="index.html#hero" class="sb-link">Home</a>
+    <a href="index.html#flavours" class="sb-link">Flavours</a>
+    <a href="index.html#process" class="sb-link">Our Process</a>
+    <a href="index.html#story" class="sb-link">Our Story</a>
+  </div>
+  <!-- Already on the shop page, so this opens the order modal directly
+       instead of linking back to shop.html (same page navigating to
+       itself would be a no-op click). -->
+  <a href="#" class="sb-shop-btn active" aria-label="View your order" onclick="openModal();return false;">
+    <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+    <span class="cart-badge">0</span>
+  </a>
+</nav>
+<div class="mob-drawer" id="mobDrawer">
+  <div class="mob-drawer-inner">
+    <button class="mob-drawer-close" onclick="toggleMobMenu()">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <a href="index.html#hero"     class="mob-nav-link" onclick="toggleMobMenu()">Home</a>
+    <a href="index.html#flavours" class="mob-nav-link" onclick="toggleMobMenu()">Flavours</a>
+    <a href="shop.html"           class="mob-nav-link active" onclick="toggleMobMenu()">Shop</a>
+    <a href="index.html#process"  class="mob-nav-link" onclick="toggleMobMenu()">Our Process</a>
+    <a href="index.html#story"    class="mob-nav-link" onclick="toggleMobMenu()">Our Story</a>
+    <a href="#" class="mob-nav-cta" onclick="toggleMobMenu();openModal();return false;">View Order<span class="cart-badge" style="top:2px;right:10px;">0</span></a>
+  </div>
+</div>
+<div class="mob-drawer-overlay" id="mobOverlay" onclick="toggleMobMenu()"></div>
+
+<div class="main">
+
+  <!-- ══ SHOP HEADER ══════════════════════════════════════════════════ -->
+  <section class="shop-hero">
+    <div class="reveal">
+      <div class="flv-hd-lbl">Build Your Order</div>
+      <h1 class="flv-hd-title">Create Your <span class="accent">Pack</span></h1>
+      <p class="flv-hd-sub">Mix and match flavours and sizes — everything you add joins one order below.</p>
+    </div>
+  </section>
+
+  <!-- ══ MERDEKA COMBO — same Buy 4 Get 1 Free offer live on staging's
+       product.html, restyled in the redesign's own colour system. Free
+       5th cup defaults to Cempedak (fixed, not customer-chosen, to keep
+       fulfilment simple) — swap the copy below if you'd rather it be
+       Soya Gula Melaka or Pandan Coconut. ══════════════════════════════ -->
+  <section class="combo-section reveal" id="merdekaCombo">
+    <div class="combo-card">
+      <img class="combo-img" src="brand assets/Dollop Merdeka Flavour_Web.jpg" alt="Buy 4 Get 1 Free — Dollop Gelato Merdeka lineup">
+      <div class="combo-body">
+        <div class="combo-badge">🇲🇾 Merdeka Special</div>
+        <div class="combo-title">The Merdeka Combo</div>
+        <p class="combo-desc">Four proudly Malaysian flavours, one combo — buy all 4, get a 5th cup free. One cup each of Musang King, Cempedak, Soya Gula Melaka &amp; Pandan Coconut, plus a free extra Cempedak on us.</p>
+        <div class="combo-flavours">
+          <span class="combo-flavour-pill">Musang King</span>
+          <span class="combo-flavour-pill">Cempedak</span>
+          <span class="combo-flavour-pill">Soya Gula Melaka</span>
+          <span class="combo-flavour-pill">Pandan Coconut</span>
+          <span class="combo-flavour-pill">+ 1 Free Cempedak</span>
+        </div>
+        <div class="combo-price-row">
+          <span class="combo-price">RM 45</span>
+          <span class="combo-price-note">5 × 70g cups · Buy 4 Get 1 Free</span>
+        </div>
+        <button class="combo-order-btn" onclick="addComboToCart()">Add Combo to Order</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SHOP GRID — every flavour, size toggle + quick-add per card ══ -->
+  <section class="shop-grid-section">
+    <div class="flv-grid reveal" id="shopGrid"><!-- rendered by renderShopGrid() in shop.js --></div>
+  </section>
+
+  <!-- ══ FOOTER — same as ../index.html ══════════════════════════════ -->
+  <footer class="ft-fat reveal-clip" id="footer">
+    <div class="ft-fat-bg" aria-hidden="true" style="background-image:url('assets/images/Dollop-Footer-Redesign.png')"></div>
+    <div class="ft-fat-top reveal">
+      <div class="ft-col">
+        <div class="ft-ct">Contact</div>
+        <a href="tel:+60142676333">014-2676 333</a>
+        <address class="ft-addr">1282, Jalan Bukit Kemuning,<br>40640 Shah Alam, Selangor</address>
+        <div class="ft-fat-soc">
+          <a href="https://www.facebook.com/dollop.gelato" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="https://www.instagram.com/dollopgelato/?hl=af" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://www.youtube.com/@dollopgelato" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </div>
+      <div class="ft-col">
+        <div class="ft-ct">Shop</div>
+        <a href="product.html?flavour=musang-king">Musang King</a>
+        <a href="product.html?flavour=cempedak">Cempedak</a>
+        <a href="product.html?flavour=soya-gula-melaka">Soya With Gula Melaka</a>
+        <a href="product.html?flavour=pandan-coconut">Pandan Coconut</a>
+        <a href="shop.html">Shop All</a>
+      </div>
+      <div class="ft-col">
+        <div class="ft-ct">Company</div>
+        <a href="index.html#story">Our Story</a>
+        <a href="index.html#process">Our Process</a>
+      </div>
+      <div class="ft-col">
+        <div class="ft-ct">Support</div>
+        <a href="#" id="waSupportLink">WhatsApp Us</a>
+        <a href="index.html#footer">Delivery Info</a>
+      </div>
+    </div>
+
+    <div class="ft-fat-mid">
+      <img src="assets/Dollop Logo.png" alt="Dollop" class="ft-fat-logo reveal-logo">
+    </div>
+
+    <div class="ft-bot">
+      <span>© 2025 Beyond Bites Sdn Bhd (202501026928) · All rights reserved.</span>
+      <span>made with stinking good passion</span>
+    </div>
+  </footer>
+
+</div><!-- /.main -->
+
+<!-- ══ PERSISTENT CART BAR — shows once something's in the pack ═══════ -->
+<button class="shop-cart-bar" id="shopCartBar" onclick="openModal()" aria-label="View your order">
+  <span class="shop-cart-bar-icon">🛒<span class="cart-badge">0</span></span>
+  <span class="shop-cart-bar-label">View Order</span>
+  <span class="shop-cart-bar-total" id="shopCartTotal">RM 0.00</span>
+</button>
+
+<!-- ══ CHECKOUT MODAL — ported from ../product.html, same backend/payment ══ -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal" data-lenis-prevent>
+    <button class="m-close" onclick="closeModal()">✕</button>
+    <div class="m-step active" id="step1">
+      <div class="si"><div class="sd active"></div><div class="sd"></div><div class="sd"></div></div>
+      <div class="m-title">Your Pack</div>
+      <div class="m-sub">Review your items, then let us know how you'd like to get your stink on.</div>
+      <div class="v-lbl">Items</div>
+      <div id="cartList" class="cart-list"></div>
+      <div id="cartEmpty" class="cart-empty" style="display:none;">Your pack is empty.<br>Close this and tap "Add to Pack" on a flavour you like.</div>
+      <div class="v-lbl">Fulfilment</div>
+      <div class="fulfilment-toggle" style="margin-bottom:16px;">
+        <button class="ft-btn active" id="ft-pickup" onclick="selFulfilment('pickup')">🏪 Pickup</button>
+        <button class="ft-btn" id="ft-delivery" onclick="selFulfilment('delivery')">🚚 Delivery</button>
+      </div>
+      <div class="pickup-fields" id="pickup-fields">
+        <div class="v-lbl">Pickup Location</div>
+        <div class="m-cards" style="grid-template-columns:1fr;margin-bottom:20px;">
+          <div class="m-card selected" id="loc-sa" onclick="selLocation('sa')"><span class="m-icon">📍</span><div class="m-name">Shah Alam</div><div class="m-note">1282, Jalan Bukit Kemuning · 40640 Shah Alam, Selangor</div></div>
+        </div>
+      </div>
+      <div class="delivery-fields" id="delivery-fields">
+        <div class="delivery-note">🚚 Delivery is available within Klang Valley. A delivery fee applies based on distance. We'll confirm the fee via WhatsApp before processing your order.</div>
+        <div class="fg"><label class="fl">Delivery Address</label><input type="text" class="fi2" placeholder="Full address incl. unit, street, postcode" id="del-addr"></div>
+        <div class="fg"><label class="fl">Area / Postcode</label><input type="text" class="fi2" placeholder="e.g. Petaling Jaya 47810" id="del-area"></div>
+      </div>
+      <button class="mb mb-p" id="cartContinueBtn" onclick="goStep(2)">Continue →</button>
+    </div>
+    <div class="m-step" id="step2">
+      <div class="si"><div class="sd done"></div><div class="sd active"></div><div class="sd"></div></div>
+      <div class="m-title">Your Details</div>
+      <div class="m-sub">Almost done — we'll confirm your pickup via WhatsApp.</div>
+      <div id="step2-pickup-info" style="background:rgba(74,124,36,0.07);border:1.5px solid rgba(74,124,36,0.2);border-radius:12px;padding:14px 16px;margin-bottom:18px;font-size:0.84rem;color:var(--green);line-height:1.7;">
+        📍 <strong>Pickup Location:</strong> <a id="locName" href="https://www.google.com/maps/search/?api=1&query=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor" target="_blank" rel="noopener" style="color:var(--green);text-decoration:underline;font-weight:500;">1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor ↗</a><br>
+        🕐 Ready within 1–2 hours after order confirmation.<br>
+        🧊 Kept frozen until you collect.
+      </div>
+      <div id="step2-delivery-info" style="display:none;background:rgba(245,197,24,0.1);border:1.5px solid rgba(245,197,24,0.35);border-radius:12px;padding:14px 16px;margin-bottom:18px;font-size:0.84rem;color:var(--brown);line-height:1.7;">
+        🚚 <strong>Delivery to:</strong> <span id="delAddrDisplay">—</span><br>
+        💬 We'll confirm delivery fee &amp; ETA via WhatsApp.<br>
+        🧊 Packed in insulated packaging.
+      </div>
+      <div class="fg"><label class="fl">Full Name</label><input type="text" class="fi2" placeholder="e.g. Ahmad Rizal" id="fn"></div>
+      <div class="fg"><label class="fl">WhatsApp Number</label><input type="tel" class="fi2" placeholder="e.g. 012-345 6789" id="fp"></div>
+      <div class="fg"><label class="fl">Email (optional)</label><input type="email" class="fi2" placeholder="e.g. yourname@email.com" id="fe"></div>
+      <div class="fg"><label class="fl">Notes (optional)</label><textarea class="fta" placeholder="e.g. Allergies, preferred collection time..." id="fnotes"></textarea></div>
+      <button class="mb mb-p" onclick="goStep(3)">Review Order →</button>
+      <button class="mb mb-s" onclick="goStep(1)">← Back</button>
+    </div>
+    <div class="m-step" id="step3">
+      <div class="si"><div class="sd done"></div><div class="sd done"></div><div class="sd active"></div></div>
+      <div class="m-title">Review &amp; Pay</div>
+      <div class="m-sub">Double-check your order before confirming.</div>
+      <div class="os">
+        <div class="or"><span>Name</span><span id="sName">—</span></div>
+        <div class="or"><span>WhatsApp</span><span id="sPhone">—</span></div>
+        <div class="or" id="sEmailRow"><span>Email</span><span id="sEmail">—</span></div>
+        <div id="reviewItems"></div>
+        <div class="or"><span>Fulfilment</span><span id="sFulfilment">Pickup</span></div>
+        <div class="or" id="sLocRow"><span>Pickup Location</span><a id="sLoc" href="https://www.google.com/maps/search/?api=1&query=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor" target="_blank" rel="noopener" style="color:var(--green);text-decoration:underline;font-size:0.8rem;text-align:right;max-width:200px;">1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor ↗</a></div>
+        <div class="or" id="sAddrRow" style="display:none"><span>Delivery Address</span><span id="sAddr">—</span></div>
+        <div class="or" id="sPickupFeeRow"><span>Pickup</span><span style="color:var(--green);font-weight:600;">FREE</span></div>
+        <div class="or" id="sDeliveryFeeRow" style="display:none"><span>Delivery Fee</span><span>Confirmed via WhatsApp</span></div>
+        <div class="or tot"><span>Total</span><span id="st">RM 0.00</span></div>
+      </div>
+      <div style="background:rgba(74,124,36,0.07);border:1.5px solid rgba(74,124,36,0.22);border-radius:12px;padding:14px 16px;margin-bottom:18px;font-size:0.84rem;color:var(--brown);line-height:1.7;">
+        💸 <strong>How payment works:</strong><br>
+        After confirming, we'll WhatsApp you with a <strong>bank transfer QR code</strong>. Send your receipt and we'll process your order right away.
+      </div>
+      <button class="mb mb-p" id="confirmOrderBtn" onclick="placeOrder()">Confirm Order →</button>
+      <button class="mb mb-s" onclick="goStep(2)">← Back</button>
+    </div>
+    <div class="m-step" id="step4">
+      <div class="ss">
+        <div class="si2">✅</div>
+        <div class="st">Order Received!</div>
+        <p class="ssub">We'll WhatsApp you shortly with payment instructions and a QR code for bank transfer.</p>
+        <div class="son" id="orderNo">ORDER #DLP-00000</div>
+        <div style="background:var(--white);border:1.5px solid rgba(59,31,10,0.1);border-radius:14px;padding:20px;margin:16px 0;text-align:center;">
+          <div style="font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--brown-light);margin-bottom:12px;">Scan to Pay</div>
+          <img src="images/Dollop gelato Duit Now QR.jpeg" alt="DuitNow QR" style="width:180px;height:180px;object-fit:contain;border-radius:10px;display:block;margin:0 auto 16px;">
+          <div style="font-size:0.82rem;color:var(--brown);line-height:1.9;border-top:1px solid rgba(59,31,10,0.08);padding-top:14px;text-align:left;">
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--brown-light);">Bank</span><strong>Maybank</strong></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--brown-light);">Account No.</span><strong>562106988173</strong></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--brown-light);">Account Name</span><strong>Beyond Bites Sdn Bhd</strong></div>
+          </div>
+        </div>
+        <div style="background:rgba(74,124,36,0.07);border:1.5px solid rgba(74,124,36,0.22);border-radius:12px;padding:14px 16px;margin-bottom:16px;font-size:0.84rem;color:var(--brown);line-height:1.8;text-align:left;">
+          📱 <strong>WhatsApp on file:</strong> <span id="confirmPhone" style="font-weight:600;color:var(--green);">—</span><br>
+          📌 <strong>Reply in that WhatsApp chat with your proof of payment</strong> (screenshot or photo of receipt) — we'll confirm your order right away.
+        </div>
+        <button class="mb mb-p" onclick="closeModal()">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="soldout-toast">We're currently sold out — check back soon!</div>
+<div id="cartToast" class="cart-toast"></div>
+
+<script src="site-config.js"></script>
+<script src="flavours.js"></script>
+<script src="cart.js"></script>
+<script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
+<script src="redesign.js"></script>
+<script src="shop.js"></script>
+<script>
+  var waMsg = encodeURIComponent("Hi Dollop! I'd love to hear about new flavours 🍦");
+  document.getElementById('waSupportLink').href = 'https://wa.me/' + COMPANY_WHATSAPP + '?text=' + waMsg;
+</script>
+</body>
+</html>

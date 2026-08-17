@@ -1,6 +1,6 @@
 // ─── DOLLOP FLAVOURS ────────────────────────────────────────────────────────
-// Add new flavours here. Each entry drives both the homepage grid card
-// and the product detail page. No HTML changes needed to add a flavour.
+// All 4 flavours are available:true with real pricing (70g cup / 380g pint —
+// Musang King RM12/RM70, the other 3 RM10/RM50).
 
 const FLAVOURS = {
 
@@ -15,18 +15,17 @@ const FLAVOURS = {
     hasSweetness: true,
     sizeCup:      '70g',
     sizePint:     '380g',
-    hasNutrition: false,
+    hasNutrition: true,
     hasImages:    true,
-    cardImage:    'images/dollop-regular sweet image card.jpg',
+    cardImage:    'assets/images/Musang%20King.png',
     productImage: 'images/Dollop Cup Design.png',
     cupImage:     'images/Dollop Cup Design.png',
     pintImage:    'images/Dollop Pint Design.png',
     cardBg:       'radial-gradient(ellipse at 40% 30%,#8FBF3A 0%,#4A7C24 40%,#2D5016 75%,#1A3A0A 100%)',
     priceCup:     12,
     pricePint:    70,
-    // kcal/serving stat dropped — was calculated for the old 80g cup; add
-    // it back once you have the figure for the new 70g size.
     stats: [
+      { num: '133', unit: 'kcal per serving', label: 'Energy' },
       { num: '100%', unit: 'Musang King',     label: 'Real Durian' },
       { num: 'Zero', unit: '',                label: 'Preservatives' }
     ],
@@ -55,8 +54,8 @@ const FLAVOURS = {
     sizeCup:      '70g',
     sizePint:     '380g',
     hasNutrition: false,
-    hasImages:    false,
-    cardImage:    'images/cempedak colour.png',
+    hasImages:    true,
+    cardImage:    'assets/images/Cempedak.png',
     productImage: 'images/Dollop_cup_cempedak.png',
     cupImage:     'images/Dollop_cup_cempedak.png',
     pintImage:    'images/Dollop_pint_cempedak.png',
@@ -78,7 +77,7 @@ const FLAVOURS = {
     sweetness: null
   },
 
-  // Draft copy — please review/replace with approved marketing copy.
+  // Now live — matches production flavours.js/staging draft copy.
   'soya-gula-melaka': {
     slug:         'soya-gula-melaka',
     name:         'Soya Gula Melaka',
@@ -92,10 +91,10 @@ const FLAVOURS = {
     sizePint:     '380g',
     hasNutrition: false,
     hasImages:    true,
-    cardImage:    'images/Soya With Gula Melaka.png',
-    productImage: 'images/Soya With Gula Melaka.png',
-    cupImage:     'images/Soya With Gula Melaka.png',
-    pintImage:    'images/Soya With Gula Melaka.png',
+    cardImage:    'assets/images/Soya%20With%20Gula%20Melaka.png',
+    productImage: 'assets/images/Soya%20With%20Gula%20Melaka.png',
+    cupImage:     'assets/images/Soya%20With%20Gula%20Melaka.png',
+    pintImage:    'assets/images/Soya%20With%20Gula%20Melaka.png',
     cardBg:       'radial-gradient(ellipse at 40% 30%,#D9B36B 0%,#A67C3D 40%,#6B4A1F 75%,#3B2A10 100%)',
     priceCup:     10,
     pricePint:    50,
@@ -110,7 +109,7 @@ const FLAVOURS = {
     sweetness: null
   },
 
-  // Draft copy — please review/replace with approved marketing copy.
+  // Now live — matches production flavours.js/staging draft copy.
   'pandan-coconut': {
     slug:         'pandan-coconut',
     name:         'Pandan Coconut',
@@ -124,10 +123,10 @@ const FLAVOURS = {
     sizePint:     '380g',
     hasNutrition: false,
     hasImages:    true,
-    cardImage:    'images/Pandan Coconut.png',
-    productImage: 'images/Pandan Coconut.png',
-    cupImage:     'images/Pandan Coconut.png',
-    pintImage:    'images/Pandan Coconut.png',
+    cardImage:    'assets/images/Pandan%20Coconut.png',
+    productImage: 'assets/images/Pandan%20Coconut.png',
+    cupImage:     'assets/images/Pandan%20Coconut.png',
+    pintImage:    'assets/images/Pandan%20Coconut.png',
     cardBg:       'radial-gradient(ellipse at 40% 30%,#A8D4A0 0%,#6FA85E 40%,#3D6B2F 75%,#1F3A16 100%)',
     priceCup:     10,
     pricePint:    50,
@@ -144,6 +143,5 @@ const FLAVOURS = {
 
 };
 
-// Controls which flavours show on the homepage grid, in this order.
-// Swap slugs here to feature different ones without changing any HTML.
+// All 4 flavours, in display order for the homepage flavour-tease grid.
 const FEATURED_FLAVOURS = ['musang-king', 'cempedak', 'soya-gula-melaka', 'pandan-coconut'];

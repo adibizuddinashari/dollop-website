@@ -1,2630 +1,355 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
-  <html lang="en">
-<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async>
-</script>
+<!-- Runs before the browser gets a chance to restore a mid-page scroll
+     position on refresh — without this, a refresh mid-scroll briefly
+     shows the old position, then visibly snaps to 0 once Lenis (loaded
+     later, in redesign.js) initialises with its own internal state. -->
+<script>if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }</script>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dollop — Pure Flavour Gelato</title>
 <link rel="icon" href="brand assets/Dollop Favicon.png" type="image/png">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dollop — Pure Musang King Gelato</title>
-<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,500;0,800;1,600&family=Bebas+Neue&family=Barrio&family=Anton&family=Bangers&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,500;0,700;0,800;1,600&family=Bebas+Neue&family=Barrio&family=Bangers&display=swap" rel="stylesheet">
 <style>
 @font-face { font-family:'Barlow'; src:url('brand assets/fonts/Barlow-Medium.ttf') format('truetype'); font-weight:500; font-style:normal; }
 @font-face { font-family:'Barlow'; src:url('brand assets/fonts/Barlow-Italic.ttf') format('truetype'); font-weight:400; font-style:italic; }
 @font-face { font-family:'Barlow'; src:url('brand assets/fonts/Barlow-BoldItalic.ttf') format('truetype'); font-weight:700; font-style:italic; }
-:root {
-  --cream:#FFF8EE; --yellow:#F5C518; --yellow-deep:#E0A800;
-  --brown:#3B1F0A; --brown-mid:#6B3A1F; --brown-light:#B07B4A;
-  --green:#2D5016; --green-mid:#4A7C24; --green-light:#8CC63F;
-  --thorn:#1A3A0A; --white:#FFFDF7; --sb:64px;
-}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:auto;}
-body{font-family:'Barlow',sans-serif;font-weight:500;background:var(--cream);color:var(--brown);overflow-x:hidden;}
-a{text-decoration:none;color:inherit;}
-
-/* CURSOR */
-*{cursor:url('brand assets/durian cursor-64.png') 0 0,auto;}
-#cursor{display:none;}
-body:has(button:hover) #cursor,body:has(a:hover) #cursor{transform:scale(1.4) rotate(-15deg);}
-
-/* SIDEBAR */
-.sb{position:fixed;top:0;left:0;right:0;height:64px;background:#FFF8EE;z-index:200;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 40px;border-bottom:1px solid rgba(59,31,10,0.08);}
-.sb-logo{display:flex;align-items:center;justify-content:center;text-decoration:none;}
-.sb-logo img{height:38px;width:auto;object-fit:contain;}
-.sb-nav{display:flex;flex-direction:row;gap:4px;align-items:center;}
-.sb-link{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;color:rgba(59,31,10,0.4);text-decoration:none;transition:color 0.2s,background 0.2s;position:relative;}
-.sb-link:hover,.sb-link.active{color:var(--brown);background:rgba(59,31,10,0.07);}
-.sb-cta{position:relative;padding:10px 26px;background:#2D5016;color:#FFF8EE;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.12em;border-radius:40px;text-decoration:none;white-space:nowrap;transition:background 0.3s ease,color 0.3s ease,transform 0.2s ease;justify-self:end;}
-.sb-cta:hover{background:#F5C518;color:#3B1F0A;transform:translateY(-1px);}
-.sb-link svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
-.sb-tip{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--brown);color:var(--cream);font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;padding:4px 10px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.15s;}
-.sb-tip::before{content:'';position:absolute;bottom:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-bottom-color:var(--brown);}
-.sb-link:hover .sb-tip{opacity:1;}
-
-.sb-div{width:22px;height:1px;background:rgba(255,248,238,0.1);margin:6px 0;}
-.sb-dot{width:6px;height:6px;border-radius:50%;background:var(--yellow);margin-top:auto;margin-bottom:2px;box-shadow:0 0 8px var(--yellow);}
-
-/* MAIN */
-.main{margin-left:0;}
-
-/* HERO */
-.hero{position:relative;height:100vh;min-height:640px;overflow:hidden;}
-.hero-bg{position:absolute;inset:0;z-index:0;background:#1a1a1a;overflow:hidden;}
-.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease;will-change:opacity;}
-.hero-slide.active{opacity:1;}
-.hero-slide img{width:100%;height:100%;object-fit:cover;object-position:center;}
-.hero-dots{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:5;display:flex;gap:8px;}
-.hero-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,248,238,0.35);border:none;cursor:pointer;transition:all 0.3s;padding:0;}
-.hero-dot.active{background:var(--yellow);transform:scale(1.3);}
-.hero-prev,.hero-next{position:absolute;top:50%;transform:translateY(-50%);z-index:5;background:rgba(255,248,238,0.15);border:1px solid rgba(255,248,238,0.25);backdrop-filter:blur(6px);color:#fff8ee;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background 0.2s,transform 0.2s;}
-.hero-prev{left:24px;}
-.hero-next{right:24px;}
-.hero-prev:hover,.hero-next:hover{background:rgba(255,248,238,0.3);transform:translateY(-50%) scale(1.08);}
-
-.hero-ov{position:absolute;inset:0;z-index:2;background:linear-gradient(to bottom,rgba(255,248,238,0.45) 0%,rgba(255,248,238,0.1) 20%,transparent 45%,transparent 55%,rgba(0,0,0,0.45) 85%,rgba(0,0,0,0.65) 100%);}
-.hero-c{display:none;}
-.hero-logo-top{display:none;position:absolute;top:48px;left:50%;transform:translateX(-50%);width:clamp(140px,16vw,220px);height:auto;object-fit:contain;opacity:1;z-index:3;}
-.hero-ey{font-size:0.68rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--green-light);font-weight:500;margin-bottom:10px;display:flex;align-items:center;gap:14px;}
-.hero-ey::before,.hero-ey::after{content:'';display:block;width:26px;height:1px;background:var(--green-light);}
-.hero-bottom-row{position:absolute;bottom:48px;left:52px;z-index:3;display:inline-flex;align-items:flex-end;gap:20px;}
-.hero-headline-wrap{flex:0 0 auto;}
-.hero-hl{font-family:'Barlow',sans-serif;font-weight:500;font-size:clamp(2.5rem,7.4vw,6.8rem);line-height:0.91;color:#fff8ee;text-align:left;letter-spacing:2.48px;}
-.hero-right-panel{flex-shrink:0;width:240px;display:flex;flex-direction:column;gap:12px;align-self:flex-end;}
-.hero-hl-line{display:block;}
-.hl-xbold{font-weight:800;font-family:'Barlow',sans-serif;}
-.hl-flavour{font-weight:600;font-style:italic;color:#f5c518;}
-.hero-stink{font-family:'Bangers',cursive;font-size:clamp(1rem,1.5vw,1.35rem);color:rgba(255,248,238,0.72);letter-spacing:0.108em;line-height:1.3;text-shadow:0 2px 12px rgba(0,0,0,0.4);}
-.hl-barrio{font-family:'Barrio',cursive;font-weight:400;}
-.hl-stinky{font-size:clamp(2.5rem,7.4vw,6.8rem);line-height:0.91;letter-spacing:1px;}
-.hl-line2{font-size:clamp(2.5rem,7.4vw,6.8rem);line-height:0.91;font-weight:500;letter-spacing:2.48px;color:#fff8ee;font-family:'Barlow',sans-serif;}
-.hl-boldital{font-weight:700;font-style:italic;font-family:'Barlow',sans-serif;}
-.hl-line3{font-size:clamp(1rem,1.8vw,1.6rem);font-weight:400;font-style:italic;color:rgba(255,248,238,0.72);letter-spacing:0.04em;}
-.hero-pills{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-bottom:32px;}
-.hero-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,248,238,0.07);border:1px solid rgba(255,248,238,0.14);border-radius:40px;padding:6px 14px;font-size:0.76rem;font-weight:500;color:rgba(255,248,238,0.78);backdrop-filter:blur(4px);}
-.trust-bar{background:var(--brown);padding:0;display:flex;justify-content:center;align-items:stretch;border-bottom:3px solid var(--yellow);}
-.trust-items{display:flex;align-items:center;justify-content:center;gap:0;width:100%;max-width:900px;flex-wrap:wrap;}
-.trust-item{display:flex;align-items:center;gap:16px;padding:28px 48px;position:relative;flex:1;min-width:240px;}
-.trust-item:not(:last-child)::after{content:'';position:absolute;right:0;top:20%;bottom:20%;width:1px;background:rgba(255,248,238,0.15);}
-.trust-icon{font-size:2rem;flex-shrink:0;}
-.trust-text{display:flex;flex-direction:column;gap:3px;}
-.trust-title{font-family:'Barlow',sans-serif;font-size:1.2rem;font-weight:700;font-style:italic;color:var(--cream);letter-spacing:-0.01em;line-height:1.1;}
-.trust-sub{font-family:'Barlow',sans-serif;font-size:0.75rem;font-weight:500;color:rgba(255,248,238,0.5);letter-spacing:0.06em;text-transform:uppercase;}
-.hero-btn{display:flex;align-items:center;justify-content:center;width:100%;gap:11px;background:var(--yellow);color:var(--brown);font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.2em;padding:17px 32px;height:61.44px;border-radius:40px;white-space:nowrap;transition:transform 0.2s,box-shadow 0.2s;margin-bottom:27px;position:relative;overflow:hidden;border:none;}
-.hero-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent 40%,rgba(255,255,255,0.18) 50%,transparent 60%);transform:translateX(-100%);transition:transform 0.5s;}
-.hero-btn:hover::after{transform:translateX(100%);}
-.hero-btn:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(245,197,24,0.38);}
-.hero-note{font-size:0.73rem;color:rgba(255,248,238,0.38);letter-spacing:0.04em;}
-.hero-badge{display:none !important;}
-.hero-badge-char{width:160px;height:auto;filter:drop-shadow(0 8px 24px rgba(0,0,0,0.4));animation:charFloat 3s ease-in-out infinite;}
-@keyframes charFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-.hero-badge-cloud{background:var(--yellow);color:var(--brown);font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.12em;padding:7px 18px;border-radius:40px 40px 40px 4px;border:2px solid var(--brown);box-shadow:0 4px 16px rgba(0,0,0,0.25);white-space:nowrap;margin-bottom:8px;position:relative;}
-.hero-badge-cloud::after{content:'';position:absolute;bottom:-8px;left:18px;border:5px solid transparent;border-top-color:var(--brown);}
-.hero-badge-cloud::before{content:'';position:absolute;bottom:-6px;left:19px;border:4px solid transparent;border-top-color:var(--yellow);}
-.hero-badge-in .bs{display:block;font-size:0.56rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--brown-mid);}
-.hero-scroll{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:4;display:flex;flex-direction:column;align-items:center;gap:5px;color:rgba(255,248,238,0.28);font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;animation:scr 2.4s ease-in-out infinite;}
-@keyframes scr{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
-.hero-scroll svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8;}
-
-/* SECTION LABEL */
-.sec-lbl{font-size:0.68rem;letter-spacing:0.24em;text-transform:uppercase;color:var(--brown-mid);font-weight:500;display:inline-flex;align-items:center;gap:9px;margin-bottom:36px;}
-.sec-lbl::before{content:'—';color:var(--yellow);letter-spacing:0;font-family:sans-serif;}
-
-/* PRODUCTS */
-.products{padding:0;background:var(--cream);overflow:hidden;}
-.pg-head{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem, 7vw, 6.5rem);letter-spacing:0.06em;color:var(--brown);margin-bottom:6px;line-height:1;}
-.pg-head span{color:var(--green-mid);}
-.pg-sub{font-size:0.84rem;color:var(--brown-mid);margin-bottom:40px;max-width:420px;line-height:1.6;margin-left:auto;margin-right:auto;}
-.pg2{display:flex;width:100%;}
-.pcard{background:var(--white);border-radius:0;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;width:100%;}
-.pcard:hover{transform:translateY(-4px);box-shadow:0 20px 56px rgba(59,31,10,0.12);}
-.pcard-img-col{position:relative;background:var(--cream);display:flex;flex-direction:column;}
-.pgal-wrap{position:relative;overflow:hidden;aspect-ratio:5/5;width:100%;}
-.pgal-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;transition:opacity 0.45s ease;}
-.pgal-slide.active{opacity:1;}
-.pgal-contain{object-fit:contain;background:#fff;padding:24px;}
-.pgal-arrow{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,248,238,0.92);border:1.5px solid rgba(59,31,10,0.12);border-radius:50%;width:42px;height:42px;display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--brown);cursor:pointer;z-index:3;transition:background 0.2s,transform 0.2s;backdrop-filter:blur(4px);}
-.pgal-arrow:hover{background:var(--yellow);transform:translateY(-50%) scale(1.08);}
-.pgal-prev{left:16px;}
-.pgal-next{right:16px;}
-.pcard-img-stats{display:flex;border-top:1px solid rgba(59,31,10,0.08);background:var(--cream);}
-.pcard-img-stat{flex:1;display:flex;flex-direction:column;align-items:center;padding:16px 8px;gap:2px;}
-.pcard-img-stat:not(:last-child){border-right:1px solid rgba(59,31,10,0.08);}
-.pcard-img-stat-num{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--brown);line-height:1;letter-spacing:0.04em;}
-.pcard-img-stat-lbl{font-size:0.58rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--brown-light);text-align:center;line-height:1.3;}
-.pcard-info{padding:48px 48px 40px;display:flex;flex-direction:column;background:var(--cream);border-left:1.5px solid rgba(59,31,10,0.08);}
-.pcard-eyebrow{font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--green-mid);font-weight:500;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
-.pcard-eyebrow::before{content:'';display:block;width:18px;height:1.5px;background:var(--green-mid);}
-.pcard-title{font-family:'Barlow',sans-serif;font-weight:500;font-size:clamp(2.2rem,3.5vw,3rem);letter-spacing:2px;color:var(--brown);line-height:0.91;margin-bottom:6px;}
-.pcard-rating{display:flex;align-items:center;gap:8px;margin-bottom:14px;}
-.pcard-stars{color:var(--yellow);font-size:0.9rem;letter-spacing:2px;}
-.pcard-rcount{font-size:0.7rem;color:var(--brown-light);}
-.pcard-desc-new{font-size:0.88rem;color:var(--brown-mid);line-height:1.65;margin-bottom:20px;}
-.pcard-feats{display:grid;grid-template-columns:1fr 1fr;background:rgba(59,31,10,0.04);border:1.5px solid rgba(59,31,10,0.08);border-radius:10px;padding:16px 20px;gap:8px 12px;margin-bottom:20px;}
-.pcard-feat{font-size:0.78rem;color:var(--brown-mid);line-height:1.4;}
-.pcard-avail-lbl{font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--brown-mid);margin-bottom:8px;}
-.pcard-szrow{display:flex;gap:8px;margin-bottom:14px;}
-.pcard-sz-new{padding:7px 18px;border:1.5px solid rgba(59,31,10,0.16);border-radius:40px;background:transparent;font-family:'Barlow',sans-serif;font-size:0.8rem;font-weight:500;color:var(--brown-mid);cursor:pointer;transition:all 0.2s;}
-.pcard-sz-new.active{border-color:var(--green);background:var(--green);color:var(--cream);}
-.pcard-sz-new:hover:not(.active){border-color:var(--brown-mid);color:var(--brown);}
-.pcard-price-line{margin-bottom:20px;padding-top:16px;border-top:1px solid rgba(59,31,10,0.08);}
-.pcard-price-num{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--brown);letter-spacing:0.04em;line-height:1;}
-.pcard-price-note{font-size:0.7rem;color:var(--brown-light);}
-.pcard-order-btn{display:block;width:100%;padding:14px;background:var(--yellow);color:var(--brown);font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.1em;border:none;border-radius:10px;cursor:pointer;transition:background 0.2s,transform 0.15s;}
-.pcard-order-btn:hover{background:#e6b800;transform:translateY(-1px);}
-.pcard-img{height:300px;position:relative;overflow:hidden;flex-shrink:0;}
-.pcard-pkg-img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
-.pcard-reg{background:radial-gradient(ellipse at 40% 30%,#8FBF3A 0%,#4A7C24 40%,#2D5016 75%,#1A3A0A 100%);}
-.pcard-less{background:radial-gradient(ellipse at 60% 70%,#A8D458 0%,#6B9E2A 35%,#3A6A12 70%,#0D2205 100%);}
-.pcard-badge{position:absolute;top:16px;left:16px;background:var(--yellow);color:var(--brown);font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:4px 11px;border-radius:40px;}
-.pcard-img-note{position:absolute;bottom:14px;right:14px;font-size:0.62rem;color:rgba(255,248,238,0.35);letter-spacing:0.08em;text-transform:uppercase;background:rgba(0,0,0,0.3);padding:3px 8px;border-radius:4px;backdrop-filter:blur(4px);}
-.pcard-body{padding:26px 26px 22px;flex:1;display:flex;flex-direction:column;gap:10px;}
-.pcard-name{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:0.06em;color:var(--brown);line-height:1;}
-.pcard-desc{font-size:0.84rem;color:var(--brown-mid);line-height:1.6;margin-bottom:4px;}
-.pcard-sizes{display:flex;gap:8px;align-items:center;}
-.pcard-size-lbl{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--brown-light);margin-right:4px;}
-.pcard-sz{padding:6px 16px;border:1.5px solid rgba(59,31,10,0.14);border-radius:40px;background:transparent;font-family:'Barlow',sans-serif;font-size:0.78rem;font-weight:500;color:var(--brown-mid);transition:all 0.2s;}
-.pcard-sz.active{border-color:var(--green);background:var(--green);color:var(--cream);}
-.pcard-sz:hover:not(.active){border-color:var(--brown-mid);color:var(--brown);}
-.pcard-footer{display:flex;align-items:center;gap:12px;margin-top:auto;padding-top:18px;border-top:1px solid rgba(59,31,10,0.07);}
-.pcard-price{font-family:'Barlow',sans-serif;font-weight:700;font-size:1.15rem;letter-spacing:0.02em;color:var(--brown);line-height:1;white-space:nowrap;}
-.pcard-price small{font-size:0.75rem;letter-spacing:0.08em;color:var(--brown-light);font-family:'Barlow',sans-serif;font-weight:500;display:block;margin-top:1px;}
-.pcard-qty{display:flex;align-items:center;border:1.5px solid rgba(59,31,10,0.14);border-radius:40px;overflow:hidden;background:var(--cream);}
-.pcard-qty button{width:32px;height:36px;background:transparent;border:none;font-size:1.3rem;color:var(--brown);font-weight:300;transition:background 0.15s;line-height:1;display:flex;align-items:center;justify-content:center;}
-.pcard-qty button:hover{background:rgba(59,31,10,0.07);}
-.pcard-qty span{min-width:26px;text-align:center;font-weight:700;font-size:0.88rem;color:var(--brown);}
-.pcard-btn{flex:1;padding:10px 18px;background:var(--brown);color:var(--cream);font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:0.15em;border:none;border-radius:40px;transition:all 0.25s;white-space:nowrap;}
-.pcard-btn:hover{background:var(--green);color:var(--yellow);transform:none;}
-
-/* FEATURES */
-.features{padding:72px 48px;background:var(--white);border-top:1px solid rgba(59,31,10,0.06);}
-.feat-inner{width:100%;}
-.fr{display:grid;grid-template-columns:60px 1fr;gap:22px;align-items:flex-start;padding:30px 0;border-bottom:1px solid rgba(59,31,10,0.07);opacity:1;transform:none;transition:opacity 0.6s ease,transform 0.6s ease;}
-.fr:first-of-type{border-top:1px solid rgba(59,31,10,0.07);}
-.fr.visible{opacity:1;transform:none;}
-.fn{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--yellow);line-height:1;opacity:0.55;padding-top:3px;}
-.ft{font-family:'Barlow',sans-serif;font-size:1.2rem;font-weight:700;font-style:italic;color:var(--brown);margin-bottom:8px;letter-spacing:-0.01em;}
-.fd{font-size:0.88rem;color:var(--brown-mid);line-height:1.75;}
-
-/* FAQ */
-.faq{padding:72px 48px;background:var(--cream);}
-.faq-inner{width:100%;}
-.fi{border-bottom:1px solid rgba(59,31,10,0.09);}
-.fq{width:100%;padding:21px 0;display:flex;align-items:center;justify-content:space-between;gap:18px;background:none;border:none;text-align:left;font-family:'Barlow',sans-serif;font-size:1rem;font-weight:700;font-style:italic;color:var(--brown);letter-spacing:-0.01em;transition:color 0.2s;}
-.fq:hover{color:var(--green-mid);}
-.fi-icon{width:28px;height:28px;min-width:28px;border:1.5px solid rgba(59,31,10,0.16);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:300;color:var(--brown-mid);line-height:1;transition:all 0.25s;}
-.fi.open .fi-icon{background:var(--yellow);border-color:var(--yellow);color:var(--brown);transform:rotate(45deg);}
-.fa{max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s ease;font-size:0.88rem;color:var(--brown-mid);line-height:1.75;}
-.fi.open .fa{max-height:180px;padding-bottom:20px;}
-
-
-
-/* MARQUEE */
-.mq{overflow:hidden;background:var(--yellow);padding:15px 0;cursor:default;}
-.mq-track{display:flex;animation:mq 22s linear infinite;white-space:nowrap;transition:filter 0.3s;}
-.mq:hover .mq-track{animation-play-state:paused;}
-.mi{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:0.95rem;
-  letter-spacing:0.22em;
-  color:rgba(59,31,10,0.45);
-  padding:0 32px;
-  flex-shrink:0;
-  transition:color 0.2s, text-shadow 0.2s, transform 0.2s, letter-spacing 0.2s;
-  display:inline-block;
-}
-.mi.y{color:var(--yellow);}
-.mq-track:hover .mi:not(:hover){color:rgba(59,31,10,0.25);}
-.mi:hover{
-  color:var(--brown);
-  text-shadow:0 0 20px rgba(59,31,10,0.25);
-  transform:scaleY(1.12);
-  letter-spacing:0.28em;
-}
-.mi.y:hover{
-  color:var(--yellow);
-  text-shadow:0 0 20px rgba(245,197,24,0.9), 0 0 40px rgba(245,197,24,0.4);
-}
-@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
-/* FOOTER */
-footer{background:#FFF8EE;padding:52px 48px 0;color:var(--brown);}
-.ft-top{display:flex;align-items:flex-start;justify-content:space-between;gap:36px;padding-bottom:44px;border-bottom:1px solid rgba(255,248,238,0.07);}
-.ft-brand{max-width:250px;}
-.ft-logo{height:44px;width:auto;display:block;margin-bottom:13px;}
-.ft-tagline{font-size:0.82rem;color:rgba(59,31,10,0.5);line-height:1.65;margin-bottom:18px;white-space:nowrap;}
-.ft-soc{display:flex;gap:12px;}
-.ft-soc a{width:44px;height:44px;border:1.5px solid rgba(59,31,10,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.74rem;transition:background 0.2s,border-color 0.2s;}
-.ft-soc a:hover{background:var(--yellow);border-color:var(--yellow);color:var(--brown);}
-.ft-cols{display:flex;gap:52px;}
-.ft-ct{font-size:0.66rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--green);margin-bottom:16px;font-weight:500;}
-.ft-col a{display:block;font-size:0.84rem;color:rgba(59,31,10,0.5);margin-bottom:10px;transition:color 0.2s;}
-.ft-col a:hover{color:var(--brown);}
-.ft-addr{font-style:normal;font-size:0.84rem;color:rgba(59,31,10,0.5);line-height:1.75;display:flex;gap:9px;align-items:flex-start;}
-.ft-addr svg{flex-shrink:0;margin-top:3px;opacity:0.55;}
-.ft-bot{padding:17px 0;display:flex;justify-content:space-between;align-items:center;font-size:0.7rem;color:rgba(59,31,10,0.35);border-top:1px solid rgba(59,31,10,0.08);}
-
-/* MODAL */
-.modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(18,8,2,0.65);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px;}
-.modal-overlay.open{display:flex;}
-.modal{background:var(--white);border-radius:18px;width:100%;max-width:540px;max-height:90vh;overflow-y:auto;padding:44px;position:relative;animation:min 0.3s cubic-bezier(0.34,1.56,0.64,1);}
-@keyframes min{from{transform:scale(0.92) translateY(16px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
-.m-close{position:absolute;top:17px;right:17px;width:33px;height:33px;background:var(--cream);border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.95rem;color:var(--brown);transition:background 0.2s;}
-.m-close:hover{background:var(--yellow);}
-.m-step{display:none;}.m-step.active{display:block;}
-.m-title{font-family:'Barlow',sans-serif;font-size:1.85rem;font-weight:700;font-style:italic;color:var(--brown);margin-bottom:5px;letter-spacing:-0.02em;}
-.m-sub{font-size:0.84rem;color:var(--brown-light);margin-bottom:24px;}
-.fulfilment-toggle{display:flex;gap:0;border:1.5px solid rgba(59,31,10,0.14);border-radius:40px;overflow:hidden;margin-bottom:20px;background:var(--cream);}
-.ft-btn{flex:1;padding:10px 16px;background:transparent;border:none;font-family:'Bebas Neue',sans-serif;font-size:0.95rem;letter-spacing:0.12em;color:var(--brown);opacity:0.5;cursor:pointer;transition:background 0.2s,opacity 0.2s;}
-.ft-btn.active{background:var(--yellow);opacity:1;border-radius:40px;}
-.delivery-fields{display:none;margin-bottom:20px;}
-.delivery-fields.show{display:block;}
-.delivery-note{background:rgba(245,197,24,0.12);border:1.5px solid rgba(245,197,24,0.35);border-radius:10px;padding:12px 14px;font-size:0.8rem;color:var(--brown);line-height:1.6;margin-bottom:10px;}
-.pickup-fields{display:block;}
-.pickup-fields.hide{display:none;}
-.m-cards{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:20px;}
-.m-card{border:2px solid rgba(59,31,10,0.12);border-radius:12px;padding:20px;text-align:center;transition:all 0.2s;background:var(--cream);}
-.m-card:hover{border-color:var(--green-mid);background:rgba(74,124,36,0.05);}
-.m-card.selected{border-color:var(--green);background:rgba(74,124,36,0.08);}
-.m-icon{font-size:1.8rem;margin-bottom:7px;display:block;}
-.m-name{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:0.1em;color:var(--brown);margin-bottom:3px;}
-.m-note{font-size:0.71rem;color:var(--brown-light);}
-.fg{margin-bottom:17px;}
-.fl{display:block;font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--brown-mid);margin-bottom:6px;}
-.fi2,.fs,.fta{width:100%;padding:11px 13px;border:1.5px solid rgba(59,31,10,0.14);border-radius:8px;font-family:'Barlow',sans-serif;font-size:0.92rem;color:var(--brown);background:var(--cream);transition:border-color 0.2s;outline:none;}
-.fi2:focus,.fs:focus,.fta:focus{border-color:var(--green-mid);}
-.fta{resize:vertical;min-height:72px;}
-.os{background:var(--cream);border-radius:10px;padding:17px 20px;margin-bottom:20px;}
-.or{display:flex;justify-content:space-between;font-size:0.86rem;color:var(--brown-mid);padding:4px 0;}
-.or.tot{border-top:1px solid rgba(59,31,10,0.1);margin-top:7px;padding-top:12px;font-weight:700;color:var(--brown);font-size:0.98rem;}
-.si{display:flex;align-items:center;gap:5px;margin-bottom:26px;}
-.sd{width:7px;height:7px;border-radius:50%;background:rgba(59,31,10,0.12);transition:all 0.3s;}
-.sd.active{background:var(--green);width:21px;border-radius:3px;}
-.sd.done{background:var(--green-light);}
-.mb{width:100%;padding:14px;border:none;border-radius:8px;font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:0.15em;transition:all 0.2s;}
-.mb-p{background:var(--green);color:var(--yellow);}
-.mb-p:hover{background:var(--thorn);}
-.mb-s{background:transparent;color:var(--brown-mid);border:1.5px solid rgba(59,31,10,0.17);margin-top:8px;font-size:0.92rem;letter-spacing:0.08em;font-family:'Barlow',sans-serif;}
-.mb-s:hover{border-color:var(--brown);color:var(--brown);}
-.pm{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
-.pb{padding:5px 11px;border:1px solid rgba(59,31,10,0.12);border-radius:6px;font-size:0.71rem;font-weight:500;color:var(--brown-mid);background:var(--cream);}
-.pb.fpx{border-color:var(--green-mid);color:var(--green-mid);}
-.ss{text-align:center;padding:14px 0;}
-.si2{width:70px;height:70px;background:rgba(74,124,36,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 18px;border:2px solid var(--green-light);}
-.st{font-family:'Barlow',sans-serif;font-size:2rem;font-weight:700;font-style:italic;color:var(--brown);margin-bottom:7px;letter-spacing:-0.02em;}
-.ssub{color:var(--brown-mid);line-height:1.7;margin-bottom:26px;font-size:0.88rem;}
-.son{background:var(--cream);border-radius:8px;padding:13px;font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:0.2em;color:var(--green);margin-bottom:20px;}
-.v-lbl{font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--brown-mid);margin-bottom:8px;}
-.v-sel{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:4px;}
-.vb{display:flex;flex-direction:column;align-items:flex-start;padding:10px 13px;border:2px solid rgba(59,31,10,0.12);border-radius:9px;background:transparent;text-align:left;transition:all 0.2s;position:relative;}
-.vb.active{border-color:var(--green);background:rgba(74,124,36,0.07);}
-.vb.active::after{content:'✓';position:absolute;top:6px;right:8px;font-size:0.7rem;color:var(--green);font-weight:700;}
-.vb:hover:not(.active){border-color:var(--brown-light);}
-.vn{font-weight:700;font-size:0.84rem;color:var(--brown);margin-bottom:1px;display:block;}
-.vnt{font-size:0.68rem;color:var(--brown-light);display:block;}
-.sz-sel{display:flex;gap:6px;margin-bottom:20px;margin-top:9px;}
-.sz-btn{padding:6px 14px;border:1.5px solid rgba(59,31,10,0.17);border-radius:40px;background:transparent;font-family:'Barlow',sans-serif;font-size:0.78rem;font-weight:500;color:var(--brown-mid);transition:all 0.2s;}
-.sz-btn.active{border-color:var(--green);background:var(--green);color:var(--cream);}
-.sz-btn:hover:not(.active){border-color:var(--brown);}
-
-/* CART */
-.cart-list{margin-bottom:20px;}
-.cart-line{display:flex;align-items:center;gap:10px;background:var(--cream);border-radius:10px;padding:12px 14px;margin-bottom:8px;}
-.cart-line-info{flex:1;min-width:0;}
-.cart-line-name{font-weight:700;font-size:0.88rem;color:var(--brown);}
-.cart-line-size{font-size:0.74rem;color:var(--brown-light);margin-top:1px;}
-.cart-line-qty{display:flex;align-items:center;gap:0;border:1.5px solid rgba(59,31,10,0.14);border-radius:40px;overflow:hidden;background:#fff;flex-shrink:0;}
-.cart-line-qty button{width:26px;height:26px;background:transparent;border:none;font-size:1rem;color:var(--brown);cursor:pointer;display:flex;align-items:center;justify-content:center;}
-.cart-line-qty button:hover{background:rgba(59,31,10,0.07);}
-.cart-line-qty span{min-width:20px;text-align:center;font-weight:700;font-size:0.82rem;}
-.cart-line-price{font-weight:700;font-size:0.84rem;color:var(--brown);min-width:64px;text-align:right;flex-shrink:0;}
-.cart-line-remove{width:26px;height:26px;flex-shrink:0;background:transparent;border:none;color:var(--brown-light);font-size:0.9rem;cursor:pointer;border-radius:50%;transition:background 0.15s,color 0.15s;}
-.cart-line-remove:hover{background:rgba(192,57,43,0.1);color:#C0392B;}
-.cart-subtotal{display:flex;justify-content:space-between;font-weight:700;font-size:0.95rem;color:var(--brown);padding:10px 2px 4px;}
-.cart-empty{text-align:center;padding:28px 10px;color:var(--brown-light);font-size:0.88rem;line-height:1.6;}
-.cart-badge{display:none;position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;padding:0 4px;border-radius:999px;background:#C0392B;color:#fff;font-family:'Barlow',sans-serif;font-size:0.66rem;font-weight:800;align-items:center;justify-content:center;line-height:1;}
-.cart-toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--green);color:#fff;font-family:inherit;font-size:0.88rem;font-weight:600;padding:12px 24px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity 0.3s,transform 0.3s;z-index:9999;white-space:nowrap;}
-.cart-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-
-/* REVEAL */
-.reveal{opacity:0;transform:translateY(32px);transition:opacity 0.7s cubic-bezier(0.22,1,0.36,1),transform 0.7s cubic-bezier(0.22,1,0.36,1);}
-.reveal.visible{opacity:1;transform:none;}
-
-/* MOBILE */
-@media(max-width:860px){
-  .sb{padding:0 20px;height:52px;}.sb-nav{gap:0;}.sb-link{padding:6px 10px;font-size:0.78rem;}.sb-cta{padding:7px 16px;font-size:0.88rem;}
-  .pg2{grid-template-columns:1fr;}
-  
-  .features,.faq,.products{padding:52px 24px;}
-  footer{padding:40px 24px 0;}
-  .ft-top{flex-direction:column;}
-  .ft-cols{flex-direction:column;gap:24px;}
-  .m-cards{grid-template-columns:1fr;}
-  .modal{padding:26px 18px;}
-  .hero-c{padding:0 24px;}
-}
-
-/* FLOATING CHARACTER */
-#floatWidget {
-  position: fixed;
-  bottom: 28px;
-  right: 28px;
-  z-index: 8000;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 10px;
-  opacity: 1;
-  pointer-events: auto;
-  transition: bottom 0.25s ease, opacity 0.4s ease;
-}
-#floatBubble {
-  background: var(--brown);
-  color: var(--cream);
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.05rem;
-  letter-spacing: 0.14em;
-  padding: 10px 20px;
-  border-radius: 20px 20px 4px 20px;
-  box-shadow: 0 6px 24px rgba(59,31,10,0.25);
-  white-space: normal;
-  text-align: center;
-  line-height: 1.25;
-  cursor: pointer;
-  transition: transform 0.2s, background 0.2s;
-  border: 2px solid rgba(255,248,238,0.1);
-  animation: bubblePop 3.5s ease-in-out infinite;
-}
-#floatBubble:hover { background: var(--yellow); color: var(--brown); transform: scale(1.04); }
-.fb-xbold { display: block; font-family: 'Barlow', sans-serif; font-weight: 800; font-size: 1.3rem; letter-spacing: 0.02em; margin-top: 2px; }
-#floatChar {
-  width: 120px;
-  height: 120px;
-  object-fit: contain;
-  cursor: pointer;
-  filter: drop-shadow(0 8px 20px rgba(59,31,10,0.3));
-  animation: charFloat 3s ease-in-out infinite;
-  transition: transform 0.2s;
-}
-#floatChar:hover { transform: scale(1.08); }
-#floatWaBtn {
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  background: #25D366;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 6px 20px rgba(37,211,102,0.45), 0 2px 8px rgba(59,31,10,0.15);
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  text-decoration: none;
-  flex-shrink: 0;
-}
-#floatWaBtn:hover { transform: scale(1.08); box-shadow: 0 8px 26px rgba(37,211,102,0.55), 0 2px 8px rgba(59,31,10,0.2); }
-#floatWaBtn svg { width: 30px; height: 30px; display: block; }
-@keyframes charFloat {
-  0%,100% { transform: translateY(0); }
-  50%      { transform: translateY(-8px); }
-}
-@keyframes bubblePop {
-  0%,90%,100% { transform: scale(1); }
-  95%         { transform: scale(1.05); }
-}
-  20%{transform:translateY(-1px) rotate(1deg);}
-  30%{transform:translateY(-4px) rotate(-1deg);}
-  40%{transform:translateY(0px) rotate(0.5deg);}
-  50%{transform:translateY(-2px) rotate(0deg);}
-  60%{transform:translateY(0) rotate(0deg);}
-}
-@keyframes fbPulse{
-  0%,100%{opacity:1;transform:scale(1);}
-  50%{opacity:0.4;transform:scale(0.6);}
-}
-
-/* ================================
-   STORY SECTIONS (index-v2)
-================================ */
-
-/* STORY: THE KING'S PROMISE */
-.story-promise {
-  background: var(--brown);
-  background-image: url('images/durian-flesh.jpg');
-  background-size: cover;
-  background-position: center;
-  min-height: 100vh;
-  padding: 0;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.story-promise::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(42,20,8,0.25);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.story-promise::before {
-  content: '';
-  position: absolute;
-  top: -120px; right: -120px;
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(245,197,24,0.12) 0%, transparent 70%);
-  pointer-events: none;
-}
-.sp-inner {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 48px;
-  width: 100%;
-  padding: 0 80px 64px;
-}
-.sp-right-text {
-  text-align: right;
-  flex-shrink: 0;
-  max-width: 620px;
-}
-.sp-head {
-  font-family: 'Barlow', sans-serif;
-  font-weight: 500;
-  font-size: 5rem;
-  line-height: 0.91;
-  color: var(--cream);
-  letter-spacing: 2px;
-  margin-bottom: 16px;
-  text-shadow: 0 0 80px rgba(245,197,24,0.2);
-}
-.sp-one { font-weight: 900; }
-.sp-obsession { font-family: 'Barrio', cursive; letter-spacing: 1px; }
-.sp-sub {
-  font-size: 1rem;
-  color: rgb(255, 255, 255);
-  line-height: 1.75;
-  max-width: 460px;
-  margin: 0 0 0 auto;
-}
-.sp-benefits {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  flex-shrink: 0;
-  max-width: 320px;
-}
-.spb {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  text-align: left;
-  gap: 14px;
-  padding: 14px 0;
-  border-top: 1px solid rgba(255,248,238,0.08);
-}
-.spb:last-child { border-bottom: 1px solid rgba(255,248,238,0.08); }
-
-.spb-icon {
-  font-size: 1.6rem;
-  flex-shrink: 0;
-  width: 45px;
-  height: 45px;
-  background: rgba(245,197,24,0.1);
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.spb-title {
-  font-family: 'Barlow', sans-serif;
-  font-weight: 700;
-  font-style: italic;
-  font-size: 1rem;
-  color: var(--cream);
-  margin-bottom: 3px;
-  letter-spacing: -0.01em;
-}
-.spb-note {
-  font-size: 0.88rem;
-  color: rgb(255, 255, 255);
-  line-height: 1.5;
-}
-.spb-text { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; }
-.sp-right {
-  position: relative;
-  border-radius: 20px;
-  overflow: hidden;
-  height: 580px;
-  box-shadow: 0 24px 64px rgba(0,0,0,0.55);
-  border: 3px solid rgba(255,248,238,0.08);
-}
-.sp-right img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.6s ease;
-}
-.sp-right:hover img {
-  transform: scale(1.04);
-}
-.sp-right::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(42,20,8,0.35) 0%, transparent 60%);
-  pointer-events: none;
-}
-
-/* STORY: WHAT'S INSIDE */
-.story-inside {
-  background: var(--yellow);
-  position: relative;
-  overflow: hidden;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: 100vh;
-}
-.story-inside::after {
-  content: '';
-  position: absolute;
-  bottom: -80px; left: -80px;
-  width: 350px; height: 350px;
-  background: radial-gradient(circle, rgba(59,31,10,0.1) 0%, transparent 70%);
-  pointer-events: none;
-}
-.si-inner {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 64px 56px 64px 80px;
-  gap: 32px;
-}
-.si-head-row { margin-bottom: 0; }
-.si-left-text { text-align: left; flex-shrink: 0; max-width: 560px; }
-.si-right-content { display: flex; flex-direction: column; gap: 20px; }.si-img-col { position: relative; overflow: hidden; }
-.si-img-col img { transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-.si-img-col:hover img { transform: scale(1.06); }
-.si-img-col::after { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to bottom, rgba(255,248,238,0.55) 0%, rgba(255,248,238,0.15) 25%, transparent 50%, rgba(8,4,0,0.45) 80%, rgba(8,4,0,0.72) 100%); pointer-events: none; }.si-img-col img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
-.si-actually { font-weight: 900; }
-.si-cup { font-family: 'Barrio', cursive; letter-spacing: 1px; }
-.si-head {
-  font-family: 'Barlow', sans-serif;
-  font-weight: 500;
-  font-size: 5rem;
-  line-height: 0.91;
-  color: var(--brown);
-  letter-spacing: 2px;
-  margin-bottom: 12px;
-  text-align: left;
-}
-.si-sub {
-  font-size: 1.05rem;
-  font-weight: 700;
-  font-style: italic;
-  color: rgba(59,31,10,0.6);
-  letter-spacing: -0.01em;
-  text-align: left;
-}
-.si-overlay-content {
-  position: absolute;
-  bottom: 40px;
-  right: 40px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 20px;
-  z-index: 2;
-}
-.si-ing-list {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 6px;
-}
-.si-ing {
-  color: var(--cream);
-  font-family: 'Barlow', sans-serif;
-  font-weight: 700;
-  font-size: 1rem;
-  letter-spacing: 0.03em;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
-}
-.si-ing--star {
-  color: var(--yellow);
-  font-size: 1.1rem;
-}
-.si-ing--small {
-  font-size: 0.85rem;
-  opacity: 0.75;
-}
-.si-note {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  background: rgba(59,31,10,0.07);
-  border: 2px solid rgba(59,31,10,0.18);
-  border-radius: 14px;
-  padding: 20px 22px;
-  margin-bottom: 22px;
-  text-align: left;
-  max-width: 560px;
-  margin-left: 0;
-  margin-right: 0;
-}
-.si-note-icon { font-size: 1.4rem; flex-shrink: 0; }
-.si-note-title {
-  font-family: 'Barlow', sans-serif;
-  font-weight: 700;
-  font-style: italic;
-  font-size: 0.9rem;
-  color: var(--brown);
-  margin-bottom: 4px;
-}
-.si-note-body { font-size: 0.82rem; color: rgba(59,31,10,0.68); line-height: 1.6; }
-
-/* STORY: TESTIMONIALS */
-.brand-story {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: 100vh;
-  height: auto;
-  padding: 0;
-  position: relative;
-}
-.bs-img-col {
-  position: relative;
-  overflow: hidden;
-}
-.bs-vid {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: opacity 0.8s ease;
-}
-.bs-img-tag {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  background: var(--yellow);
-  color: var(--brown);
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 0.95rem;
-  letter-spacing: 0.15em;
-  padding: 8px 16px;
-  border-radius: 6px;
-}
-.bs-text-col {
-  background: var(--cream);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 48px 72px 48px 56px;
-  gap: 14px;
-  overflow: visible;
-}
-.bs-head {
-  font-family: 'Barlow', sans-serif;
-  font-weight: 500;
-  font-size: clamp(2.4rem, 4.2vw, 5rem);
-  line-height: 0.95;
-  color: var(--brown);
-  letter-spacing: 2px;
-}
-.bs-born { font-weight: 900; }
-.bs-real { font-weight: 900; color: var(--yellow); } 
-.bs-obsession { font-family: 'Barrio', cursive; letter-spacing: 1px; }
-.bs-head span:not(.bs-real) { color: var(--green); }
-.bs-body {
-  font-size: 1rem;
-  color: var(--brown-light);
-  line-height: 1.75;
-}
-.bs-stats {
-  display: flex;
-  gap: 32px;
-  padding-top: 16px;
-  border-top: 1.5px solid rgba(59,31,10,0.1);
-  margin-top: 4px;
-}
-.bs-stat { display: flex; flex-direction: column; gap: 4px; }
-.bs-stat-num {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 2.2rem;
-  color: var(--brown);
-  line-height: 1;
-  letter-spacing: 0.04em;
-}
-.bs-stat-lbl {
-  font-size: 0.78rem;
-  color: var(--brown-light);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-@media (max-width: 768px) {
-  .bs-img { height: 340px; }
-  .bs-stats { gap: 20px; }
-}
-
-/* STORY: WHERE TO FIND */
-.story-where {
-  background: var(--green);
-  background-image: url('images/unsplash_fHsX0eS5X9Y.png');
-  background-size: cover;
-  background-position: center;
-  min-height: 100vh;
-  padding: 80px 48px;
-  position: relative;
-  overflow: hidden;
-}
-.story-where::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.30);
-  pointer-events: none;
-  z-index: 0;
-}
-.sw-inner { position: relative; z-index: 1; }
-.story-where::before {
-  content: '';
-  position: absolute;
-  top: -100px; right: -100px;
-  width: 420px; height: 420px;
-  background: radial-gradient(circle, rgba(140,198,63,0.2) 0%, transparent 70%);
-  pointer-events: none;
-}
-.sw-inner { max-width: 1000px; margin: 0 auto; position: relative; z-index: 1; }
-.sw-head-row { margin-bottom: 52px; text-align: center; }
-.sw-head {
-  font-family: 'Barlow', sans-serif;
-  font-weight: 500;
-  font-size: 5rem;
-  line-height: 0.91;
-  color: var(--cream);
-  letter-spacing: 2px;
-  margin-bottom: 12px;
-}
-.sw-find { font-weight: 900; }
-.sw-fix { font-family: 'Barrio', cursive; letter-spacing: 1px; }
-.sw-sub {
-  font-size: 1rem;
-  color: rgb(255, 255, 255);
-  max-width: 480px;
-  line-height: 1.65;
-  margin: 0 auto;
-}
-.sw-cols {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-  align-items: start;
-}
-.sw-lbl {
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--green-light);
-  margin-bottom: 18px;
-}
-.sw-loc-cards { display: flex; flex-direction: column; gap: 12px; }
-.sw-loc {
-  background: rgba(255,248,238,0.08);
-  border: 1px solid rgba(255,248,238,0.14);
-  border-radius: 12px;
-  padding: 18px 20px;
-  transition: background 0.2s, border-color 0.2s;
-}
-.sw-loc:hover {
-  background: rgba(255,248,238,0.14);
-  border-color: rgba(255,248,238,0.28);
-}
-.sw-loc--link {
-  display: block;
-  text-decoration: none;
-  cursor: pointer;
-}
-.sw-loc--link:hover {
-  background: rgba(255,248,238,0.16);
-  border-color: rgba(245,197,24,0.45);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-}
-.sw-loc--link:active { transform: translateY(0); }
-.sw-loc { transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
-.sw-loc-arrow {
-  font-style: normal;
-  font-size: 0.85rem;
-  opacity: 0.5;
-  transition: opacity 0.2s, transform 0.2s;
-  display: inline-block;
-}
-.sw-loc--link:hover .sw-loc-arrow { opacity: 1; transform: translate(2px, -2px); }
-.sw-loc-name {
-  font-family: 'Barlow', sans-serif;
-  font-weight: 700;
-  font-style: italic;
-  font-size: 1rem;
-  color: var(--cream);
-  margin-bottom: 4px;
-}
-.sw-loc-note { font-size: 0.78rem; color: rgb(255, 255, 255); }
-.sw-map-wrap { display: flex; flex-direction: column; }
-.sw-map-frame {
-  width: 100%;
-  height: 240px;
-  border: none;
-  border-radius: 12px 12px 0 0;
-  display: block;
-}
-.sw-addr-block {
-  background: rgba(255,248,238,0.10);
-  border: 1px solid rgba(255,248,238,0.14);
-  border-top: none;
-  border-radius: 0 0 12px 12px;
-  padding: 16px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-.sw-addr-text {
-  font-size: 0.82rem;
-  color: var(--cream);
-  line-height: 1.5;
-}
-.sw-dir-link {
-  font-family: 'Barlow', sans-serif;
-  font-weight: 700;
-  font-style: italic;
-  font-size: 0.82rem;
-  color: var(--yellow);
-  text-decoration: none;
-  white-space: nowrap;
-  transition: opacity 0.2s;
-}
-.sw-dir-link:hover { opacity: 0.75; }
-.sw-order-card {
-  background: var(--yellow);
-  border-radius: 18px;
-  padding: 36px 32px;
-  text-align: center;
-}
-.sw-order-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 2.2rem;
-  letter-spacing: 0.1em;
-  color: var(--brown);
-  margin-bottom: 12px;
-  line-height: 1;
-}
-.sw-order-sub {
-  font-size: 0.84rem;
-  color: rgba(59,31,10,0.65);
-  line-height: 1.65;
-  margin-bottom: 24px;
-}
-.sw-order-btn {
-  display: inline-block;
-  background: var(--brown);
-  color: var(--yellow);
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.2rem;
-  letter-spacing: 0.2em;
-  padding: 14px 36px;
-  border-radius: 40px;
-  border: none;
-  transition: transform 0.2s, box-shadow 0.2s;
-  margin-bottom: 14px;
-  width: 100%;
-}
-.sw-order-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(59,31,10,0.35);
-}
-.sw-order-note {
-  font-size: 0.72rem;
-  color: rgba(59,31,10,0.5);
-  letter-spacing: 0.04em;
-}
-
-/* Mobile responsive for new sections */
-@media(max-width:860px) {
-  .sp-inner { flex-direction: column; align-items: flex-start; padding: 48px 24px; gap: 32px; }
-  .sp-right { order: -1; }
-  .sp-char-img { max-width: 260px; margin: 0 auto; display: block; }
-  .story-promise,.story-testi,.story-where { padding: 60px 24px; }
-  .st-grid { grid-template-columns: 3fr; }
-  .sw-cols { grid-template-columns: 1fr; }
-  .sw-head{font-size:clamp(2rem,9vw,3.2rem);}
-}
-
-
-/* ============================================
-   SECTION ENTRANCE TRANSITIONS
-   ============================================ */
-
-/* Base: each section starts invisible */
-.sec-enter {
-  opacity: 0;
-  transform: translateY(48px);
-  transition:
-    opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.sec-enter.sec-visible {
-  opacity: 1;
-  transform: none;
-}
-
-/* Variant: slide from left */
-.sec-enter-left {
-  opacity: 0;
-  transform: translateX(-56px);
-  transition:
-    opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.sec-enter-left.sec-visible {
-  opacity: 1;
-  transform: none;
-}
-
-/* Variant: scale up (intimate/product feel) */
-.sec-enter-scale {
-  opacity: 0;
-  transform: scale(0.96) translateY(24px);
-  transition:
-    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.sec-enter-scale.sec-visible {
-  opacity: 1;
-  transform: none;
-}
-
-/* Stagger inner children when section becomes visible */
-.sec-stagger > * {
-  opacity: 0;
-  transform: translateY(28px);
-  transition:
-    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.sec-stagger.sec-visible > *:nth-child(1) { opacity:1; transform:none; transition-delay: 0.05s; }
-.sec-stagger.sec-visible > *:nth-child(2) { opacity:1; transform:none; transition-delay: 0.15s; }
-.sec-stagger.sec-visible > *:nth-child(3) { opacity:1; transform:none; transition-delay: 0.25s; }
-.sec-stagger.sec-visible > *:nth-child(4) { opacity:1; transform:none; transition-delay: 0.35s; }
-.sec-stagger.sec-visible > *:nth-child(5) { opacity:1; transform:none; transition-delay: 0.45s; }
-.sec-stagger.sec-visible > *:nth-child(6) { opacity:1; transform:none; transition-delay: 0.55s; }
-
-/* Trust bar items stagger */
-.tb .tb-item {
-  opacity: 0;
-  transform: translateY(16px);
-  transition:
-    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.tb.sec-visible .tb-item:nth-child(1) { opacity:1; transform:none; transition-delay: 0.0s; }
-.tb.sec-visible .tb-item:nth-child(2) { opacity:1; transform:none; transition-delay: 0.1s; }
-.tb.sec-visible .tb-item:nth-child(3) { opacity:1; transform:none; transition-delay: 0.2s; }
-.tb.sec-visible .tb-item:nth-child(4) { opacity:1; transform:none; transition-delay: 0.3s; }
-.tb.sec-visible .tb-item:nth-child(5) { opacity:1; transform:none; transition-delay: 0.4s; }
-
-/* Product cards stagger */
-.pg2.sec-stagger > .pcard { transition-property: opacity, transform, box-shadow; }
-
-/* Ingredient pills stagger */
-.si-ing-list.sec-stagger > .si-ing {
-  opacity: 0;
-  transform: scale(0.9) translateY(12px);
-  transition:
-    opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.si-ing-list.sec-stagger.sec-visible > .si-ing:nth-child(1) { opacity:1; transform:none; transition-delay:0.05s; }
-.si-ing-list.sec-stagger.sec-visible > .si-ing:nth-child(2) { opacity:1; transform:none; transition-delay:0.10s; }
-.si-ing-list.sec-stagger.sec-visible > .si-ing:nth-child(3) { opacity:1; transform:none; transition-delay:0.15s; }
-.si-ing-list.sec-stagger.sec-visible > .si-ing:nth-child(4) { opacity:1; transform:none; transition-delay:0.20s; }
-.si-ing-list.sec-stagger.sec-visible > .si-ing:nth-child(5) { opacity:1; transform:none; transition-delay:0.25s; }
-.si-ing-list.sec-stagger.sec-visible > .si-ing:nth-child(6) { opacity:1; transform:none; transition-delay:0.30s; }
-.si-ing-list.sec-stagger.sec-visible > .si-ing:nth-child(7) { opacity:1; transform:none; transition-delay:0.35s; }
-.si-ing-list.sec-stagger.sec-visible > .si-ing:nth-child(8) { opacity:1; transform:none; transition-delay:0.40s; }
-.si-ing-list.sec-stagger.sec-visible > .si-ing:nth-child(9) { opacity:1; transform:none; transition-delay:0.45s; }
-
-
-
-
-
-/* ============================================
-   HERO CINEMATIC INTRO
-   ============================================ */
-
-/* Phase 1 — BG Ken Burns zoom-in */
-@keyframes heroBgReveal {
-  from { opacity: 0; transform: scale(1.08); }
-  to   { opacity: 1; transform: scale(1); }
-}
-.hero-bg--intro {
-  animation: heroBgReveal 2s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-/* Phase 2+3 — Centre logo: pop in, hold, then shrink-move to top */
-.hero-logo-intro{display:none;} .hero-logo-intro--hidden {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  height: 96px;
-  width: auto;
-  object-fit: contain;
-  transform: translate(-50%, -50%) scale(1);
-  transform-origin: center center;
-  z-index: 10;
-  pointer-events: none;
-  will-change: transform, opacity;
-  /* Starts invisible; JS drives the animation via class toggling */
-  opacity: 0;
-}
-.hero-logo-intro.phase-pop {
-  animation: logoPopIn 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-@keyframes logoPopIn {
-  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.25); }
-  60%  { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
-  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-}
-.hero-logo-intro.phase-move {
-  /* JS sets --logo-dx and --logo-dy via inline style */
-  animation: logoMoveToTop 0.75s cubic-bezier(0.65, 0, 0.35, 1) forwards;
-}
-@keyframes logoMoveToTop {
-  0%   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-  85%  { opacity: 1; transform: translate(calc(-50% + var(--logo-dx, 0px)), calc(-50% + var(--logo-dy, -220px))) scale(var(--logo-scale, 0.2)); }
-  100% { opacity: 0; transform: translate(calc(-50% + var(--logo-dx, 0px)), calc(-50% + var(--logo-dy, -220px))) scale(var(--logo-scale, 0.2)); }
-}
-
-/* Real logo + all hero-c children hidden until JS reveals them */
-/* Each hero element starts hidden independently */
-.hero-logo-top,
-.hero-bottom-row,
-.hero-scroll,
-.hero-badge,
-.hero-dots { opacity: 0; }
-
-/* Individual element transitions (triggered by adding class 'hi-show') */
-.hero-logo-top  { transition: opacity 0.5s ease; }
-.hero-ey        { transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22,1,0.36,1); transform: translateY(12px); }
-.hero-hl-line   { overflow: hidden; padding-bottom: 0.05em; }
-.hero-hl-line > * { display: inline; }
-
-/* Headline lines: each is a masking container — inner span slides up */
-.hl-slide {
-  display: block;
-  transform: translateY(110%);
-  transition: transform 0.72s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.hl-slide.hi-show { transform: translateY(0); }
-
-.hero-stink { transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.22,1,0.36,1); transform: translateY(10px); }
-.hero-pills { transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.22,1,0.36,1); transform: translateY(12px); }
-.hero-btn   { transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34,1.4,0.64,1); transform: translateY(10px) scale(0.96); }
-.hero-note  { transition: opacity 0.5s ease; }
-.hero-scroll{ transition: opacity 0.5s ease; }
-.hero-badge { transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22,1,0.36,1); transform: translateX(30px) rotate(6deg) scale(0.88); }
-.hero-dots  { transition: opacity 0.5s ease; }
-
-.hero-scroll.hi-show, .hero-dots.hi-show,
-.hero-bottom-row.hi-show {
-  opacity: 1 !important;
-  transform: none !important;
-}
-.hero-badge.hi-show { opacity: 1 !important; transform: none !important; }
-.hero-logo-top.hi-show { opacity: 0.88 !important; }
-
-
-  /* ── Scroll lock during intro ── */
-  body.intro-lock { overflow: hidden; }
-
-
-.si-img-col img,
-.bs-img-col .bs-img {
-  transform: none;
-  will-change: auto;
-}
-
-/* ── FULL-PAGE SCROLL ────────────────────────────────────────── */
-/* full-page scroll active — sections scroll into view */
-
-/* ── MOBILE OVERRIDES (max-width: 860px) ──────────────────────────────────── */
-@media(max-width:860px){
-
-  /* Hero */
-  .hero-bottom-row{left:24px;right:24px;bottom:56px;flex-direction:column;align-items:flex-start;gap:16px;}
-  .hero-right-panel{width:100%;}
-  .hero-logo-top{left:50%;transform:translateX(-50%);top:24px;}
-  .hero-dots{bottom:14px;}
-
-  /* Story-Promise */
-  .sp-right{height:260px;width:100%;}
-  .sp-right-text{max-width:100%;text-align:left;}
-  .sp-head{font-size:clamp(2rem,9vw,3.2rem);}
-  .sp-benefits{max-width:100%;}
-
-  /* Story-Inside */
-  .story-inside{grid-template-columns:1fr;min-height:auto;padding:0;}
-  .si-inner{padding:48px 24px;}
-  .si-img-col{height:320px;}
-  .si-img-col img{width:100%;height:100%;object-fit:cover;display:block;}
-  .si-overlay-content{display:flex;right:16px;bottom:16px;left:16px;}
-  .si-head{font-size:clamp(2rem,9vw,3.2rem);}
-
-  /* Brand-Story */
-  .brand-story{grid-template-columns:1fr;height:auto;min-height:100svh;}
-  .bs-img-col{height:45vmax;order:2;}
-  .bs-text-col{padding:36px 24px 48px;order:1;}
-  .bs-head{font-size:clamp(2rem,9vw,3.2rem);}
-
-  /* Trust bar hidden on mobile (visible via normal scroll between sections) */
-  .trust-bar{display:none;}
-
-  /* Float widget */
-  #floatWidget{bottom:16px;right:16px;}
-  #floatChar{width:90px;height:90px;}
-  #floatBubble{font-size:0.8rem;padding:8px 14px;}
-  #floatWaBtn{width:48px;height:48px;}
-  #floatWaBtn svg{width:25px;height:25px;}
-  .fb-xbold{font-size:1.05rem;}
-
-}
-/* ── END MOBILE OVERRIDES ────────────────────────────────────────────────── */
-
-/* ── SITE INTRO OVERLAY ─────────────────────────────────────────────────── */
-#siteIntro {
-  position: fixed;
-  inset: 0;
-  background: #FFF8EE;
-  z-index: 9000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-#introLogo {
-  height: 80px;
-  width: auto;
-  opacity: 0;
-  transform: scale(0.6);
-  transition: none;
-}
-/* nav items start hidden for reveal */
-.sb-nav, .sb-cta { opacity: 0; transition: opacity 0.5s ease; }
-/* ── END INTRO OVERLAY ───────────────────────────────────────────────────── */
-
-/* ── MOBILE NAV ──────────────────────────────────────────────────────────── */
-/* Hamburger button — hidden on desktop */
-.mob-menu-btn{display:none;}
-
-/* Cart icon — hidden on desktop, show on mobile */
-.sb-cta-icon{display:none;width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
-
-/* Drawer */
-.mob-drawer{position:fixed;top:0;right:-280px;width:280px;height:100%;background:#FFF8EE;z-index:9999;transition:right 0.3s cubic-bezier(0.4,0,0.2,1);box-shadow:-4px 0 24px rgba(59,31,10,0.12);}
-.mob-drawer.open{right:0;}
-.mob-drawer-inner{display:flex;flex-direction:column;padding:24px 28px;gap:4px;height:100%;}
-.mob-drawer-close{align-self:flex-end;width:40px;height:40px;background:none;border:none;cursor:pointer;color:var(--brown);margin-bottom:16px;}
-.mob-drawer-close svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;}
-.mob-nav-link{font-family:'Barlow',sans-serif;font-size:1.1rem;font-weight:500;color:rgba(59,31,10,0.6);padding:14px 0;border-bottom:1px solid rgba(59,31,10,0.07);text-decoration:none;transition:color 0.15s;}
-.mob-nav-link:hover{color:var(--brown);}
-.mob-nav-cta{position:relative;margin-top:auto;padding:14px 0;background:#2D5016;color:#FFF8EE;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.12em;border-radius:40px;text-align:center;text-decoration:none;}
-.mob-drawer-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.3);z-index:9998;}
-.mob-drawer-overlay.open{display:block;}
-
-@media(max-width:860px){
-  /* Navbar: logo center, hamburger left, cart right */
-  .sb{grid-template-columns:auto 1fr auto;height:52px;padding:0 16px;}
-  .sb-nav{display:none;}
-  .mob-menu-btn{display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:none;border:none;cursor:pointer;color:var(--brown);}
-  .mob-menu-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;}
-  .sb-logo{justify-self:center;}
-  /* Order Now → cart icon only */
-  .sb-cta{padding:0;background:transparent;justify-self:end;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:#2D5016;}
-  .sb-cta:hover{background:#2D5016;transform:none;}
-  .sb-cta-text{display:none;}
-  .sb-cta-icon{display:block;color:#FFF8EE;}
-  /* Disable intro overlay on mobile */
-  #siteIntro{display:none;}
-  .sb-nav,.sb-cta{opacity:1 !important;}
-}
-/* ── END MOBILE NAV ──────────────────────────────────────────────────────── */
-
-/* SWAP ANIMATION */
-.hl-swap-wrap{display:inline-block;overflow:hidden;position:relative;vertical-align:top;height:1.05em;}
-.hl-swap{display:block;white-space:nowrap;font-weight:600;font-style:italic;color:#f5c518;position:absolute;top:0;left:0;}
-
-#hl-pure-e.hidden{opacity:0;transform:translateX(0.05em);}
-
-
-
-@keyframes swap-out{0%{transform:translateY(0);opacity:1}100%{transform:translateY(-110%);opacity:0}}
-@keyframes swap-in{0%{transform:translateY(110%);opacity:0}100%{transform:translateY(0);opacity:1}}
-.hl-swap.leaving{animation:swap-out 0.45s cubic-bezier(0.4,0,0.2,1) forwards;}
-.hl-swap.entering{animation:swap-in 0.45s cubic-bezier(0.4,0,0.2,1) forwards;}
-
-#soldout-toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(16px);background:#1a0a00;color:#fff;font-family:inherit;font-size:0.92rem;padding:12px 24px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity 0.3s,transform 0.3s;z-index:9999;white-space:nowrap;}
-#soldout-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-.ann-overlay{display:none;position:fixed;inset:0;z-index:600;background:rgba(18,8,2,0.70);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px;}
-.ann-overlay.open{display:flex;}
-.ann-card{position:relative;width:min(864px,74vw,74vh);aspect-ratio:1/1;background:var(--cream);border-radius:16px;overflow:hidden;}
-.ann-close{position:absolute;top:20px;right:20px;z-index:10;width:40px;height:40px;border-radius:50%;border:none;background:rgba(59,31,10,0.12);color:var(--brown);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s ease,transform 0.2s ease;}
-.ann-close:hover{background:rgba(59,31,10,0.22);transform:scale(1.1);}
-.ann-close:active{transform:scale(0.95);}
-
-
-/* ── FLAVOUR GRID ─────────────────────────────────── */
-.flv-hd{text-align:center;padding:80px 24px 52px;}
-.flv-hd-lbl{font-size:0.62rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#4A7C24;margin-bottom:14px;}
-.flv-hd-title{font-family:'Barlow',sans-serif;font-weight:500;font-size:clamp(2.6rem,4.5vw,4rem);letter-spacing:2px;color:var(--brown);line-height:0.88;text-transform:uppercase;margin-bottom:18px;}
-.flv-hd-sub{font-size:0.88rem;color:rgba(59,31,10,0.5);max-width:380px;margin:0 auto;line-height:1.65;}
-.flv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:1100px;margin:0 auto;padding:0 32px 80px;}
-.flv-card{display:flex;flex-direction:column;background:#fff;border-radius:20px;overflow:hidden;border:1.5px solid rgba(59,31,10,0.08);text-decoration:none;color:inherit;transition:transform 0.3s ease,box-shadow 0.3s ease;}.flv-card:not(.flv-card--soon){cursor:pointer;}
-.flv-card:not(.flv-card--soon):hover{transform:translateY(-10px);box-shadow:0 28px 64px rgba(59,31,10,0.13);}
-.flv-card--soon{cursor:default;}
-.flv-card-img{position:relative;aspect-ratio:5/4;overflow:hidden;}
-.flv-card-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;}
-.flv-card:not(.flv-card--soon):hover .flv-card-img img{transform:scale(1.05);}
-.flv-card-img-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(20,8,2,0.3) 0%,transparent 55%);}
-.flv-badge{position:absolute;top:16px;left:16px;font-size:0.58rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:4px 12px;border-radius:40px;background:var(--yellow);color:var(--brown);}
-.flv-badge--new{background:#E6F4EA;color:#2D6A4F;}
-.flv-badge--soon{background:rgba(255,255,255,0.18);color:#fff;border:1px solid rgba(255,255,255,0.35);backdrop-filter:blur(4px);}
-.flv-card-body{padding:24px 24px 20px;flex:1;display:flex;flex-direction:column;}
-.flv-card-name{font-family:'Barlow',sans-serif;font-size:1.55rem;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--brown);margin-bottom:6px;}
-.flv-card-tagline{font-size:0.84rem;color:rgba(59,31,10,0.52);line-height:1.55;flex:1;margin-bottom:20px;}
-.flv-card-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:16px;border-top:1px solid rgba(59,31,10,0.08);}
-.flv-card-price{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--brown);letter-spacing:0.04em;line-height:1;}
-.flv-card-price-sub{font-size:0.62rem;color:rgba(59,31,10,0.38);letter-spacing:0.05em;margin-top:1px;}
-.flv-card-cta{display:inline-block;padding:10px 22px;background:var(--brown);color:var(--cream);border:none;border-radius:40px;font-family:'Bebas Neue',sans-serif;font-size:0.88rem;letter-spacing:0.1em;cursor:pointer;transition:background 0.2s,transform 0.15s;white-space:nowrap;text-decoration:none;}
-.flv-card-cta:hover{background:#5A2E0F;transform:scale(1.04);}
-.flv-card-cta--soon{background:transparent;color:rgba(59,31,10,0.3);border:1.5px solid rgba(59,31,10,0.18);cursor:default;}
-.flv-card-cta--soon:hover{background:transparent;transform:none;}
-@media(max-width:900px){.flv-grid{grid-template-columns:1fr 1fr;gap:20px;}}
-@media(max-width:560px){.flv-grid{grid-template-columns:1fr;gap:18px;padding:0 20px 60px;}.flv-hd{padding:60px 24px 40px;}}
 </style>
-<script src="site-config.js"></script>
-<script src="flavours.js"></script>
-<script src="cart.js"></script>
-<!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '2040554866886258');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=2040554866886258&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-6BG4XW032H"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-6BG4XW032H');
-</script>
+<link rel="stylesheet" href="redesign.css">
 </head>
-<body class="intro-lock">
-<div id="siteIntro">
-  <img id="introLogo" src="brand assets/Dollop Logo.png" alt="Dollop">
-</div>
-<div id="cursor"></div>
+<body>
 
-<!-- SIDEBAR -->
+<!-- NAV -->
 <nav class="sb">
-  <!-- Mobile: hamburger left -->
   <button class="mob-menu-btn" id="mobMenuBtn" aria-label="Menu" onclick="toggleMobMenu()">
     <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
   </button>
-  <div class="sb-nav">
-    <a href="#hero" class="sb-link active">
-      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      <span class="sb-tip">Home</span>
-    </a>
-    <a href="#story" class="sb-link">
-      <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-      <span class="sb-tip">The Story</span>
-    </a>
-    <a href="#inside" class="sb-link">
-      <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-      <span class="sb-tip">What's Inside</span>
-    </a>
-    <a href="#brand" class="sb-link">
-      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      <span class="sb-tip">Our Brand</span>
-    </a>
-    <a href="#where" class="sb-link">
-      <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      <span class="sb-tip">Find Us</span>
-    </a>
-  </div>
   <a href="#hero" class="sb-logo">
     <img src="brand assets/Dollop Logo.png" alt="Dollop">
   </a>
-  <a href="product.html" class="sb-cta">
-    <span class="sb-cta-text">Order Now</span>
-    <svg class="sb-cta-icon" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+  <div class="sb-nav">
+    <a href="#hero" class="sb-link active">Home</a>
+    <a href="#flavours" class="sb-link">Flavours</a>
+    <a href="#featured" class="sb-link">Featured</a>
+    <a href="#process" class="sb-link">Our Process</a>
+    <a href="#story" class="sb-link">Our Story</a>
+  </div>
+  <a href="shop.html" class="sb-shop-btn" aria-label="Shop">
+    <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
     <span class="cart-badge">0</span>
   </a>
 </nav>
-<!-- Mobile nav drawer -->
 <div class="mob-drawer" id="mobDrawer">
   <div class="mob-drawer-inner">
     <button class="mob-drawer-close" onclick="toggleMobMenu()">
       <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
-    <a href="#hero"   class="mob-nav-link" onclick="toggleMobMenu()">Home</a>
-    <a href="#story"  class="mob-nav-link" onclick="toggleMobMenu()">The Story</a>
-    <a href="#inside" class="mob-nav-link" onclick="toggleMobMenu()">What's Inside</a>
-    <a href="#brand"  class="mob-nav-link" onclick="toggleMobMenu()">Our Brand</a>
-    <a href="#where"  class="mob-nav-link" onclick="toggleMobMenu()">Find Us</a>
-    <a href="product.html" class="mob-nav-cta">Order Now<span class="cart-badge" style="top:2px;right:10px;">0</span></a>
+    <a href="#hero"     class="mob-nav-link" onclick="toggleMobMenu()">Home</a>
+    <a href="#flavours" class="mob-nav-link" onclick="toggleMobMenu()">Flavours</a>
+    <a href="shop.html" class="mob-nav-link" onclick="toggleMobMenu()">Shop</a>
+    <a href="#featured" class="mob-nav-link" onclick="toggleMobMenu()">Featured</a>
+    <a href="#process"  class="mob-nav-link" onclick="toggleMobMenu()">Our Process</a>
+    <a href="#story"    class="mob-nav-link" onclick="toggleMobMenu()">Our Story</a>
+    <a href="shop.html" class="mob-nav-cta">Order Now<span class="cart-badge" style="top:2px;right:10px;">0</span></a>
   </div>
 </div>
 <div class="mob-drawer-overlay" id="mobOverlay" onclick="toggleMobMenu()"></div>
 
 <div class="main">
 
-<!-- HERO -->
-<section class="hero" id="hero">
-  <div class="hero-bg hero-bg--intro" id="heroBg">
-    <div class="hero-slide active" data-slide="0">
-      <img src="images/Dollop Pure Flavour.png" alt="Dollop Pure Flavour" loading="eager">
+  <!-- ══ 1. HERO — simple product + buy button ══════════════════════
+       Back to the 5-slide lifestyle carousel with a headline word that
+       swaps in sync with each slide (see renderHeroCarousel in
+       redesign.js). Section height/peek stays as-is; text/button stay
+       left-aligned + vertically centered per the graeters.com pattern. -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <div class="hero-slide active"><img src="images/Dollop Pure Flavour.png" alt="Dollop gelato" loading="eager"></div>
+      <div class="hero-slide"><img src="images/Dollop Pure Joy.png" alt="Dollop gelato" loading="lazy"></div>
+      <div class="hero-slide"><img src="images/Dollop Pure Love.png" alt="Dollop gelato" loading="lazy"></div>
+      <div class="hero-slide"><img src="images/Dollop Pure Mess.png" alt="Dollop gelato" loading="lazy"></div>
+      <div class="hero-slide"><img src="images/Dollop Pure Dollop.png" alt="Dollop gelato" loading="lazy"></div>
     </div>
-    <div class="hero-slide" data-slide="1">
-      <img src="images/Dollop Pure Joy.png" alt="Dollop Pure Joy" loading="lazy">
+    <div class="hero-ov"></div>
+    <div class="hero-dots" id="heroDots">
+      <button class="hero-dot active" data-dot="0" aria-label="Slide 1"></button>
+      <button class="hero-dot" data-dot="1" aria-label="Slide 2"></button>
+      <button class="hero-dot" data-dot="2" aria-label="Slide 3"></button>
+      <button class="hero-dot" data-dot="3" aria-label="Slide 4"></button>
+      <button class="hero-dot" data-dot="4" aria-label="Slide 5"></button>
     </div>
-    <div class="hero-slide" data-slide="2">
-      <img src="images/Dollop Pure Love.png" alt="Dollop Pure Love" loading="lazy">
+    <button class="hero-prev" id="heroPrev" aria-label="Previous slide"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <button class="hero-next" id="heroNext" aria-label="Next slide"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+    <div class="hero-content">
+      <h1 class="hero-headline">
+        <span class="hl-line"><span class="hl-xbold">PURE</span> <em id="heroSwapWord">FLAVOUR</em></span>
+        <span class="hl-line">NEVER TASTED</span>
+        <span class="hl-line hl-line--cta">
+          <span>THIS <span class="hl-barrio">GOOD.</span></span>
+          <a href="shop.html" class="hero-btn">Order Now</a>
+        </span>
+      </h1>
     </div>
-    <div class="hero-slide" data-slide="3">
-      <img src="images/Dollop Pure Mess.png" alt="Dollop Pure Mess" loading="lazy">
+  </section>
+
+  <!-- ══ PROMO TICKER — sits between Hero and Our Flavours ═══════════
+       Links through to the Merdeka Combo card on the shop page — the
+       scrolling text itself stays aria-hidden (it's decorative/repeated
+       for the seamless loop), the link carries its own label instead. -->
+  <a href="shop.html#merdekaCombo" class="ticker" aria-label="View the Merdeka Combo deal">
+    <div class="ticker-track" id="tickerTrack" aria-hidden="true"><!-- rendered by renderTicker() in redesign.js --></div>
+  </a>
+
+  <!-- ══ 2. FLAVOUR TEASE — all flavours, not the full catalogue ═════ -->
+  <section id="flavours">
+    <div class="flv-hd reveal">
+      <div class="flv-hd-lbl">Our Flavours</div>
+      <h2 class="flv-hd-title">Pick Your <span class="accent">Obsession</span></h2>
+      <p class="flv-hd-sub">Four flavours. Zero shortcuts. Real fruit, small batch, always.</p>
     </div>
-    <div class="hero-slide" data-slide="4">
-      <img src="images/Dollop Pure Dollop.png" alt="Dollop Pure Dollop" loading="lazy">
-    </div>
+    <div class="flv-grid" id="flvGrid"><!-- rendered by renderFlvTease() in redesign.js; each card carries its own staggered .reveal --></div>
+  </section>
 
-  </div>
-  <div class="hero-dots" id="heroDots">
-    <button class="hero-dot active" data-dot="0" aria-label="Slide 1"></button>
-    <button class="hero-dot" data-dot="1" aria-label="Slide 2"></button>
-    <button class="hero-dot" data-dot="2" aria-label="Slide 3"></button>
-    <button class="hero-dot" data-dot="3" aria-label="Slide 4"></button>
-    <button class="hero-dot" data-dot="4" aria-label="Slide 5"></button>
-  </div>
-  <button class="hero-prev" id="heroPrev" aria-label="Previous slide"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
-  <button class="hero-next" id="heroNext" aria-label="Next slide"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
-  <div class="hero-ov"></div>
-  <img src="brand assets/Dollop Logo.png" alt="Dollop" class="hero-logo-top">
-  <div class="hero-bottom-row">
-    <div class="hero-headline-wrap">
-      <div class="hero-hl">
-        <span class="hero-hl-line"><span class="hl-slide">
-          <span class="hl-xbold">PURE</span> <span class="hl-swap-wrap"><span class="hl-swap hl-flavour">FLAVOUR</span></span>
-        </span></span>
-        <span class="hero-hl-line"><span class="hl-slide hl-stinky"><span class="hl-barrio">STINKY</span> NEVER</span></span>
-        <span class="hero-hl-line"><span class="hl-slide hl-stinky">TASTED THIS <span class="hl-barrio">GOOD.</span></span></span>
-      </div>
-    </div>
-    <div class="hero-right-panel">
-      <a href="product.html" class="hero-btn">Get Your Dollop</a>
-    </div>
-  </div>
-  <!-- intro logo moved to overlay -->
-  <div class="hero-badge">
-    <div class="hero-badge-cloud">Stinky Good</div>
-    <img class="hero-badge-char" src="brand assets/Dollop Character.webp" alt="Dollop Character">
-  </div>
-  <div class="hero-scroll">
-    <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-    scroll
-  </div>
-</section>
-
-
-
-<!-- >
-</div>
-
-<!-- STORY: THE KING'S PROMISE -->
-<section class="story-promise sec-enter" id="story">
-  <div class="sp-inner">
-
-    <!-- LEFT: Benefits -->
-    <div class="sp-benefits">
-      <div class="spb reveal">
-        <div class="spb-icon">👑</div>
-        <div class="spb-text">
-          <div class="spb-title">100% Real Musang King Pulp</div>
-          <div class="spb-note">Not concentrate. Not extract. The actual fruit.</div>
-        </div>
-      </div>
-      <div class="spb reveal" style="transition-delay:0.08s">
-        <div class="spb-icon">🌿</div>
-        <div class="spb-text">
-          <div class="spb-title">Zero Artificial Anything</div>
-          <div class="spb-note">No flavours, no preservatives, no colour. Ever.</div>
-        </div>
-      </div>
-      <div class="spb reveal" style="transition-delay:0.16s">
-        <div class="spb-icon">🍦</div>
-        <div class="spb-text">
-          <div class="spb-title">Made in Small Batches Using a Family Recipe</div>
-          <div class="spb-note">Churned fresh so every cup hits harder, crafted with generations of durian passion.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- RIGHT: Heading + Sub, bottom-right -->
-    <div class="sp-right-text reveal">
-      <div class="sec-lbl" style="color:rgba(255,248,238,0.5);text-align:right;margin-bottom:10px;">The Story</div>
-      <h2 class="sp-head">BUILT ON<br><span class="sp-one" style="white-space:nowrap">ONE <span class="sp-obsession">OBSESSION.</span></span></h2>
-      <p class="sp-sub">No shortcuts. No fillers. No "durian flavouring". Just the real, pungent, glorious Musang King — the way we eat at pasar malam, minus the awkward family drama</p>
-    </div>
-
-  </div>
-</section>
-
-<!-- STORY: WHAT'S INSIDE -->
-<section class="story-inside sec-enter-left" id="inside">
-
-  <!-- LEFT: Info column -->
-  <div class="si-inner">
-    <div class="si-left-text reveal">
-      <div class="sec-lbl" style="color:rgba(59,31,10,0.4);margin-bottom:12px;">What's Inside</div>
-      <h2 class="si-head">WHAT'S <span class="si-actually">ACTUALLY</span><br>IN YOUR <span class="si-cup">CUP.</span></h2>
-      <p class="si-sub">Read the label. Brag to your friends.</p>
-    </div>
-  </div>
-
-  <!-- RIGHT: Fill image column with overlay -->
-  <div class="si-img-col">
-    <img src="images/dollop-less sweet image card.jpg" alt="Dollop Gelato">
-    <div class="si-overlay-content">
-      <div class="si-ing-list sec-stagger">
-        <div class="si-ing si-ing--star">👑 MSK Durian</div>
-        <div class="si-ing">🥛 Milk</div>
-        <div class="si-ing">🍦 Cream</div>
-        <div class="si-ing">🍬 Sugar</div>
-        <div class="si-ing">💧 Water</div>
-        <div class="si-ing">❄️ Trehalose</div>
-        <div class="si-ing">🌾 Dextrose</div>
-      </div>
-    </div>
-  </div>
-
-</section>
-
-<!-- STORY: TESTIMONIALS -->
-
-
-
-<section class="brand-story sec-enter" id="brand">
-
-  <!-- LEFT: Fill image column -->
-  <div class="bs-img-col">
-    <video class="bs-vid" id="bsVid" src="videos/Durian_Gelato_Scooped_Into_Cup_New.mp4" muted playsinline autoplay preload="auto"></video>
-    <div class="bs-img-tag">Est. 2024 · Kuala Lumpur</div>
-  </div>
-
-  <!-- RIGHT: Text column -->
-  <div class="bs-text-col reveal">
-    <div class="sec-lbl">Behind the Brand</div>
-    <h2 class="bs-head"><span class="bs-born">BORN</span> FROM A<br><span style="white-space:nowrap"><span class="bs-real">REAL</span> <span class="bs-obsession">OBSESSION.</span></span></h2>
-    <p class="bs-body"><em>A story about agak-agak - and a generational love for durian.</em></p>
-    <p class="bs-body">Grandma is crazy for it (she'll eat durian with rice for lunch and dinner). Mum loves it too, and Dad always made sure to bring some home during season, because that's just what you do when you love someone.</p>
-    <p class="bs-body">When the harvest was generous and the kids were only so-so about durian, Mum quietly hoped she could change that. So she turned it into popsicles.</p>
-    <p class="bs-body">The kids were hooked. But it was always a blind box. Made with true agak-agak spirit, sometimes the popsicle would be perfectly creamy with just the right amount of durian fibre. Other times? Pure icy lolly, as if the milk had simply forgotten to show up. Every popsicle pulled from that freezer hill was a little gamble, and somehow that made it more exciting.</p>
-    <p class="bs-body">Thirty years later, the recipe has been perfected, and Mum gave it two thumbs up 👍👍. So it's now time to share it with the world.</p>
-    <div class="bs-stats">
-      <div class="bs-stat">
-        <div class="bs-stat-num" data-count="100" data-suffix="%">100%</div>
-        <div class="bs-stat-lbl">Real Musang King</div>
-      </div>
-      <div class="bs-stat">
-        <div class="bs-stat-num" data-count="0">0</div>
-        <div class="bs-stat-lbl">Artificial flavours</div>
-      </div>
-      <div class="bs-stat">
-        <div class="bs-stat-num" data-scramble="D197">D197</div>
-        <div class="bs-stat-lbl">Premium grade only</div>
-      </div>
-    </div>
-  </div>
-
-</section>
-
-
-
-<!-- STORY: WHERE TO FIND -->
-<section class="story-where sec-enter" id="where">
-  <div class="sw-inner">
-    <div class="sw-head-row reveal">
-      <h2 class="sw-head">WHERE TO<br><span class="sw-find">FIND</span> YOUR <span class="sw-fix">FIX.</span></h2>
-      <p class="sw-sub">One pickup location in Shah Alam. Order ahead and it'll be cold and ready when you arrive.</p>
-    </div>
-    <div class="sw-cols">
-      <div class="sw-locs reveal">
-        <div class="sw-lbl">📍 Our Location</div>
-        <div class="sw-map-wrap">
-          <iframe
-            class="sw-map-frame"
-            src="https://maps.google.com/maps?q=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor&output=embed"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            title="Dollop pickup location"
-          ></iframe>
-          <div class="sw-addr-block">
-            <div class="sw-addr-text">1282, Jalan Bukit Kemuning<br>40640 Shah Alam, Selangor</div>
-            <a class="sw-dir-link" href="https://www.google.com/maps/search/?api=1&query=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor" target="_blank" rel="noopener">Get Directions ↗</a>
+  <!-- ══ 3. FEATURED FLAGSHIP — single highlighted product, now a highlight
+       video (real footage: videos/Dollop_Mini Gathering Highlights_Handbraked.mp4)
+       in place of the static product cutout. Autoplays muted/looped for
+       browser autoplay policies; pcard-mute-btn (wired in redesign.js) lets
+       visitors opt into sound. Everything else in this card (badge, stats
+       strip, info panel) is unchanged. ═══════════════════════════════ -->
+  <section class="featured" id="featured">
+    <div class="pcard reveal">
+      <div class="pcard-img-col">
+        <div class="pcard-img-wrap pcard-img-wrap--video">
+          <div class="pcard-video-frame">
+            <video class="pcard-video" id="flagshipVideo" autoplay muted loop playsinline poster="assets/images/Musang%20King.png">
+              <source src="videos/Dollop_Mini%20Gathering%20Highlights_Handbraked.mp4" type="video/mp4">
+            </video>
+            <button class="pcard-mute-btn" id="flagshipMuteBtn" type="button" aria-label="Unmute video">
+              <svg class="ico-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+              <svg class="ico-unmuted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+            </button>
           </div>
         </div>
       </div>
-      <div class="sw-order reveal" style="transition-delay:0.12s">
-        <div class="sw-lbl">🛒 Order Online</div>
-        <div class="sw-order-card">
-          <div class="sw-order-title">ONE CLICK AWAY</div>
-          <p class="sw-order-sub">Choose your location, pick your flavour, set a time. We'll have it cold and ready when you arrive.</p>
-          <a href="product.html" class="sw-order-btn" data-orig-text="Order Now">Order Now</a>
-          <div class="sw-order-note">Also available via WhatsApp for bulk & events</div>
+      <div class="pcard-info">
+        <div class="pcard-eyebrow">From Our Community</div>
+        <h2 class="pcard-title">Musang King, Courtside</h2>
+        <p class="pcard-desc">We brought a fresh batch of Musang King gelato to a pickleball gathering in Petaling Jaya — and watched first-timers fall for real durian, scoop by scoop. Made in small batches with real Musang King pulp: no shortcuts, no filler, just the honest intensity of the King of Fruits.</p>
+        <div class="pcard-feats">
+          <div class="pcard-feat">100% Real Musang King</div>
+          <div class="pcard-feat">No Artificial Flavours</div>
+          <div class="pcard-feat">Freshly Made</div>
+          <div class="pcard-feat">Small Batch</div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- MARQUEE -->
-<div class="mq">
-  <div class="mq-track">
-    <span class="mi">DOLLOP</span><span class="mi y">·</span><span class="mi">PURE MUSANG KING</span><span class="mi y">·</span><span class="mi">ONE FLAVOUR</span><span class="mi y">·</span><span class="mi">NO COMPROMISE</span><span class="mi y">·</span><span class="mi">NO APOLOGIES</span><span class="mi y">·</span><span class="mi">STINKY GOOD</span><span class="mi y">·</span><span class="mi">MADE IN MALAYSIA</span><span class="mi y">·</span>
-    <span class="mi">DOLLOP</span><span class="mi y">·</span><span class="mi">PURE MUSANG KING</span><span class="mi y">·</span><span class="mi">ONE FLAVOUR</span><span class="mi y">·</span><span class="mi">NO COMPROMISE</span><span class="mi y">·</span><span class="mi">NO APOLOGIES</span><span class="mi y">·</span><span class="mi">STINKY GOOD</span><span class="mi y">·</span><span class="mi">MADE IN MALAYSIA</span><span class="mi y">·</span>
-  </div>
-</div>
-
-<!-- FOOTER -->
-<footer id="footer">
-  <div class="ft-top">
-    <div class="ft-brand">
-      <img src="brand assets/Dollop Logo.png" alt="Dollop" class="ft-logo">
-      <p class="ft-tagline">Pure Musang King Gelato. One Flavour.&nbsp;No apologies.</p>
-      <div class="ft-soc">
-        <a href="https://www.facebook.com/dollop.gelato" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
-        <a href="https://www.instagram.com/dollopgelato/?hl=af" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
-        <a href="https://www.youtube.com/@dollopgelato" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg></a>
+  <!-- ══ 4. PARALLAX TAGLINE — "Pure ___" marquee (Figma node 45:4298) ═══
+       .parallax-tagline is a tall scroll-spacer (see redesign.css);
+       .pt-sticky pins to the top of the viewport for that extra distance,
+       so scrolling visually "pauses" on this section for a beat. While
+       pinned, 3 rows of gold "PURE ___" wordmark text and 2 rows of round
+       top-view gelato shots shift horizontally IN SYNC WITH SCROLL
+       (renderHappinessMarquee() in redesign.js fills the tracks per-row
+       word pattern; the scroll-linked block right below it drives
+       .hpy-dir-left rows one way and .hpy-dir-right rows the other — no
+       autoplay, it only moves while you scroll). Every row alternates
+       direction from the one above it: text rows move left→right
+       (.hpy-dir-right), image rows move right→left (.hpy-dir-left).
+       Circle images alternate the two real top-view photos shot so far
+       (Cempedak, Soya Gula Melaka) standing in for the single stock photo
+       Figma repeats — extend CIRCLE_PHOTOS in redesign.js once more
+       flavours are photographed. -->
+  <section class="parallax-tagline hpy-section" id="parallax">
+    <div class="pt-sticky hpy-sticky">
+      <div class="hpy-rows">
+        <div class="hpy-band"><div class="hpy-track hpy-dir-right" id="hpyText1"></div></div>
+        <div class="hpy-circles-row hpy-circles-row--wide"><div class="hpy-circles-track hpy-dir-left" id="hpyCircles1"></div></div>
+        <div class="hpy-band"><div class="hpy-track hpy-dir-right" id="hpyText2"></div></div>
+        <div class="hpy-circles-row hpy-circles-row--tight"><div class="hpy-circles-track hpy-dir-left" id="hpyCircles2"></div></div>
+        <div class="hpy-band"><div class="hpy-track hpy-dir-right" id="hpyText3"></div></div>
       </div>
     </div>
-    <div class="ft-cols">
-      <div class="ft-col">
-        <div class="ft-ct">The Goods</div>
-        <a href="#">The Flavour</a><a href="#">Packages</a><a href="#">Find a Cart</a><a href="product.html">Order Now</a>
+  </section>
+
+  <!-- ══ 6. OUR PROCESS ═══════════════════════════════════════════════
+       NOTE: placeholder copy — no manufacturing/sourcing details have
+       been confirmed by the client yet. Do not treat these claims as
+       final; swap for approved copy before this leaves draft status. -->
+  <section class="process" id="process">
+    <div class="process-inner">
+      <div class="process-hd reveal">
+        <div class="flv-hd-lbl">How It's Made</div>
+        <h2 class="flv-hd-title">Our <span class="accent">Process</span></h2>
       </div>
-      <div class="ft-col">
-        <div class="ft-ct">Info</div>
-        <a href="#">FAQ</a><a href="#">Delivery Info</a><a href="#">Contact Us</a><a href="#">Wholesale</a>
-      </div>
-      <div class="ft-col">
-        <div class="ft-ct">Find Us</div>
-        <address class="ft-addr">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span>1282, Jalan Bukit Kemuning,<br>40640 Shah Alam,<br>Selangor</span>
-        </address>
-        <address class="ft-addr">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          <span><a href="tel:+60142676333" style="color:inherit;text-decoration:none;">014-2676 333</a></span>
-        </address>
+      <div class="proc-steps">
+        <div class="proc-step reveal" style="transition-delay:0s">
+          <div class="proc-num">01</div>
+          <div class="proc-title">Real Fruit, Sourced Right</div>
+          <div class="proc-note">We start with real Musang King, Cempedak, and premium local ingredients — no concentrates, no flavouring.</div>
+        </div>
+        <div class="proc-step reveal" style="transition-delay:0.1s">
+          <div class="proc-num">02</div>
+          <div class="proc-title">Small-Batch Churned</div>
+          <div class="proc-note">Every batch is churned in small quantities so the fruit stays the star — never diluted for volume.</div>
+        </div>
+        <div class="proc-step reveal" style="transition-delay:0.2s">
+          <div class="proc-num">03</div>
+          <div class="proc-title">Freshly Packed</div>
+          <div class="proc-note">Cups and pints are packed fresh, close to pickup — not sitting in a warehouse freezer for weeks.</div>
+        </div>
+        <div class="proc-step reveal" style="transition-delay:0.3s">
+          <div class="proc-num">04</div>
+          <div class="proc-title">Cold to Your Door</div>
+          <div class="proc-note">Pickup in Shah Alam or delivery, kept cold the whole way so it arrives exactly as it left the freezer.</div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="ft-bot">
-    <span>© 2025 Beyond Bites Sdn Bhd (202501026928) · All rights reserved.</span>
-    <span>made with stinking good passion</span>
-  </div>
-</footer>
+  </section>
+
+  <!-- ══ 7. BRAND STORY — reused near-verbatim from ../index.html #brand ═ -->
+  <section class="brand-story" id="story">
+    <div class="bs-img-col">
+      <video class="bs-vid" src="videos/Durian_Gelato_Scooped_Into_Cup_New.mp4" muted playsinline autoplay loop preload="auto"></video>
+      <div class="bs-img-tag">Est. 2024 · Kuala Lumpur</div>
+    </div>
+    <div class="bs-text-col reveal">
+      <div class="sec-lbl">Behind the Brand</div>
+      <h2 class="bs-head"><span class="bs-born">BORN</span> FROM A<br><span style="white-space:nowrap"><span class="bs-real">REAL</span> <span class="bs-obsession">OBSESSION.</span></span></h2>
+      <p class="bs-body"><em>A story about agak-agak — and a generational love for durian.</em></p>
+      <p class="bs-body">Grandma is crazy for it (she'll eat durian with rice for lunch and dinner). Mum loves it too, and Dad always made sure to bring some home during season, because that's just what you do when you love someone.</p>
+      <p class="bs-body">When the harvest was generous and the kids were only so-so about durian, Mum quietly hoped she could change that. So she turned it into popsicles.</p>
+      <p class="bs-body">The kids were hooked. But it was always a blind box. Made with true agak-agak spirit, sometimes the popsicle would be perfectly creamy with just the right amount of durian fibre. Other times? Pure icy lolly, as if the milk had simply forgotten to show up. Every popsicle pulled from that freezer hill was a little gamble, and somehow that made it more exciting.</p>
+      <p class="bs-body">Thirty years later, the recipe has been perfected, and Mum gave it two thumbs up 👍👍. So it's now time to share it with the world.</p>
+      <div class="bs-stats">
+        <div class="bs-stat">
+          <div class="bs-stat-num">100%</div>
+          <div class="bs-stat-lbl">Real Musang King</div>
+        </div>
+        <div class="bs-stat">
+          <div class="bs-stat-num">0</div>
+          <div class="bs-stat-lbl">Artificial flavours</div>
+        </div>
+        <div class="bs-stat">
+          <div class="bs-stat-num">D197</div>
+          <div class="bs-stat-lbl">Premium grade only</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 7.5. WHERE TO FIND — near-verbatim from ../index.html #where, ═══
+       re-themed for a light fill (E2F2E6) instead of the live site's dark
+       green + photo-overlay treatment, so cards/text switch from
+       translucent-white-on-dark to solid-white-on-light. Structure,
+       copy, and the map/order-card layout are otherwise unchanged. -->
+  <section class="story-where" id="where">
+    <div class="sw-inner">
+      <div class="sw-head-row reveal">
+        <h2 class="sw-head">WHERE TO<br><span class="sw-find">FIND</span> YOUR <span class="sw-fix">FIX.</span></h2>
+        <p class="sw-sub">One pickup location in Shah Alam. Order ahead and it'll be cold and ready when you arrive.</p>
+      </div>
+      <div class="sw-cols">
+        <div class="sw-locs reveal">
+          <div class="sw-lbl">📍 Our Location</div>
+          <div class="sw-map-wrap" data-lenis-prevent>
+            <iframe
+              class="sw-map-frame"
+              src="https://maps.google.com/maps?q=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor&output=embed"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Dollop pickup location"
+            ></iframe>
+            <div class="sw-addr-block">
+              <div class="sw-addr-text">1282, Jalan Bukit Kemuning<br>40640 Shah Alam, Selangor</div>
+              <a class="sw-dir-link" href="https://www.google.com/maps/search/?api=1&query=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor" target="_blank" rel="noopener">Get Directions ↗</a>
+            </div>
+          </div>
+        </div>
+        <div class="sw-order reveal" style="transition-delay:0.12s">
+          <div class="sw-lbl">🛒 Order Online</div>
+          <div class="sw-order-card">
+            <div class="sw-order-title">ONE CLICK AWAY</div>
+            <p class="sw-order-sub">Choose your location, pick your flavour, set a time. We'll have it cold and ready when you arrive.</p>
+            <a href="shop.html" class="sw-order-btn">Order Now</a>
+            <div class="sw-order-note">Also available via WhatsApp for bulk &amp; events</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 8. FOOTER — fat illustrated footer ═════════════════════════════
+       Layout follows the client-supplied reference: link columns sit at
+       the top directly on the illustration (solid, fully-opaque text —
+       no frosted panel, since the light sky already gives good contrast),
+       the wordmark is large and centered in the middle, hills/flowers
+       show below it. -->
+  <footer class="ft-fat reveal-clip" id="footer">
+    <div class="ft-fat-bg" aria-hidden="true" style="background-image:url('assets/images/Dollop-Footer-Redesign.png')"></div>
+    <div class="ft-fat-top reveal">
+      <div class="ft-col">
+        <div class="ft-ct">Contact</div>
+        <a href="tel:+60142676333">014-2676 333</a>
+        <address class="ft-addr">1282, Jalan Bukit Kemuning,<br>40640 Shah Alam, Selangor</address>
+        <div class="ft-fat-soc">
+          <a href="https://www.facebook.com/dollop.gelato" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="https://www.instagram.com/dollopgelato/?hl=af" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://www.youtube.com/@dollopgelato" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </div>
+      <div class="ft-col">
+        <div class="ft-ct">Shop</div>
+        <a href="product.html?flavour=musang-king">Musang King</a>
+        <a href="product.html?flavour=cempedak">Cempedak</a>
+        <a href="product.html?flavour=soya-gula-melaka">Soya With Gula Melaka</a>
+        <a href="product.html?flavour=pandan-coconut">Pandan Coconut</a>
+        <a href="shop.html">Shop All</a>
+      </div>
+      <div class="ft-col">
+        <div class="ft-ct">Company</div>
+        <a href="#story">Our Story</a>
+        <a href="#process">Our Process</a>
+      </div>
+      <div class="ft-col">
+        <div class="ft-ct">Support</div>
+        <a href="#" id="waSupportLink">WhatsApp Us</a>
+        <a href="#footer">Delivery Info</a>
+      </div>
+    </div>
+
+    <div class="ft-fat-mid">
+      <img src="assets/Dollop Logo.png" alt="Dollop" class="ft-fat-logo reveal-logo">
+    </div>
+
+    <div class="ft-bot">
+      <span>© 2025 Beyond Bites Sdn Bhd (202501026928) · All rights reserved.</span>
+      <span>made with stinking good passion</span>
+    </div>
+  </footer>
 
 </div><!-- /.main -->
 
-<!-- MODAL -->
-<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
-  <div class="modal">
-    <button class="m-close" onclick="closeModal()">✕</button>
-    <div class="m-step active" id="step1">
-      <div class="si"><div class="sd active"></div><div class="sd"></div><div class="sd"></div></div>
-      <div class="m-title">Your Order</div>
-      <div class="m-sub">Add Musang King to your order, then let us know how you'd like to get your stink on.</div>
-      <div class="v-lbl">Cup Size</div>
-      <div class="sz-sel" style="margin-bottom:12px;">
-        <button class="sz-btn active" id="sz-80g" onclick="selSize(this,18)">80g · RM18</button>
-        <button class="sz-btn" onclick="selSize(this,75)">410g · RM75</button>
-      </div>
-      <button class="mb mb-s" style="margin-bottom:20px;" onclick="addCurrentToCart()">+ Add to Order</button>
-      <div class="v-lbl">Items</div>
-      <div id="cartList" class="cart-list"></div>
-      <div id="cartEmpty" class="cart-empty" style="display:none;">Your order is empty.<br>Pick a size above and tap "Add to Order", or browse other flavours on our <a href="product.html" style="color:var(--green);text-decoration:underline;">flavours page</a>.</div>
-      <div class="v-lbl">Fulfilment</div>
-      <div class="fulfilment-toggle" style="margin-bottom:16px;">
-        <button class="ft-btn active" id="ft-pickup" onclick="selFulfilment('pickup')">🏪 Pickup</button>
-        <button class="ft-btn" id="ft-delivery" onclick="selFulfilment('delivery')">🚚 Delivery</button>
-      </div>
-      <div class="pickup-fields" id="pickup-fields">
-        <div class="v-lbl">Pickup Location</div>
-        <div class="m-cards" style="grid-template-columns:1fr;margin-bottom:20px;">
-          <div class="m-card selected" id="loc-sa" onclick="selLocation('sa')"><span class="m-icon">📍</span><div class="m-name">Shah Alam</div><div class="m-note">1282, Jalan Bukit Kemuning · 40640 Shah Alam, Selangor</div></div>
-        </div>
-      </div>
-      <div class="delivery-fields" id="delivery-fields">
-        <div class="delivery-note">🚚 Delivery is available within Klang Valley. A delivery fee applies based on distance. We'll confirm the fee via WhatsApp before processing your order.</div>
-        <div class="fg"><label class="fl">Delivery Address</label><input type="text" class="fi2" placeholder="Full address incl. unit, street, postcode" id="del-addr"></div>
-        <div class="fg"><label class="fl">Area / Postcode</label><input type="text" class="fi2" placeholder="e.g. Petaling Jaya 47810" id="del-area"></div>
-      </div>
-      <button class="mb mb-p" id="cartContinueBtn" onclick="goStep(2)">Continue →</button>
-    </div>
-    <div class="m-step" id="step2">
-      <div class="si"><div class="sd done"></div><div class="sd active"></div><div class="sd"></div></div>
-      <div class="m-title">Your Details</div>
-      <div class="m-sub">Almost done — we'll confirm your pickup via WhatsApp.</div>
-      <div id="step2-pickup-info" style="background:rgba(74,124,36,0.07);border:1.5px solid rgba(74,124,36,0.2);border-radius:12px;padding:14px 16px;margin-bottom:18px;font-size:0.84rem;color:var(--green);line-height:1.7;">
-        📍 <strong>Pickup Location:</strong> <a id="locName" href="https://www.google.com/maps/search/?api=1&query=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor" target="_blank" rel="noopener" style="color:var(--green);text-decoration:underline;font-weight:500;">1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor ↗</a><br>
-        🕐 Ready within 1–2 hours after order confirmation.<br>
-        🧊 Kept frozen until you collect.
-      </div>
-      <div id="step2-delivery-info" style="display:none;background:rgba(245,197,24,0.1);border:1.5px solid rgba(245,197,24,0.35);border-radius:12px;padding:14px 16px;margin-bottom:18px;font-size:0.84rem;color:var(--brown);line-height:1.7;">
-        🚚 <strong>Delivery to:</strong> <span id="delAddrDisplay">—</span><br>
-        💬 We'll confirm delivery fee &amp; ETA via WhatsApp.<br>
-        🧊 Packed in insulated packaging.
-      </div>
-      <div class="fg"><label class="fl">Full Name</label><input type="text" class="fi2" placeholder="e.g. Ahmad Rizal" id="fn"></div>
-      <div class="fg"><label class="fl">WhatsApp Number</label><input type="tel" class="fi2" placeholder="e.g. 012-345 6789" id="fp"></div>
-      <div class="fg"><label class="fl">Email (optional)</label><input type="email" class="fi2" placeholder="e.g. yourname@email.com" id="fe"></div>
-      <div class="fg"><label class="fl">Notes (optional)</label><textarea class="fta" placeholder="e.g. Allergies, preferred collection time..." id="fnotes"></textarea></div>
-      <button class="mb mb-p" onclick="goStep(3)">Review Order →</button>
-      <button class="mb mb-s" onclick="goStep(1)">← Back</button>
-    </div>
-    <div class="m-step" id="step3">
-      <div class="si"><div class="sd done"></div><div class="sd done"></div><div class="sd active"></div></div>
-      <div class="m-title">Review &amp; Pay</div>
-      <div class="m-sub">Double-check your order before confirming.</div>
-      <div class="os">
-        <div class="or"><span>Name</span><span id="sName">—</span></div>
-        <div class="or"><span>WhatsApp</span><span id="sPhone">—</span></div>
-        <div class="or" id="sEmailRow"><span>Email</span><span id="sEmail">—</span></div>
-        <div id="reviewItems"></div>
-        <div class="or"><span>Fulfilment</span><span id="sFulfilment">Pickup</span></div>
-        <div class="or" id="sLocRow"><span>Pickup Location</span><a id="sLoc" href="https://www.google.com/maps/search/?api=1&query=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor" target="_blank" rel="noopener" style="color:var(--green);text-decoration:underline;font-size:0.8rem;text-align:right;max-width:200px;">1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor ↗</a></div>
-        <div class="or" id="sAddrRow" style="display:none"><span>Delivery Address</span><span id="sAddr">—</span></div>
-        <div class="or" id="sPickupFeeRow"><span>Pickup</span><span style="color:var(--green);font-weight:600;">FREE</span></div>
-        <div class="or" id="sDeliveryFeeRow" style="display:none"><span>Delivery Fee</span><span>Confirmed via WhatsApp</span></div>
-        <div class="or tot"><span>Total</span><span id="st">RM 18.00</span></div>
-      </div>
-      <!--<div style="background:rgba(74,124,36,0.07);border:1.5px solid rgba(74,124,36,0.22);border-radius:12px;padding:14px 16px;margin-bottom:18px;font-size:0.84rem;color:var(--brown);line-height:1.7;">
-        💸 <strong>How payment works:</strong><br>
-        After confirming, we'll WhatsApp you with a <strong>bank transfer QR code</strong>. Send your receipt and we'll process your order right away.
-      </div> -->
-      <button class="mb mb-p" id="confirmOrderBtn" onclick="placeOrder()">Confirm Order →</button>
-      <button class="mb mb-s" onclick="goStep(2)">← Back</button>
-    </div>
-    <div class="m-step" id="step4">
-      <div class="ss">
-        <div class="si2">✅</div>
-        <div class="st">Order Received!</div>
-        <p class="ssub">We'll WhatsApp you shortly with payment instructions and a QR code for bank transfer.</p>
-        <div class="son" id="orderNo">ORDER #DLP-00000</div>
-
-        <div style="background:var(--white);border:1.5px solid rgba(59,31,10,0.1);border-radius:14px;padding:20px;margin:16px 0;text-align:center;">
-          <div style="font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--brown-light);margin-bottom:12px;">Scan to Pay</div>
-          <img src="images/Dollop gelato Duit Now QR.jpeg" alt="DuitNow QR" style="width:180px;height:180px;object-fit:contain;border-radius:10px;display:block;margin:0 auto 16px;">
-          <div style="font-size:0.82rem;color:var(--brown);line-height:1.9;border-top:1px solid rgba(59,31,10,0.08);padding-top:14px;text-align:left;">
-            <div style="display:flex;justify-content:space-between;"><span style="color:var(--brown-light);">Bank</span><strong>Maybank</strong></div>
-            <div style="display:flex;justify-content:space-between;"><span style="color:var(--brown-light);">Account No.</span><strong>562106988173</strong></div>
-            <div style="display:flex;justify-content:space-between;"><span style="color:var(--brown-light);">Account Name</span><strong>Beyond Bites Sdn Bhd</strong></div>
-          </div>
-        </div>
-
-        <div style="background:rgba(74,124,36,0.07);border:1.5px solid rgba(74,124,36,0.22);border-radius:12px;padding:14px 16px;margin-bottom:16px;font-size:0.84rem;color:var(--brown);line-height:1.8;text-align:left;">
-          📱 <strong>WhatsApp on file:</strong> <span id="confirmPhone" style="font-weight:600;color:var(--green);">—</span><br>
-          📌 <strong>Reply in that WhatsApp chat with your proof of payment</strong> (screenshot or photo of receipt) — we'll confirm your order right away.
-        </div>
-        <button class="mb mb-p" onclick="closeModal()">Back to Home</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-
-// ============================================
-// SITE INTRO SEQUENCE
-// ============================================
-(function () {
-  const overlay   = document.getElementById('siteIntro');
-  const iLogo     = document.getElementById('introLogo');
-  const navLogo   = document.querySelector('.sb-logo img');
-  const sbNav     = document.querySelector('.sb-nav');
-  const sbCta     = document.querySelector('.sb-cta');
-  const hlSlides  = document.querySelectorAll('.hl-slide');
-  const heroScroll= document.querySelector('.hero-scroll');
-  const bottomRow = document.querySelector('.hero-bottom-row');
-  const dots      = document.querySelector('.hero-dots');
-
-  function show(el) { if (el) { el.style.opacity = '1'; } }
-
-  // Step 1 — logo pops in at center of cream screen
-  setTimeout(() => {
-    iLogo.style.transition = 'opacity 0.5s ease, transform 0.6s cubic-bezier(0.34,1.56,0.64,1)';
-    iLogo.style.opacity = '1';
-    iLogo.style.transform = 'scale(1)';
-  }, 300);
-
-  // Step 2 — logo flies to navbar position
-  setTimeout(() => {
-    const navLogoBcr  = navLogo.getBoundingClientRect();
-    const iLogoBcr    = iLogo.getBoundingClientRect();
-    // Center of intro logo
-    const fromCx = iLogoBcr.left + iLogoBcr.width / 2;
-    const fromCy = iLogoBcr.top  + iLogoBcr.height / 2;
-    // Center of nav logo target
-    const toCx   = navLogoBcr.left + navLogoBcr.width / 2;
-    const toCy   = navLogoBcr.top  + navLogoBcr.height / 2;
-    const dx = toCx - fromCx;
-    const dy = toCy - fromCy;
-    const scale = navLogoBcr.height / iLogoBcr.height;
-
-    iLogo.style.transition = 'transform 0.7s cubic-bezier(0.65,0,0.35,1), opacity 0.3s ease 0.5s';
-    iLogo.style.transform  = `translate(${dx}px, ${dy}px) scale(${scale})`;
-    iLogo.style.opacity    = '0';
-  }, 1200);
-
-  // Step 3 — fade out overlay, reveal page
-  setTimeout(() => {
-    overlay.style.transition = 'opacity 0.6s ease';
-    overlay.style.opacity = '0';
-    show(sbNav);
-    show(sbCta);
-  }, 1750);
-
-  // Step 4 — remove overlay, reveal hero content
-  setTimeout(() => {
-    overlay.style.display = 'none';
-    document.body.classList.remove('intro-lock');
-  }, 2400);
-
-  // Step 5 — hero content cascades in
-  setTimeout(() => show(bottomRow), 2000);
-  hlSlides.forEach((line, i) => setTimeout(() => line.classList.add('hi-show'), 2100 + i * 160));
-  setTimeout(() => show(dots),       2600);
-  setTimeout(() => show(heroScroll), 2800);
-})();
-
-const cursor=document.getElementById('cursor');
-document.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';});
-
-// Element-level reveal (existing)
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.05,rootMargin:'0px 0px 80px 0px'});
-document.querySelectorAll('.reveal,.fr,.pcard').forEach(el=>obs.observe(el));
-
-// Section-level entrance transitions
-const secObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('sec-visible');
-      // Also trigger stagger children inside this section
-      e.target.querySelectorAll('.sec-stagger').forEach(el => {
-        el.classList.add('sec-visible');
-      });
-      secObs.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-
-document.querySelectorAll('.sec-enter, .sec-enter-left, .sec-enter-scale').forEach(el => secObs.observe(el));
-
-// Trust bar — observe separately (it's a div not section)
-const tbEl = document.querySelector('.tb');
-if (tbEl) secObs.observe(tbEl);
-// Fallback: force all visible after short delay (catches elements in viewport on load)
-function forceVisible(){
-  document.querySelectorAll('.reveal,.fr,.pcard').forEach(el=>el.classList.add('visible'));
-  document.querySelectorAll('.sec-enter,.sec-enter-left,.sec-enter-scale').forEach(el=>{
-    const r=el.getBoundingClientRect();
-    if(r.top<window.innerHeight){
-      el.classList.add('sec-visible');
-      el.querySelectorAll('.sec-stagger').forEach(s=>s.classList.add('sec-visible'));
-    }
-  });
-}
-setTimeout(forceVisible,300);
-
-const sLinks=document.querySelectorAll('.sb-link');
-const secs=document.querySelectorAll('section[id]');
-const sObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const id=e.target.id;sLinks.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+id));}});},{threshold:0.4});
-secs.forEach(s=>sObs.observe(s));
-
-function toggleFaq(btn){const item=btn.closest('.fi');const was=item.classList.contains('open');document.querySelectorAll('.fi').forEach(i=>i.classList.remove('open'));if(!was)item.classList.add('open');}
-
-// State
-let price=18, sweet='regular', pickupLoc='sa', cupSize='80g', fulfilment='pickup', deliveryAddr='';
-const locLabels={sa:'1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor'};
-const pcQtys={reg:1,less:1};
-
-// Product card qty
-function pcQty(e,flavour,delta){
-  e.stopPropagation();
-  pcQtys[flavour]=Math.max(1,pcQtys[flavour]+delta);
-  document.getElementById('qty-'+flavour).textContent=pcQtys[flavour];
-}
-// Product card size
-function pcSelSz(e,flavour,ml,btn){
-  e.stopPropagation();
-  document.querySelectorAll('#sz-'+flavour+'-50,#sz-'+flavour+'-100').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  const prices={50:18,100:30};
-  const el=document.getElementById('price-'+flavour);
-  if(el) el.textContent='RM '+prices[ml];
-  const wasEl=document.getElementById('price-was');
-  if(wasEl) wasEl.style.display=ml===50?'inline':'none';
-}
-// Modal size
-function selSize(btn,p){
-  document.querySelectorAll('.sz-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  cupSize=btn.textContent.split('·')[0].trim();
-  price=p;
-}
-
-// Adds the currently selected Musang King size to the shared cart (qty 1 per click).
-function addCurrentToCart(){
-  var f = (typeof FLAVOURS !== 'undefined' && FLAVOURS['musang-king']) ? FLAVOURS['musang-king'] : null;
-  var flavourName = f ? f.fullName : 'Musang King Gelato';
-  var isPint = cupSize === '410g';
-  addToCart({
-    flavourSlug: 'musang-king',
-    flavourName: flavourName,
-    sizeKey: cupSize,
-    sizeLabel: cupSize + (isPint ? ' Pint' : ' Cup'),
-    price: price,
-    qty: 1
-  });
-  showCartToast('Added Musang King (' + cupSize + (isPint ? ' Pint' : ' Cup') + ') to your order');
-}
-
-function showCartToast(msg){
-  var t = document.getElementById('cartToast');
-  if (!t) return;
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(t._hideTimer);
-  t._hideTimer = setTimeout(function(){ t.classList.remove('show'); }, 2600);
-}
-
-// Renders the cart line items into the modal's first step.
-function renderCartStep(){
-  var cart = getCart();
-  var listEl = document.getElementById('cartList');
-  var emptyEl = document.getElementById('cartEmpty');
-  var contBtn = document.getElementById('cartContinueBtn');
-  if (!listEl) return;
-  if (cart.length === 0) {
-    listEl.innerHTML = '';
-    if (emptyEl) emptyEl.style.display = 'block';
-    if (contBtn) contBtn.disabled = true;
-    return;
-  }
-  if (emptyEl) emptyEl.style.display = 'none';
-  if (contBtn) contBtn.disabled = false;
-  listEl.innerHTML = cart.map(function(item, i){
-    return '<div class="cart-line">'
-      + '<div class="cart-line-info"><div class="cart-line-name">' + item.flavourName + '</div><div class="cart-line-size">' + item.sizeLabel + '</div></div>'
-      + '<div class="cart-line-qty"><button onclick="updateCartQty(' + i + ',-1);renderCartStep();">−</button><span>' + item.qty + '</span><button onclick="updateCartQty(' + i + ',1);renderCartStep();">+</button></div>'
-      + '<div class="cart-line-price">RM ' + (item.price * item.qty).toFixed(2) + '</div>'
-      + '<button class="cart-line-remove" onclick="removeFromCart(' + i + ');renderCartStep();" aria-label="Remove">✕</button>'
-      + '</div>';
-  }).join('') + '<div class="cart-subtotal"><span>Subtotal</span><span>RM ' + cartTotal().toFixed(2) + '</span></div>';
-}
-// Modal sweetness
-function selSweet(t){
-  sweet=t;
-  document.querySelectorAll('#sw-regular,#sw-less').forEach(b=>b.classList.remove('active'));
-  document.getElementById('sw-'+t).classList.add('active');
-}
-// Modal location
-function selLocation(loc){
-  pickupLoc=loc;
-  document.querySelectorAll('#loc-bu,#loc-sub,#loc-mk').forEach(c=>c.classList.remove('selected'));
-  document.getElementById('loc-'+loc).classList.add('selected');
-}
-function selFulfilment(type){
-  fulfilment=type;
-  document.getElementById('ft-pickup').classList.toggle('active',type==='pickup');
-  document.getElementById('ft-delivery').classList.toggle('active',type==='delivery');
-  document.getElementById('pickup-fields').classList.toggle('hide',type==='delivery');
-  document.getElementById('delivery-fields').classList.toggle('show',type==='delivery');
-  if(type==='delivery'){pickupLoc='delivery';}
-  else{pickupLoc='';}
-}
-// Open modal
-function openModal(){
-  if(window.SITE_CFG && window.SITE_CFG.SOLD_OUT){showSoldOutToast();return;}
-  if(typeof fbq!=='undefined') fbq('track','InitiateCheckout');
-  fulfilment='pickup';pickupLoc='sa';deliveryAddr='';
-  // Reset fulfilment toggle UI
-  const ftP=document.getElementById('ft-pickup');
-  const ftD=document.getElementById('ft-delivery');
-  const pf=document.getElementById('pickup-fields');
-  const df=document.getElementById('delivery-fields');
-  if(ftP){ftP.classList.add('active');ftD.classList.remove('active');}
-  if(pf){pf.classList.remove('hide');}
-  if(df){df.classList.remove('show');}
-  // Reset location selection
-  document.querySelectorAll('#loc-bu,#loc-sub,#loc-mk').forEach(c=>c.classList.remove('selected'));
-  renderCartStep();
-  document.getElementById('modalOverlay').classList.add('open');
-  document.body.style.overflow='hidden';
-  goStep(1);
-}
-function openModalWithFlavour(f){
-  selSweet(f);
-  openModal();
-}
-function closeModal(){
-  document.getElementById('modalOverlay').classList.remove('open');
-  document.body.style.overflow='';
-  setTimeout(function(){
-    goStep(1);
-    ['fn','fp','fe','fnotes'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
-    var btn=document.getElementById('confirmOrderBtn');if(btn){btn.disabled=false;btn.textContent='Confirm Order';}
-  },350);
-}
-function handleOverlayClick(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
-function showSoldOutToast(){var t=document.getElementById('soldout-toast');if(!t)return;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3000);}
-// ── Dynamic config (loaded from Apps Script) ─────────────────────────────────
-function applyConfig(cfg) {
-  window.SITE_CFG = Object.assign({}, DEFAULT_CONFIG, cfg);
-  var c = window.SITE_CFG;
-
-  // SOLD_OUT — update buttons and float character
-  if (c.SOLD_OUT) {
-    document.querySelectorAll('.pcard-order-btn,.sw-order-btn,.ph-order-btn').forEach(function(b){
-      b.textContent = 'Sold Out'; b.disabled = true;
-      b.style.opacity = '0.55'; b.style.cursor = 'not-allowed';
-    });
-    var fc = document.getElementById('floatChar');
-    if (fc) { fc.onclick = function(){ showSoldOutToast(); }; }
-  } else {
-    document.querySelectorAll('.pcard-order-btn,.sw-order-btn,.ph-order-btn').forEach(function(b){
-      b.textContent = b.dataset.origText || b.textContent;
-      b.disabled = false; b.style.opacity = ''; b.style.cursor = '';
-    });
-    var fc2 = document.getElementById('floatChar');
-    if (fc2) { fc2.onclick = function(){ window.location.href = 'product.html'; }; }
-  }
-
-
-  // ANNOUNCEMENT POPUP
-  var annOverlay = document.getElementById('annOverlay');
-  if (annOverlay) {
-    if (c.ANNOUNCEMENT_ACTIVE && c.ANNOUNCEMENT_IMAGE_URL) {
-      var annImg = document.getElementById('annImg');
-      var annLink = document.getElementById('annLink');
-      if (annLink) annLink.href = c.ANNOUNCEMENT_LINK || 'product.html';
-      if (annImg) {
-        annImg.onerror = function(){ annOverlay.classList.remove('open'); };
-        annImg.onload = function(){ setTimeout(function(){ annOverlay.classList.add('open'); }, 600); };
-        annImg.src = toDriveDirectUrl(c.ANNOUNCEMENT_IMAGE_URL);
-      } else {
-        setTimeout(function(){ annOverlay.classList.add('open'); }, 600);
-      }
-    }
-  }
-
-  // PRICES
-  var priceWas = document.getElementById('price-was');
-  var priceReg = document.getElementById('price-reg');
-  var phPrice  = document.getElementById('ph-price');
-  var phPriceWas = document.getElementById('ph-price-was');
-  var szBtns   = document.querySelectorAll('.sz-btn');
-  var showWas  = c.ORIGINAL_PRICE && c.ORIGINAL_PRICE !== c.PRICE;
-  if (priceWas)   { priceWas.textContent = 'RM ' + c.ORIGINAL_PRICE; priceWas.style.display = showWas ? 'inline' : 'none'; }
-  if (priceReg)   priceReg.textContent   = 'RM ' + c.PRICE;
-  if (phPrice)    phPrice.textContent    = 'RM ' + c.PRICE;
-  if (phPriceWas) { phPriceWas.textContent = 'RM ' + c.ORIGINAL_PRICE; phPriceWas.style.display = showWas ? 'inline' : 'none'; }
-  var btn80 = document.getElementById('sz-80g');
-  if (btn80) { btn80.textContent = '80g · RM' + c.PRICE; }
-  if (btn80 && btn80.classList.contains('active')) { price = c.PRICE; }
-
-  // Re-render flavour grid with updated price from config
-  renderFlvGrid(c);
-}
-
-function renderFlvGrid(cfg) {
-  var grid = document.getElementById('flvGrid');
-  if (!grid || typeof FEATURED_FLAVOURS === 'undefined') return;
-  var price = (cfg && cfg.PRICE) ? cfg.PRICE : ((window.SITE_CFG && window.SITE_CFG.PRICE) || 18);
-  grid.innerHTML = FEATURED_FLAVOURS.map(function(slug) {
-    var f = FLAVOURS[slug];
-    if (!f) return '';
-    var isSoon = !f.available;
-    var href = 'product.html?flavour=' + f.slug;
-    var badgeCls = isSoon ? 'flv-badge--soon' : (f.badge === 'New' ? 'flv-badge--new' : '');
-    var priceHtml = f.priceCup
-      ? '<div><div class="flv-card-price">RM ' + price + '</div><div class="flv-card-price-sub">per 80g cup</div></div>'
-      : '<div><div class="flv-card-price" style="font-size:1rem;letter-spacing:0.05em;opacity:0.38;">Stay Tuned</div></div>';
-    var ctaHtml = isSoon
-      ? '<span class="flv-card-cta flv-card-cta--soon">Coming Soon</span>'
-      : '<a class="flv-card-cta" href="' + href + '">Order Now</a>';
-    var clickAttr = !isSoon
-      ? ' onclick="location.href=\'' + href + '\'"'
-      : '';
-    return '<div class="flv-card' + (isSoon ? ' flv-card--soon' : '') + '"' + clickAttr + '>'
-      + '<div class="flv-card-img" style="background:' + f.cardBg + '">'
-      +   '<img src="' + f.cardImage + '" alt="' + f.fullName + '" loading="lazy">'
-      +   '<div class="flv-card-img-overlay"></div>'
-      +   '<span class="flv-badge ' + badgeCls + '">' + f.badge + '</span>'
-      + '</div>'
-      + '<div class="flv-card-body">'
-      +   '<div class="flv-card-name">' + f.name + '</div>'
-      +   '<div class="flv-card-tagline">' + f.tagline + '</div>'
-      +   '<div class="flv-card-footer">' + priceHtml + ctaHtml + '</div>'
-      + '</div>'
-      + '</div>';
-  }).join('');
-}
-
-function loadAndApplyConfig() {
-  var local = localStorage.getItem('dollop_config');
-  if (local) { try { applyConfig(JSON.parse(local)); } catch(e){} }
-  fetch(APPS_SCRIPT_URL + '?type=config', {cache:'no-cache'})
-    .then(function(r){ return r.json(); })
-    .then(function(cfg){ localStorage.setItem('dollop_config', JSON.stringify(cfg)); applyConfig(cfg); })
-    .catch(function(){ if (!local) applyConfig(DEFAULT_CONFIG); });
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  renderFlvGrid(DEFAULT_CONFIG);  // render grid immediately with default prices
-  loadAndApplyConfig();           // then fetch live config and re-render
-});
-
-
-function goStep(s){
-  if(s===2){
-    if(getCart().length===0){alert('Please add at least one item to your order.');return;}
-    if(fulfilment==='pickup'){
-      if(!pickupLoc||pickupLoc==='delivery'){alert('Please select a pickup location.');return;}
-      document.getElementById('locName').innerHTML='<a href="https://www.google.com/maps/search/?api=1&query=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor" target="_blank" rel="noopener" style="color:var(--green);text-decoration:underline;font-weight:500;">1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor ↗</a>';
-      document.getElementById('step2-pickup-info').style.display='';
-      document.getElementById('step2-delivery-info').style.display='none';
-    } else {
-      const addr=document.getElementById('del-addr').value.trim();
-      if(!addr){alert('Please enter your delivery address.');return;}
-      deliveryAddr=addr+' — '+(document.getElementById('del-area').value.trim()||'');
-      document.getElementById('delAddrDisplay').textContent=deliveryAddr;
-      document.getElementById('step2-pickup-info').style.display='none';
-      document.getElementById('step2-delivery-info').style.display='';
-    }
-  }
-  if(s===3){
-    const n=document.getElementById('fn').value.trim();
-    const p=document.getElementById('fp').value.trim();
-    if(!n||!p){alert('Please fill in your name and WhatsApp number.');return;}
-    if(typeof fbq!=='undefined') fbq('track','Lead');
-    document.getElementById('sName').textContent=n;
-    document.getElementById('sPhone').textContent=p;
-    const em=document.getElementById('fe').value.trim();document.getElementById('sEmail').textContent=em||'—';document.getElementById('sEmailRow').style.display=em?'':'none';
-    var cart=getCart();
-    var reviewEl=document.getElementById('reviewItems');
-    if(reviewEl){
-      reviewEl.innerHTML=cart.map(function(item){
-        return '<div class="or"><span>'+item.flavourName+' — '+item.sizeLabel+' × '+item.qty+'</span><span>RM '+(item.price*item.qty).toFixed(2)+'</span></div>';
-      }).join('');
-    }
-    const total=cartTotal().toFixed(2);
-    document.getElementById('sFulfilment').textContent=fulfilment==='delivery'?'Delivery':'Pickup';
-    document.getElementById('sLocRow').style.display=fulfilment==='delivery'?'none':'';
-    document.getElementById('sAddrRow').style.display=fulfilment==='delivery'?'':'none';
-    document.getElementById('sPickupFeeRow').style.display=fulfilment==='delivery'?'none':'';
-    document.getElementById('sDeliveryFeeRow').style.display=fulfilment==='delivery'?'':'none';
-    document.getElementById('sLoc').innerHTML='<a href="https://www.google.com/maps/search/?api=1&query=1282+Jalan+Bukit+Kemuning+40640+Shah+Alam+Selangor" target="_blank" rel="noopener" style="color:var(--green);text-decoration:underline;font-size:0.8rem;">1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor ↗</a>';
-    document.getElementById('sAddr').textContent=deliveryAddr||'—';
-    document.getElementById('st').textContent='RM '+total+(fulfilment==='delivery'?' + delivery fee':'');
-  }
-  document.querySelectorAll('.m-step').forEach(x=>x.classList.remove('active'));
-  document.getElementById('step'+s).classList.add('active');
-}
-
-// ============================================================
-// ORDER SUBMISSION — Google Sheets + WhatsApp
-// ============================================================
-// SETUP: Deploy a Google Apps Script Web App with the script
-// below and paste the URL into APPS_SCRIPT_URL.
-//
-// Apps Script code (Tools > Script Editor in Google Sheets):
-// ---------------------------------------------------------------
-// function doPost(e) {
-//   try {
-//     var data = JSON.parse(e.postData.contents);
-//     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-//     sheet.appendRow([
-//       data.timestamp, data.orderNo, data.name, data.phone,
-//       data.flavour, data.size, data.qty, data.fulfilment,
-//       data.location, data.total, data.notes, "Pending"
-//     ]);
-//     return ContentService.createTextOutput(JSON.stringify({status:"ok"}))
-//       .setMimeType(ContentService.MimeType.JSON);
-//   } catch(err) {
-//     return ContentService.createTextOutput(JSON.stringify({status:"error",msg:err.toString()}))
-//       .setMimeType(ContentService.MimeType.JSON);
-//   }
-// }
-// ---------------------------------------------------------------
-// Deploy: Extensions > Apps Script > Deploy > New deployment
-//         Type: Web App, Execute as: Me, Who has access: Anyone
-//         Copy the Web App URL and paste below.
-// ---------------------------------------------------------------
-
-
-async function placeOrder(){
-  const btn = document.getElementById('confirmOrderBtn');
-
-  // Gather all order data
-  const name     = document.getElementById('fn').value.trim();
-  const phone    = document.getElementById('fp').value.trim();
-  const notes    = document.getElementById('fnotes').value.trim();
-  const email    = document.getElementById('fe').value.trim();
-  const cart     = getCart();
-  if (cart.length === 0) { alert('Your order is empty.'); goStep(1); return; }
-  const itemsSummary = cart.map(function(i){ return i.flavourName + ' (' + i.sizeLabel + ') x' + i.qty; }).join(', ');
-  const totalQty = cart.reduce(function(s,i){ return s + i.qty; }, 0);
-  const subtotal = cartTotal();
-  const total    = 'RM ' + subtotal.toFixed(2) + (fulfilment === 'delivery' ? ' + delivery fee' : '');
-  const location = fulfilment === 'delivery' ? (deliveryAddr || '—') : (locLabels[pickupLoc] || '—');
-  const orderNo  = 'DLP-' + String(Math.floor(Math.random() * 90000) + 10000);
-  const timestamp = new Date().toLocaleString('en-MY', {timeZone: 'Asia/Kuala_Lumpur'});
-
-  // Basic validation
-  if (!name || !phone) {
-    alert('Please fill in your name and WhatsApp number.');
-    goStep(2);
-    return;
-  }
-
-  // Loading state
-  btn.disabled = true;
-  btn.textContent = 'Sending order...';
-
-  // Note: the order-saving backend (Apps Script) still expects one flavour/size/qty per
-  // row, so a mixed cart is summarised into a single line here rather than split into
-  // multiple rows — avoids needing another backend redeploy for this cart prototype.
-  const orderData = {
-    timestamp, orderNo, name, phone, email, flavour: itemsSummary,
-    size: 'Mixed', qty: totalQty, fulfilment, location, total, notes
-  };
-
-  // ── Submit to Google Sheets (best-effort, non-blocking) ──
-  const sheetPromise = (async () => {
-    if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') return;
-    try {
-      await fetch(APPS_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(orderData)
-      });
-    } catch (err) {
-      console.warn('Sheet submission failed (order still sent via WhatsApp):', err);
-    }
-  })();
-
-  // ── Build WhatsApp message to company ──
-  const itemLines = cart.map(function(i){ return `  • ${i.flavourName} (${i.sizeLabel}) × ${i.qty} — RM ${(i.price*i.qty).toFixed(2)}`; }).join('\n');
-  const waMsg = [
-    `🍦 *NEW DOLLOP ORDER*`,
-    `━━━━━━━━━━━━━━━━━━━━`,
-    `📋 Order No: *${orderNo}*`,
-    `👤 Name: ${name}`,
-    `📱 WhatsApp: ${phone}`,
-    email ? `📧 Email: ${email}` : '',
-    ``,
-    `🧁 Items:`,
-    itemLines,
-    ``,
-    `🚚 Fulfilment: ${fulfilment === 'delivery' ? 'Delivery' : 'Pickup'}`,
-    `📍 Location: ${location}`,
-    `💰 Total: ${total}`,
-    notes ? `📝 Notes: ${notes}` : '',
-    ``,
-    `⏰ ${timestamp}`,
-    `━━━━━━━━━━━━━━━━━━━━`,
-    `(Saya akan lampirkan bukti pembayaran selepas transfer.) / (I will attach my proof of payment once transferred.)`
-  ].filter(Boolean).join('\n');
-
-  // Wait for sheet (max 3s) then open WhatsApp regardless
-  await Promise.race([sheetPromise, new Promise(r => setTimeout(r, 3000))]);
-
-  // ── Update success screen ──
-  document.getElementById('orderNo').textContent = 'ORDER #' + orderNo;
-  document.getElementById('confirmPhone').textContent = phone;
-
-  // Reset button
-  btn.disabled = false;
-  btn.textContent = 'Confirm Order →';
-
-  clearCart();
-  // Go to success step
-  goStep(4);
-  if(typeof fbq!=='undefined') fbq('track','Purchase',{value:subtotal.toFixed(2),currency:'MYR'});
-
-  // Open WhatsApp to company number
-  const waUrl = 'https://wa.me/' + COMPANY_WHATSAPP + '?text=' + encodeURIComponent(waMsg);
-  setTimeout(() => window.open(waUrl, '_blank'), 400);
-}
-
-// Floating character — show after user scrolls past hero; lift above footer when it comes into view
-document.addEventListener('DOMContentLoaded', function(){
-  const waBtn = document.getElementById('floatWaBtn');
-  if (waBtn) {
-    waBtn.href = 'https://wa.me/' + COMPANY_WHATSAPP + '?text=' + encodeURIComponent('Hi! I have a question about Dollop Gelato 🍨');
-  }
-
-  const floatBtn = document.getElementById('floatWidget');
-  const heroSec = document.getElementById('hero');
-  if(floatBtn && heroSec){
-    const floatObs = new IntersectionObserver(([entry]) => {
-      floatBtn.classList.toggle('show', !entry.isIntersecting);
-    }, {threshold: 0});
-    floatObs.observe(heroSec);
-  }
-
-  const ftEl = document.getElementById('footer');
-  const wgt  = document.getElementById('floatWidget');
-  if(!ftEl || !wgt) return;
-  const BASE = 28;
-  function reposition(){
-    const rect = ftEl.getBoundingClientRect();
-    const overlap = window.innerHeight - rect.top;
-    wgt.style.bottom = (overlap > 0 ? overlap + BASE : BASE) + 'px';
-  }
-  window.addEventListener('scroll', reposition, { passive: true });
-  reposition();
-});
-
-// Hero carousel
-(function(){
-  const slides = document.querySelectorAll('.hero-slide');
-  const dots = document.querySelectorAll('.hero-dot');
-  let cur = 0, timer;
-  function goTo(n){
-    slides[cur].classList.remove('active');
-    dots[cur].classList.remove('active');
-    cur = (n + slides.length) % slides.length;
-    slides[cur].classList.add('active');
-    dots[cur].classList.add('active');
-    // Sync headline text with slide
-    if(window.heroSwapToIndex) window.heroSwapToIndex(cur);
-  }
-  function next(){ goTo(cur + 1); }
-  function startAuto(){ timer = setInterval(next, 5000); }
-  function resetAuto(){ clearInterval(timer); startAuto(); }
-  dots.forEach((d,i) => d.addEventListener('click', ()=>{ goTo(i); resetAuto(); }));
-  document.getElementById('heroPrev').addEventListener('click', ()=>{ goTo(cur-1); resetAuto(); });
-  document.getElementById('heroNext').addEventListener('click', ()=>{ goTo(cur+1); resetAuto(); });
-  startAuto();
-})();
-
-// ── Product Gallery ──
-let galIdx = 0;
-function galleryGo(n) {
-  const slides = document.querySelectorAll('.pgal-slide');
-  slides[galIdx].classList.remove('active');
-  galIdx = (n + slides.length) % slides.length;
-  slides[galIdx].classList.add('active');
-}
-function galleryNav(dir) { galleryGo(galIdx + dir); }
-
-// Hero headline swap animation
-(function(){
-  const words = ['FLAVOUR','JOY','LOVE','MESS','DOLLOP'];
-  let current = 0, isAnimating = false, pendingTarget = null;
-  function swapToIndex(target) {
-    if(target === current) return;
-    if(isAnimating) { pendingTarget = target; return; }
-    var wrap = document.querySelector('.hl-swap-wrap');
-    if(!wrap) return;
-    var leaving = wrap.querySelector('.hl-swap:not(.entering)');
-    if(leaving) {
-      isAnimating = true;
-      wrap.style.width = leaving.offsetWidth + 'px';
-      var entering = document.createElement('span');
-      entering.className = 'hl-swap hl-flavour entering';
-      entering.textContent = words[target];
-      wrap.appendChild(entering);
-      leaving.classList.add('leaving');
-      setTimeout(function(){
-        if(leaving) leaving.remove();
-        entering.classList.remove('entering');
-        wrap.style.width = entering.offsetWidth + 'px';
-        current = target;
-        isAnimating = false;
-        if(pendingTarget !== null && pendingTarget !== current) {
-          var next = pendingTarget;
-          pendingTarget = null;
-          swapToIndex(next);
-        } else {
-          pendingTarget = null;
-        }
-      }, 450);
-    }
-  }
-
-  function swapWord(){
-    const next = (current + 1) % words.length;
-    const wrap = document.querySelector('.hl-swap-wrap');
-    if(!wrap) return;
-    const leaving = wrap.querySelector('.hl-swap');
-    // Pin wrap width so layout stays stable during animation
-    if(leaving) wrap.style.width = leaving.offsetWidth + 'px';
-    const entering = document.createElement('span');
-    entering.className = 'hl-swap hl-flavour entering';
-    entering.textContent = words[next];
-    wrap.appendChild(entering);
-    if(leaving) leaving.classList.add('leaving');
-
-
-    setTimeout(function(){
-      if(leaving) leaving.remove();
-      entering.classList.remove('entering');
-      wrap.style.width = entering.offsetWidth + 'px';
-      current = next;
-    }, 450);
-  }
-  // Set initial wrap width
-  window.heroSwapToIndex = swapToIndex;
-  (function initWrap(){
-    var wrap = document.querySelector('.hl-swap-wrap');
-    var first = wrap && wrap.querySelector('.hl-swap');
-    if(wrap && first && first.offsetWidth) { wrap.style.width = first.offsetWidth + 'px'; }
-    else { setTimeout(initWrap, 100); }
-  })();
-  // Text swap is now driven by the image carousel (heroSwapToIndex)
-})();
-</script>
-
-<!-- FLOATING CHARACTER -->
-<div id="floatWidget">
-  <a id="floatWaBtn" href="#" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp">
-    <svg viewBox="0 0 32 32" fill="#fff"><path d="M16.004 3C9.376 3 4 8.373 4 15c0 2.29.638 4.43 1.744 6.256L4 29l7.955-2.086A11.94 11.94 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3zm0 21.7c-1.94 0-3.76-.51-5.34-1.4l-.383-.22-4.72 1.238 1.26-4.6-.25-.4A9.65 9.65 0 0 1 5.3 15c0-5.9 4.8-10.7 10.704-10.7S26.7 9.1 26.7 15 21.908 24.7 16.004 24.7zm5.87-8.02c-.32-.16-1.9-.94-2.196-1.05-.294-.107-.508-.16-.722.16-.213.32-.826 1.05-1.013 1.267-.187.213-.373.24-.693.08-.32-.16-1.35-.497-2.573-1.585-.95-.847-1.593-1.894-1.78-2.213-.187-.32-.02-.494.14-.653.144-.143.32-.373.48-.56.16-.187.213-.32.32-.533.107-.213.053-.4-.027-.56-.08-.16-.722-1.74-.99-2.386-.26-.626-.526-.54-.722-.55l-.615-.01c-.213 0-.56.08-.853.4-.293.32-1.12 1.093-1.12 2.667 0 1.573 1.147 3.093 1.307 3.307.16.213 2.256 3.44 5.467 4.827.764.33 1.36.527 1.826.673.767.244 1.466.21 2.02.127.617-.092 1.9-.777 2.166-1.527.267-.75.267-1.393.187-1.527-.08-.133-.293-.213-.613-.373z"/></svg>
-  </a>
-  <div id="floatBubble" onclick="window.location.href='product.html'">NEW FLAVOUR !<br><span class="fb-xbold">CEMPEDAK</span></div>
-  <img src="brand assets/Dollop Character.webp" alt="Dollop" id="floatChar" onclick="window.location.href='product.html'">
-</div>
-
-<script>
-// ── SCROLL REVEAL + SIDEBAR ────────────────────────────────────────────────
-(function() {
-  const SECTION_IDS = ['hero','story','inside','brand','where'];
-
-  function revealSection(el) {
-    el.querySelectorAll('.sec-enter,.sec-enter-left,.reveal,.sec-stagger').forEach(e => {
-      e.classList.add('sec-visible','visible');
-    });
-  }
-
-  function updateSidebar(id) {
-    document.querySelectorAll('.sb-link').forEach(l => l.classList.remove('active'));
-    const a = document.querySelector('.sb-link[href="#' + id + '"]');
-    if(a) a.classList.add('active');
-  }
-
-  // Reveal on scroll via IntersectionObserver
-  const sections = SECTION_IDS.map(id => document.getElementById(id)).filter(Boolean);
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting) {
-        revealSection(entry.target);
-        updateSidebar(entry.target.id);
-      }
-    });
-  }, { threshold: 0.3 });
-  sections.forEach(s => observer.observe(s));
-
-  // Reveal hero immediately
-  revealSection(sections[0]);
-
-  // Framer-style lerp smooth scroll
-  let lerpTarget = window.scrollY;
-  let lerpCurrent = window.scrollY;
-  let lerpRunning = false;
-  const LERP_FACTOR = 0.06; // lower = slower/smoother
-
-  function lerpTick() {
-    const dist = lerpTarget - lerpCurrent;
-    if(Math.abs(dist) < 0.5) {
-      lerpCurrent = lerpTarget;
-      window.scrollTo(0, lerpCurrent);
-      lerpRunning = false;
-      return;
-    }
-    lerpCurrent += dist * LERP_FACTOR;
-    window.scrollTo(0, lerpCurrent);
-    requestAnimationFrame(lerpTick);
-  }
-
-  function startLerp(delta) {
-    const maxY = document.body.scrollHeight - window.innerHeight;
-    lerpTarget = Math.max(0, Math.min(lerpTarget + delta, maxY));
-    if(!lerpRunning) { lerpRunning = true; requestAnimationFrame(lerpTick); }
-  }
-
-  window.addEventListener('wheel', function(e) {
-    e.preventDefault();
-    startLerp(e.deltaY * 1.8);
-  }, { passive: false });
-
-  // Smooth scroll for nav links
-  document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener('click', function(e) {
-      const el = document.getElementById(this.getAttribute('href').slice(1));
-      if(!el) return;
-      e.preventDefault();
-      lerpTarget = Math.max(0, Math.min(el.getBoundingClientRect().top + window.scrollY, document.body.scrollHeight - window.innerHeight));
-      if(!lerpRunning) { lerpRunning = true; requestAnimationFrame(lerpTick); }
-    });
-  });
-
-
-  // Number counter animation
-  function animateCounter(el) {
-    const target = parseInt(el.dataset.count);
-    const suffix = el.dataset.suffix || '';
-    const duration = 1800;
-    const start = performance.now();
-    function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
-    function tick(now) {
-      const progress = Math.min((now - start) / duration, 1);
-      const value = Math.round(easeOut(progress) * target);
-      el.textContent = value + suffix;
-      if(progress < 1) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-  }
-
-  function animateScramble(el) {
-    const final = el.dataset.scramble;
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let frame = 0;
-    const totalFrames = 24;
-    function tick() {
-      el.textContent = final.split('').map((c, i) => {
-        if(frame > totalFrames * (i / final.length) * 1.5) return c;
-        return chars[Math.floor(Math.random() * chars.length)];
-      }).join('');
-      frame++;
-      if(frame <= totalFrames * 1.5) requestAnimationFrame(tick);
-      else el.textContent = final;
-    }
-    requestAnimationFrame(tick);
-  }
-
-  // Trigger when brand section enters view
-  const brandSection = document.getElementById('brand');
-  let countersRun = false;
-  const counterObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting && !countersRun) {
-        countersRun = true;
-        document.querySelectorAll('.bs-stat-num[data-count]').forEach(animateCounter);
-        document.querySelectorAll('.bs-stat-num[data-scramble]').forEach(animateScramble);
-      }
-    });
-  }, { threshold: 0.4 });
-  if(brandSection) counterObserver.observe(brandSection);
-})();
-// ── END SCROLL REVEAL ────
-
-// ── BRAND VIDEO LOOP WITH PAUSE ─────────────────────────────────────────────
-(function() {
-  var vid = document.getElementById('bsVid');
-  if(!vid) return;
-  var PAUSE_MS = 1800;
-  var FADE_MS  = 800;
-
-  function doLoop() {
-    // Fade out
-    vid.style.opacity = '0';
-    setTimeout(function() {
-      vid.pause();
-      vid.currentTime = 0;
-      // Hold pause
-      setTimeout(function() {
-        vid.play().catch(function(){});
-        vid.style.opacity = '1';
-      }, PAUSE_MS);
-    }, FADE_MS);
-  }
-
-  // Trigger loop near end via timeupdate (once duration is known)
-  var triggered = false;
-  vid.addEventListener('timeupdate', function() {
-    if(!triggered && vid.duration && vid.currentTime >= vid.duration - (FADE_MS / 1000 + 0.1)) {
-      triggered = true;
-      doLoop();
-      setTimeout(function() { triggered = false; }, PAUSE_MS + FADE_MS * 2 + 500);
-    }
-  });
-
-  // Fallback: ended event
-  vid.addEventListener('ended', function() {
-    if(!triggered) doLoop();
-  });
-
-  // Autoplay when in viewport
-  var vidObs = new IntersectionObserver(function(entries) {
-    if(entries[0].isIntersecting) {
-      vid.play().catch(function(){});
-      vidObs.disconnect();
-    }
-  }, { threshold: 0.1 });
-  vidObs.observe(vid);
-  vid.play().catch(function(){});
-})();
-// ── END BRAND VIDEO LOOP ────────────────────────────────────────────────
-</script>
-
-<script>
-function toggleMobMenu() {
-  document.getElementById('mobDrawer').classList.toggle('open');
-  document.getElementById('mobOverlay').classList.toggle('open');
-}
-</script>
-
-
-<div id="soldout-toast">We’re currently sold out — check back soon!</div>
-<div id="cartToast" class="cart-toast"></div>
 <div class="ann-overlay" id="annOverlay">
   <div class="ann-card" id="annCard">
     <button class="ann-close" id="annClose" aria-label="Close announcement" style="color: white;">&#x2715;</button>
-    <a id="annLink" href="product.html" style="display:block;width:100%;height:100%;">
+    <a id="annLink" href="shop.html" style="display:block;width:100%;height:100%;">
       <img id="annImg" src="" alt="Announcement" style="width:100%;height:100%;object-fit:cover;display:block;">
     </a>
   </div>
 </div>
+
+<script src="site-config.js"></script>
+<script src="flavours.js"></script>
+<script src="cart.js"></script>
+<script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
+<script src="redesign.js"></script>
 <script>
-(function(){
-  var overlay=document.getElementById('annOverlay');
-  var card=document.getElementById('annCard');
-  var btn=document.getElementById('annClose');
-  if(!overlay||!card||!btn)return;
-  function closeAnn(){overlay.classList.remove('open');}
-  btn.addEventListener('click',closeAnn);
-  overlay.addEventListener('click',function(e){if(!card.contains(e.target))closeAnn();});
-})();
+  var waMsg = encodeURIComponent("Hi Dollop! I'd love to hear about new flavours 🍦");
+  document.getElementById('waSupportLink').href = 'https://wa.me/' + COMPANY_WHATSAPP + '?text=' + waMsg;
 </script>
 </body>
 </html>
