@@ -204,8 +204,75 @@ a{text-decoration:none;color:inherit;}
 .pd-nut-divider{height:2px;background:rgba(59,31,10,0.12);margin:4px 0;}
 .pd-nut-footer{font-size:0.68rem;color:var(--brown-light);margin-top:12px;padding-top:10px;border-top:1px solid rgba(59,31,10,0.07);}
 
+/* MERDEKA COMBO */
+.combo-section{padding:100px 48px 32px;}
+.combo-card{max-width:920px;margin:0 auto;background:var(--white);border:1.5px solid rgba(59,31,10,0.09);border-radius:20px;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;align-items:center;}
+.combo-img{width:100%;height:100%;object-fit:cover;display:block;}
+.combo-body{padding:40px 44px;}
+.combo-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(74,124,36,0.09);color:var(--green);font-size:0.68rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;padding:6px 16px;border-radius:40px;margin-bottom:16px;}
+.combo-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4vw,2.8rem);letter-spacing:0.06em;color:var(--brown);margin-bottom:12px;}
+.combo-desc{font-size:0.92rem;color:var(--brown-mid);line-height:1.7;margin-bottom:22px;}
+.combo-flavours{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;}
+.combo-flavour-pill{padding:6px 16px;border:1.5px solid rgba(59,31,10,0.14);border-radius:40px;font-size:0.78rem;font-weight:500;color:var(--brown-mid);background:var(--cream);}
+.combo-price-row{display:flex;align-items:baseline;gap:10px;margin-bottom:24px;}
+.combo-price{font-family:'Bebas Neue',sans-serif;font-size:2.6rem;letter-spacing:0.04em;color:var(--brown);}
+.combo-price-note{font-size:0.82rem;color:var(--brown-light);}
+.combo-order-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--yellow);color:var(--brown);font-family:'Bebas Neue',sans-serif;font-size:1.25rem;letter-spacing:0.14em;padding:14px 40px;border-radius:50px 44px 52px 46px;border:2.5px solid var(--brown);cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;}
+.combo-order-btn:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(245,197,24,0.4);}
+.combo-order-btn:disabled{opacity:0.55;cursor:not-allowed;transform:none;box-shadow:none;}
+@media(max-width:760px){
+  .combo-section{padding:76px 20px 24px;}
+  .combo-card{grid-template-columns:1fr;}
+  .combo-img{aspect-ratio:1/1;}
+  .combo-body{padding:32px 24px;}
+}
 
-/* MARQUEE 
+/* SHOP GRID — flavour cards with size toggle + Add to Order, replaces the
+   old single-product detail view. Card visuals reuse the .flv-* classes
+   already defined on ../index.html for the homepage grid, ported here
+   since this page keeps its own separate <style> block. */
+.flv-hd{text-align:center;padding:8px 24px 48px;max-width:640px;margin:0 auto;}
+.flv-hd-lbl{font-size:0.62rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#4A7C24;margin-bottom:14px;}
+.flv-hd-title{font-family:'Barlow',sans-serif;font-weight:500;font-size:clamp(2.6rem,4.5vw,4rem);letter-spacing:2px;color:var(--brown);line-height:0.88;text-transform:uppercase;margin-bottom:18px;}
+.flv-hd-sub{font-size:0.88rem;color:rgba(59,31,10,0.5);max-width:380px;margin:0 auto;line-height:1.65;}
+.flv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1240px;margin:0 auto;padding:0 32px 100px;}
+.flv-card{display:flex;flex-direction:column;background:#fff;border-radius:20px;overflow:hidden;border:1.5px solid rgba(59,31,10,0.08);text-decoration:none;color:inherit;}
+.flv-card--soon{cursor:default;}
+.flv-card-img{position:relative;aspect-ratio:5/4;overflow:hidden;}
+.flv-card-img img{width:100%;height:100%;object-fit:cover;display:block;}
+.flv-card-img-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(20,8,2,0.3) 0%,transparent 55%);}
+.flv-badge{position:absolute;top:16px;left:16px;font-size:0.58rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:4px 12px;border-radius:40px;background:var(--yellow);color:var(--brown);}
+.flv-badge--new{background:#E6F4EA;color:#2D6A4F;}
+.flv-badge--soon{background:rgba(255,255,255,0.18);color:#fff;border:1px solid rgba(255,255,255,0.35);backdrop-filter:blur(4px);}
+.flv-card-body{padding:24px 24px 20px;flex:1;display:flex;flex-direction:column;}
+.flv-card-name{font-family:'Barlow',sans-serif;font-size:1.35rem;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;color:var(--brown);margin-bottom:6px;}
+.flv-card-tagline{font-size:0.82rem;color:rgba(59,31,10,0.52);line-height:1.5;flex:1;margin-bottom:14px;}
+.flv-card-cta{display:block;text-align:center;padding:10px 22px;background:var(--brown);color:var(--cream);border:none;border-radius:40px;font-family:'Bebas Neue',sans-serif;font-size:0.86rem;letter-spacing:0.1em;cursor:pointer;transition:background 0.2s,transform 0.15s;white-space:nowrap;text-decoration:none;}
+.flv-card-cta:hover{background:#5A2E0F;transform:scale(1.02);}
+.flv-card-cta--soon{background:transparent;color:rgba(59,31,10,0.3);border:1.5px solid rgba(59,31,10,0.18);cursor:default;}
+.flv-card-cta--soon:hover{background:transparent;transform:none;}
+.shop-sz-row{display:flex;gap:8px;margin:0 0 12px;}
+.shop-sz{flex:1;padding:8px 6px;border:1.5px solid rgba(59,31,10,0.16);border-radius:10px;background:transparent;font-family:'Barlow',sans-serif;font-size:0.7rem;font-weight:700;color:var(--brown-mid);cursor:pointer;transition:all 0.2s;}
+.shop-sz.active{border-color:var(--green);background:var(--green);color:var(--cream);}
+.shop-sz:hover:not(.active){border-color:var(--brown-mid);color:var(--brown);}
+.shop-add-btn{display:block;width:100%;padding:11px 16px;background:var(--green);color:#fff;border:none;border-radius:40px;font-family:'Barlow',sans-serif;font-weight:700;font-size:0.76rem;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;transition:background 0.2s,transform 0.15s;}
+.shop-add-btn:hover{background:#213E11;transform:scale(1.02);}
+.shop-add-btn:disabled{opacity:0.55;cursor:not-allowed;transform:none;}
+.shop-cart-bar{position:fixed;left:50%;bottom:-100px;transform:translateX(-50%);display:flex;align-items:center;gap:14px;background:var(--brown);color:#FFF8EE;padding:14px 22px;border-radius:50px;box-shadow:0 16px 40px rgba(59,31,10,0.35);border:none;cursor:pointer;z-index:400;transition:bottom 0.3s cubic-bezier(0.34,1.56,0.64,1);font-family:'Barlow',sans-serif;}
+.shop-cart-bar.show{bottom:28px;}
+.shop-cart-bar-icon{position:relative;font-size:1.2rem;line-height:1;}
+.shop-cart-bar-icon .cart-badge{position:absolute;top:-9px;right:-11px;}
+.shop-cart-bar-label{font-weight:700;font-size:0.86rem;letter-spacing:0.02em;}
+.shop-cart-bar-total{font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:0.04em;color:var(--yellow);}
+@media(max-width:900px){.flv-grid{grid-template-columns:1fr 1fr;gap:20px;}}
+@media(max-width:560px){
+  .flv-grid{grid-template-columns:1fr;gap:18px;padding:0 20px 80px;}
+  .flv-hd{padding:0 24px 36px;}
+  .shop-cart-bar{left:20px;right:20px;transform:none;justify-content:center;}
+  .shop-cart-bar.show{bottom:20px;}
+}
+
+/* MARQUEE
 .mq{overflow:hidden;background:var(--brown);padding:15px 0;}
 .mq-track{display:flex;animation:mq 22s linear infinite;white-space:nowrap;}
 .mi{font-family:'Bebas Neue',sans-serif;font-size:0.95rem;letter-spacing:0.22em;color:rgba(255,248,238,0.25);padding:0 32px;flex-shrink:0;}
@@ -441,166 +508,49 @@ src="https://www.facebook.com/tr?id=2040554866886258&ev=PageView&noscript=1"
 <div class="mob-drawer-overlay" id="mobOverlay" onclick="toggleMobMenu()"></div>
   
   <div class="main">
-    
-    <!-- BREADCRUMB -->
-    <div class="bc">
-      <a href="index.html">Home</a>
-      <span class="bc-sep">/</span>
-      <a href="index.html#products">Products</a>
-      <span class="bc-sep">/</span>
-      <span id="bc-current">Loading...</span>
-    </div>
-    
-    <!-- PRODUCT HERO -->
-    <section class="ph">
-      
-      <!-- LEFT: Image + Stats -->
-      <div>
-        <div class="ph-img-wrap" id="ph-img-wrap">
-          <img src="images/Dollop Cup Design.png" alt="Dollop Gelato" id="ph-img" style="padding:24px;object-fit:contain;">
-          <div class="ph-img-badge" id="ph-badge">Original Sweetness</div>
-        </div>
-        <div class="ph-sz-row">
-          <button class="ph-sz active" data-size="80g" onclick="selSize(this,18)">
-            <img class="ph-sz-img" src="images/Dollop Cup Design.png" alt="80g Cup">
-            <div class="ph-sz-name">80g Cup</div>
-            <div class="ph-sz-price">RM 18</div>
-          </button>
-          <button class="ph-sz" data-size="410g" onclick="selSize(this,75)">
-            <img class="ph-sz-img" src="images/Dollop Pint Design.png" alt="410g Pint">
-            <div class="ph-sz-name">410g Pint</div>
-            <div class="ph-sz-price">RM 75</div>
-          </button>
-        </div>
-        <div class="ph-stats" id="phStats">
-          <div class="ph-stat">
-            <span class="ph-stat-num">133</span>
-            <span class="ph-stat-unit">kcal per serving</span>
-            <span class="ph-stat-lbl">Energy</span>
+
+    <!-- MERDEKA COMBO — Buy 4 Get 1 Free, RM45, using the official Merdeka
+         promo graphic (also used for the homepage announcement popup). The
+         "free" 5th cup is a fixed flavour (not customer-chosen) to keep
+         fulfilment simple; defaulted to Cempedak as the most established of
+         the 3 "cheaper" (RM10) flavours — swap the copy below if you'd
+         rather it be Soya Gula Melaka or Pandan Coconut. -->
+    <section class="combo-section" id="merdekaCombo">
+      <div class="combo-card">
+        <img class="combo-img" src="images/Dollop Merdeka Combo Promo.jpg" alt="Buy 4 Get 1 Free — Dollop Gelato Merdeka lineup">
+        <div class="combo-body">
+          <div class="combo-badge">🇲🇾 Merdeka Special</div>
+          <div class="combo-title">The Merdeka Combo</div>
+          <p class="combo-desc">Four proudly Malaysian flavours, one combo — buy all 4, get a 5th cup free. One cup each of Musang King, Cempedak, Soya Gula Melaka &amp; Pandan Coconut, plus a free extra Cempedak on us.</p>
+          <div class="combo-flavours">
+            <span class="combo-flavour-pill">Musang King</span>
+            <span class="combo-flavour-pill">Cempedak</span>
+            <span class="combo-flavour-pill">Soya Gula Melaka</span>
+            <span class="combo-flavour-pill">Pandan Coconut</span>
+            <span class="combo-flavour-pill">+ 1 Free Cempedak</span>
           </div>
-          <div class="ph-stat-div"></div>
-          <div class="ph-stat">
-            <span class="ph-stat-num">100%</span>
-            <span class="ph-stat-unit">Musang King</span>
-            <span class="ph-stat-lbl">Real Durian</span>
+          <div class="combo-price-row">
+            <span class="combo-price">RM 45</span>
+            <span class="combo-price-note">5 × 70g cups · Buy 4 Get 1 Free</span>
           </div>
-          <div class="ph-stat-div"></div>
-          <div class="ph-stat">
-            <span class="ph-stat-num">Zero</span>
-            
-            <span class="ph-stat-lbl">Preservatives</span>
-          </div>
+          <button class="combo-order-btn" onclick="addComboToCart()">Add Combo to Order</button>
         </div>
       </div>
-      
-      <!-- RIGHT: Info -->
-      <div class="ph-info">
-        <!-- Flavour switcher (rendered by JS) -->
-        <div id="phFlvSwitcher" class="ph-flv-switcher"></div>
-        <div class="ph-title-row">
-          <div class="ph-name" id="ph-name">Musang King Gelato</div>
-          <div class="ph-price-tag"><strong id="ph-price-was" style="text-decoration:line-through;opacity:0.45;font-size:1.2rem;margin-right:6px;letter-spacing:0.04em;font-family:'Bebas Neue',sans-serif;display:none;">RM 18</strong><strong id="ph-price">RM 18</strong></div>
-        </div>
-        
-        <p class="ph-sub" id="ph-sub">Classic durian richness — bold, creamy, unmistakably Musang King the way it was meant to be.</p>
-        
-        <!-- Sweetness toggle (shown only for hasSweetness flavours) -->
-        <div id="phSweetness" style="display:none;margin-bottom:20px;">
-          <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;opacity:0.42;margin-bottom:10px;">Sweetness Level</div>
-          <div class="ph-flavours">
-            <button class="ph-flv-btn active" id="sw-regular" onclick="selSweet('regular')">Regular Sweet</button>
-            <button class="ph-flv-btn" id="sw-less" onclick="selSweet('less')">Less Sweet</button>
-          </div>
-        </div>
+    </section>
 
-        <button class="ph-order-btn" id="phOrderBtn" data-orig-text="Add to Order" onclick="addCurrentToCart()" style="width:100%;">
-          Add to Order
-        </button>
-        <a href="#" id="viewOrderLink" onclick="openModal();return false;" style="display:none;margin-top:12px;text-align:center;font-size:0.86rem;font-weight:700;color:var(--green);text-decoration:underline;">🛒 View Order</a>
-
-        <!-- Coming Soon (shown only for unavailable flavours) -->
-        <div id="phComingSoon" class="ph-coming-soon-box" style="display:none;">
-          <strong>Something New Is Coming</strong>
-          <p>Follow us on Instagram to be the first to know when this drops.</p>
-          <a href="https://www.instagram.com/dollop.gelato" target="_blank" rel="noopener" style="display:inline-block;padding:10px 24px;background:var(--brown);color:var(--cream);border-radius:40px;font-family:'Bebas Neue',sans-serif;font-size:0.88rem;letter-spacing:0.1em;text-decoration:none;">Follow @dollop.gelato →</a>
-        </div>
-
-    <!-- Feature box -->
-    <div class="ph-features" id="phFeatures">
-      <div class="ph-feat-item">— 100% Real Musang King</div>
-      <div class="ph-feat-item">— No Artificial Flavours</div>
-      <div class="ph-feat-item">— Freshly Made</div>
-      <div class="ph-feat-item">— Small Batch</div>
-      <div class="ph-feat-item">— Premium Grade D197</div>
+    <!-- SHOP GRID — every flavour, size toggle + Add to Order per card.
+         Replaces the old single-product detail view (flavour switcher,
+         sweetness toggle, ingredients/nutrition accordion) with a
+         Graeter's-style "see everything, pick what you want" grid. -->
+    <div class="flv-hd">
+      <div class="flv-hd-lbl">Our Flavours</div>
+      <h1 class="flv-hd-title">Pick Your Obsession</h1>
+      <p class="flv-hd-sub">Four flavours. Zero shortcuts. Real fruit, small batch, always.</p>
     </div>
+    <div class="flv-grid" id="shopGrid"><!-- rendered by renderShopGrid() --></div>
 
 
-    <!-- Accordion: Ingredients & Nutrition -->
-    <div class="ph-accordion" id="acc-ingredients">
-      <div id="acc-nutrition-section">
-      <button class="ph-acc-trigger" onclick="toggleAcc(this)">
-        <span>Ingredients &amp; Nutrition Facts</span>
-        <span class="ph-acc-icon">+</span>
-      </button>
-      <div class="ph-acc-body" style="display:none;">
-        <div class="ph-acc-section">
-          <div class="ph-acc-head">Ingredients</div>
-          <p>Water, MSK Durian, Milk, Cream, Sugar, Trehalose, Skimmed Milk Powder, Dextrose. Stabiliser: Guar Gum (E412), Cellulose Gum (E466), Carrageenan (E407).</p>
-        </div>
-        <div class="ph-acc-section">
-          <div class="ph-acc-head">Allergen Info</div>
-          <p><strong>Contains:</strong> Milk &nbsp;·&nbsp; <strong>May Contain:</strong> Traces of eggs, nuts</p>
-        </div>
-        <div class="ph-acc-section">
-          <div class="ph-acc-head">Storage</div>
-          <p>Store at or below −18°C. Best consumed within 4 weeks after opening. Production Date / Best Before: refer to the bottom of container.</p>
-        </div>
-        <div class="ph-acc-section">
-          <div class="ph-acc-head">Nutrition Information</div>
-          <div class="ph-acc-note">Serving per Container: 1 &nbsp;·&nbsp; Serving Size: 80g (1 Cup)</div>
-          <table class="ph-acc-nut">
-            <thead>
-              <tr><td></td><td>Per Serving</td><td>Per 100g</td></tr>
-            </thead>
-            <tbody>
-              <tr class="nut-big"><td>Energy</td><td>133 kcal</td><td>166 kcal</td></tr>
-              <tr class="nut-big"><td>Protein</td><td>2.8 g</td><td>3.5 g</td></tr>
-              <tr class="nut-big"><td>Total Fat</td><td>3.8 g</td><td>4.7 g</td></tr>
-              <tr class="nut-sub"><td>Saturated Fat</td><td>2.2 g</td><td>2.8 g</td></tr>
-              <tr class="nut-sub"><td>Trans Fat</td><td>0.1 g</td><td>0.1 g</td></tr>
-              <tr class="nut-big"><td>Cholesterol</td><td>8 mg</td><td>10 mg</td></tr>
-              <tr class="nut-big"><td>Carbohydrate</td><td>22.0 g</td><td>27.5 g</td></tr>
-              <tr class="nut-sub"><td>Total Sugar</td><td id="nut-sugar">14.4 g</td><td>18.0 g</td></tr>
-              <tr class="nut-big"><td>Dietary Fibre</td><td>1.1 g</td><td>1.4 g</td></tr>
-              <tr class="nut-big"><td>Sodium</td><td>28 mg</td><td>34 mg</td></tr>
-            </tbody>
-            <tfoot><tr><td colspan="3">*1 kcal = 4.2 kJ</td></tr></tfoot>
-          </table>
-        </div>
-      </div>
-
-      </div><!-- /acc-nutrition-section -->
-      <div id="acc-delivery"></div><button class="ph-acc-trigger" onclick="toggleAcc(this)" style="border-top:1px solid rgba(59,31,10,0.1);">
-        <span>Delivery &amp; Pickup</span>
-        <span class="ph-acc-icon">+</span>
-      </button>
-      <div class="ph-acc-body" style="display:none;">
-        <div class="ph-acc-section">
-          <p>Available for pickup at Shah Alam (Jalan Bukit Kemuning). Delivery available — fee applies based on location. Order via WhatsApp after placing your order.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="ph-divider"></div>
-    
-  </div>
-
-</section>
-
-<!-- DETAILS -->
-
-
-<!-- MARQUEE 
+<!-- MARQUEE
 <div class="mq">
   <div class="mq-track">
     <span class="mi">DOLLOP</span><span class="mi y">·</span><span class="mi">PURE MUSANG KING</span><span class="mi y">·</span><span class="mi">ONE FLAVOUR</span><span class="mi y">·</span><span class="mi">NO COMPROMISE</span><span class="mi y">·</span><span class="mi">NO APOLOGIES</span><span class="mi y">·</span><span class="mi">STINKY GOOD</span><span class="mi y">·</span><span class="mi">MADE IN MALAYSIA</span><span class="mi y">·</span><span class="mi">HALAL CERTIFIED</span><span class="mi y">·</span>
@@ -626,7 +576,7 @@ src="https://www.facebook.com/tr?id=2040554866886258&ev=PageView&noscript=1"
     <div class="ft-cols">
       <div class="ft-col">
         <div class="ft-ct">The Goods</div>
-        <a href="index.html">Home</a><a href="index.html#products">Our Flavours</a><a href="product.html?flavour=musang-king">Musang King</a><a href="product.html?flavour=cempedak">Cempedak</a><a href="#" onclick="openModal();return false;">Order Now</a>
+        <a href="index.html">Home</a><a href="index.html#products">Our Flavours</a><a href="product.html?flavour=musang-king">Musang King</a><a href="product.html?flavour=cempedak">Cempedak</a><a href="product.html?flavour=soya-gula-melaka">Soya Gula Melaka</a><a href="product.html?flavour=pandan-coconut">Pandan Coconut</a><a href="#" onclick="openModal();return false;">Order Now</a>
       </div>
       <div class="ft-col">
         <div class="ft-ct">Info</div>
@@ -652,6 +602,14 @@ src="https://www.facebook.com/tr?id=2040554866886258&ev=PageView&noscript=1"
 </footer>
 
 </div><!-- /.main -->
+
+<!-- PERSISTENT CART BAR — shows once something's in the order; opens the
+     same checkout modal as the nav's "Order Now" button. -->
+<button class="shop-cart-bar" id="shopCartBar" onclick="openModal()" aria-label="View your order">
+  <span class="shop-cart-bar-icon">🛒<span class="cart-badge">0</span></span>
+  <span class="shop-cart-bar-label">View Order</span>
+  <span class="shop-cart-bar-total" id="shopCartTotal">RM 0.00</span>
+</button>
 
 <!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
@@ -763,200 +721,108 @@ function toggleMobMenu(){
 const cursor=document.getElementById('cursor');
 document.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';});
 
-// Product data
-// Read URL param — now uses flavour slug, not sweetness key
-const params = new URLSearchParams(window.location.search);
-let currentFlavour = params.get('flavour') || 'musang-king';
-if (!FLAVOURS[currentFlavour]) currentFlavour = 'musang-king';
-let currentSweet = 'regular';
+// ---- Cart / modal state & logic ----
+let pickupLoc='sa', fulfilment='pickup', deliveryAddr='';
 
-function applyProduct() {
-  var f = FLAVOURS[currentFlavour];
-  if (!f) return;
+// ---- Shop grid — flavour cards with size toggle + Add to Order ----
+var shopSelection = {}; // slug -> { sizeKey, sizeLabel, price }
 
-  // Title + breadcrumb
-  document.title = 'Dollop — ' + f.fullName;
-  var bcEl = document.getElementById('bc-current');
-  if (bcEl) bcEl.textContent = f.fullName;
+function renderShopGrid() {
+  var grid = document.getElementById('shopGrid');
+  if (!grid || typeof FEATURED_FLAVOURS === 'undefined') return;
 
-  // Name, tagline, badge
-  var nameEl = document.getElementById('ph-name');  if (nameEl) nameEl.textContent = f.fullName;
-  var subEl  = document.getElementById('ph-sub');   if (subEl)  subEl.textContent  = f.tagline;
-  var badgeEl = document.getElementById('ph-badge'); if (badgeEl) badgeEl.textContent = f.badge;
-
-  // Hero image (reset to flavour photo; selSize() will override when user picks a size)
-  var imgEl = document.getElementById('ph-img');
-  if (imgEl) { imgEl.src = f.productImage; imgEl.style.padding = '24px'; imgEl.style.objectFit = 'contain'; }
-  var wrap = document.getElementById('ph-img-wrap');
-  if (wrap) wrap.className = 'ph-img-wrap';
-
-  // Stats
-  var statsEl = document.getElementById('phStats');
-  if (statsEl) {
-    if (f.stats.length) {
-      statsEl.style.display = '';
-      statsEl.innerHTML = f.stats.map(function(s, i) {
-        return (i > 0 ? '<div class="ph-stat-div"></div>' : '')
-          + '<div class="ph-stat"><span class="ph-stat-num">' + s.num + '</span>'
-          + (s.unit ? '<span class="ph-stat-unit">' + s.unit + '</span>' : '')
-          + '<span class="ph-stat-lbl">' + s.label + '</span></div>';
-      }).join('');
-    } else {
-      statsEl.style.display = 'none';
-    }
-  }
-
-  // Price tag (hide for coming-soon; show strikethrough original price if set)
-  var priceTag = document.querySelector('.ph-price-tag');
-  if (priceTag) priceTag.style.display = f.priceCup ? '' : 'none';
-  var phPriceEl    = document.getElementById('ph-price');
-  var phPriceWasEl = document.getElementById('ph-price-was');
-  if (phPriceEl && f.priceCup) phPriceEl.textContent = 'RM ' + f.priceCup;
-  if (phPriceWasEl) {
-    if (f.originalPriceCup) {
-      phPriceWasEl.textContent = 'RM ' + f.originalPriceCup;
-      phPriceWasEl.style.display = 'inline';
-    } else {
-      phPriceWasEl.style.display = 'none';
-    }
-  }
-
-  // Ingredients & Nutrition accordion — hide for flavours without nutrition data
-  var accNutr = document.getElementById('acc-nutrition-section');
-  if (accNutr) accNutr.style.display = (f.hasNutrition === false) ? 'none' : '';
-
-  // Features
-  var featEl = document.getElementById('phFeatures');
-  if (featEl) {
-    featEl.innerHTML = f.features.map(function(ft) {
-      return '<div class="ph-feat-item">— ' + ft + '</div>';
-    }).join('');
-  }
-
-  // Sweetness toggle
-  var sweetEl = document.getElementById('phSweetness');
-  if (sweetEl) sweetEl.style.display = f.hasSweetness ? 'block' : 'none';
-  if (f.hasSweetness) { currentSweet = 'regular'; selSweet('regular'); }
-
-  // Size buttons — update per flavour (sizes, prices, image visibility)
-  var szBtns = document.querySelectorAll('.ph-sz');
-  var mSzBtns = document.querySelectorAll('.sz-btn');
-  var cupP  = f.priceCup  || 18;
-  var pintP = f.pricePint || 75;
-  var cupSz  = f.sizeCup  || '80g';
-  var pintSz = f.sizePint || '410g';
-  if (szBtns[0]) {
-    szBtns[0].dataset.size = cupSz;
-    szBtns[0].setAttribute('onclick', 'selSize(this,' + cupP + ')');
-    szBtns[0].classList.add('active');
-    var img0 = szBtns[0].querySelector('.ph-sz-img');
-    if (img0) img0.style.display = f.hasImages ? '' : 'none';
-    var nm0 = szBtns[0].querySelector('.ph-sz-name');
-    if (nm0) nm0.textContent = cupSz + ' Cup';
-    var pr0 = szBtns[0].querySelector('.ph-sz-price');
-    if (pr0) pr0.innerHTML = f.originalPriceCup
-      ? '<s style="opacity:0.38;font-size:0.8em;margin-right:3px;">RM ' + f.originalPriceCup + '</s>RM ' + cupP
-      : 'RM ' + cupP;
-  }
-  if (szBtns[1]) {
-    szBtns[1].dataset.size = pintSz;
-    szBtns[1].setAttribute('onclick', 'selSize(this,' + pintP + ')');
-    szBtns[1].classList.remove('active');
-    var img1 = szBtns[1].querySelector('.ph-sz-img');
-    if (img1) img1.style.display = f.hasImages ? '' : 'none';
-    var nm1 = szBtns[1].querySelector('.ph-sz-name');
-    if (nm1) nm1.textContent = pintSz + ' Pint';
-    var pr1 = szBtns[1].querySelector('.ph-sz-price');
-    if (pr1) pr1.innerHTML = f.originalPricePint
-      ? '<s style="opacity:0.38;font-size:0.8em;margin-right:3px;">RM ' + f.originalPricePint + '</s>RM ' + pintP
-      : 'RM ' + pintP;
-  }
-  if (mSzBtns[0]) {
-    mSzBtns[0].dataset.size = cupSz;
-    mSzBtns[0].setAttribute('onclick', 'selSize(this,' + cupP + ')');
-    mSzBtns[0].textContent = cupSz + ' · RM' + cupP;
-    mSzBtns[0].classList.add('active');
-  }
-  if (mSzBtns[1]) {
-    mSzBtns[1].dataset.size = pintSz;
-    mSzBtns[1].setAttribute('onclick', 'selSize(this,' + pintP + ')');
-    mSzBtns[1].textContent = pintSz + ' · RM' + pintP;
-    mSzBtns[1].classList.remove('active');
-  }
-  price = cupP;
-  cupSize = cupSz;
-
-  // Flavour switcher pills
-  renderFlvSwitcher();
-
-  // Available vs Coming Soon
-  var orderBtn = document.getElementById('phOrderBtn');
-  var soonBox  = document.getElementById('phComingSoon');
-  var szRow    = document.querySelector('.ph-sz-row');
-  if (!f.available) {
-    if (orderBtn) orderBtn.style.display = 'none';
-    if (soonBox)  soonBox.style.display  = 'block';
-    if (szRow)    szRow.style.display    = 'none';
-  } else {
-    if (orderBtn) { orderBtn.style.display = ''; orderBtn.disabled = false; }
-    if (soonBox)  soonBox.style.display  = 'none';
-    if (szRow)    szRow.style.display    = '';
-  }
-
-  // Update order review label
-  var svEl = document.getElementById('sv');
-  if (svEl) svEl.textContent = f.hasSweetness ? 'Regular Sweet' : f.name;
-}
-
-function renderFlvSwitcher() {
-  var sw = document.getElementById('phFlvSwitcher');
-  if (!sw || typeof FLAVOURS === 'undefined') return;
-  sw.innerHTML = Object.keys(FLAVOURS).filter(function(slug) {
-    return FLAVOURS[slug].available || FLAVOURS[slug].slug === 'coming-soon';
-  }).map(function(slug) {
+  grid.innerHTML = FEATURED_FLAVOURS.map(function (slug) {
     var f = FLAVOURS[slug];
-    var isCurrent = slug === currentFlavour;
+    if (!f) return '';
     var isSoon = !f.available;
-    return '<button class="ph-flv-btn'
-      + (isCurrent ? ' active' : '')
-      + (isSoon ? ' ph-flv-btn--soon' : '') + '"'
-      + (!isSoon ? ' data-slug="' + slug + '" onclick="switchToFlavour(this.dataset.slug)"' : '')
-      + '>' + f.name + (isSoon ? ' — Soon' : '') + '</button>';
+
+    if (!isSoon) {
+      var cupSz = f.sizeCup || '70g';
+      shopSelection[slug] = { sizeKey: cupSz, sizeLabel: cupSz + ' Cup', price: f.priceCup };
+    }
+
+    var szHtml = '';
+    if (!isSoon) {
+      var cupSize  = f.sizeCup  || '70g';
+      var pintSize = f.sizePint || '380g';
+      szHtml = '<div class="shop-sz-row">'
+        + '<button class="shop-sz active" data-slug="' + slug + '" data-size="' + cupSize + '" data-label="' + cupSize + ' Cup" data-price="' + f.priceCup + '" onclick="selectShopSize(this)">' + cupSize + ' Cup · RM' + f.priceCup + '</button>'
+        + '<button class="shop-sz" data-slug="' + slug + '" data-size="' + pintSize + '" data-label="' + pintSize + ' Pint" data-price="' + f.pricePint + '" onclick="selectShopSize(this)">' + pintSize + ' Pint · RM' + f.pricePint + '</button>'
+        + '</div>';
+    }
+
+    var ctaHtml = isSoon
+      ? '<a class="flv-card-cta flv-card-cta--soon" href="https://www.instagram.com/dollopgelato/" target="_blank" rel="noopener">Follow for updates →</a>'
+      : '<button class="shop-add-btn" data-slug="' + slug + '" onclick="addFlavourToCart(\'' + slug + '\')">Add to Order</button>';
+
+    var badgeCls = isSoon ? 'flv-badge--soon' : (f.badge === 'New' ? 'flv-badge--new' : '');
+
+    return '<div class="flv-card' + (isSoon ? ' flv-card--soon' : '') + '">'
+      + '<div class="flv-card-img" style="background:' + f.cardBg + '">'
+      +   '<img src="' + f.cardImage + '" alt="' + f.fullName + '" loading="lazy">'
+      +   '<div class="flv-card-img-overlay"></div>'
+      +   '<span class="flv-badge ' + badgeCls + '">' + f.badge + '</span>'
+      + '</div>'
+      + '<div class="flv-card-body">'
+      +   '<div class="flv-card-name">' + f.name + '</div>'
+      +   '<div class="flv-card-tagline">' + f.tagline + '</div>'
+      +   szHtml
+      +   ctaHtml
+      + '</div>'
+      + '</div>';
   }).join('');
 }
 
-function switchToFlavour(slug) {
-  if (slug === currentFlavour || !FLAVOURS[slug]) return;
-  currentFlavour = slug;
-  currentSweet = 'regular';
-  applyProduct();
-  var url = new URL(window.location.href);
-  url.searchParams.set('flavour', slug);
-  window.history.replaceState({}, '', url);
+function selectShopSize(btn) {
+  var slug = btn.dataset.slug;
+  var row = btn.parentElement;
+  row.querySelectorAll('.shop-sz').forEach(function (b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  shopSelection[slug] = { sizeKey: btn.dataset.size, sizeLabel: btn.dataset.label, price: parseFloat(btn.dataset.price) };
 }
 
-// ---- Cart / modal state & logic ----
-// price/cupSize track the size currently selected on the product page (before "Add to Order").
-let price=18, sweet='regular', pickupLoc='sa', cupSize='80g', fulfilment='pickup', deliveryAddr='';
-
-applyProduct();
-renderCartBadge();
-if(typeof fbq!=='undefined') fbq('track','ViewContent',{content_name:'Musang King Gelato',content_type:'product',currency:'MYR',value:18});
-
-// Adds the currently selected flavour + size to the shared cart (qty 1 per click).
-function addCurrentToCart(){
-  var f = FLAVOURS[currentFlavour];
-  if (!f) return;
-  var isPint = cupSize === (f.sizePint || '410g');
+function addFlavourToCart(slug) {
+  var f = FLAVOURS[slug];
+  var sel = shopSelection[slug];
+  if (!f || !sel) return;
   addToCart({
-    flavourSlug: currentFlavour,
+    flavourSlug: slug,
     flavourName: f.fullName,
-    sizeKey: cupSize,
-    sizeLabel: cupSize + (isPint ? ' Pint' : ' Cup'),
-    price: price,
+    sizeKey: sel.sizeKey,
+    sizeLabel: sel.sizeLabel,
+    price: sel.price,
     qty: 1
   });
-  showCartToast('Added ' + f.name + ' (' + cupSize + (isPint ? ' Pint' : ' Cup') + ') to your order');
+  showCartToast('Added ' + f.name + ' (' + sel.sizeLabel + ') to your order');
+  renderShopCartBar();
+}
+
+function renderShopCartBar() {
+  var bar = document.getElementById('shopCartBar');
+  var totalEl = document.getElementById('shopCartTotal');
+  var count = cartCount();
+  if (totalEl) totalEl.textContent = 'RM ' + cartTotal().toFixed(2);
+  if (bar) bar.classList.toggle('show', count > 0);
+}
+
+renderShopGrid();
+renderCartBadge();
+renderShopCartBar();
+if(typeof fbq!=='undefined') fbq('track','ViewContent',{content_name:'Dollop Shop',content_type:'product_group',currency:'MYR'});
+
+// The Merdeka Combo — a single fixed-price cart line (reuses the same
+// shared cart/checkout as everything else, no new backend needed).
+function addComboToCart(){
+  addToCart({
+    flavourSlug: 'merdeka-combo',
+    flavourName: 'The Merdeka Combo',
+    sizeKey: 'combo-5cup',
+    sizeLabel: '5 × 70g cups — Musang King, Cempedak, Soya Gula Melaka, Pandan Coconut + free Cempedak',
+    price: 45,
+    qty: 1
+  });
+  showCartToast('Added The Merdeka Combo to your order');
+  renderShopCartBar();
 }
 
 function showCartToast(msg){
@@ -979,6 +845,7 @@ function renderCartStep(){
     listEl.innerHTML = '';
     if (emptyEl) emptyEl.style.display = 'block';
     if (contBtn) contBtn.disabled = true;
+    renderShopCartBar();
     return;
   }
   if (emptyEl) emptyEl.style.display = 'none';
@@ -991,6 +858,7 @@ function renderCartStep(){
       + '<button class="cart-line-remove" onclick="removeFromCart(' + i + ');renderCartStep();" aria-label="Remove">✕</button>'
       + '</div>';
   }).join('') + '<div class="cart-subtotal"><span>Subtotal</span><span>RM ' + cartTotal().toFixed(2) + '</span></div>';
+  renderShopCartBar();
 }
 
 const locLabels={sa:'1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor'};
@@ -1002,39 +870,26 @@ function applyConfig(cfg) {
   window.SITE_CFG = Object.assign({}, DEFAULT_CONFIG, cfg);
   var c = window.SITE_CFG;
 
-  // SOLD_OUT — update buttons and float character
+  // SOLD_OUT — update buttons and float character. Flavour prices/sizes
+  // themselves come straight from flavours.js (shop grid, rendered per
+  // flavour) — this file no longer has a single admin-editable "PRICE"
+  // field to sync, since every flavour shows its own real price now.
   if (c.SOLD_OUT) {
-    document.querySelectorAll('.pcard-order-btn,.sw-order-btn,.ph-order-btn').forEach(function(b){
+    document.querySelectorAll('.shop-add-btn,.combo-order-btn').forEach(function(b){
+      b.dataset.origText = b.dataset.origText || b.textContent;
       b.textContent = 'Sold Out'; b.disabled = true;
       b.style.opacity = '0.55'; b.style.cursor = 'not-allowed';
     });
     var fc = document.getElementById('floatChar');
     if (fc) { fc.onclick = function(){ showSoldOutToast(); }; }
   } else {
-    document.querySelectorAll('.pcard-order-btn,.sw-order-btn,.ph-order-btn').forEach(function(b){
+    document.querySelectorAll('.shop-add-btn,.combo-order-btn').forEach(function(b){
       b.textContent = b.dataset.origText || b.textContent;
       b.disabled = false; b.style.opacity = ''; b.style.cursor = '';
     });
     var fc2 = document.getElementById('floatChar');
     if (fc2) { fc2.onclick = function(){ openModal(); }; }
   }
-
-
-  // PRICES
-  var priceWas = document.getElementById('price-was');
-  var priceReg = document.getElementById('price-reg');
-  var phPrice  = document.getElementById('ph-price');
-  var phPriceWas = document.getElementById('ph-price-was');
-  var szBtns   = document.querySelectorAll('.sz-btn');
-  var showWas  = c.ORIGINAL_PRICE && c.ORIGINAL_PRICE !== c.PRICE;
-  if (priceWas)   { priceWas.textContent = 'RM ' + c.ORIGINAL_PRICE; priceWas.style.display = showWas ? 'inline' : 'none'; }
-  if (priceReg)   priceReg.textContent   = 'RM ' + c.PRICE;
-  if (phPrice)    phPrice.textContent    = 'RM ' + c.PRICE;
-  if (phPriceWas) { phPriceWas.textContent = 'RM ' + c.ORIGINAL_PRICE; phPriceWas.style.display = showWas ? 'inline' : 'none'; }
-  var btn80 = document.getElementById('sz-80g');
-  if (btn80) { btn80.textContent = '80g · RM' + c.PRICE; }
-  if (btn80 && btn80.classList.contains('active')) { price = c.PRICE; }
-
 }
 
 function loadAndApplyConfig() {
@@ -1059,44 +914,6 @@ function closeModal(){
 }
 function handleOverlayClick(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
 
-function toggleAcc(btn){
-  const body=btn.nextElementSibling;
-  const icon=btn.querySelector('.ph-acc-icon');
-  const open=body.style.display!=='none';
-  body.style.display=open?'none':'block';
-  if(icon) icon.classList.toggle('open',!open);
-}
-function selSweet(t){
-  sweet=t;
-  document.querySelectorAll('#sw-regular,#sw-less').forEach(function(b){b.classList.remove('active');});
-  var btn=document.getElementById('sw-'+t);if(btn)btn.classList.add('active');
-  var f=FLAVOURS[currentFlavour];
-  if(f&&f.sweetness&&f.sweetness[t]){
-    var wrap=document.getElementById('ph-img-wrap');
-    if(wrap)wrap.className='ph-img-wrap'+(f.sweetness[t].imgClass?' '+f.sweetness[t].imgClass:'');
-    var sugarEl=document.getElementById('nut-sugar');
-    if(sugarEl)sugarEl.textContent=f.sweetness[t].sugar;
-    var svEl=document.getElementById('sv');
-    if(svEl)svEl.textContent=f.sweetness[t].label;
-  }
-}
-function selSize(btn,p){
-  price=p;
-  document.querySelectorAll('.sz-btn,.ph-sz').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  const txt=btn.textContent;
-  cupSize=btn.getAttribute('data-size')||txt.split('·')[0].trim();
-  const priceEl=document.getElementById('ph-price');
-  if(priceEl) priceEl.textContent='RM '+p;
-  const imgEl=document.getElementById('ph-img');
-  var flv = FLAVOURS[currentFlavour];
-  if(imgEl && flv && flv.pintImage){
-    var isPint = cupSize === (flv.sizePint || '410g');
-    imgEl.src = isPint ? flv.pintImage : (flv.cupImage || flv.productImage);
-    imgEl.style.padding='24px';
-    imgEl.style.objectFit='contain';
-  }
-}
 function selFulfilment(type){
   fulfilment=type;
   document.getElementById('ft-pickup').classList.toggle('active',type==='pickup');

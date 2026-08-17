@@ -7,7 +7,7 @@ const COMPANY_WHATSAPP = '60142676333';
 
 const DEFAULT_CONFIG = {
   ORIGINAL_PRICE:         0,       // strikethrough price (0 = hide strikethrough)
-  PRICE:                  18,      // current selling price
+  PRICE:                  12,      // current selling price (Musang King, 70g cup)
   SOLD_OUT:               false,   // true = disable ordering, show "Sold Out"
   MAX_QTY:                24,      // maximum cups per order
   PROMO_ACTIVE:           false,   // true = show "Buy X Get Y Free" badge
