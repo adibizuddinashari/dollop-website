@@ -15,7 +15,7 @@ const DEFAULT_CONFIG = {
   PROMO_FREE:             1,       // number of free cups given
   ANNOUNCEMENT_ACTIVE:    false,   // true = show popup announcement on homepage
   ANNOUNCEMENT_IMAGE_URL: '',      // Google Drive share link for popup image
-  ANNOUNCEMENT_LINK:      'product.html', // where clicking the popup goes
+  ANNOUNCEMENT_LINK:      'shop.html', // where clicking the popup goes
 };
 
 // Applied once config is fetched (or falls back to DEFAULT_CONFIG)
