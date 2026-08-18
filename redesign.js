@@ -346,18 +346,33 @@ document.addEventListener('DOMContentLoaded', renderHappinessMarquee);
   var annOverlay = document.getElementById('annOverlay');
   if (!annOverlay) return;
 
+  // Config is applied twice on a normal load (once from the localStorage
+  // cache for an instant paint, once again when the fresh fetch resolves),
+  // so a naive "open on load" would pop the announcement a second time —
+  // e.g. right as the fetch resolves after the user already closed it.
+  // These flags make the open a one-shot action per page view.
+  var opened = false;
+  var dismissed = false;
+
+  function openAnn() {
+    if (opened || dismissed) return;
+    opened = true;
+    annOverlay.classList.add('open');
+  }
+
   function applyAnnouncementConfig(cfg) {
     var c = Object.assign({}, DEFAULT_CONFIG, cfg);
+    if (opened || dismissed) return;
     if (!c.ANNOUNCEMENT_ACTIVE || !c.ANNOUNCEMENT_IMAGE_URL) return;
     var annImg = document.getElementById('annImg');
     var annLink = document.getElementById('annLink');
     if (annLink) annLink.href = c.ANNOUNCEMENT_LINK || 'shop.html';
     if (annImg) {
       annImg.onerror = function () { annOverlay.classList.remove('open'); };
-      annImg.onload = function () { setTimeout(function () { annOverlay.classList.add('open'); }, 600); };
+      annImg.onload = function () { setTimeout(openAnn, 600); };
       annImg.src = toDriveDirectUrl(c.ANNOUNCEMENT_IMAGE_URL);
     } else {
-      setTimeout(function () { annOverlay.classList.add('open'); }, 600);
+      setTimeout(openAnn, 600);
     }
   }
 
@@ -371,7 +386,7 @@ document.addEventListener('DOMContentLoaded', renderHappinessMarquee);
   var card = document.getElementById('annCard');
   var closeBtn = document.getElementById('annClose');
   if (card && closeBtn) {
-    function closeAnn() { annOverlay.classList.remove('open'); }
+    function closeAnn() { dismissed = true; annOverlay.classList.remove('open'); }
     closeBtn.addEventListener('click', closeAnn);
     annOverlay.addEventListener('click', function (e) { if (!card.contains(e.target)) closeAnn(); });
   }
