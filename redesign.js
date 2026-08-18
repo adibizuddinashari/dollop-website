@@ -154,22 +154,12 @@ function renderFlvTease() {
     var href = 'shop.html'; // single ordering destination — see redesign/shop.html
     var delay = (i * 0.1).toFixed(2); // staggers each card in one by one instead of all at once
 
-    var cupImg = f.cupImage || f.cardImage;
-
-    var imgHtml = cupImg
-      ? '<img src="' + cupImg + '" alt="' + f.fullName + '" loading="lazy" class="flv-card-photo">'
+    var imgHtml = f.cardImage
+      ? '<img src="' + f.cardImage + '" alt="' + f.fullName + '" loading="lazy">'
       : '<div class="flv-card-wordmark">' + f.name + '</div>';
 
-    var cupSize = f.sizeCup || '80g', pintSize = f.sizePint || '410g';
-    var szHtml = (!isSoon && f.priceCup && f.pricePint) ? (
-      '<div class="shop-sz-row">'
-      + '<button class="shop-sz active" data-slug="' + slug + '" data-size="cup" onclick="selectFlvSize(this)">' + cupSize + ' Cup</button>'
-      + '<button class="shop-sz" data-slug="' + slug + '" data-size="pint" onclick="selectFlvSize(this)">' + pintSize + ' Pint</button>'
-      + '</div>'
-    ) : '';
-
     var priceHtml = f.priceCup
-      ? '<div><div class="flv-card-price">RM ' + f.priceCup + '</div><div class="flv-card-price-sub">per ' + cupSize + ' cup</div></div>'
+      ? '<div><div class="flv-card-price">RM ' + f.priceCup + '</div><div class="flv-card-price-sub">per ' + f.sizeCup + ' cup</div></div>'
       : '<div></div>';
 
     var ctaHtml = isSoon
@@ -187,7 +177,6 @@ function renderFlvTease() {
       + '<div class="flv-card-body">'
       +   '<div class="flv-card-name">' + f.name + '</div>'
       +   '<div class="flv-card-tagline">' + f.tagline + '</div>'
-      +   szHtml
       +   '<div class="flv-card-footer">' + priceHtml + ctaHtml + '</div>'
       + '</div>'
       + '</div>';
@@ -196,30 +185,6 @@ function renderFlvTease() {
   observeReveal(grid); // cards were just injected — pick up their new .reveal elements
 }
 document.addEventListener('DOMContentLoaded', renderFlvTease);
-
-// Cup/Pint toggle on the homepage flavour-tease cards — swaps the photo and
-// price shown, same cupImage/pintImage data product.html's own size toggle
-// (selSize) already reads from. This card is just a preview, not a cart
-// action, so it doesn't touch cart.js — "Order Now" still sends the
-// shopper to shop.html to actually add to their pack.
-function selectFlvSize(btn) {
-  var slug = btn.dataset.slug;
-  var f = FLAVOURS[slug];
-  var card = btn.closest('.flv-card');
-  if (!f || !card) return;
-
-  card.querySelectorAll('.shop-sz').forEach(function (b) { b.classList.remove('active'); });
-  btn.classList.add('active');
-
-  var isPint = btn.dataset.size === 'pint';
-  var img = card.querySelector('.flv-card-photo');
-  if (img) img.src = (isPint ? f.pintImage : f.cupImage) || f.cardImage;
-
-  var priceEl = card.querySelector('.flv-card-price');
-  var priceSubEl = card.querySelector('.flv-card-price-sub');
-  if (priceEl) priceEl.textContent = 'RM ' + (isPint ? f.pricePint : f.priceCup);
-  if (priceSubEl) priceSubEl.textContent = 'per ' + (isPint ? (f.sizePint || '410g') : (f.sizeCup || '80g')) + (isPint ? ' pint' : ' cup');
-}
 
 // ── Promo ticker — between Hero and Our Flavours ────────────────────────
 // Same fix as the "Pure ___" marquee below: two copies isn't reliably

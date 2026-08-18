@@ -475,7 +475,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 }
 
 .shop-grid-section{padding:0 40px 120px;}
-.shop-card{scroll-margin-top:80px;}
 .shop-card .flv-card-body{display:flex;flex-direction:column;}
 .shop-sz-row{display:flex;gap:8px;margin:14px 0 12px;}
 .shop-sz{flex:1;padding:8px 6px;border:1.5px solid rgba(59,31,10,0.16);border-radius:10px;background:transparent;font-family:'Barlow',sans-serif;font-size:0.72rem;font-weight:700;color:var(--brown-mid);transition:all 0.2s;}
