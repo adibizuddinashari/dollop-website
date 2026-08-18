@@ -7,6 +7,32 @@ function toggleMobMenu() {
   document.getElementById('mobOverlay').classList.toggle('open');
 }
 
+// ── Page-load intro (homepage hero only) ────────────────────────────────
+// [data-intro]/[data-intro-fade] elements start hidden (see redesign.css)
+// and get staggered here; the nav's own drop-in is a pure-CSS animation
+// (.sb--intro) that needs no JS at all.
+(function () {
+  var els = document.querySelectorAll('[data-intro], [data-intro-fade]');
+  if (!els.length) return;
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    els.forEach(function (el) { el.classList.add('is-revealed'); });
+    return;
+  }
+
+  els.forEach(function (el, i) {
+    el.style.setProperty('--intro-delay', String(150 + i * 220));
+  });
+
+  // Double rAF ensures the initial (opacity:0) state is painted first, so
+  // adding .is-revealed actually animates instead of snapping straight in.
+  requestAnimationFrame(function () {
+    requestAnimationFrame(function () {
+      els.forEach(function (el) { el.classList.add('is-revealed'); });
+    });
+  });
+})();
+
 // ── Smooth scroll — spec item 1 ─────────────────────────────────────────
 // Swapped the earlier hand-rolled lerp for Lenis (studiofreight/lenis via
 // CDN, loaded before this file) — the same library the Framer smooth-
@@ -154,18 +180,9 @@ function renderFlvTease() {
     var href = 'shop.html'; // single ordering destination — see redesign/shop.html
     var delay = (i * 0.1).toFixed(2); // staggers each card in one by one instead of all at once
 
-    // Cup photo shows by default; hovering the card fades in the pint photo
-    // on top (pure CSS — see .flv-card-photo--pint in redesign.css). Falls
-    // back to a single cardImage/wordmark when there's no dedicated pair.
-    var imgHtml;
-    if (f.cupImage && f.pintImage) {
-      imgHtml = '<img src="' + f.cupImage + '" alt="' + f.fullName + '" loading="lazy" class="flv-card-photo flv-card-photo--cup">'
-        + '<img src="' + f.pintImage + '" alt="' + f.fullName + ' (pint)" loading="lazy" class="flv-card-photo flv-card-photo--pint">';
-    } else if (f.cardImage) {
-      imgHtml = '<img src="' + f.cardImage + '" alt="' + f.fullName + '" loading="lazy">';
-    } else {
-      imgHtml = '<div class="flv-card-wordmark">' + f.name + '</div>';
-    }
+    var imgHtml = (f.cupImage || f.cardImage)
+      ? '<img src="' + (f.cupImage || f.cardImage) + '" alt="' + f.fullName + '" loading="lazy">'
+      : '<div class="flv-card-wordmark">' + f.name + '</div>';
 
     var priceHtml = f.priceCup
       ? '<div><div class="flv-card-price">RM ' + f.priceCup + '</div><div class="flv-card-price-sub">per ' + f.sizeCup + ' cup</div></div>'
