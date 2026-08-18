@@ -182,6 +182,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 .flv-hd-sub{font-size:0.92rem;color:rgba(59,31,10,0.55);line-height:1.65;}
 
 .flv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1240px;margin:0 auto;padding:0 40px 40px;}
+/* Matches the ~54px gap already above the disclaimer (40px grid padding +
+   14px disclaimer margin) so it sits centred in the whitespace instead of
+   hugging the Featured section right below it. */
+#flavours{padding-bottom:54px;}
 /* transition here must also carry opacity (with .reveal's own 0.7s/easing)
    — this is a full shorthand, same specificity as and later in the file
    than .reveal's, so it fully overrides .reveal's transition rather than
