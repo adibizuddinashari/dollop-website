@@ -54,7 +54,7 @@ function renderShopGrid() {
 
     var badgeCls = isSoon ? 'flv-badge--soon' : (f.badge === 'New' ? 'flv-badge--new' : '');
 
-    return '<div class="flv-card shop-card' + (isSoon ? ' flv-card--soon' : '') + '">'
+    return '<div class="flv-card shop-card' + (isSoon ? ' flv-card--soon' : '') + '" id="flavour-' + slug + '">'
       + '<div class="flv-card-img" style="background:' + f.cardBg + '">'
       +   imgHtml
       +   '<div class="flv-card-img-overlay"></div>'
