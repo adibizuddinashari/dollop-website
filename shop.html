@@ -66,28 +66,31 @@
     </div>
   </section>
 
-  <!-- ══ MERDEKA COMBO — same Buy 4 Get 1 Free offer live on staging's
-       product.html, restyled in the redesign's own colour system. Free
-       5th cup defaults to Cempedak (fixed, not customer-chosen, to keep
-       fulfilment simple) — swap the copy below if you'd rather it be
-       Soya Gula Melaka or Pandan Coconut. ══════════════════════════════ -->
+  <!-- ══ MERDEKA COMBO — Buy 4 Get 1 Free, with a Cup Deal (RM45) / Pint
+       Deal (RM220) toggle (selectComboDeal() in shop.js). The free 5th
+       item is a random flavour, not customer-chosen, to keep fulfilment
+       simple. ══════════════════════════════════════════════════════════ -->
   <section class="combo-section reveal" id="merdekaCombo">
     <div class="combo-card">
       <img class="combo-img" src="brand assets/Dollop Merdeka Flavour_Web.jpg" alt="Buy 4 Get 1 Free — Dollop Gelato Merdeka lineup">
       <div class="combo-body">
         <div class="combo-badge">🇲🇾 Merdeka Special</div>
         <div class="combo-title">The Merdeka Combo</div>
-        <p class="combo-desc">Four proudly Malaysian flavours, one combo — buy all 4, get a 5th cup free. One cup each of Musang King, Cempedak, Soya Gula Melaka &amp; Pandan Coconut, plus a free extra Cempedak on us.</p>
+        <p class="combo-desc">Four proudly Malaysian flavours, one combo — buy all 4, get a 5th free. One of Musang King, Cempedak, Soya Gula Melaka &amp; Pandan Coconut, plus a free extra random flavour on us.</p>
         <div class="combo-flavours">
           <span class="combo-flavour-pill">Musang King</span>
           <span class="combo-flavour-pill">Cempedak</span>
           <span class="combo-flavour-pill">Soya Gula Melaka</span>
           <span class="combo-flavour-pill">Pandan Coconut</span>
-          <span class="combo-flavour-pill">+ 1 Free Cempedak</span>
+          <span class="combo-flavour-pill">+ 1 Free Random Flavour</span>
+        </div>
+        <div class="shop-sz-row" id="comboSzRow">
+          <button class="shop-sz active" data-deal="cup" onclick="selectComboDeal(this)">Cup Deal · RM45</button>
+          <button class="shop-sz" data-deal="pint" onclick="selectComboDeal(this)">Pint Deal · RM220</button>
         </div>
         <div class="combo-price-row">
-          <span class="combo-price">RM 45</span>
-          <span class="combo-price-note">5 × 70g cups · Buy 4 Get 1 Free</span>
+          <span class="combo-price" id="comboPrice">RM 45</span>
+          <span class="combo-price-note" id="comboPriceNote">5 × 70g cups · Buy 4 Get 1 Free</span>
         </div>
         <button class="combo-order-btn" onclick="addComboToCart()">Add Combo to Order</button>
       </div>
@@ -97,6 +100,7 @@
   <!-- ══ SHOP GRID — every flavour, size toggle + quick-add per card ══ -->
   <section class="shop-grid-section">
     <div class="flv-grid reveal" id="shopGrid"><!-- rendered by renderShopGrid() in shop.js --></div>
+    <p class="ph-img-disclaimer">Photos are for illustration only — actual product appearance may vary slightly.</p>
   </section>
 
   <!-- ══ FOOTER — same as ../index.html ══════════════════════════════ -->

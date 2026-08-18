@@ -154,9 +154,18 @@ function renderFlvTease() {
     var href = 'shop.html'; // single ordering destination — see redesign/shop.html
     var delay = (i * 0.1).toFixed(2); // staggers each card in one by one instead of all at once
 
-    var imgHtml = f.cardImage
-      ? '<img src="' + f.cardImage + '" alt="' + f.fullName + '" loading="lazy">'
-      : '<div class="flv-card-wordmark">' + f.name + '</div>';
+    // Cup photo shows by default; hovering the card fades in the pint photo
+    // on top (pure CSS — see .flv-card-photo--pint in redesign.css). Falls
+    // back to a single cardImage/wordmark when there's no dedicated pair.
+    var imgHtml;
+    if (f.cupImage && f.pintImage) {
+      imgHtml = '<img src="' + f.cupImage + '" alt="' + f.fullName + '" loading="lazy" class="flv-card-photo flv-card-photo--cup">'
+        + '<img src="' + f.pintImage + '" alt="' + f.fullName + ' (pint)" loading="lazy" class="flv-card-photo flv-card-photo--pint">';
+    } else if (f.cardImage) {
+      imgHtml = '<img src="' + f.cardImage + '" alt="' + f.fullName + '" loading="lazy">';
+    } else {
+      imgHtml = '<div class="flv-card-wordmark">' + f.name + '</div>';
+    }
 
     var priceHtml = f.priceCup
       ? '<div><div class="flv-card-price">RM ' + f.priceCup + '</div><div class="flv-card-price-sub">per ' + f.sizeCup + ' cup</div></div>'

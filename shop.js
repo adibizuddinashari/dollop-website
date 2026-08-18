@@ -25,8 +25,11 @@ function renderShopGrid() {
       shopSelection[slug] = { sizeKey: cupSz, sizeLabel: cupSz + ' Cup', price: f.priceCup };
     }
 
-    var imgHtml = f.cardImage
-      ? '<img src="' + f.cardImage + '" alt="' + f.fullName + '" loading="lazy">'
+    // Cup image shows by default (matches the Cup size button being active
+    // by default below); selectShopSize() swaps this to the pint photo
+    // when the shopper picks the pint size instead.
+    var imgHtml = (f.cupImage || f.cardImage)
+      ? '<img src="' + (f.cupImage || f.cardImage) + '" alt="' + f.fullName + '" loading="lazy" class="flv-card-photo">'
       : '<div class="flv-card-wordmark">' + f.name + '</div>';
 
     var szHtml = '';
@@ -34,8 +37,8 @@ function renderShopGrid() {
       var cupSize  = f.sizeCup  || '80g';
       var pintSize = f.sizePint || '410g';
       szHtml = '<div class="shop-sz-row">'
-        + '<button class="shop-sz active" data-slug="' + slug + '" data-size="' + cupSize + '" data-label="' + cupSize + ' Cup" data-price="' + f.priceCup + '" onclick="selectShopSize(this)">' + cupSize + ' Cup · RM' + f.priceCup + '</button>'
-        + '<button class="shop-sz" data-slug="' + slug + '" data-size="' + pintSize + '" data-label="' + pintSize + ' Pint" data-price="' + f.pricePint + '" onclick="selectShopSize(this)">' + pintSize + ' Pint · RM' + f.pricePint + '</button>'
+        + '<button class="shop-sz active" data-slug="' + slug + '" data-sizetype="cup" data-size="' + cupSize + '" data-label="' + cupSize + ' Cup" data-price="' + f.priceCup + '" onclick="selectShopSize(this)">' + cupSize + ' Cup · RM' + f.priceCup + '</button>'
+        + '<button class="shop-sz" data-slug="' + slug + '" data-sizetype="pint" data-size="' + pintSize + '" data-label="' + pintSize + ' Pint" data-price="' + f.pricePint + '" onclick="selectShopSize(this)">' + pintSize + ' Pint · RM' + f.pricePint + '</button>'
         + '</div>';
     }
 
@@ -78,6 +81,11 @@ function selectShopSize(btn) {
   row.querySelectorAll('.shop-sz').forEach(function (b) { b.classList.remove('active'); });
   btn.classList.add('active');
   shopSelection[slug] = { sizeKey: btn.dataset.size, sizeLabel: btn.dataset.label, price: parseFloat(btn.dataset.price) };
+
+  var f = FLAVOURS[slug];
+  var card = btn.closest('.flv-card');
+  var img = card && card.querySelector('.flv-card-photo');
+  if (f && img) img.src = (btn.dataset.sizetype === 'pint' ? f.pintImage : f.cupImage) || f.cardImage;
 }
 
 function addFlavourToCart(slug) {
@@ -109,18 +117,35 @@ function renderShopCartBar() {
 }
 document.addEventListener('DOMContentLoaded', renderShopCartBar);
 
-// The Merdeka Combo — a single fixed-price cart line, same offer as the
-// one live on staging's product.html (reuses the same shared cart).
+// The Merdeka Combo — Cup Deal (RM45, 70g cups) or Pint Deal (RM220, 380g
+// pints), toggled via selectComboDeal(). Still a single fixed-price cart
+// line either way (reuses the same shared cart).
+var comboDeal = 'cup';
+
+function selectComboDeal(btn) {
+  var row = document.getElementById('comboSzRow');
+  if (row) row.querySelectorAll('.shop-sz').forEach(function (b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  comboDeal = btn.dataset.deal;
+
+  var isPint = comboDeal === 'pint';
+  var priceEl = document.getElementById('comboPrice');
+  var noteEl = document.getElementById('comboPriceNote');
+  if (priceEl) priceEl.textContent = isPint ? 'RM 220' : 'RM 45';
+  if (noteEl) noteEl.textContent = (isPint ? '5 × 380g pints' : '5 × 70g cups') + ' · Buy 4 Get 1 Free';
+}
+
 function addComboToCart() {
+  var isPint = comboDeal === 'pint';
   addToCart({
     flavourSlug: 'merdeka-combo',
-    flavourName: 'The Merdeka Combo',
-    sizeKey: 'combo-5cup',
-    sizeLabel: '5 × 70g cups — Musang King, Cempedak, Soya Gula Melaka, Pandan Coconut + free Cempedak',
-    price: 45,
+    flavourName: 'The Merdeka Combo (' + (isPint ? 'Pint' : 'Cup') + ' Deal)',
+    sizeKey: isPint ? 'combo-5pint' : 'combo-5cup',
+    sizeLabel: (isPint ? '5 × 380g pints' : '5 × 70g cups') + ' — Musang King, Cempedak, Soya Gula Melaka, Pandan Coconut + free random flavour',
+    price: isPint ? 220 : 45,
     qty: 1
   });
-  showCartToast('Added The Merdeka Combo to your order');
+  showCartToast('Added The Merdeka Combo (' + (isPint ? 'Pint' : 'Cup') + ' Deal) to your order');
   renderShopCartBar();
 }
 
