@@ -103,13 +103,18 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 .mob-drawer-overlay.open{display:block;}
 
 @media(max-width:860px){
-  .sb{display:grid;grid-template-columns:auto 1fr;height:52px;padding:0 16px;}
+  .sb{display:grid;grid-template-columns:auto 1fr auto;height:52px;padding:0 16px;}
   .sb-nav{display:none;}
-  .sb-shop-btn{display:none;}
-  .mob-menu-btn{display:flex;}
-  /* Absolutely centered on the nav bar itself (not the remaining grid
-     track) so it stays dead-center regardless of the hamburger's width
-     now that there's no cta on the right balancing it. */
+  .mob-menu-btn{display:flex;grid-column:1;}
+  /* Was hidden entirely on mobile (only the drawer's own "Order Now" CTA
+     gave access to the cart) — brought back as a third grid column so
+     there's a persistent, always-visible way to reach the cart on phones
+     too, not just after opening the hamburger menu. Sized down to match
+     the hamburger button (36px) instead of the desktop 40px. */
+  .sb-shop-btn{display:flex;grid-column:3;width:36px;height:36px;margin-left:0;}
+  .sb-shop-btn svg{width:17px;height:17px;}
+  /* Absolutely centered on the nav bar itself (not a grid track) so it
+     stays dead-center regardless of the hamburger/shop-button widths. */
   .sb-logo{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);}
 }
 
