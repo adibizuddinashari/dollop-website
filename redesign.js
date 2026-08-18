@@ -375,7 +375,7 @@ document.addEventListener('DOMContentLoaded', renderHappinessMarquee);
     if (!c.ANNOUNCEMENT_ACTIVE || !c.ANNOUNCEMENT_IMAGE_URL) return;
     var annImg = document.getElementById('annImg');
     var annLink = document.getElementById('annLink');
-    if (annLink) annLink.href = c.ANNOUNCEMENT_LINK || 'shop.html';
+    if (annLink) annLink.href = c.ANNOUNCEMENT_LINK || 'https://www.dollopgelato.com/shop.html';
     if (annImg) {
       annImg.onerror = function () { annOverlay.classList.remove('open'); };
       annImg.onload = function () { setTimeout(openAnn, 600); };

@@ -248,7 +248,7 @@
       <div style="padding:14px 0 0">
         <div class="row-label" style="font-size:0.88rem;">Popup Link</div>
         <div class="row-sub" style="margin-bottom:8px;">Page that opens when a customer clicks the popup</div>
-        <input type="text" id="annLink" class="text-input" placeholder="shop.html" value="shop.html">
+        <input type="text" id="annLink" class="text-input" placeholder="https://www.dollopgelato.com/shop.html" value="https://www.dollopgelato.com/shop.html">
       </div>
     </div>
 
@@ -380,7 +380,7 @@ function applyToForm(cfg) {
   document.getElementById('promoFree').value      = cfg.PROMO_FREE || 1;
   document.getElementById('annToggle').checked   = !!cfg.ANNOUNCEMENT_ACTIVE;
   document.getElementById('annImageUrl').value   = cfg.ANNOUNCEMENT_IMAGE_URL || '';
-  document.getElementById('annLink').value       = cfg.ANNOUNCEMENT_LINK || 'shop.html';
+  document.getElementById('annLink').value       = cfg.ANNOUNCEMENT_LINK || 'https://www.dollopgelato.com/shop.html';
   document.getElementById('annImageUrl').dispatchEvent(new Event('input'));
 }
 
@@ -421,7 +421,7 @@ function saveConfig() {
     PROMO_FREE:               parseInt(document.getElementById('promoFree').value, 10) || 1,
     ANNOUNCEMENT_ACTIVE:      document.getElementById('annToggle').checked,
     ANNOUNCEMENT_IMAGE_URL:   document.getElementById('annImageUrl').value.trim(),
-    ANNOUNCEMENT_LINK:        document.getElementById('annLink').value.trim() || 'shop.html',
+    ANNOUNCEMENT_LINK:        document.getElementById('annLink').value.trim() || 'https://www.dollopgelato.com/shop.html',
   };
 
   // Save to localStorage immediately so the website reflects changes on refresh
@@ -469,7 +469,7 @@ function previewSite() {
     PROMO_FREE:               parseInt(document.getElementById('promoFree').value, 10) || 1,
     ANNOUNCEMENT_ACTIVE:      document.getElementById('annToggle').checked,
     ANNOUNCEMENT_IMAGE_URL:   document.getElementById('annImageUrl').value.trim(),
-    ANNOUNCEMENT_LINK:        document.getElementById('annLink').value.trim() || 'shop.html',
+    ANNOUNCEMENT_LINK:        document.getElementById('annLink').value.trim() || 'https://www.dollopgelato.com/shop.html',
   };
   localStorage.setItem('dollop_config', JSON.stringify(cfg));
   window.open('index.html', '_blank');
