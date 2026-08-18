@@ -197,9 +197,15 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 .flv-card:not(.flv-card--soon):hover .flv-card-img img{transform:scale(1.05);}
 /* Cup photo shows by default; pint photo is an absolutely-positioned
    overlay that fades in on hover, so hovering the card previews the pint
-   size without any buttons/click needed. */
-.flv-card-photo--pint{position:absolute;inset:0;opacity:0;transition:opacity 0.35s ease,transform 0.4s ease;}
+   size without any buttons/click needed. A pure opacity crossfade (no
+   zoom) so it reads as a clean dissolve rather than a zoom+swap — the
+   two rules below cancel out the general .flv-card-img img zoom-on-hover
+   for just these two photos (matched specificity + later in the
+   cascade, so they win over that rule while hovering). */
+.flv-card-photo--pint{position:absolute;inset:0;opacity:0;transition:opacity 0.6s ease-in-out;}
 .flv-card:hover .flv-card-photo--pint{opacity:1;}
+.flv-card:hover .flv-card-img img.flv-card-photo--cup,
+.flv-card:hover .flv-card-img img.flv-card-photo--pint{transform:none;}
 @media(hover:none){.flv-card-photo--pint{display:none;}} /* touch devices have no hover to reveal it */
 .flv-card-img-overlay{display:none;}
 .flv-card-wordmark{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:0.05em;color:rgba(255,248,238,0.92);text-align:center;text-transform:uppercase;line-height:1.15;padding:0 20px;text-shadow:0 2px 10px rgba(0,0,0,0.25);}
