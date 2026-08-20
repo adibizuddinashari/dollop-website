@@ -22,7 +22,7 @@ const FLAVOURS = {
     cupImage:     'images/Dollop_cup_durian.png',
     pintImage:    'images/Dollop_pint_durian.png',
     cardBg:       'radial-gradient(ellipse at 40% 30%,#8FBF3A 0%,#4A7C24 40%,#2D5016 75%,#1A3A0A 100%)',
-    priceCup:     12,
+    priceCup:     15,
     pricePint:    70,
     stats: [
       { num: '133', unit: 'kcal per serving', label: 'Energy' },

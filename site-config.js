@@ -7,7 +7,7 @@ const COMPANY_WHATSAPP = '60142676333';
 
 const DEFAULT_CONFIG = {
   ORIGINAL_PRICE:         0,       // strikethrough price (0 = hide strikethrough)
-  PRICE:                  12,      // current selling price (Musang King, 70g cup)
+  PRICE:                  15,      // current selling price (Musang King, 70g cup) — not read by the current site; flavours.js's priceCup is the real source of truth, this only remains for the legacy admin.html field
   SOLD_OUT:               false,   // true = disable ordering, show "Sold Out"
   MAX_QTY:                24,      // maximum cups per order
   PROMO_ACTIVE:           false,   // true = show "Buy X Get Y Free" badge
