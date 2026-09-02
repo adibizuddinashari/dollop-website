@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Runs before the browser gets a chance to restore a mid-page scroll
+     position on refresh — see index.html for the full explanation. -->
+<script>if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dollop — Terms &amp; Conditions</title>
+<link rel="icon" href="brand assets/Dollop Favicon.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,500;0,700;0,800;1,600&family=Bebas+Neue&family=Barrio&family=Bangers&display=swap" rel="stylesheet">
+<style>
+@font-face { font-family:'Barlow'; src:url('brand assets/fonts/Barlow-Medium.ttf') format('truetype'); font-weight:500; font-style:normal; }
+@font-face { font-family:'Barlow'; src:url('brand assets/fonts/Barlow-Italic.ttf') format('truetype'); font-weight:400; font-style:italic; }
+@font-face { font-family:'Barlow'; src:url('brand assets/fonts/Barlow-BoldItalic.ttf') format('truetype'); font-weight:700; font-style:italic; }
+</style>
+<link rel="stylesheet" href="redesign.css">
+<link rel="stylesheet" href="legal.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="sb">
+  <button class="mob-menu-btn" id="mobMenuBtn" aria-label="Menu" onclick="toggleMobMenu()">
+    <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+  <a href="index.html" class="sb-logo">
+    <img src="brand assets/Dollop Logo.png" alt="Dollop">
+  </a>
+  <div class="sb-nav">
+    <a href="index.html#hero" class="sb-link">Home</a>
+    <a href="index.html#flavours" class="sb-link">Flavours</a>
+    <a href="index.html#process" class="sb-link">Our Process</a>
+    <a href="index.html#story" class="sb-link">Our Story</a>
+  </div>
+  <a href="shop.html" class="sb-shop-btn" aria-label="Shop">
+    <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+    <span class="cart-badge">0</span>
+  </a>
+</nav>
+<div class="mob-drawer" id="mobDrawer">
+  <div class="mob-drawer-inner">
+    <button class="mob-drawer-close" onclick="toggleMobMenu()">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <a href="index.html#hero"     class="mob-nav-link" onclick="toggleMobMenu()">Home</a>
+    <a href="index.html#flavours" class="mob-nav-link" onclick="toggleMobMenu()">Flavours</a>
+    <a href="shop.html"           class="mob-nav-link" onclick="toggleMobMenu()">Shop</a>
+    <a href="index.html#process"  class="mob-nav-link" onclick="toggleMobMenu()">Our Process</a>
+    <a href="index.html#story"    class="mob-nav-link" onclick="toggleMobMenu()">Our Story</a>
+    <a href="shop.html" class="mob-nav-cta" onclick="toggleMobMenu()">Order Now<span class="cart-badge" style="top:2px;right:10px;">0</span></a>
+  </div>
+</div>
+<div class="mob-drawer-overlay" id="mobOverlay" onclick="toggleMobMenu()"></div>
+
+<div class="main">
+
+  <div class="legal-wrap">
+
+    <header class="legal-head">
+      <div class="flv-hd-lbl">Legal</div>
+      <h1>Terms &amp; Conditions</h1>
+      <p class="legal-updated">Last updated 2 September 2026</p>
+    </header>
+
+    <nav class="legal-toc" aria-label="Table of contents">
+      <div class="legal-toc-ttl">On this page</div>
+      <a href="#agreement">1. Agreement to these Terms</a>
+      <a href="#about">2. Who we are</a>
+      <a href="#eligibility">3. Eligibility</a>
+      <a href="#products">4. Our products</a>
+      <a href="#orders">5. Orders &amp; acceptance</a>
+      <a href="#prices">6. Prices &amp; payment</a>
+      <a href="#fulfilment">7. Pickup &amp; delivery</a>
+      <a href="#cancellations">8. Cancellations, changes &amp; refunds</a>
+      <a href="#allergens">9. Allergens &amp; storage</a>
+      <a href="#promotions">10. Promotions &amp; vouchers</a>
+      <a href="#ip">11. Intellectual property</a>
+      <a href="#acceptable-use">12. Acceptable use of the website</a>
+      <a href="#thirdparty">13. Third-party links &amp; services</a>
+      <a href="#liability">14. Limitation of liability</a>
+      <a href="#indemnity">15. Indemnity</a>
+      <a href="#privacy">16. Privacy</a>
+      <a href="#changes">17. Changes to these Terms</a>
+      <a href="#law">18. Governing law</a>
+      <a href="#contact">19. Contact us</a>
+    </nav>
+
+    <article class="legal-doc">
+      <!-- NOTE: working draft written for Dollop / Beyond Bites Sdn Bhd.
+           Have a Malaysian lawyer review before relying on it. Structure
+           matches privacy-policy.html for a clean swap
+           if a Termly-generated version replaces it later. -->
+
+      <p><strong>Please read these Terms &amp; Conditions carefully.</strong> They govern your use of <a href="index.html">dollopgelato.com</a> (the "<strong>Website</strong>") and any gelato or other products you order from us. By using the Website or placing an order, you agree to these Terms. If you do not agree, please do not use the Website or order from us.</p>
+
+      <h2 id="agreement">1. Agreement to these Terms</h2>
+      <p>These Terms form a binding agreement between you ("<strong>you</strong>", "<strong>your</strong>", or the "<strong>Customer</strong>") and Beyond Bites Sdn Bhd, trading as Dollop ("<strong>Dollop</strong>", "<strong>we</strong>", "<strong>us</strong>", or "<strong>our</strong>"). They apply alongside our <a href="privacy-policy.html">Privacy Policy</a> and <a href="cookie-policy.html">Cookie Policy</a>, which are incorporated by reference.</p>
+      <p>We may update these Terms from time to time (see section 17). The version in force is the one published on the Website when you place your order.</p>
+
+      <h2 id="about">2. Who we are</h2>
+      <p>The Website and the Dollop brand are operated by:</p>
+      <ul>
+        <li><strong>Beyond Bites Sdn Bhd</strong> (Company No. 202501026928)</li>
+        <li>1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor, Malaysia</li>
+        <li>Phone / WhatsApp: <a href="tel:+60142676333">014-2676 333</a></li>
+        <li>Email: <a href="mailto:dollopgelato@gmail.com">dollopgelato@gmail.com</a></li>
+      </ul>
+
+      <h2 id="eligibility">3. Eligibility</h2>
+      <p>You may place an order only if you are at least 18 years old (or have the consent of a parent or guardian) and are able to enter into a legally binding contract. By ordering, you confirm that the information you give us — including your name, contact number, and delivery address — is accurate and complete, and that you will keep it up to date.</p>
+
+      <h2 id="products">4. Our products</h2>
+      <p>Dollop makes gelato in small batches using real fruit and pure ingredients, without artificial flavourings or preservatives. Because our products are handmade and made with seasonal produce:</p>
+      <ul>
+        <li>colour, texture, intensity, and taste may vary slightly from batch to batch;</li>
+        <li>photographs, illustrations, and descriptions on the Website are for general guidance and are not a precise representation of what you receive;</li>
+        <li>flavours, sizes (currently 70g cups and 380g pints), and pricing may change, sell out, or be discontinued without notice; and</li>
+        <li>some flavours are seasonal and available only while stocks last.</li>
+      </ul>
+      <p>Nutrition information, serving sizes, and ingredient lists shown on the Website are approximate and provided for general guidance only.</p>
+
+      <h2 id="orders">5. Orders &amp; acceptance</h2>
+      <p>When you submit an order through the Website or via WhatsApp, you are making an offer to buy the products in your cart. Your order is <strong>not accepted</strong> until we confirm it with you directly (normally by WhatsApp). We may decline or cancel an order — before or after payment — for reasons including:</p>
+      <ul>
+        <li>a product is unavailable, sold out, or mispriced;</li>
+        <li>we cannot deliver to your location or cannot verify your details;</li>
+        <li>we suspect fraud, abuse, or a breach of these Terms; or</li>
+        <li>circumstances beyond our reasonable control prevent fulfilment.</li>
+      </ul>
+      <p>If we cancel an order you have already paid for, we will refund the amount you paid for the cancelled items.</p>
+      <p>The maximum order quantity is 24 cups (or the equivalent) unless we agree otherwise in writing for a bulk or event order.</p>
+
+      <h2 id="prices">6. Prices &amp; payment</h2>
+      <ul>
+        <li>All prices are in Malaysian Ringgit (RM) and are shown on the Website. Delivery fees, where they apply, are quoted and confirmed separately via WhatsApp before you pay.</li>
+        <li>We take reasonable care to price products correctly, but errors can occur. If a product's correct price is higher than the price shown when you ordered, we will contact you before proceeding and you may confirm at the correct price or cancel.</li>
+        <li>Payment is made by bank transfer or DuitNow QR to Beyond Bites Sdn Bhd after you place your order. We will send payment details via WhatsApp.</li>
+        <li>Your order is only processed once we have received your payment and your proof of payment (a screenshot or photo of the transfer receipt).</li>
+        <li>We do not store your card or banking details. Bank and e-wallet transactions are handled by your own bank or payment provider.</li>
+      </ul>
+
+      <h2 id="fulfilment">7. Pickup &amp; delivery</h2>
+      <h3>Pickup</h3>
+      <p>Pickup is free from 1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor. Orders are normally ready 1–2 hours after we confirm them and are kept frozen until you collect. Please collect within the time we agree; we are not responsible for the quality of gelato left uncollected beyond that window.</p>
+      <h3>Delivery</h3>
+      <p>Where we offer delivery, the delivery fee and estimated time are confirmed with you via WhatsApp before payment. Gelato is packed in insulated packaging suitable for the agreed delivery window, but it is a frozen product: once it reaches you, it is your responsibility to refrigerate or freeze it promptly. Risk in the products passes to you on delivery or collection.</p>
+      <p>We are not liable for failed or delayed delivery caused by an incorrect or incomplete address, no one being available to receive the order, or events outside our reasonable control (traffic, weather, courier issues, and similar).</p>
+
+      <h2 id="cancellations">8. Cancellations, changes &amp; refunds</h2>
+      <p>Our products are perishable food made to order, so the usual "change of mind" cooling-off rights do not apply once an order is confirmed.</p>
+      <ul>
+        <li><strong>Before we confirm your order:</strong> contact us as soon as possible and we will try to change or cancel it. If you have already paid, we will refund you.</li>
+        <li><strong>After we confirm your order:</strong> we may not be able to change or cancel it, particularly once preparation has begun.</li>
+        <li><strong>If something is wrong</strong> — the wrong item, a missing item, or gelato that arrived melted or spoiled through our fault — contact us within <strong>24 hours</strong> of pickup or delivery with your order number and clear photos. If we agree there is a genuine quality or fulfilment issue, we will, at our option, replace the affected items or refund you for them.</li>
+        <li>We do not refund issues caused by storage after the product reached you, by collection or delivery details you gave incorrectly, or by normal batch-to-batch variation.</li>
+      </ul>
+      <p>Approved refunds are made to your original payment method or by bank transfer, normally within 7–14 business days.</p>
+
+      <h2 id="allergens">9. Allergens &amp; storage</h2>
+      <p>Our gelato contains <strong>dairy</strong> and, depending on the flavour, <strong>durian</strong>, <strong>soy</strong>, <strong>nuts</strong>, <strong>gluten</strong>, or other allergens. It is made in a small kitchen that also handles these ingredients, so we cannot guarantee any product is free from traces of a given allergen. If you have a food allergy or intolerance, check with us before ordering and do not rely solely on Website descriptions.</p>
+      <p>Once gelato reaches you, keep it frozen and consume it within the period we advise. We are not responsible for quality problems caused by thawing, refreezing, or storage outside a freezer after collection or delivery.</p>
+
+      <h2 id="promotions">10. Promotions &amp; vouchers</h2>
+      <p>Promotions, combos (such as "Buy 4 Get 1 Free"), discounts, and vouchers are subject to their own stated conditions and to these Terms. Unless we say otherwise: they cannot be combined; they have no cash value and are not exchangeable for cash; free or bonus items are chosen by us and may be substituted; and we may change or withdraw a promotion at any time. We may cancel orders or reverse benefits obtained through misuse of a promotion.</p>
+
+      <h2 id="ip">11. Intellectual property</h2>
+      <p>The Website and its content — including the Dollop name and logo, text, graphics, illustrations, photographs, packaging design, and layout — are owned by or licensed to Beyond Bites Sdn Bhd and are protected by intellectual property laws. You may view and print content for your own personal, non-commercial use in connection with an order. You may not copy, reproduce, republish, distribute, or use our content or branding for any commercial purpose without our prior written permission.</p>
+
+      <h2 id="acceptable-use">12. Acceptable use of the website</h2>
+      <p>You agree not to:</p>
+      <ul>
+        <li>use the Website for any unlawful, fraudulent, or harmful purpose;</li>
+        <li>submit false orders or another person's details without authority;</li>
+        <li>interfere with or attempt to gain unauthorised access to the Website, its servers, or connected systems;</li>
+        <li>introduce malware or place an unreasonable load on our infrastructure; or</li>
+        <li>scrape, harvest, or reuse content or data from the Website except as ordinary browsing allows.</li>
+      </ul>
+      <p>We may suspend or restrict your access to the Website if we reasonably believe you have breached these Terms.</p>
+
+      <h2 id="thirdparty">13. Third-party links &amp; services</h2>
+      <p>The Website uses and links to third-party services — including Google (forms, maps, and hosting), WhatsApp, and payment and courier providers. We are not responsible for the content, policies, or practices of those third parties. Your use of their services is governed by their own terms.</p>
+
+      <h2 id="liability">14. Limitation of liability</h2>
+      <p>Nothing in these Terms limits or excludes our liability for death or personal injury caused by our negligence, for fraud, or for anything that cannot lawfully be limited or excluded under Malaysian law, including your rights under the Consumer Protection Act 1999 where they apply.</p>
+      <p>Subject to that, and to the fullest extent permitted by law:</p>
+      <ul>
+        <li>the Website and its content are provided "as is" and "as available", without warranties of any kind;</li>
+        <li>we are not liable for indirect, incidental, special, or consequential loss, or for loss of profit, revenue, data, or goodwill; and</li>
+        <li>our total liability to you in connection with any order or your use of the Website is limited to the amount you paid for the order giving rise to the claim.</li>
+      </ul>
+
+      <h2 id="indemnity">15. Indemnity</h2>
+      <p>You agree to indemnify and hold harmless Beyond Bites Sdn Bhd and its directors, employees, and agents against claims, losses, liabilities, and reasonable costs arising from your breach of these Terms or your misuse of the Website or our products.</p>
+
+      <h2 id="privacy">16. Privacy</h2>
+      <p>We handle your personal information in accordance with our <a href="privacy-policy.html">Privacy Policy</a> and the Personal Data Protection Act 2010 (Malaysia). By placing an order, you consent to us contacting you about that order — including by WhatsApp, phone, and email.</p>
+
+      <h2 id="changes">17. Changes to these Terms</h2>
+      <p>We may revise these Terms at any time by posting the updated version on this page and changing the "Last updated" date above. Changes take effect when published. Continuing to use the Website or place orders after that means you accept the revised Terms.</p>
+
+      <h2 id="law">18. Governing law &amp; jurisdiction</h2>
+      <p>These Terms and any dispute arising out of them are governed by the laws of Malaysia. You and we submit to the exclusive jurisdiction of the courts of Malaysia, without limiting our right to bring proceedings in another jurisdiction where necessary to enforce our rights.</p>
+      <p>If any provision of these Terms is found to be unenforceable, the rest remains in full effect.</p>
+
+      <h2 id="contact">19. Contact us</h2>
+      <div class="legal-callout">
+        <p><strong>Questions about these Terms or an order?</strong> Contact us at <a href="mailto:dollopgelato@gmail.com">dollopgelato@gmail.com</a> or WhatsApp <a href="tel:+60142676333">014-2676 333</a>.</p>
+        <p style="margin-bottom:0;">Beyond Bites Sdn Bhd (202501026928)<br>1282, Jalan Bukit Kemuning, 40640 Shah Alam, Selangor, Malaysia</p>
+      </div>
+    </article>
+
+  </div>
+
+  <!-- ══ FOOTER ═══════════════════════════════════════════════════════ -->
+  <footer class="ft-fat" id="footer">
+    <div class="ft-fat-bg" aria-hidden="true" style="background-image:url('assets/images/Dollop-Footer-Redesign.png')"></div>
+    <div class="ft-fat-top">
+      <div class="ft-col">
+        <div class="ft-ct">Contact</div>
+        <a href="tel:+60142676333">014-2676 333</a>
+        <address class="ft-addr">1282, Jalan Bukit Kemuning,<br>40640 Shah Alam, Selangor</address>
+        <div class="ft-fat-soc">
+          <a href="https://www.facebook.com/dollop.gelato" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="https://www.instagram.com/dollopgelato/?hl=af" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://www.youtube.com/@dollopgelato" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </div>
+      <div class="ft-col">
+        <div class="ft-ct">Shop</div>
+        <a href="product.html?flavour=musang-king">Musang King</a>
+        <a href="product.html?flavour=cempedak">Cempedak</a>
+        <a href="product.html?flavour=soya-gula-melaka">Soya With Gula Melaka</a>
+        <a href="product.html?flavour=pandan-coconut">Pandan Coconut</a>
+        <a href="shop.html">Shop All</a>
+      </div>
+      <div class="ft-col">
+        <div class="ft-ct">Company</div>
+        <a href="index.html#story">Our Story</a>
+        <a href="index.html#process">Our Process</a>
+      </div>
+      <div class="ft-col">
+        <div class="ft-ct">Legal</div>
+        <a href="terms.html">Terms &amp; Conditions</a>
+        <a href="cookie-policy.html">Cookie Policy</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+      </div>
+      <div class="ft-col">
+        <div class="ft-ct">Support</div>
+        <a href="#" id="waSupportLink">WhatsApp Us</a>
+        <a href="#" id="waCatalogLink">Shop on WhatsApp</a>
+        <a href="index.html#footer">Delivery Info</a>
+      </div>
+    </div>
+
+    <div class="ft-fat-mid">
+      <img src="assets/Dollop Logo.png" alt="Dollop" class="ft-fat-logo">
+    </div>
+
+    <div class="ft-bot">
+      <span>© 2025 Beyond Bites Sdn Bhd (202501026928) · All rights reserved.</span>
+      <span>made with stinking good passion</span>
+    </div>
+  </footer>
+
+</div><!-- /.main -->
+
+<script src="site-config.js"></script>
+<script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
+<script src="redesign.js"></script>
+<script>
+  var waMsg = encodeURIComponent("Hi Dollop! I have a question 🍦");
+  document.getElementById('waSupportLink').href = 'https://wa.me/' + COMPANY_WHATSAPP + '?text=' + waMsg;
+  document.getElementById('waCatalogLink').href = 'https://wa.me/c/' + COMPANY_WHATSAPP;
+</script>
+</body>
+</html>

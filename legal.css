@@ -1,0 +1,115 @@
+/* ── LEGAL PAGES — Terms & Conditions, Disclaimer, Privacy Policy ───────
+   Shares the site shell (nav + fat footer) from redesign.css. Everything
+   here styles the document body: a centred reading column on a cream
+   card, a compact header, and an optional sticky table of contents.
+   Long-form legal copy, so the type is a touch larger and looser than
+   the marketing pages. */
+
+.legal-wrap{
+  max-width:1180px;
+  margin:0 auto;
+  padding:112px 24px 96px;
+  display:grid;
+  grid-template-columns:220px minmax(0,1fr);
+  gap:56px;
+  align-items:start;
+}
+
+/* ── Header ─────────────────────────────────────────────────────────── */
+.legal-head{grid-column:1 / -1;text-align:center;max-width:680px;margin:0 auto 8px;}
+.legal-head .flv-hd-lbl{margin-bottom:14px;}
+.legal-head h1{
+  font-family:'Barlow',sans-serif;font-weight:500;
+  font-size:clamp(2.4rem,4.5vw,3.6rem);
+  letter-spacing:2px;line-height:0.95;text-transform:uppercase;
+  color:var(--brown);margin-bottom:14px;
+}
+.legal-head .legal-updated{
+  font-size:0.78rem;letter-spacing:0.04em;
+  color:var(--brown-light);
+}
+
+/* ── Table of contents (left rail) ──────────────────────────────────── */
+.legal-toc{
+  position:sticky;top:96px;
+  font-size:0.82rem;line-height:1.5;
+}
+.legal-toc .legal-toc-ttl{
+  font-size:0.6rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--green-mid);margin-bottom:14px;
+}
+.legal-toc a{
+  display:block;padding:6px 0;
+  color:var(--brown-mid);
+  border-left:2px solid transparent;padding-left:12px;margin-left:-14px;
+  transition:color 0.15s,border-color 0.15s;
+}
+.legal-toc a:hover{color:var(--brown);border-left-color:var(--yellow);}
+
+/* ── Document body ─────────────────────────────────────────────────── */
+.legal-doc{
+  background:var(--cream);
+  border:1px solid rgba(59,31,10,0.08);
+  border-radius:18px;
+  padding:clamp(28px,5vw,64px);
+  font-size:0.95rem;
+  line-height:1.75;
+  color:var(--brown-mid);
+}
+.legal-doc > *:first-child{margin-top:0;}
+
+.legal-doc h2{
+  font-family:'Barlow',sans-serif;font-weight:700;
+  font-size:1.35rem;letter-spacing:0.01em;
+  color:var(--brown);
+  margin:44px 0 14px;
+  scroll-margin-top:96px;
+}
+.legal-doc h3{
+  font-family:'Barlow',sans-serif;font-weight:700;
+  font-size:1.05rem;
+  color:var(--brown);
+  margin:28px 0 10px;
+  scroll-margin-top:96px;
+}
+.legal-doc p{margin:0 0 16px;}
+.legal-doc ul,.legal-doc ol{margin:0 0 16px;padding-left:1.4em;}
+.legal-doc li{margin:0 0 8px;}
+.legal-doc a{color:var(--green-mid);text-decoration:underline;text-underline-offset:2px;}
+.legal-doc a:hover{color:var(--green);}
+.legal-doc strong{color:var(--brown);font-weight:700;}
+.legal-doc code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:0.86em;background:rgba(59,31,10,0.06);border-radius:4px;padding:1px 5px;}
+.legal-doc hr{border:none;border-top:1px solid rgba(59,31,10,0.12);margin:32px 0;}
+.legal-doc table{width:100%;border-collapse:collapse;margin:0 0 20px;font-size:0.88rem;}
+.legal-doc th,.legal-doc td{border:1px solid rgba(59,31,10,0.14);padding:10px 12px;text-align:left;vertical-align:top;}
+.legal-doc th{background:rgba(59,31,10,0.04);color:var(--brown);font-weight:700;}
+
+/* "In Short:" summary line that opens most Termly sections */
+.legal-doc .legal-short{
+  font-style:italic;
+  color:var(--brown);
+  background:var(--white);
+  border-left:3px solid var(--green-light);
+  border-radius:0 8px 8px 0;
+  padding:10px 16px;
+  margin:14px 0 18px;
+  font-size:0.9rem;
+}
+
+/* Callout box for the "Questions or concerns" / contact block */
+.legal-doc .legal-callout{
+  background:var(--white);
+  border:1px solid rgba(59,31,10,0.1);
+  border-left:3px solid var(--yellow);
+  border-radius:10px;
+  padding:18px 20px;
+  margin:24px 0;
+  font-size:0.9rem;
+}
+
+/* ── Responsive ────────────────────────────────────────────────────── */
+@media(max-width:900px){
+  .legal-wrap{grid-template-columns:1fr;gap:32px;padding-top:96px;}
+  .legal-toc{position:static;order:2;border-top:1px solid rgba(59,31,10,0.1);padding-top:24px;}
+  .legal-doc{order:1;}
+}

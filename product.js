@@ -106,6 +106,17 @@ function applyProduct() {
     if (soonBox) soonBox.style.display = 'none';
     if (szRow) szRow.style.display = '';
   }
+
+  // Meta Pixel — one ViewContent per flavour shown (also fires on switch).
+  if (typeof fbq !== 'undefined') {
+    fbq('track', 'ViewContent', {
+      content_name: f.fullName,
+      content_ids: [currentFlavour],
+      content_type: 'product',
+      currency: 'MYR',
+      value: f.priceCup || price
+    });
+  }
 }
 
 function renderFlvSwitcher() {
