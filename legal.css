@@ -79,6 +79,10 @@
 .legal-doc a:hover{color:var(--green);}
 .legal-doc strong{color:var(--brown);font-weight:700;}
 .legal-doc code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:0.86em;background:rgba(59,31,10,0.06);border-radius:4px;padding:1px 5px;}
+/* Termly renders certain clauses (disclaimer, liability caps, e-sign
+   consent) in all-caps for legal emphasis — keep that, but tuck the size
+   down a touch so a full uppercase paragraph stays readable. */
+.legal-doc .legal-caps{text-transform:uppercase;font-size:0.86em;letter-spacing:0.01em;display:block;}
 .legal-doc hr{border:none;border-top:1px solid rgba(59,31,10,0.12);margin:32px 0;}
 .legal-doc table{width:100%;border-collapse:collapse;margin:0 0 20px;font-size:0.88rem;}
 .legal-doc th,.legal-doc td{border:1px solid rgba(59,31,10,0.14);padding:10px 12px;text-align:left;vertical-align:top;}
