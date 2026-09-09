@@ -173,7 +173,10 @@ function renderFlvTease() {
   var grid = document.getElementById('flvGrid');
   if (!grid || typeof FEATURED_FLAVOURS === 'undefined') return;
 
-  grid.innerHTML = FEATURED_FLAVOURS.map(function (slug, i) {
+  var slugs = FEATURED_FLAVOURS.filter(function (s) { return FLAVOURS[s]; });
+  if (typeof flvGridCols === 'function') grid.dataset.cols = flvGridCols(slugs.length);
+
+  grid.innerHTML = slugs.map(function (slug, i) {
     var f = FLAVOURS[slug];
     if (!f) return '';
     var isSoon = !f.available;
@@ -402,11 +405,18 @@ document.addEventListener('DOMContentLoaded', renderHappinessMarquee);
     }
   }
 
+  // Also fold any admin-added products into the flavour-tease grid on this
+  // same config payload (the popup and the grid share one fetch).
+  function applyProductConfig(cfg) {
+    if (typeof mergeRemoteProducts !== 'function' || typeof renderFlvTease !== 'function') return;
+    if (mergeRemoteProducts(cfg)) renderFlvTease();
+  }
+
   var local = localStorage.getItem('dollop_config');
-  if (local) { try { applyAnnouncementConfig(JSON.parse(local)); } catch (e) {} }
+  if (local) { try { var lc = JSON.parse(local); applyAnnouncementConfig(lc); applyProductConfig(lc); } catch (e) {} }
   fetch(APPS_SCRIPT_URL + '?type=config', { cache: 'no-cache' })
     .then(function (r) { return r.json(); })
-    .then(function (cfg) { localStorage.setItem('dollop_config', JSON.stringify(cfg)); applyAnnouncementConfig(cfg); })
+    .then(function (cfg) { localStorage.setItem('dollop_config', JSON.stringify(cfg)); applyAnnouncementConfig(cfg); applyProductConfig(cfg); })
     .catch(function () { if (!local) applyAnnouncementConfig(DEFAULT_CONFIG); });
 
   var card = document.getElementById('annCard');

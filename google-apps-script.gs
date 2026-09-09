@@ -60,7 +60,22 @@ function getConfig() {
   cfg.MAX_QTY             = Number(cfg.MAX_QTY) || 24;
   cfg.PROMO_THRESHOLD     = Number(cfg.PROMO_THRESHOLD) || 5;
   cfg.PROMO_FREE          = Number(cfg.PROMO_FREE) || 1;
+  // These are stored JSON-encoded, one per cell — parse a key only when its
+  // column actually exists. Leaving a missing key absent (rather than forcing
+  // it to []/{}) lets the site apply its own built-in default. This matters
+  // for COMBOS: absent → show the bundled Merdeka combo; [] → the admin has
+  // deliberately cleared every combo.
+  if ('PRODUCTS'          in cfg) cfg.PRODUCTS          = parseJsonCell(cfg.PRODUCTS, []);
+  if ('FLAVOUR_ORDER'     in cfg) cfg.FLAVOUR_ORDER     = parseJsonCell(cfg.FLAVOUR_ORDER, []);
+  if ('FLAVOUR_HIDDEN'    in cfg) cfg.FLAVOUR_HIDDEN    = parseJsonCell(cfg.FLAVOUR_HIDDEN, []);
+  if ('FLAVOUR_OVERRIDES' in cfg) cfg.FLAVOUR_OVERRIDES = parseJsonCell(cfg.FLAVOUR_OVERRIDES, {});
+  if ('COMBOS'            in cfg) cfg.COMBOS            = parseJsonCell(cfg.COMBOS, []);
   return jsonResponse(cfg);
+}
+
+function parseJsonCell(raw, fallback) {
+  try { return raw ? JSON.parse(raw) : fallback; }
+  catch (err) { return fallback; }
 }
 
 // ── Config write ────────────────────────────────────────────────────────────
@@ -79,12 +94,21 @@ function saveConfig(data) {
   if (!sheet) sheet = ss.insertSheet(CONFIG_SHEET);
 
   var keys = ['ORIGINAL_PRICE','PRICE','SOLD_OUT','MAX_QTY','PROMO_ACTIVE','PROMO_THRESHOLD','PROMO_FREE',
-              'ANNOUNCEMENT_ACTIVE','ANNOUNCEMENT_IMAGE_URL','ANNOUNCEMENT_LINK'];
+              'ANNOUNCEMENT_ACTIVE','ANNOUNCEMENT_IMAGE_URL','ANNOUNCEMENT_LINK',
+              'PRODUCTS','FLAVOUR_OVERRIDES','FLAVOUR_ORDER','FLAVOUR_HIDDEN','COMBOS'];
+  // These keys hold arrays/objects — store each JSON-encoded in one cell
+  // (well under the ~50k char cell limit). FLAVOUR_OVERRIDES defaults to {}.
+  var JSON_KEYS = { PRODUCTS: [], FLAVOUR_OVERRIDES: {}, FLAVOUR_ORDER: [], FLAVOUR_HIDDEN: [], COMBOS: [] };
 
   // Always rewrite headers to stay in sync with the keys list
   sheet.getRange(1, 1, 1, keys.length).setValues([keys]);
-  // Write values to row 2
-  var row = keys.map(function(k) { return cfg[k] !== undefined ? cfg[k] : ''; });
+  // Write values to row 2.
+  var row = keys.map(function(k) {
+    if (JSON_KEYS.hasOwnProperty(k)) {
+      return JSON.stringify(cfg[k] !== undefined && cfg[k] !== null ? cfg[k] : JSON_KEYS[k]);
+    }
+    return cfg[k] !== undefined ? cfg[k] : '';
+  });
   sheet.getRange(2, 1, 1, keys.length).setValues([row]);
 
   return jsonResponse({success: true});
@@ -143,6 +167,9 @@ function defaultConfig() {
   return {
     ORIGINAL_PRICE: 18, PRICE: 15, SOLD_OUT: true, MAX_QTY: 24,
     PROMO_ACTIVE: true, PROMO_THRESHOLD: 5, PROMO_FREE: 1,
-    ANNOUNCEMENT_ACTIVE: false, ANNOUNCEMENT_IMAGE_URL: '', ANNOUNCEMENT_LINK: 'product.html'
+    ANNOUNCEMENT_ACTIVE: false, ANNOUNCEMENT_IMAGE_URL: '', ANNOUNCEMENT_LINK: 'product.html',
+    PRODUCTS: [], FLAVOUR_OVERRIDES: {}, FLAVOUR_ORDER: [], FLAVOUR_HIDDEN: []
+    // COMBOS intentionally omitted here so a brand-new sheet falls back to the
+    // site's bundled Merdeka combo rather than rendering nothing.
   };
 }

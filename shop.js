@@ -15,7 +15,10 @@ function renderShopGrid() {
   var grid = document.getElementById('shopGrid');
   if (!grid || typeof FEATURED_FLAVOURS === 'undefined') return;
 
-  grid.innerHTML = FEATURED_FLAVOURS.map(function (slug) {
+  var slugs = FEATURED_FLAVOURS.filter(function (s) { return FLAVOURS[s]; });
+  if (typeof flvGridCols === 'function') grid.dataset.cols = flvGridCols(slugs.length);
+
+  grid.innerHTML = slugs.map(function (slug) {
     var f = FLAVOURS[slug];
     if (!f) return '';
     var isSoon = !f.available;
@@ -117,35 +120,133 @@ function renderShopCartBar() {
 }
 document.addEventListener('DOMContentLoaded', renderShopCartBar);
 
-// The Merdeka Combo — Cup Deal (RM45, 70g cups) or Pint Deal (RM220, 380g
-// pints), toggled via selectComboDeal(). Still a single fixed-price cart
-// line either way (reuses the same shared cart).
-var comboDeal = 'cup';
+// ── Combo deals ────────────────────────────────────────────────────────────
+// Up to 2 combos from cfg.COMBOS (managed in admin.html). One combo renders as
+// the image-left / details-right card. Two render as side-by-side square tiles;
+// clicking one cross-fades to its full card with a "‹ Back" button that returns
+// to the two tiles. Each combo has its own Cup Deal / Pint Deal price toggle.
+var comboList = [];       // active combos, capped at COMBO_MAX
+var comboDeal = 'cup';    // 'cup' | 'pint' for the combo currently on screen
+var comboExpanded = -1;   // index into comboList when a tile is expanded, else -1
+var _comboSig = '';       // set-of-combos signature, to reset the expanded view when it changes
+
+function slugifyCombo(s) {
+  return (s || 'combo').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'combo';
+}
+function comboImg(c) {
+  return c.imageUrl ? toDriveDirectUrl(c.imageUrl) : 'brand assets/Dollop Merdeka Flavour_Web.jpg';
+}
+function currentCombo() {
+  return comboList[comboExpanded > -1 ? comboExpanded : 0] || null;
+}
+
+function renderCombos(rawList) {
+  var section = document.getElementById('merdekaCombo');
+  var wrap = document.getElementById('comboWrap');
+  if (!section || !wrap) return;
+
+  comboList = (Array.isArray(rawList) ? rawList : [])
+    .filter(function (c) { return c && c.active !== false && c.title; })
+    .slice(0, (typeof COMBO_MAX === 'number' ? COMBO_MAX : 2));
+
+  if (!comboList.length) { section.style.display = 'none'; wrap.innerHTML = ''; return; }
+  section.style.display = '';
+  comboDeal = 'cup';
+
+  // Reset the expanded view whenever the set of combos changes (e.g. the
+  // localStorage cache and the server payload differ on first load).
+  var sig = JSON.stringify(comboList.map(function (c) { return (c.slug || c.title) + '|' + c.active; }));
+  if (sig !== _comboSig) { _comboSig = sig; comboExpanded = -1; }
+  if (comboExpanded >= comboList.length) comboExpanded = -1;
+
+  if (comboList.length === 1) {
+    comboExpanded = -1;
+    wrap.innerHTML = comboCardHtml(comboList[0]);
+  } else if (comboExpanded > -1) {
+    wrap.innerHTML =
+      '<div class="combo-back-wrap"><button class="combo-back" onclick="collapseCombo()">‹ Back to deals</button></div>'
+      + comboCardHtml(comboList[comboExpanded]);
+  } else {
+    wrap.innerHTML = '<div class="combo-dual">' + comboList.map(function (c, i) {
+      return '<button type="button" class="combo-tile" onclick="expandCombo(' + i + ')" aria-label="' + (c.title || 'Combo deal') + '">'
+        + '<img src="' + comboImg(c) + '" alt="' + (c.title || 'Combo deal') + '">'
+        + '</button>';
+    }).join('') + '</div>';
+  }
+
+  // Re-apply the sold-out lock to any button just injected.
+  if (window.SITE_CFG && window.SITE_CFG.SOLD_OUT) {
+    wrap.querySelectorAll('.combo-order-btn').forEach(function (b) { b.disabled = true; });
+  }
+}
+
+function comboCardHtml(c) {
+  var pills = (Array.isArray(c.pills) ? c.pills : [])
+    .filter(Boolean)
+    .map(function (p) { return '<span class="combo-flavour-pill">' + p + '</span>'; }).join('');
+  return '<div class="combo-card">'
+    + '<img class="combo-img" src="' + comboImg(c) + '" alt="' + (c.title || 'Combo deal') + '">'
+    + '<div class="combo-body">'
+    +   (c.badge ? '<div class="combo-badge">' + c.badge + '</div>' : '')
+    +   '<div class="combo-title">' + (c.title || '') + '</div>'
+    +   (c.desc ? '<p class="combo-desc">' + c.desc + '</p>' : '')
+    +   (pills ? '<div class="combo-flavours">' + pills + '</div>' : '')
+    +   '<div class="shop-sz-row" id="comboSzRow">'
+    +     '<button class="shop-sz active" data-deal="cup" onclick="selectComboDeal(this)">Cup Deal · RM' + (Number(c.cupPrice) || 0) + '</button>'
+    +     '<button class="shop-sz" data-deal="pint" onclick="selectComboDeal(this)">Pint Deal · RM' + (Number(c.pintPrice) || 0) + '</button>'
+    +   '</div>'
+    +   '<div class="combo-price-row">'
+    +     '<span class="combo-price" id="comboPrice">RM ' + (Number(c.cupPrice) || 0) + '</span>'
+    +     '<span class="combo-price-note" id="comboPriceNote">' + (c.cupNote || '') + '</span>'
+    +   '</div>'
+    +   '<button class="combo-order-btn" onclick="addComboToCart()">Add Combo to Order</button>'
+    + '</div>'
+    + '</div>';
+}
+
+function _comboFadeSwap() {
+  var wrap = document.getElementById('comboWrap');
+  if (!wrap) return;
+  wrap.classList.add('combo-fade');
+  setTimeout(function () {
+    renderCombos(comboList);
+    requestAnimationFrame(function () { wrap.classList.remove('combo-fade'); });
+  }, 280);
+}
+function expandCombo(i) { comboExpanded = i; _comboFadeSwap(); }
+function collapseCombo() { comboExpanded = -1; _comboFadeSwap(); }
 
 function selectComboDeal(btn) {
+  var c = currentCombo();
+  if (!c) return;
   var row = document.getElementById('comboSzRow');
   if (row) row.querySelectorAll('.shop-sz').forEach(function (b) { b.classList.remove('active'); });
   btn.classList.add('active');
   comboDeal = btn.dataset.deal;
-
   var isPint = comboDeal === 'pint';
   var priceEl = document.getElementById('comboPrice');
   var noteEl = document.getElementById('comboPriceNote');
-  if (priceEl) priceEl.textContent = isPint ? 'RM 220' : 'RM 45';
-  if (noteEl) noteEl.textContent = (isPint ? '5 × 380g pints' : '5 × 70g cups') + ' · Buy 4 Get 1 Free';
+  if (priceEl) priceEl.textContent = 'RM ' + (isPint ? (Number(c.pintPrice) || 0) : (Number(c.cupPrice) || 0));
+  if (noteEl) noteEl.textContent = isPint ? (c.pintNote || '') : (c.cupNote || '');
 }
 
 function addComboToCart() {
+  var c = currentCombo();
+  if (!c) return;
   var isPint = comboDeal === 'pint';
+  var slug = c.slug || slugifyCombo(c.title);
+  var dealName = c.title + ' (' + (isPint ? 'Pint' : 'Cup') + ' Deal)';
+  var note = isPint ? (c.pintNote || '') : (c.cupNote || '');
+  var pills = Array.isArray(c.pills) ? c.pills.filter(Boolean).join(', ') : '';
   addToCart({
-    flavourSlug: 'merdeka-combo',
-    flavourName: 'The Merdeka Combo (' + (isPint ? 'Pint' : 'Cup') + ' Deal)',
-    sizeKey: isPint ? 'combo-5pint' : 'combo-5cup',
-    sizeLabel: (isPint ? '5 × 380g pints' : '5 × 70g cups') + ' — Musang King, Cempedak, Soya Gula Melaka, Pandan Coconut + free random flavour',
-    price: isPint ? 220 : 45,
+    flavourSlug: 'combo-' + slug,
+    flavourName: dealName,
+    sizeKey: 'combo-' + slug + (isPint ? '-pint' : '-cup'),
+    sizeLabel: note + (pills ? ' — ' + pills : ''),
+    price: isPint ? (Number(c.pintPrice) || 0) : (Number(c.cupPrice) || 0),
     qty: 1
   });
-  showCartToast('Added The Merdeka Combo (' + (isPint ? 'Pint' : 'Cup') + ' Deal) to your order');
+  showCartToast('Added ' + dealName + ' to your order');
   renderShopCartBar();
 }
 
@@ -199,6 +300,21 @@ function showSoldOutToast() {
 // price used on ../product.html).
 function applyConfig(cfg) {
   window.SITE_CFG = Object.assign({}, DEFAULT_CONFIG, cfg);
+
+  // Fold any admin-added products into the flavour grid; re-render only if
+  // the set actually changed.
+  if (typeof mergeRemoteProducts === 'function' && mergeRemoteProducts(cfg)) {
+    renderShopGrid();
+  }
+
+  // Combo deals: a non-empty cfg.COMBOS wins; empty or missing falls back to
+  // the bundled default so the Merdeka combo never silently disappears. To run
+  // no deals, an admin keeps a combo toggled inactive (renderCombos filters it).
+  var combos = (cfg && Array.isArray(cfg.COMBOS) && cfg.COMBOS.length)
+    ? cfg.COMBOS
+    : (typeof DEFAULT_COMBOS !== 'undefined' ? DEFAULT_COMBOS : []);
+  renderCombos(combos);
+
   var c = window.SITE_CFG;
   document.querySelectorAll('.shop-quickadd,.combo-order-btn').forEach(function (b) {
     b.disabled = !!c.SOLD_OUT;

@@ -88,6 +88,63 @@
   .guide strong{display:block;margin-bottom:4px;}
   .guide ol{padding-left:16px;}
 
+  /* ── PRODUCTS ── */
+  .prod-list{display:flex;flex-direction:column;gap:10px;margin-bottom:6px;}
+  .prod-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;background:var(--cream);}
+  .prod-item-thumb{width:40px;height:40px;border-radius:8px;object-fit:cover;flex-shrink:0;background:#Eee;border:1px solid var(--border);}
+  .prod-item-main{flex:1;min-width:0;}
+  .prod-item-name{font-weight:600;font-size:0.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .prod-item-sub{font-size:0.75rem;opacity:0.55;margin-top:2px;}
+  .prod-item-reorder{display:flex;flex-direction:column;gap:2px;flex-shrink:0;}
+  .prod-item-reorder button{width:24px;height:19px;line-height:1;padding:0;border:1.5px solid var(--border);border-radius:6px;background:#fff;color:var(--brown);cursor:pointer;font-size:0.7rem;}
+  .prod-item-reorder button:hover:not(:disabled){background:var(--border);}
+  .prod-item-reorder button:disabled{opacity:0.3;cursor:default;}
+  .prod-tag{display:inline-block;font-size:0.62rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:2px 7px;border-radius:999px;margin-left:6px;vertical-align:1px;}
+  .prod-tag--core{background:#EEF2E9;color:#5a7a3c;}
+  .prod-tag--custom{background:#EDE7F6;color:#5b4a8a;}
+  .prod-tag--edited{background:#FFF4DA;color:#8a6d1e;}
+  .prod-item-actions{display:flex;gap:6px;flex-shrink:0;}
+  .prod-item-edit{font-size:0.75rem;padding:6px 12px;border:1.5px solid var(--border);border-radius:8px;background:#fff;color:var(--brown);cursor:pointer;font-weight:600;}
+  .prod-item-edit:hover{background:var(--border);}
+  .prod-item-remove{font-size:0.75rem;padding:6px 12px;border:1.5px solid #EBC9C4;border-radius:8px;background:#FDECEA;color:var(--red);cursor:pointer;font-weight:600;}
+  .prod-item-remove:hover{background:#F9DAD5;}
+  .prod-empty{font-size:0.82rem;opacity:0.5;padding:6px 0 12px;}
+  .prod-hidden-wrap{margin-top:14px;padding-top:14px;border-top:1px dashed var(--border);}
+  .prod-hidden-title{font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;opacity:0.45;margin-bottom:10px;}
+  .prod-hidden-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 14px;border:1.5px solid var(--border);border-radius:10px;margin-bottom:8px;font-size:0.85rem;opacity:0.8;}
+  .prod-restore{font-size:0.75rem;padding:6px 12px;border:1.5px solid var(--border);border-radius:8px;background:#fff;color:var(--green);cursor:pointer;font-weight:600;flex-shrink:0;}
+  .prod-restore:hover{background:var(--border);}
+  .btn-reset{padding:12px 14px;background:transparent;color:var(--red);border:1.5px solid #EBC9C4;border-radius:10px;font-size:0.86rem;font-weight:600;cursor:pointer;}
+  .btn-reset:hover{background:#FDECEA;}
+  .pf-note{font-size:0.74rem;opacity:0.55;margin-top:5px;}
+
+  .prod-form{border:1.5px dashed var(--border);border-radius:12px;padding:16px;margin-top:12px;}
+  .prod-form-title{font-size:0.78rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;opacity:0.5;margin-bottom:14px;}
+  .pf-field{margin-bottom:12px;}
+  .pf-field label{display:block;font-size:0.78rem;font-weight:600;margin-bottom:5px;opacity:0.75;}
+  .pf-field .row-sub{margin:0 0 6px;}
+  .pf-field input[type=text],.pf-field input[type=url],.pf-field input[type=number]{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:0.88rem;background:#fff;color:var(--brown);outline:none;}
+  .pf-field input:focus{border-color:var(--brown);}
+  .pf-2col{display:flex;gap:10px;}
+  .pf-2col > div{flex:1;}
+  .pf-slug-preview{font-size:0.74rem;opacity:0.5;margin-top:4px;word-break:break-all;}
+  .pf-inline{display:flex;align-items:center;gap:10px;}
+  .pf-inline input[type=color]{width:44px;height:36px;border:1.5px solid var(--border);border-radius:8px;background:#fff;cursor:pointer;padding:2px;}
+  .pf-row-toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;}
+  #pfImgPreviewWrap{margin-top:8px;}
+  #pfImgPreview{max-width:120px;max-height:120px;border-radius:9px;border:1.5px solid var(--border);display:none;}
+  #pfImgStatus{font-size:0.78rem;margin-top:5px;}
+  .pf-btn-row{display:flex;gap:8px;margin-top:4px;}
+  .btn-add{flex:1;padding:12px;background:var(--green);color:#fff;border:none;border-radius:10px;font-size:0.92rem;font-weight:700;cursor:pointer;}
+  .btn-add:hover{opacity:0.9;}
+  .btn-cancel{padding:12px 16px;background:transparent;color:var(--brown);border:1.5px solid var(--border);border-radius:10px;font-size:0.92rem;font-weight:600;cursor:pointer;}
+  .btn-cancel:hover{background:var(--border);}
+  .pf-err{color:var(--red);font-size:0.8rem;margin-top:8px;display:none;}
+  .prod-sync-warn{background:#FDECEA;border:1.5px solid #EBC9C4;border-radius:10px;padding:12px 14px;font-size:0.8rem;line-height:1.55;color:#8A2A1E;margin-top:12px;display:none;}
+  .pf-field textarea{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:0.88rem;font-family:inherit;background:#fff;color:var(--brown);outline:none;resize:vertical;min-height:64px;}
+  .pf-field textarea:focus{border-color:var(--brown);}
+  .cf-max-note{font-size:0.8rem;opacity:0.55;margin-top:10px;}
+
   @media(max-width:480px){
     .login-card{padding:32px 20px;}
     main{padding:20px 12px;}
@@ -220,6 +277,217 @@
       </div>
     </div>
 
+    <!-- Products -->
+    <div class="section">
+      <div class="section-title">Products</div>
+      <div class="row-sub" style="margin-bottom:16px;">
+        Every flavour on the site — the 4 originals and any you add. Reorder with
+        the arrows; the order here is the order customers see on the homepage grid,
+        the shop grid and the product-page switcher. Edit or remove any of them.
+        Removed originals drop off the site but can be restored below.
+      </div>
+
+      <div id="prodList" class="prod-list"></div>
+      <div id="prodEmpty" class="prod-empty">Loading…</div>
+
+      <div id="prodHiddenWrap" class="prod-hidden-wrap" hidden>
+        <div class="prod-hidden-title">Removed — not shown on the site</div>
+        <div id="prodHiddenList"></div>
+      </div>
+
+      <div class="prod-form">
+        <div class="prod-form-title" id="pfFormTitle">Add a Product</div>
+
+        <div class="pf-field">
+          <label for="pfName">Name</label>
+          <input type="text" id="pfName" placeholder="e.g. Teh Tarik">
+        </div>
+
+        <div class="pf-field">
+          <label for="pfSlug">Page address (slug)</label>
+          <div class="row-sub">Auto-filled from the name. Lowercase, dashes only.</div>
+          <input type="text" id="pfSlug" placeholder="teh-tarik">
+          <div class="pf-slug-preview" id="pfSlugPreview"></div>
+        </div>
+
+        <div class="pf-field">
+          <label for="pfTagline">Tagline</label>
+          <input type="text" id="pfTagline" placeholder="One short line shown under the name">
+        </div>
+
+        <div class="pf-field">
+          <label for="pfBadge">Badge</label>
+          <div class="row-sub">Small label on the card corner. Leave as "New" or clear it.</div>
+          <input type="text" id="pfBadge" placeholder="New" value="New">
+        </div>
+
+        <div class="pf-field">
+          <label>Cup</label>
+          <div class="pf-2col">
+            <div>
+              <div class="row-sub">Price (RM)</div>
+              <input type="number" id="pfPriceCup" min="0" max="999" placeholder="12">
+            </div>
+            <div>
+              <div class="row-sub">Size</div>
+              <input type="text" id="pfSizeCup" value="70g">
+            </div>
+          </div>
+        </div>
+
+        <div class="pf-field">
+          <label>Pint</label>
+          <div class="pf-2col">
+            <div>
+              <div class="row-sub">Price (RM)</div>
+              <input type="number" id="pfPricePint" min="0" max="999" placeholder="60">
+            </div>
+            <div>
+              <div class="row-sub">Size</div>
+              <input type="text" id="pfSizePint" value="380g">
+            </div>
+          </div>
+        </div>
+
+        <div class="pf-field">
+          <label for="pfColor">Card colour</label>
+          <div class="row-sub">Background tint behind the product photo.</div>
+          <div class="pf-inline">
+            <input type="color" id="pfColor" value="#C9A96A">
+            <span class="row-sub" style="margin:0;">Pick a colour that suits the flavour</span>
+          </div>
+        </div>
+
+        <div class="pf-field">
+          <label for="pfImageUrl">Product image</label>
+          <div class="row-sub">Google Drive share link, set to "Anyone with the link". Used for the card and product page.</div>
+          <input type="url" id="pfImageUrl" placeholder="https://drive.google.com/file/d/…/view">
+          <div id="pfImageNote" class="pf-note" hidden>Leave blank to keep this flavour's built-in artwork.</div>
+          <div id="pfImgPreviewWrap">
+            <img id="pfImgPreview" alt="">
+            <div id="pfImgStatus"></div>
+          </div>
+        </div>
+
+        <div class="pf-row-toggle">
+          <div>
+            <div class="row-label" style="font-size:0.88rem;">Available to order</div>
+            <div class="row-sub">Off = shows on the site as "coming soon", no order button</div>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="pfAvailable" checked>
+            <div class="toggle-track"></div>
+          </label>
+        </div>
+
+        <div class="pf-btn-row">
+          <button type="button" class="btn-add" id="pfSubmitBtn" onclick="submitProduct()">Add Product</button>
+          <button type="button" class="btn-reset" id="pfResetBtn" onclick="resetCoreOverride()" hidden>Reset to default</button>
+          <button type="button" class="btn-cancel" id="pfCancelBtn" onclick="resetProductForm()" hidden>Cancel</button>
+        </div>
+        <div id="pfErr" class="pf-err"></div>
+      </div>
+
+      <div id="prodSyncWarn" class="prod-sync-warn"></div>
+    </div>
+
+    <!-- Combo Deals -->
+    <div class="section">
+      <div class="section-title">Combo Deals</div>
+      <div class="row-sub" style="margin-bottom:16px;">
+        The bundle deals shown above the flavour grid on the shop page. With one
+        deal, it shows as the big image + details card. With two, they appear as
+        side-by-side square tiles that expand when a customer taps one. Maximum 2.
+        To run no deals at all, switch a combo to inactive — deleting every combo
+        restores the built-in Merdeka combo.
+      </div>
+
+      <div id="comboList" class="prod-list"></div>
+      <div id="comboEmpty" class="prod-empty">No combo deals.</div>
+
+      <div class="prod-form">
+        <div class="prod-form-title" id="cfFormTitle">Add a Combo Deal</div>
+
+        <div class="pf-field">
+          <label for="cfTitle">Title</label>
+          <input type="text" id="cfTitle" placeholder="e.g. The Merdeka Combo">
+        </div>
+
+        <div class="pf-field">
+          <label for="cfBadge">Badge</label>
+          <div class="row-sub">Small pill above the title. Emoji allowed. Leave blank for none.</div>
+          <input type="text" id="cfBadge" placeholder="🇲🇾 Merdeka Special">
+        </div>
+
+        <div class="pf-field">
+          <label for="cfDesc">Description</label>
+          <textarea id="cfDesc" placeholder="One short paragraph explaining the deal."></textarea>
+        </div>
+
+        <div class="pf-field">
+          <label for="cfPills">Flavour pills</label>
+          <div class="row-sub">One per line. Shown as little rounded tags.</div>
+          <textarea id="cfPills" placeholder="Musang King&#10;Cempedak&#10;+ 1 Free Random Flavour"></textarea>
+        </div>
+
+        <div class="pf-field">
+          <label>Cup Deal</label>
+          <div class="pf-2col">
+            <div>
+              <div class="row-sub">Price (RM)</div>
+              <input type="number" id="cfCupPrice" min="0" max="9999" placeholder="45">
+            </div>
+            <div>
+              <div class="row-sub">Note line</div>
+              <input type="text" id="cfCupNote" placeholder="5 × 70g cups · Buy 4 Get 1 Free">
+            </div>
+          </div>
+        </div>
+
+        <div class="pf-field">
+          <label>Pint Deal</label>
+          <div class="pf-2col">
+            <div>
+              <div class="row-sub">Price (RM)</div>
+              <input type="number" id="cfPintPrice" min="0" max="9999" placeholder="220">
+            </div>
+            <div>
+              <div class="row-sub">Note line</div>
+              <input type="text" id="cfPintNote" placeholder="5 × 380g pints · Buy 4 Get 1 Free">
+            </div>
+          </div>
+        </div>
+
+        <div class="pf-field">
+          <label for="cfImageUrl">Deal image</label>
+          <div class="row-sub">Google Drive share link, "Anyone with the link". Leave blank to use the current Merdeka artwork.</div>
+          <input type="url" id="cfImageUrl" placeholder="https://drive.google.com/file/d/…/view">
+          <div id="cfImgPreviewWrap">
+            <img id="cfImgPreview" alt="">
+            <div id="cfImgStatus"></div>
+          </div>
+        </div>
+
+        <div class="pf-row-toggle">
+          <div>
+            <div class="row-label" style="font-size:0.88rem;">Active</div>
+            <div class="row-sub">Off = hidden from the shop page</div>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="cfActive" checked>
+            <div class="toggle-track"></div>
+          </label>
+        </div>
+
+        <div class="pf-btn-row">
+          <button type="button" class="btn-add" id="cfSubmitBtn" onclick="submitCombo()">Add Combo Deal</button>
+          <button type="button" class="btn-cancel" id="cfCancelBtn" onclick="resetComboForm()" hidden>Cancel</button>
+        </div>
+        <div id="cfErr" class="pf-err"></div>
+        <div id="cfMaxNote" class="cf-max-note" hidden>You have 2 combo deals — remove one to add another.</div>
+      </div>
+    </div>
+
     <!-- Announcement Popup -->
     <div class="section">
       <div class="section-title">Announcement Popup</div>
@@ -264,6 +532,7 @@
 </div>
 
 <script src="site-config.js"></script>
+<script src="flavours.js"></script>
 <script>
 var _pw = '';
 
@@ -312,6 +581,541 @@ function stepNum(id, delta) {
     timer = setTimeout(updatePreview, 400);
   });
   input.addEventListener('blur', updatePreview);
+})();
+
+// ── Products ────────────────────────────────────────────────────────────────
+// The admin panel drives the whole flavour line-up through four config keys:
+//   PRODUCTS          — admin-created products (full record each)
+//   FLAVOUR_OVERRIDES — { slug: {field: value} } edits layered onto ANY flavour
+//   FLAVOUR_ORDER     — display order of every visible slug
+//   FLAVOUR_HIDDEN    — slugs dropped from the site
+// flavours.js's mergeRemoteProducts() rebuilds the live FLAVOURS from these.
+var customProducts = [];      // PRODUCTS
+var coreOverrides  = {};      // FLAVOUR_OVERRIDES (applies to built-ins and custom alike)
+var hiddenSlugs    = [];      // FLAVOUR_HIDDEN
+var order          = [];      // FLAVOUR_ORDER — visible slugs, in display order
+
+var CORE_SLUGS = (typeof CORE_FLAVOUR_SLUGS !== 'undefined')
+  ? CORE_FLAVOUR_SLUGS.slice()
+  : ['musang-king', 'cempedak', 'soya-gula-melaka', 'pandan-coconut'];
+
+var pfSlugTouched = false;
+var editingSlug = null;       // slug currently loaded in the form, or null when adding
+var editingKind = null;       // 'core' | 'custom' | null
+
+function slugify(s) {
+  return (s || '').toLowerCase().trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+function hexToGradient(hex) {
+  hex = (hex || '#C9A96A').replace('#', '');
+  if (hex.length === 3) hex = hex.split('').map(function (c) { return c + c; }).join('');
+  var r = parseInt(hex.substr(0, 2), 16) || 0;
+  var g = parseInt(hex.substr(2, 2), 16) || 0;
+  var b = parseInt(hex.substr(4, 2), 16) || 0;
+  function mix(f) {
+    return 'rgb(' + Math.round(r * f) + ',' + Math.round(g * f) + ',' + Math.round(b * f) + ')';
+  }
+  return 'radial-gradient(ellipse at 40% 30%,' + mix(1) + ' 0%,' + mix(0.72) + ' 40%,'
+    + mix(0.45) + ' 75%,' + mix(0.22) + ' 100%)';
+}
+
+// Pull the first hex colour out of a built-in flavour's cardBg gradient so the
+// colour picker can start from the flavour's real tint.
+function gradientFirstHex(bg) {
+  var m = /#([0-9a-fA-F]{6})/.exec(bg || '');
+  return m ? ('#' + m[1]) : '#C9A96A';
+}
+
+function isCustom(slug) {
+  return customProducts.some(function (p) { return p.slug === slug; });
+}
+
+// Effective values for a slug = built-in base (from flavours.js) with any
+// override layered on, OR the custom product record as-is.
+function effectiveFlavour(slug) {
+  var custom = customProducts.filter(function (p) { return p.slug === slug; })[0];
+  if (custom) {
+    return {
+      kind: 'custom', slug: slug,
+      name: custom.name, tagline: custom.tagline || '', badge: custom.badge || '',
+      priceCup: custom.priceCup || 0, sizeCup: custom.sizeCup || '70g',
+      pricePint: custom.pricePint || 0, sizePint: custom.sizePint || '380g',
+      available: custom.available !== false,
+      imageUrl: custom.imageUrl || '', thumb: custom.imageUrl ? toDriveDirectUrl(custom.imageUrl) : '',
+      cardColor: custom.cardColor || '#C9A96A', edited: false
+    };
+  }
+  var base = (typeof FLAVOURS !== 'undefined' && FLAVOURS[slug]) ? FLAVOURS[slug] : null;
+  if (!base) return null;
+  var ov = coreOverrides[slug] || {};
+  function pick(k, fb) { return (ov[k] !== undefined && ov[k] !== null) ? ov[k] : fb; }
+  return {
+    kind: 'core', slug: slug,
+    name: pick('name', base.name),
+    tagline: pick('tagline', base.tagline || ''),
+    badge: (ov.badge !== undefined) ? ov.badge : (base.badge || ''),
+    priceCup: pick('priceCup', base.priceCup || 0),
+    sizeCup: pick('sizeCup', base.sizeCup || '70g'),
+    pricePint: pick('pricePint', base.pricePint || 0),
+    sizePint: pick('sizePint', base.sizePint || '380g'),
+    available: (ov.available !== undefined) ? (ov.available !== false) : (base.available !== false),
+    imageUrl: ov.imageUrl || '',
+    thumb: ov.imageUrl ? toDriveDirectUrl(ov.imageUrl) : (base.cardImage || ''),
+    cardColor: ov.cardColor || gradientFirstHex(base.cardBg),
+    edited: Object.keys(ov).length > 0
+  };
+}
+
+// Keep `order` in step with what's actually visible (all core + custom slugs,
+// minus hidden), preserving the current arrangement.
+function syncOrder() {
+  var visible = CORE_SLUGS.concat(customProducts.map(function (p) { return p.slug; }))
+    .filter(function (s) { return hiddenSlugs.indexOf(s) === -1; });
+  var next = order.filter(function (s) { return visible.indexOf(s) > -1; });
+  visible.forEach(function (s) { if (next.indexOf(s) === -1) next.push(s); });
+  order = next;
+}
+
+function renderProductList() {
+  var listEl = document.getElementById('prodList');
+  var emptyEl = document.getElementById('prodEmpty');
+  if (!listEl) return;
+  syncOrder();
+
+  emptyEl.style.display = order.length ? 'none' : 'block';
+  emptyEl.textContent = 'No products.';
+
+  listEl.innerHTML = order.map(function (slug, i) {
+    var f = effectiveFlavour(slug);
+    if (!f) return '';
+    var thumb = f.thumb
+      ? '<img class="prod-item-thumb" src="' + f.thumb + '" alt="">'
+      : '<div class="prod-item-thumb"></div>';
+    var price = f.priceCup ? 'RM' + f.priceCup + ' / ' + f.sizeCup + ' cup' : 'No cup price';
+    var state = f.available ? '' : ' · Coming soon';
+    var tag = f.kind === 'core'
+      ? '<span class="prod-tag prod-tag--core">Original</span>'
+        + (f.edited ? '<span class="prod-tag prod-tag--edited">Edited</span>' : '')
+      : '<span class="prod-tag prod-tag--custom">Added</span>';
+    return '<div class="prod-item">'
+      + '<div class="prod-item-reorder">'
+      +   '<button type="button" onclick="moveProduct(\'' + slug + '\',-1)"' + (i === 0 ? ' disabled' : '') + ' aria-label="Move up">▲</button>'
+      +   '<button type="button" onclick="moveProduct(\'' + slug + '\',1)"' + (i === order.length - 1 ? ' disabled' : '') + ' aria-label="Move down">▼</button>'
+      + '</div>'
+      + thumb
+      + '<div class="prod-item-main">'
+      +   '<div class="prod-item-name">' + (f.name || '(no name)') + tag + '</div>'
+      +   '<div class="prod-item-sub">' + price + state + '</div>'
+      + '</div>'
+      + '<div class="prod-item-actions">'
+      +   '<button type="button" class="prod-item-edit" onclick="editProduct(\'' + slug + '\')">Edit</button>'
+      +   '<button type="button" class="prod-item-remove" onclick="removeProduct(\'' + slug + '\')">Remove</button>'
+      + '</div>'
+      + '</div>';
+  }).join('');
+
+  // Removed originals (custom products are deleted outright, never parked here)
+  var hiddenCore = hiddenSlugs.filter(function (s) { return CORE_SLUGS.indexOf(s) > -1; });
+  var wrap = document.getElementById('prodHiddenWrap');
+  var hlist = document.getElementById('prodHiddenList');
+  if (hiddenCore.length) {
+    wrap.hidden = false;
+    hlist.innerHTML = hiddenCore.map(function (slug) {
+      var base = (typeof FLAVOURS !== 'undefined' && FLAVOURS[slug]) ? FLAVOURS[slug] : { name: slug };
+      return '<div class="prod-hidden-item"><span>' + (base.name || slug) + '</span>'
+        + '<button type="button" class="prod-restore" onclick="restoreFlavour(\'' + slug + '\')">Restore</button></div>';
+    }).join('');
+  } else {
+    wrap.hidden = true;
+    hlist.innerHTML = '';
+  }
+}
+
+function moveProduct(slug, dir) {
+  var i = order.indexOf(slug);
+  var j = i + dir;
+  if (i < 0 || j < 0 || j >= order.length) return;
+  order.splice(j, 0, order.splice(i, 1)[0]);
+  renderProductList();
+}
+
+function removeProduct(slug) {
+  var f = effectiveFlavour(slug);
+  if (!f) return;
+  if (f.kind === 'custom') {
+    if (!confirm('Remove "' + f.name + '"? This deletes the added product. Takes effect after you Save Changes.')) return;
+    customProducts = customProducts.filter(function (p) { return p.slug !== slug; });
+  } else {
+    if (!confirm('Remove "' + f.name + '" from the site? It stays in "Removed" below and you can restore it any time. Takes effect after you Save Changes.')) return;
+    if (hiddenSlugs.indexOf(slug) === -1) hiddenSlugs.push(slug);
+  }
+  order = order.filter(function (s) { return s !== slug; });
+  if (editingSlug === slug) resetProductForm();
+  renderProductList();
+}
+
+function restoreFlavour(slug) {
+  hiddenSlugs = hiddenSlugs.filter(function (s) { return s !== slug; });
+  if (order.indexOf(slug) === -1) order.push(slug);
+  renderProductList();
+}
+
+// Wipe all admin edits on a built-in flavour, returning it to its coded defaults.
+function resetCoreOverride() {
+  if (!editingSlug || editingKind !== 'core') return;
+  if (!confirm('Reset "' + editingSlug + '" to its original built-in details?')) return;
+  delete coreOverrides[editingSlug];
+  renderProductList();
+  resetProductForm();
+}
+
+// Load a flavour (built-in or added) into the form for editing.
+function editProduct(slug) {
+  var f = effectiveFlavour(slug);
+  if (!f) return;
+  editingSlug = slug;
+  editingKind = f.kind;
+  pfSlugTouched = true;
+
+  var slugEl = document.getElementById('pfSlug');
+  document.getElementById('pfName').value      = f.name || '';
+  slugEl.value                                 = f.slug || '';
+  document.getElementById('pfTagline').value   = f.tagline || '';
+  document.getElementById('pfBadge').value     = f.badge || '';
+  document.getElementById('pfPriceCup').value  = f.priceCup || '';
+  document.getElementById('pfSizeCup').value   = f.sizeCup || '70g';
+  document.getElementById('pfPricePint').value = f.pricePint || '';
+  document.getElementById('pfSizePint').value  = f.sizePint || '380g';
+  document.getElementById('pfColor').value     = f.cardColor || '#C9A96A';
+  document.getElementById('pfImageUrl').value  = f.imageUrl || '';
+  document.getElementById('pfAvailable').checked = f.available;
+
+  // Built-in flavours keep their slug (their rich product page + artwork are
+  // keyed to it); only added products can be re-slugged.
+  slugEl.readOnly = (f.kind === 'core');
+  document.getElementById('pfImageNote').hidden = (f.kind !== 'core');
+  document.getElementById('pfResetBtn').hidden = !(f.kind === 'core' && (coreOverrides[slug] && Object.keys(coreOverrides[slug]).length));
+
+  document.getElementById('pfSlugPreview').textContent =
+    f.slug ? 'dollopgelato.com/product.html?flavour=' + f.slug : '';
+  document.getElementById('pfImageUrl').dispatchEvent(new Event('input'));
+
+  document.getElementById('pfFormTitle').textContent = 'Edit "' + (f.name || 'Product') + '"';
+  document.getElementById('pfSubmitBtn').textContent = 'Save Changes';
+  document.getElementById('pfCancelBtn').hidden = false;
+  document.getElementById('pfErr').style.display = 'none';
+  document.querySelector('.prod-form').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// Clear the form and return it to "Add a Product" mode.
+function resetProductForm() {
+  editingSlug = null;
+  editingKind = null;
+  ['pfName', 'pfSlug', 'pfTagline', 'pfPriceCup', 'pfPricePint', 'pfImageUrl'].forEach(function (id) {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('pfBadge').value = 'New';
+  document.getElementById('pfSizeCup').value = '70g';
+  document.getElementById('pfSizePint').value = '380g';
+  document.getElementById('pfColor').value = '#C9A96A';
+  document.getElementById('pfAvailable').checked = true;
+  document.getElementById('pfSlug').readOnly = false;
+  pfSlugTouched = false;
+  document.getElementById('pfSlugPreview').textContent = '';
+  document.getElementById('pfImgPreview').style.display = 'none';
+  document.getElementById('pfImgStatus').textContent = '';
+  document.getElementById('pfErr').style.display = 'none';
+  document.getElementById('pfImageNote').hidden = true;
+  document.getElementById('pfResetBtn').hidden = true;
+  document.getElementById('pfFormTitle').textContent = 'Add a Product';
+  document.getElementById('pfSubmitBtn').textContent = 'Add Product';
+  document.getElementById('pfCancelBtn').hidden = true;
+}
+
+// Add a new product, save an added product, or write overrides onto a built-in.
+function submitProduct() {
+  var err = document.getElementById('pfErr');
+  function fail(msg) { err.textContent = msg; err.style.display = 'block'; }
+  err.style.display = 'none';
+
+  var name = document.getElementById('pfName').value.trim();
+  if (!name) return fail('Give the product a name.');
+
+  var color = document.getElementById('pfColor').value || '#C9A96A';
+  var imageUrl = document.getElementById('pfImageUrl').value.trim();
+  var tagline = document.getElementById('pfTagline').value.trim();
+  var badge = document.getElementById('pfBadge').value.trim();
+  var priceCup = parseInt(document.getElementById('pfPriceCup').value, 10) || 0;
+  var sizeCup = document.getElementById('pfSizeCup').value.trim() || '70g';
+  var pricePint = parseInt(document.getElementById('pfPricePint').value, 10) || 0;
+  var sizePint = document.getElementById('pfSizePint').value.trim() || '380g';
+  var available = document.getElementById('pfAvailable').checked;
+
+  // ── Editing a built-in flavour → store only the fields that differ from its
+  //    coded defaults, and keep its slug ─────────────────────────────────────
+  if (editingKind === 'core') {
+    var base = (typeof FLAVOURS !== 'undefined' && FLAVOURS[editingSlug]) ? FLAVOURS[editingSlug] : {};
+    var ov = {};
+    if (name       !== base.name)                       ov.name = name;
+    if (tagline    !== (base.tagline || ''))            ov.tagline = tagline;
+    if (badge      !== (base.badge || ''))              ov.badge = badge;
+    if (priceCup   !== (base.priceCup || 0))            ov.priceCup = priceCup;
+    if (sizeCup    !== (base.sizeCup || '70g'))         ov.sizeCup = sizeCup;
+    if (pricePint  !== (base.pricePint || 0))           ov.pricePint = pricePint;
+    if (sizePint   !== (base.sizePint || '380g'))       ov.sizePint = sizePint;
+    if (available  !== (base.available !== false))      ov.available = available;
+    // Only touch the card colour if the admin actually changed it (the picker
+    // was pre-filled with the flavour's own tint) — the coded gradients are
+    // hand-tuned and worth keeping otherwise.
+    if (color.toLowerCase() !== gradientFirstHex(base.cardBg).toLowerCase()) {
+      ov.cardColor = color;
+      ov.cardBg = hexToGradient(color);
+    }
+    if (imageUrl) ov.imageUrl = imageUrl;   // blank = keep the built-in artwork
+
+    if (Object.keys(ov).length) coreOverrides[editingSlug] = ov;
+    else delete coreOverrides[editingSlug];
+    renderProductList();
+    resetProductForm();
+    return;
+  }
+
+  // ── Adding a new product, or editing an added one ─────────────────────────
+  var slug = slugify(document.getElementById('pfSlug').value || name);
+  if (!slug) return fail('Give the product a page address (slug).');
+  if (CORE_SLUGS.indexOf(slug) > -1 && slug !== editingSlug) {
+    return fail('"' + slug + '" is one of the original flavours — pick a different name/slug.');
+  }
+  if (customProducts.some(function (p) { return p.slug === slug && p.slug !== editingSlug; })) {
+    return fail('You already have a product with the slug "' + slug + '".');
+  }
+
+  var product = {
+    slug: slug, name: name, tagline: tagline,
+    badge: badge || 'New',
+    priceCup: priceCup, sizeCup: sizeCup, pricePint: pricePint, sizePint: sizePint,
+    imageUrl: imageUrl, cardColor: color, cardBg: hexToGradient(color),
+    available: available
+  };
+
+  if (editingKind === 'custom') {
+    var idx = customProducts.findIndex(function (p) { return p.slug === editingSlug; });
+    if (idx > -1) customProducts[idx] = product; else customProducts.push(product);
+    if (slug !== editingSlug) {
+      order = order.map(function (s) { return s === editingSlug ? slug : s; });
+      hiddenSlugs = hiddenSlugs.map(function (s) { return s === editingSlug ? slug : s; });
+    }
+  } else {
+    customProducts.push(product);
+  }
+
+  renderProductList();
+  resetProductForm();
+}
+
+// Auto-slug + slug preview
+(function () {
+  var nameEl = document.getElementById('pfName');
+  var slugEl = document.getElementById('pfSlug');
+  var previewEl = document.getElementById('pfSlugPreview');
+  if (!nameEl || !slugEl) return;
+
+  function showPreview() {
+    var s = slugify(slugEl.value);
+    previewEl.textContent = s ? 'dollopgelato.com/product.html?flavour=' + s : '';
+  }
+  nameEl.addEventListener('input', function () {
+    if (!pfSlugTouched) { slugEl.value = slugify(nameEl.value); showPreview(); }
+  });
+  slugEl.addEventListener('input', function () {
+    pfSlugTouched = true;
+    slugEl.value = slugify(slugEl.value);
+    showPreview();
+  });
+})();
+
+// Product-image preview (mirrors the announcement-image preview above)
+(function () {
+  var input = document.getElementById('pfImageUrl');
+  if (!input) return;
+  var img = document.getElementById('pfImgPreview');
+  var status = document.getElementById('pfImgStatus');
+  var timer = null;
+
+  function update() {
+    var url = input.value.trim();
+    if (!url) { img.style.display = 'none'; status.textContent = ''; return; }
+    status.textContent = 'Loading preview…';
+    status.style.color = 'var(--brown)';
+    img.style.display = 'none';
+    img.onload = function () {
+      img.style.display = 'block';
+      status.textContent = '✓ Image loads correctly';
+      status.style.color = '#2e7d32';
+    };
+    img.onerror = function () {
+      img.style.display = 'none';
+      status.textContent = '✗ This link doesn\'t load as an image — check the Drive share setting';
+      status.style.color = '#c62828';
+    };
+    img.src = toDriveDirectUrl(url);
+  }
+  input.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(update, 400); });
+  input.addEventListener('blur', update);
+})();
+
+// ── Combo deals ─────────────────────────────────────────────────────────────
+// Up to COMBO_MAX bundle deals, stored as cfg.COMBOS. shop.js renders them
+// (1 = full card, 2 = expandable tiles). Order here = left→right on the shop.
+var comboDeals = [];
+var editingComboIdx = -1;
+var MAX_COMBOS = (typeof COMBO_MAX === 'number') ? COMBO_MAX : 2;
+
+function renderComboList() {
+  var listEl = document.getElementById('comboList');
+  var emptyEl = document.getElementById('comboEmpty');
+  if (!listEl) return;
+  emptyEl.style.display = comboDeals.length ? 'none' : 'block';
+
+  listEl.innerHTML = comboDeals.map(function (c, i) {
+    var thumb = c.imageUrl
+      ? '<img class="prod-item-thumb" src="' + toDriveDirectUrl(c.imageUrl) + '" alt="">'
+      : '<div class="prod-item-thumb"></div>';
+    var price = 'RM' + (c.cupPrice || 0) + ' cup · RM' + (c.pintPrice || 0) + ' pint';
+    var state = (c.active === false) ? ' · Hidden' : '';
+    return '<div class="prod-item">'
+      + '<div class="prod-item-reorder">'
+      +   '<button type="button" onclick="moveCombo(' + i + ',-1)"' + (i === 0 ? ' disabled' : '') + ' aria-label="Move up">▲</button>'
+      +   '<button type="button" onclick="moveCombo(' + i + ',1)"' + (i === comboDeals.length - 1 ? ' disabled' : '') + ' aria-label="Move down">▼</button>'
+      + '</div>'
+      + thumb
+      + '<div class="prod-item-main">'
+      +   '<div class="prod-item-name">' + (c.title || '(untitled)') + '</div>'
+      +   '<div class="prod-item-sub">' + price + state + '</div>'
+      + '</div>'
+      + '<div class="prod-item-actions">'
+      +   '<button type="button" class="prod-item-edit" onclick="editCombo(' + i + ')">Edit</button>'
+      +   '<button type="button" class="prod-item-remove" onclick="removeCombo(' + i + ')">Remove</button>'
+      + '</div>'
+      + '</div>';
+  }).join('');
+
+  var atMax = comboDeals.length >= MAX_COMBOS && editingComboIdx === -1;
+  document.getElementById('cfSubmitBtn').disabled = atMax;
+  document.getElementById('cfMaxNote').hidden = !atMax;
+}
+
+function moveCombo(i, dir) {
+  var j = i + dir;
+  if (j < 0 || j >= comboDeals.length) return;
+  comboDeals.splice(j, 0, comboDeals.splice(i, 1)[0]);
+  renderComboList();
+}
+
+function removeCombo(i) {
+  if (!comboDeals[i]) return;
+  if (!confirm('Remove the "' + (comboDeals[i].title || 'this') + '" combo deal? Takes effect after you Save Changes.')) return;
+  comboDeals.splice(i, 1);
+  if (editingComboIdx > -1) resetComboForm();
+  renderComboList();
+}
+
+function editCombo(i) {
+  var c = comboDeals[i];
+  if (!c) return;
+  editingComboIdx = i;
+  document.getElementById('cfTitle').value     = c.title || '';
+  document.getElementById('cfBadge').value     = c.badge || '';
+  document.getElementById('cfDesc').value      = c.desc || '';
+  document.getElementById('cfPills').value     = (Array.isArray(c.pills) ? c.pills : []).join('\n');
+  document.getElementById('cfCupPrice').value  = c.cupPrice || '';
+  document.getElementById('cfCupNote').value   = c.cupNote || '';
+  document.getElementById('cfPintPrice').value = c.pintPrice || '';
+  document.getElementById('cfPintNote').value  = c.pintNote || '';
+  document.getElementById('cfImageUrl').value  = c.imageUrl || '';
+  document.getElementById('cfActive').checked  = c.active !== false;
+  document.getElementById('cfImageUrl').dispatchEvent(new Event('input'));
+
+  document.getElementById('cfFormTitle').textContent = 'Edit "' + (c.title || 'Combo') + '"';
+  document.getElementById('cfSubmitBtn').textContent = 'Save Changes';
+  document.getElementById('cfSubmitBtn').disabled = false;
+  document.getElementById('cfCancelBtn').hidden = false;
+  document.getElementById('cfErr').style.display = 'none';
+  document.getElementById('cfMaxNote').hidden = true;
+  document.getElementById('cfTitle').closest('.prod-form').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function resetComboForm() {
+  editingComboIdx = -1;
+  ['cfTitle', 'cfBadge', 'cfDesc', 'cfPills', 'cfCupPrice', 'cfCupNote', 'cfPintPrice', 'cfPintNote', 'cfImageUrl'].forEach(function (id) {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('cfActive').checked = true;
+  document.getElementById('cfImgPreview').style.display = 'none';
+  document.getElementById('cfImgStatus').textContent = '';
+  document.getElementById('cfErr').style.display = 'none';
+  document.getElementById('cfFormTitle').textContent = 'Add a Combo Deal';
+  document.getElementById('cfSubmitBtn').textContent = 'Add Combo Deal';
+  document.getElementById('cfCancelBtn').hidden = true;
+  renderComboList();
+}
+
+function submitCombo() {
+  var err = document.getElementById('cfErr');
+  function fail(msg) { err.textContent = msg; err.style.display = 'block'; }
+  err.style.display = 'none';
+
+  var title = document.getElementById('cfTitle').value.trim();
+  if (!title) return fail('Give the combo a title.');
+  if (editingComboIdx === -1 && comboDeals.length >= MAX_COMBOS) {
+    return fail('You already have ' + MAX_COMBOS + ' combo deals.');
+  }
+
+  var pills = document.getElementById('cfPills').value
+    .split('\n').map(function (s) { return s.trim(); }).filter(Boolean);
+
+  var combo = {
+    slug:      (editingComboIdx > -1 && comboDeals[editingComboIdx] && comboDeals[editingComboIdx].slug)
+                 || slugify(title) || 'combo',
+    active:    document.getElementById('cfActive').checked,
+    badge:     document.getElementById('cfBadge').value.trim(),
+    title:     title,
+    desc:      document.getElementById('cfDesc').value.trim(),
+    pills:     pills,
+    imageUrl:  document.getElementById('cfImageUrl').value.trim(),
+    cupPrice:  parseInt(document.getElementById('cfCupPrice').value, 10) || 0,
+    cupNote:   document.getElementById('cfCupNote').value.trim(),
+    pintPrice: parseInt(document.getElementById('cfPintPrice').value, 10) || 0,
+    pintNote:  document.getElementById('cfPintNote').value.trim()
+  };
+
+  if (editingComboIdx > -1) comboDeals[editingComboIdx] = combo;
+  else comboDeals.push(combo);
+  resetComboForm();
+}
+
+// Combo-image preview
+(function () {
+  var input = document.getElementById('cfImageUrl');
+  if (!input) return;
+  var img = document.getElementById('cfImgPreview');
+  var status = document.getElementById('cfImgStatus');
+  var timer = null;
+  function update() {
+    var url = input.value.trim();
+    if (!url) { img.style.display = 'none'; status.textContent = ''; return; }
+    status.textContent = 'Loading preview…';
+    status.style.color = 'var(--brown)';
+    img.style.display = 'none';
+    img.onload = function () { img.style.display = 'block'; status.textContent = '✓ Image loads correctly'; status.style.color = '#2e7d32'; };
+    img.onerror = function () { img.style.display = 'none'; status.textContent = '✗ This link doesn\'t load as an image — check the Drive share setting'; status.style.color = '#c62828'; };
+    img.src = toDriveDirectUrl(url);
+  }
+  input.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(update, 400); });
+  input.addEventListener('blur', update);
 })();
 
 // ── Login ────────────────────────────────────────────────────────────────────
@@ -382,6 +1186,22 @@ function applyToForm(cfg) {
   document.getElementById('annImageUrl').value   = cfg.ANNOUNCEMENT_IMAGE_URL || '';
   document.getElementById('annLink').value       = cfg.ANNOUNCEMENT_LINK || 'https://www.dollopgelato.com/shop.html';
   document.getElementById('annImageUrl').dispatchEvent(new Event('input'));
+
+  customProducts = Array.isArray(cfg.PRODUCTS) ? JSON.parse(JSON.stringify(cfg.PRODUCTS)) : [];
+  coreOverrides  = (cfg.FLAVOUR_OVERRIDES && typeof cfg.FLAVOUR_OVERRIDES === 'object')
+    ? JSON.parse(JSON.stringify(cfg.FLAVOUR_OVERRIDES)) : {};
+  hiddenSlugs    = Array.isArray(cfg.FLAVOUR_HIDDEN) ? cfg.FLAVOUR_HIDDEN.slice() : [];
+  order          = Array.isArray(cfg.FLAVOUR_ORDER) ? cfg.FLAVOUR_ORDER.slice() : [];
+  if (!editingSlug) resetProductForm();   // don't stomp an edit in progress
+  renderProductList();
+
+  // Combos: a non-empty saved list wins; empty/missing seeds the bundled
+  // default so the Merdeka combo isn't lost. (Deleting every combo therefore
+  // restores the default — to run none, toggle a combo inactive instead.)
+  comboDeals = (Array.isArray(cfg.COMBOS) && cfg.COMBOS.length)
+    ? JSON.parse(JSON.stringify(cfg.COMBOS))
+    : (typeof DEFAULT_COMBOS !== 'undefined' ? JSON.parse(JSON.stringify(DEFAULT_COMBOS)) : []);
+  if (editingComboIdx === -1) resetComboForm(); else renderComboList();
 }
 
 // ── Live UI updates ──────────────────────────────────────────────────────────
@@ -404,14 +1224,9 @@ function updateSoldBadge(soldOut) {
 // ── Save ─────────────────────────────────────────────────────────────────────
 document.getElementById('saveBtn').addEventListener('click', saveConfig);
 
-function saveConfig() {
-  var btn    = document.getElementById('saveBtn');
-  var status = document.getElementById('saveStatus');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="loading-spinner"></span>Saving…';
-  status.style.display = 'none';
-
-  var cfg = {
+function buildConfig() {
+  syncOrder();
+  return {
     SOLD_OUT:                 document.getElementById('soldOutToggle').checked,
     MAX_QTY:                  parseInt(document.getElementById('maxQty').value, 10) || 24,
     PRICE:                    parseInt(document.getElementById('priceNow').value, 10) || 15,
@@ -422,7 +1237,24 @@ function saveConfig() {
     ANNOUNCEMENT_ACTIVE:      document.getElementById('annToggle').checked,
     ANNOUNCEMENT_IMAGE_URL:   document.getElementById('annImageUrl').value.trim(),
     ANNOUNCEMENT_LINK:        document.getElementById('annLink').value.trim() || 'https://www.dollopgelato.com/shop.html',
+    PRODUCTS:                 customProducts,
+    FLAVOUR_OVERRIDES:        coreOverrides,
+    FLAVOUR_ORDER:            order,
+    FLAVOUR_HIDDEN:           hiddenSlugs,
+    COMBOS:                   comboDeals,
   };
+}
+
+function saveConfig() {
+  var btn    = document.getElementById('saveBtn');
+  var status = document.getElementById('saveStatus');
+  var warn   = document.getElementById('prodSyncWarn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading-spinner"></span>Saving…';
+  status.style.display = 'none';
+  warn.style.display = 'none';
+
+  var cfg = buildConfig();
 
   // Save to localStorage immediately so the website reflects changes on refresh
   localStorage.setItem('dollop_config', JSON.stringify(cfg));
@@ -437,6 +1269,7 @@ function saveConfig() {
     if (j.success) {
       status.textContent = '✓ Saved & synced to server.';
       status.className = 'status-ok';
+      verifyProductSync(cfg);
     } else if (j.error === 'Wrong password') {
       status.textContent = '✓ Saved locally. ✗ Wrong password — not synced to server.';
       status.className = 'status-err';
@@ -457,21 +1290,42 @@ function saveConfig() {
   });
 }
 
+// Confirms the Apps Script actually stored the flavour keys. Some builds of the
+// script only persist a fixed set of keys — if that's the case here, changes
+// would work on this browser (localStorage) but never reach customers, so flag
+// it loudly rather than fail silently.
+function verifyProductSync(sent) {
+  var warn = document.getElementById('prodSyncWarn');
+  var touched = (sent.PRODUCTS && sent.PRODUCTS.length)
+    || (sent.FLAVOUR_HIDDEN && sent.FLAVOUR_HIDDEN.length)
+    || (sent.FLAVOUR_ORDER && sent.FLAVOUR_ORDER.length)
+    || (sent.FLAVOUR_OVERRIDES && Object.keys(sent.FLAVOUR_OVERRIDES).length)
+    || (sent.COMBOS && sent.COMBOS.length);
+  if (!touched) return;
+  fetch(APPS_SCRIPT_URL + '?type=config', {cache:'no-cache'})
+    .then(function(r){ return r.json(); })
+    .then(function(server) {
+      function same(a, b) { return JSON.stringify(a || null) === JSON.stringify(b || null); }
+      var ok = same(server.PRODUCTS, sent.PRODUCTS)
+        && same(server.FLAVOUR_ORDER, sent.FLAVOUR_ORDER)
+        && same(server.FLAVOUR_HIDDEN, sent.FLAVOUR_HIDDEN)
+        && same(server.COMBOS, sent.COMBOS)
+        && Object.keys(sent.FLAVOUR_OVERRIDES || {}).every(function (k) {
+             return server.FLAVOUR_OVERRIDES && server.FLAVOUR_OVERRIDES[k];
+           });
+      if (ok) return;
+      warn.innerHTML = '<strong>⚠️ The server did not fully store your product changes.</strong> '
+        + 'They\'ll show on this computer, but not for customers. The Google Apps '
+        + 'Script needs its <code>PRODUCTS</code> / <code>FLAVOUR_*</code> keys — '
+        + 'send this message to whoever set up the backend.';
+      warn.style.display = 'block';
+    })
+    .catch(function(){ /* network hiccup — the normal status line already covers reachability */ });
+}
+
 function previewSite() {
   // Write current form state to localStorage so preview reflects latest settings
-  var cfg = {
-    SOLD_OUT:                 document.getElementById('soldOutToggle').checked,
-    MAX_QTY:                  parseInt(document.getElementById('maxQty').value, 10) || 24,
-    PRICE:                    parseInt(document.getElementById('priceNow').value, 10) || 15,
-    ORIGINAL_PRICE:           parseInt(document.getElementById('priceWas').value, 10) || 0,
-    PROMO_ACTIVE:             document.getElementById('promoToggle').checked,
-    PROMO_THRESHOLD:          parseInt(document.getElementById('promoThreshold').value, 10) || 5,
-    PROMO_FREE:               parseInt(document.getElementById('promoFree').value, 10) || 1,
-    ANNOUNCEMENT_ACTIVE:      document.getElementById('annToggle').checked,
-    ANNOUNCEMENT_IMAGE_URL:   document.getElementById('annImageUrl').value.trim(),
-    ANNOUNCEMENT_LINK:        document.getElementById('annLink').value.trim() || 'https://www.dollopgelato.com/shop.html',
-  };
-  localStorage.setItem('dollop_config', JSON.stringify(cfg));
+  localStorage.setItem('dollop_config', JSON.stringify(buildConfig()));
   window.open('index.html', '_blank');
 }
 </script>

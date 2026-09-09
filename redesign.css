@@ -205,7 +205,19 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 .flv-hd-title .accent{font-family:'Barrio',cursive;font-weight:400;color:var(--green-mid);text-transform:none;letter-spacing:1px;}
 .flv-hd-sub{font-size:0.92rem;color:rgba(59,31,10,0.55);line-height:1.65;}
 
-.flv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1240px;margin:0 auto;padding:0 40px 40px;}
+/* Flex (not grid) so a short last row sits CENTRED under the row above rather
+   than left-packed — e.g. 5 cards render 3 up top, 2 centred below. The card
+   width is pinned to an exact N-up fraction (minus 1px slack so rounding never
+   forces an early wrap); redesign.js / shop.js set data-cols to pick N so the
+   last row is never a single stranded card. Desktop only — the tablet/mobile
+   rules further down still take over below 1025px. */
+.flv-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:20px;max-width:1240px;margin:0 auto;padding:0 40px 40px;}
+.flv-grid > *{flex:0 1 calc((100% - 3 * 20px) / 4 - 1px);}      /* 4-up default */
+@media(min-width:1025px){
+  .flv-grid[data-cols="3"]{max-width:948px;}
+  .flv-grid[data-cols="3"] > *{flex-basis:calc((100% - 2 * 20px) / 3 - 1px);}
+  .flv-grid[data-cols="5"] > *{flex-basis:calc((100% - 4 * 20px) / 5 - 1px);}
+}
 /* Matches the ~54px gap already above the disclaimer (40px grid padding +
    14px disclaimer margin) so it sits centred in the whitespace instead of
    hugging the Featured section right below it. */
@@ -240,8 +252,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 .flv-card-cta--soon:hover{background:transparent;transform:none;color:var(--brown);border-color:var(--brown-mid);}
 
 
-@media(max-width:1024px){.flv-grid{grid-template-columns:1fr 1fr;}}
-@media(max-width:560px){.flv-grid{grid-template-columns:1fr;padding:0 20px 32px;}.flv-hd{padding:64px 20px 36px;}}
+@media(max-width:1024px){.flv-grid > *{flex-basis:calc((100% - 20px) / 2 - 1px);}}
+@media(max-width:560px){.flv-grid{padding:0 20px 32px;}.flv-grid > *{flex-basis:100%;}.flv-hd{padding:64px 20px 36px;}}
 
 /* ── FEATURED FLAGSHIP — spec item 3 ─────────────────────────────────── */
 .featured{padding:80px 40px 100px;background:#F5E3A6;}
@@ -495,11 +507,26 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 .combo-price-note{font-size:0.8rem;color:var(--brown-light);}
 .combo-order-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--yellow);color:var(--brown);font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:0.14em;padding:14px 38px;border-radius:40px;border:none;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;}
 .combo-order-btn:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(245,197,24,0.4);}
+
+/* Two-combo view: side-by-side square tiles, no details until one is picked. */
+.combo-dual{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.combo-tile{position:relative;display:block;width:100%;padding:0;border:1px solid rgba(59,31,10,0.08);border-radius:24px;overflow:hidden;cursor:pointer;background:var(--cream);aspect-ratio:1/1;box-shadow:0 20px 50px rgba(59,31,10,0.1);transition:transform 0.25s ease,box-shadow 0.25s ease;}
+.combo-tile:hover{transform:translateY(-4px);box-shadow:0 26px 60px rgba(59,31,10,0.16);}
+.combo-tile img{width:100%;height:100%;object-fit:cover;display:block;}
+.combo-back{display:inline-flex;align-items:center;gap:6px;margin:0 auto 14px;max-width:1000px;background:transparent;border:1.5px solid rgba(59,31,10,0.18);color:var(--brown-mid);font-size:0.8rem;font-weight:600;padding:8px 16px;border-radius:40px;cursor:pointer;transition:background 0.2s;}
+.combo-back:hover{background:rgba(59,31,10,0.06);}
+.combo-back-wrap{max-width:1000px;margin:0 auto;}
+
+/* Cross-fade between the dual view and an expanded single combo. */
+#comboWrap{transition:opacity 0.28s ease;}
+#comboWrap.combo-fade{opacity:0;}
+
 @media(max-width:760px){
   .combo-section{padding:0 20px 32px;}
   .combo-card{grid-template-columns:1fr;}
   .combo-img{aspect-ratio:1/1;}
   .combo-body{padding:32px 24px;}
+  .combo-dual{grid-template-columns:1fr;gap:16px;}
 }
 
 .shop-grid-section{padding:0 40px 120px;}

@@ -122,8 +122,13 @@ function applyProduct() {
 function renderFlvSwitcher() {
   var sw = document.getElementById('phFlvSwitcher');
   if (!sw || typeof FLAVOURS === 'undefined') return;
-  sw.innerHTML = Object.keys(FLAVOURS).map(function (slug) {
+  // Follow the admin-set order/visibility (FEATURED_FLAVOURS); still show the
+  // current flavour even if it's been hidden and reached via a direct link.
+  var slugs = (typeof FEATURED_FLAVOURS !== 'undefined') ? FEATURED_FLAVOURS.slice() : Object.keys(FLAVOURS);
+  if (slugs.indexOf(currentFlavour) === -1 && FLAVOURS[currentFlavour]) slugs.unshift(currentFlavour);
+  sw.innerHTML = slugs.map(function (slug) {
     var f = FLAVOURS[slug];
+    if (!f) return '';
     var isCurrent = slug === currentFlavour;
     var isSoon = !f.available;
     return '<button class="ph-flv-btn' + (isCurrent ? ' active' : '') + (isSoon ? ' ph-flv-btn--soon' : '') + '"'
@@ -208,6 +213,18 @@ function showSoldOutToast() {
 
 function applyConfig(cfg) {
   window.SITE_CFG = Object.assign({}, DEFAULT_CONFIG, cfg);
+
+  // Fold in admin product config (added products, per-flavour overrides,
+  // order, hidden). If the URL points at a flavour that only exists once the
+  // config loads, switch to it; otherwise re-render the current flavour so any
+  // price / name / availability override on it takes effect.
+  if (typeof mergeRemoteProducts === 'function' && mergeRemoteProducts(cfg)) {
+    var wanted = params.get('flavour');
+    if (wanted && FLAVOURS[wanted]) currentFlavour = wanted;
+    if (!FLAVOURS[currentFlavour]) currentFlavour = 'musang-king';
+    applyProduct();
+  }
+
   var c = window.SITE_CFG;
   var orderBtn = document.getElementById('phOrderBtn');
   if (!orderBtn) return;
