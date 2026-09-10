@@ -124,7 +124,8 @@ document.addEventListener('DOMContentLoaded', renderShopCartBar);
 // Up to 2 combos from cfg.COMBOS (managed in admin.html). One combo renders as
 // the image-left / details-right card. Two render as side-by-side square tiles;
 // clicking one cross-fades to its full card with a "‹ Back" button that returns
-// to the two tiles. Each combo has its own Cup Deal / Pint Deal price toggle.
+// to the two tiles. A combo can offer a cup price, a pint price, or both — the
+// Cup/Pint toggle only appears when both are set.
 var comboList = [];       // active combos, capped at COMBO_MAX
 var comboDeal = 'cup';    // 'cup' | 'pint' for the combo currently on screen
 var comboExpanded = -1;   // index into comboList when a tile is expanded, else -1
@@ -139,6 +140,19 @@ function comboImg(c) {
 function currentCombo() {
   return comboList[comboExpanded > -1 ? comboExpanded : 0] || null;
 }
+// Priced tiers for a combo: [], [cup], [pint], or [cup, pint].
+function comboTiers(c) {
+  var t = [];
+  if (c && Number(c.cupPrice) > 0)  t.push({ key: 'cup',  label: 'Cup Deal',  price: Number(c.cupPrice),  note: c.cupNote || '' });
+  if (c && Number(c.pintPrice) > 0) t.push({ key: 'pint', label: 'Pint Deal', price: Number(c.pintPrice), note: c.pintNote || '' });
+  return t;
+}
+function comboActiveTier(c) {
+  var tiers = comboTiers(c);
+  return tiers.filter(function (t) { return t.key === comboDeal; })[0]
+    || tiers[0]
+    || { key: 'cup', label: 'Cup Deal', price: Number(c && c.cupPrice) || 0, note: (c && c.cupNote) || '' };
+}
 
 function renderCombos(rawList) {
   var section = document.getElementById('merdekaCombo');
@@ -151,13 +165,18 @@ function renderCombos(rawList) {
 
   if (!comboList.length) { section.style.display = 'none'; wrap.innerHTML = ''; return; }
   section.style.display = '';
-  comboDeal = 'cup';
 
   // Reset the expanded view whenever the set of combos changes (e.g. the
   // localStorage cache and the server payload differ on first load).
   var sig = JSON.stringify(comboList.map(function (c) { return (c.slug || c.title) + '|' + c.active; }));
   if (sig !== _comboSig) { _comboSig = sig; comboExpanded = -1; }
   if (comboExpanded >= comboList.length) comboExpanded = -1;
+
+  // Default the price toggle to whichever combo is about to be shown.
+  var showing = comboList.length === 1 ? comboList[0]
+    : (comboExpanded > -1 ? comboList[comboExpanded] : null);
+  var firstTier = showing ? comboTiers(showing)[0] : null;
+  comboDeal = firstTier ? firstTier.key : 'cup';
 
   if (comboList.length === 1) {
     comboExpanded = -1;
@@ -170,6 +189,7 @@ function renderCombos(rawList) {
     wrap.innerHTML = '<div class="combo-dual">' + comboList.map(function (c, i) {
       return '<button type="button" class="combo-tile" onclick="expandCombo(' + i + ')" aria-label="' + (c.title || 'Combo deal') + '">'
         + '<img src="' + comboImg(c) + '" alt="' + (c.title || 'Combo deal') + '">'
+        + '<span class="combo-tile-cap">' + (c.title || '') + '</span>'
         + '</button>';
     }).join('') + '</div>';
   }
@@ -184,6 +204,20 @@ function comboCardHtml(c) {
   var pills = (Array.isArray(c.pills) ? c.pills : [])
     .filter(Boolean)
     .map(function (p) { return '<span class="combo-flavour-pill">' + p + '</span>'; }).join('');
+
+  var tiers = comboTiers(c);
+  var shown = tiers.filter(function (t) { return t.key === comboDeal; })[0] || tiers[0]
+    || { price: Number(c.cupPrice) || 0, note: c.cupNote || '' };
+
+  // Cup/Pint toggle only when the combo actually has both prices.
+  var toggle = tiers.length >= 2
+    ? '<div class="shop-sz-row" id="comboSzRow">'
+      + tiers.map(function (t) {
+          return '<button class="shop-sz' + (t.key === comboDeal ? ' active' : '') + '" data-deal="' + t.key + '" onclick="selectComboDeal(this)">' + t.label + ' · RM' + t.price + '</button>';
+        }).join('')
+      + '</div>'
+    : '';
+
   return '<div class="combo-card">'
     + '<img class="combo-img" src="' + comboImg(c) + '" alt="' + (c.title || 'Combo deal') + '">'
     + '<div class="combo-body">'
@@ -191,13 +225,10 @@ function comboCardHtml(c) {
     +   '<div class="combo-title">' + (c.title || '') + '</div>'
     +   (c.desc ? '<p class="combo-desc">' + c.desc + '</p>' : '')
     +   (pills ? '<div class="combo-flavours">' + pills + '</div>' : '')
-    +   '<div class="shop-sz-row" id="comboSzRow">'
-    +     '<button class="shop-sz active" data-deal="cup" onclick="selectComboDeal(this)">Cup Deal · RM' + (Number(c.cupPrice) || 0) + '</button>'
-    +     '<button class="shop-sz" data-deal="pint" onclick="selectComboDeal(this)">Pint Deal · RM' + (Number(c.pintPrice) || 0) + '</button>'
-    +   '</div>'
+    +   toggle
     +   '<div class="combo-price-row">'
-    +     '<span class="combo-price" id="comboPrice">RM ' + (Number(c.cupPrice) || 0) + '</span>'
-    +     '<span class="combo-price-note" id="comboPriceNote">' + (c.cupNote || '') + '</span>'
+    +     '<span class="combo-price" id="comboPrice">RM ' + shown.price + '</span>'
+    +     '<span class="combo-price-note" id="comboPriceNote">' + shown.note + '</span>'
     +   '</div>'
     +   '<button class="combo-order-btn" onclick="addComboToCart()">Add Combo to Order</button>'
     + '</div>'
@@ -223,27 +254,28 @@ function selectComboDeal(btn) {
   if (row) row.querySelectorAll('.shop-sz').forEach(function (b) { b.classList.remove('active'); });
   btn.classList.add('active');
   comboDeal = btn.dataset.deal;
-  var isPint = comboDeal === 'pint';
+  var tier = comboActiveTier(c);
   var priceEl = document.getElementById('comboPrice');
   var noteEl = document.getElementById('comboPriceNote');
-  if (priceEl) priceEl.textContent = 'RM ' + (isPint ? (Number(c.pintPrice) || 0) : (Number(c.cupPrice) || 0));
-  if (noteEl) noteEl.textContent = isPint ? (c.pintNote || '') : (c.cupNote || '');
+  if (priceEl) priceEl.textContent = 'RM ' + tier.price;
+  if (noteEl) noteEl.textContent = tier.note;
 }
 
 function addComboToCart() {
   var c = currentCombo();
   if (!c) return;
-  var isPint = comboDeal === 'pint';
+  var tier = comboActiveTier(c);
   var slug = c.slug || slugifyCombo(c.title);
-  var dealName = c.title + ' (' + (isPint ? 'Pint' : 'Cup') + ' Deal)';
-  var note = isPint ? (c.pintNote || '') : (c.cupNote || '');
+  var single = comboTiers(c).length < 2;
+  var sizeWord = tier.key === 'pint' ? 'Pint' : 'Cup';
+  var dealName = single ? c.title : (c.title + ' (' + sizeWord + ' Deal)');
   var pills = Array.isArray(c.pills) ? c.pills.filter(Boolean).join(', ') : '';
   addToCart({
     flavourSlug: 'combo-' + slug,
     flavourName: dealName,
-    sizeKey: 'combo-' + slug + (isPint ? '-pint' : '-cup'),
-    sizeLabel: note + (pills ? ' — ' + pills : ''),
-    price: isPint ? (Number(c.pintPrice) || 0) : (Number(c.cupPrice) || 0),
+    sizeKey: 'combo-' + slug + '-' + tier.key,
+    sizeLabel: (tier.note || '') + (pills ? ' — ' + pills : ''),
+    price: tier.price,
     qty: 1
   });
   showCartToast('Added ' + dealName + ' to your order');

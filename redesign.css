@@ -513,6 +513,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
 .combo-tile{position:relative;display:block;width:100%;padding:0;border:1px solid rgba(59,31,10,0.08);border-radius:24px;overflow:hidden;cursor:pointer;background:var(--cream);aspect-ratio:1/1;box-shadow:0 20px 50px rgba(59,31,10,0.1);transition:transform 0.25s ease,box-shadow 0.25s ease;}
 .combo-tile:hover{transform:translateY(-4px);box-shadow:0 26px 60px rgba(59,31,10,0.16);}
 .combo-tile img{width:100%;height:100%;object-fit:cover;display:block;}
+/* Title sits in a dark gradient strip along the bottom — least likely to
+   cover the hero art or any badge the promo image carries up top. */
+.combo-tile-cap{position:absolute;left:0;right:0;bottom:0;padding:34px 22px 16px;font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:0.05em;line-height:1.1;color:#fff;text-align:left;background:linear-gradient(transparent,rgba(18,9,3,0.82));white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none;}
 .combo-back{display:inline-flex;align-items:center;gap:6px;margin:0 auto 14px;max-width:1000px;background:transparent;border:1.5px solid rgba(59,31,10,0.18);color:var(--brown-mid);font-size:0.8rem;font-weight:600;padding:8px 16px;border-radius:40px;cursor:pointer;transition:background 0.2s;}
 .combo-back:hover{background:rgba(59,31,10,0.06);}
 .combo-back-wrap{max-width:1000px;margin:0 auto;}

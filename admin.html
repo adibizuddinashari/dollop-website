@@ -432,6 +432,7 @@
 
         <div class="pf-field">
           <label>Cup Deal</label>
+          <div class="row-sub">Leave the price at 0 to skip cup size. Set at least one of cup / pint.</div>
           <div class="pf-2col">
             <div>
               <div class="row-sub">Price (RM)</div>
@@ -446,6 +447,7 @@
 
         <div class="pf-field">
           <label>Pint Deal</label>
+          <div class="row-sub">Leave the price at 0 to skip pint size.</div>
           <div class="pf-2col">
             <div>
               <div class="row-sub">Price (RM)</div>
@@ -984,7 +986,10 @@ function renderComboList() {
     var thumb = c.imageUrl
       ? '<img class="prod-item-thumb" src="' + toDriveDirectUrl(c.imageUrl) + '" alt="">'
       : '<div class="prod-item-thumb"></div>';
-    var price = 'RM' + (c.cupPrice || 0) + ' cup · RM' + (c.pintPrice || 0) + ' pint';
+    var pt = [];
+    if (c.cupPrice) pt.push('RM' + c.cupPrice + ' cup');
+    if (c.pintPrice) pt.push('RM' + c.pintPrice + ' pint');
+    var price = pt.join(' · ') || 'No price set';
     var state = (c.active === false) ? ' · Hidden' : '';
     return '<div class="prod-item">'
       + '<div class="prod-item-reorder">'
@@ -1074,6 +1079,10 @@ function submitCombo() {
     return fail('You already have ' + MAX_COMBOS + ' combo deals.');
   }
 
+  var cupPrice  = parseInt(document.getElementById('cfCupPrice').value, 10) || 0;
+  var pintPrice = parseInt(document.getElementById('cfPintPrice').value, 10) || 0;
+  if (!cupPrice && !pintPrice) return fail('Set a price for at least the cup or the pint size.');
+
   var pills = document.getElementById('cfPills').value
     .split('\n').map(function (s) { return s.trim(); }).filter(Boolean);
 
@@ -1086,9 +1095,9 @@ function submitCombo() {
     desc:      document.getElementById('cfDesc').value.trim(),
     pills:     pills,
     imageUrl:  document.getElementById('cfImageUrl').value.trim(),
-    cupPrice:  parseInt(document.getElementById('cfCupPrice').value, 10) || 0,
+    cupPrice:  cupPrice,
     cupNote:   document.getElementById('cfCupNote').value.trim(),
-    pintPrice: parseInt(document.getElementById('cfPintPrice').value, 10) || 0,
+    pintPrice: pintPrice,
     pintNote:  document.getElementById('cfPintNote').value.trim()
   };
 
